@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" "http://www.w3.org/Math/DTD/mathml2/xhtml-math11-f.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US">
+  <head>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" /> 
+    <title>Visualization window</title>
+    <link rel="stylesheet" type="text/css" href="../../sty.css" />
+  </head>
+  <body id="top">
+    <p>Next: <a href="../visual-graphs/graphs.xhtml">Graphic types</a>, Up: <a href="../visual.xhtml">Top</a></p>
+    <hr /> 
+
+    <h3>Parts of the Visualization window</h3>
+
+    <p><strong>On this page:</strong></p>
+    <ul>
+      <li><a href="#tags">Graphic tags</a></li>
+      <li><a href="#main">Main bar</a></li>
+      <li><a href="#scene">Graphic scene</a>
+        <ul>
+          <li><a href="#mouse">Mouse interaction</a></li>
+        </ul>
+      </li>
+      <li><a href="#outline">Outline</a></li>
+      <li><a href="#legend">Legend</a></li>
+      <li><a href="#scale">Scale</a></li>
+      <li><a href="#scale-bar">Scale bar</a></li>
+      <li><a href="#param">Parameter bar</a></li>
+    </ul>  
+
+    <p>The <a href="../parts.xhtml">Visualization window</a> is the part of the interface where the graphics are shown. It is composed of several parts, as we see in <a href="#fig-1">Figure 1:</a>.</p>
+    <p align="center"> 
+      <img width="75%" src="images/vwindow.png" />
+      <br clear="all" /> 
+      <span id="fig-1" class="caption"> <strong>Figure 1:</strong> Parts of the visualization window.</span>
+    </p>
+    
+    <p>These parts are described in detail below.</p>
+
+    <h4 id="tags">Graphic tags</h4>
+    <p>These part <span class="rev">lists a tag for every type of graphic that is being visualized</span> (See <a href="#fig-2">Figure 2</a>). The user can move between graphics by simply visiting tags.</p>
+    <p align="center"> 
+      <img width="50%" src="images/tags.png" />
+      <br clear="all" /> 
+      <span id="fig-2" class="caption"> <strong>Figure 2:</strong> Graphic tags.</span>
+    </p>
+    <div class="back"><a href="#top">Back to top</a></div>    
+
+    <h4 id="main">Main bar</h4>
+    <p>This bar controls some aspects of the visualization (See <a href="#fig-3">Figure 3</a>). It also controls whether the <a href="#scale">Scale bar</a> and the <a href="#time">Time bar</a> are visible or not.</p>
+    <p align="center"> 
+      <img width="60%" src="images/main.png" />
+      <br clear="all" /> 
+      <span id="fig-3" class="caption"> <strong>Figure 3:</strong> Main bar.</span>
+    </p>
+    <p>The buttons that contains are:</p>
+    <ul>
+      <li> <strong>Save...:</strong> Let us to choose a filename to save a snapshot of the <a href="#scene">Graphic scene</a>. In the case of a <a href="#pol">Plot over line</a> graphic, two filenames are required to save each part of the Graphic scene. The valid formats are:
+        <ul>
+          <li>JPEG, PNG, BMP, TIFF as raster formats;</li>
+          <li>PDF, EPS, PS, SVN as vector formats. The latter will only be available if option VTK_USE_GL2PS was active when configuring the VTK library.</li>
+        </ul>
+      </li>
+      <li><strong>Perspective:</strong> Stablishes a specific perspective. There are four options: <em> XY view</em>, <em> XZ view</em>, <em> YZ view</em> and <em> iso view</em>. This button is unavailable in <a href="../visual-graphs/graph.xhtml">graphs</a>.</li>
+      <li><strong>Center:</strong> Centers the graphic in the <a href="#scene">Graphic scene</a>. This button is unavailable in <a href="../visual-graphs/graph.xhtml">graphs</a>.</li>
+      <li><strong>Names:</strong>When active, this button shows the filename <scan class="rev">¿or the field name?</scan> where the field is stored. This button is unavailable in <a href="../visual-graphs/graph.xhtml">graphs</a>.</li>
+      <li><strong>Legend:</strong> When active, this button shows the <a href="#legend">Legend</a>.</li>
+      <li><strong>Outline:</strong> When active, this button shows the <a href="#outline">Outline</a>. This button is unavailable in <a href="../visual-graphs/graph.xhtml">graphs</a>.</li>
+      <li><strong>Wireframe/Surface:</strong> Let us to choose the visualization mode. For scalar fields  there are three options: <em>Wireframe</em> (show field only on edges), <em>Surface</em> (show field on surfaces) and <em>Surface+Edges</em> (show field on surfaces and aldo show the edeges). For vector fields  there are three options: <em>Wireframe</em> (show edges), <em>Surface</em> (show surfaces) and <em>None</em> (do not show any part of the domain).</li>
+      <li><strong>Mesh:</strong> When active, it shows edges on the mesh. This button is only available in the graphic <a href="">References</a>.</li>
+      <li><strong>Plane:</strong> When active, it shows the cut plane. This button is only available in the graphics <a href="">Slice</a>, <a href="">Cut</a> and <a href="">Rough cut</a>.</li>
+      <li><strong>Labels:</strong> Controls the visibility of labels. In the graphics the graphics <a href="">Numbering</a> and <a href="">References</a> there are three options:  <em>No labels</em>, <em>Selected</em> (show labels only for the selected entities) and <em>All</em> (show labels for all entities). This button is only available in the graphics <a href="">Numbering</a> and <a href="">References</a>. In the graphic <a href="">2D graph</a>, when is active, shows the graph legend.</li>
+      <li><strong>Edges:</strong> When active, shows edges in the field. This button is only available in the graphic <a href="">Contour</a>.</li>
+      <li><strong>Table:</strong> When active, shows the materials that compund the domain. This button is only available in the graphic <a href="">Materials</a>.</li>
+      <li><strong>Colored/Plain:</strong> Let us to choose the visualization mode in the <a href="../visual-graphs/scalar.xhtml#def">Scalar deformed</a> graphic. There are two options: <em>Colored</em> (shows the field on the deformed domain), <em>Plain</em> (does not show the field).</li>
+      <li><span class="rev"><strong>Components:</strong> Controls the component to show in the Graphic <em>Vector Components</em>. There are four options: <em>X comp.</em>, <em>Y comp.</em>, <em>Z comp.</em> and <em>Modulus</em>.</span></li>
+      <li><strong>Scale bar:</strong> When active, shows the <a href="#scale-bar">Scale bar</a>.</li>
+      <li><strong><em>Parameter</em> bar:</strong> When active, shows the <a href="#param">Paramater bar, where <em>parameter</em> is the name of the parameter (time, frequency,...).</a>.</li>
+    </ul>
+    <div class="back"><a href="#top">Back to top</a></div>    
+
+    <h4 id="scene">Graphic scene</h4>
+    <p>Here is where the field is shown. It also contains the <a href="outline">Outline</a>, the <a href="legend">Legend</a> and the <a href="scale">Scale</a> (see <a href="#fig-4">Figure 4</a>).</p>
+    <p align="center"> 
+      <img width="65%" src="images/scene.png" />
+      <br clear="all" /> 
+      <span id="fig-4" class="caption"> <strong>Figure 4:</strong> Graphic scene.</span>
+    </p>
+    <h5 id="mouse">Mouse interaction</h5>
+    <p>Ths graphics scene can be altered through mouse events:</p>
+    <ul>
+      <li><strong>Rotate:</strong> drag with the left mouse button.</li>
+      <li><strong>Zoom:</strong> drag with the right mouse button.</li>
+      <li><strong>Move:</strong> drag with the central mouse button.</li>
+      <li><strong>Double-click:</strong>In graphics that show a scalar field, a double-click shows the value of the field.<scan class="rev">Otros casos? mesh? vector?</scan></li> 
+    </ul>
+    <p>In graphics <a href="">Slice</a>, <a href="">Cut</a> and <a href="">Rough cut</a> we recommend to hide the plane through the <em>Plane</em> button in the <a href="#main">Main bar</a> before using the previous mouse events.</p>
+    <div class="back"><a href="#top">Back to top</a></div>    
+
+    <h4 id="outline">Outline</h4>
+    <p>It is a box that shows the axis and some ticks with the coordinates on each axis (see <a href="#fig-5">Figure 5</a>).</p>
+    <p align="center"> 
+      <img width="20%" src="images/outline.png" />
+      <br clear="all" /> 
+      <span id="fig-5" class="caption"> <strong>Figure 5:</strong> Outline.</span>
+    </p>
+    <div class="back"><a href="#top">Back to top</a></div>    
+
+    <h4 id="legend">Legend</h4>
+    <p>It shows some information related to the field (see <a href="#fig-6">Figure 6</a>).</p>
+    <p align="center"> 
+      <img width="20%" src="images/legend.png" />
+      <br clear="all" /> 
+      <span id="fig-6" class="caption"> <strong>Figure 6:</strong> Legend.</span>
+    </p>
+    <div class="back"><a href="#top">Back to top</a></div>    
+
+    <h4 id="scale">Scale</h4>
+    <p>It shows the colors used to represent the field and the field values associated to each color (see <a href="#fig-7">Figure 7</a>).</p>
+    <p align="center"> 
+      <img width="10%" src="images/scale.png" />
+      <br clear="all" /> 
+      <span id="fig-7" class="caption"> <strong>Figure 7:</strong> Scale.</span>
+    </p>
+    <div class="back"><a href="#top">Back to top</a></div>    
+
+    <h4 id="scale-bar">Scale bar</h4>
+    <p>This bar controls controls some aspects related to the color scale (see <a href="#fig-8">Figure 8</a>).</p>
+    <p align="center"> 
+      <img width="45%" src="images/scale-bar.png" />
+      <br clear="all" /> 
+      <span id="fig-8" class="caption"> <strong>Figure 8:</strong> Scale bar.</span>
+    </p>
+    <p>It includes the following buttons:</p>
+    <ul>
+      <li><strong>Scale:</strong> When active, shows the <a href="#scale">Scale</a> in the <a href="#scene">Graphic scene</a>.</li>
+      <li><strong>Absolute/Relative scale:</strong> indicates how to calculate the extrem values of the field. There are two options: <em>Absolute scale</em> (they are calculated in the whole domain) and <em>Relative scale</em> (they are calculated in the portion of the domain that is visible in the <a href="#scene">Graphic scene</a>). This button is only available in the graphics <a href="">Slice</a>, <a href="">Cut</a> and <a href="">Rough cut</a>.</li>
+      <li><strong>Adjust:</strong> permits to adjust the limits of the scale range; possible options are:
+        <ul>
+          <li><em>Adjust manually:</em> user can change the limits manually.</li>
+          <li><em>Adjust to every field:</em> the limits will be the extreme values of the field; in the case of a parameter-dependent simulation, this limits will be recalculated for every parameter step.</li>
+          <li><em>Adjust to the current field:</em> the limits will be the extreme values of the current field. In the case of a parameter-dependent simulation, this limits will not be recalculated for every parameter step.</li>
+          <li><em>Adjust to the </em>parameter<em> interval:</em> In the case of a parameter-dependent simulation, the limits will be the extreme values of all parameter steps. Here <em>parameter</em> refers to the name of the parameter (time, frequency,...).</li>
+        </ul>
+      </li>
+      <li><strong>From/To:</strong> when the user wants to adjust manually the scale range, these buttons permit to introduce the range limits.</li>
+    </ul>
+    <div class="back"><a href="#top">Back to top</a></div>    
+
+    <h4 id="param">Parameter bar</h4>
+    <p>This bar controls some aspects of the visualization of <em>parameter</em>-dependent fields (see <a href="#fig-9">Figure 9</a>). Here <em>parameter</em> is the name of a particular parameter (time, frequency,...).</p>
+    <p align="center"> 
+      <img width="50%" src="images/time-bar.png" />
+      <br clear="all" /> 
+      <span id="fig-9" class="caption"> <strong>Figure 9:</strong> Parameter bar.</span>
+    </p>
+    <p>The bar includes the following buttons:</p>
+    <ul>
+      <li><strong>First frame "|&lt;":</strong> shows the first frame of the series.</li>
+      <li><strong>Previous frame "&lt;|":</strong> shows the previous frame of the series.</li>
+      <li><strong>Play "&gt;":</strong> plays the series.</li>
+      <li><strong>Pause "||":</strong> pauses the animation.</li>
+      <li><strong>Next frame "|&gt;":</strong> shows the next frame of the series.</li>
+      <li><strong>First frame "&gt;|":</strong> shows the last frame of the series.</li>
+      <li><strong>Parameter:</strong> shows/edits the current parameter value in the animation.</li>
+      <li><strong>Start:</strong> shows/edits the start parameter value in the animation.</li>
+      <li><strong>End:</strong> shows/edits the end parameter value in the animation.</li>
+      <li><strong>Duration:</strong> shows/edits the duration in seconds of the animation.</li>
+    </ul>
+    <div class="back"><a href="#top">Back to top</a></div>    
+
+    <hr />
+    <p>&copy; 2012 - <a href="http://www.usc.es/ingmat/?lang=en">Ingeniería Matemática</a></p>
+  </body>
+</html>
+

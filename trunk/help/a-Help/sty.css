@@ -1,0 +1,21 @@
+/* Headers (only to check that css is been used) */
+h1, h2, h3, h4, h5, h6 {color: #880000; }
+
+/* Horizontal rule */
+hr {background-color: gray; }
+
+/* Back to top */
+.back {text-align: right; }
+
+/* Caption figures */
+.caption {font-family: Times, FreeSerif, 'Century Schoolbook L', 'Times New Roman', serif; 
+          text-align: center; padding: 0% 15% 0% 15%; font-size: larger;}
+          
+/* Menu items */
+.menu {font-weight: bold; }
+
+/* Text to be revised */
+.rev { color: red; }
+
+/* Horizontal array of images */
+img.hoz {vertical-align: middle; margin-right: 20px;}

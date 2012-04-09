@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" "http://www.w3.org/Math/DTD/mathml2/xhtml-math11-f.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US">
+  <head>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" /> 
+    <title>Scalar field-related graphics</title>
+    <link rel="stylesheet" type="text/css" href="../../sty.css" />
+  </head>
+  <body id="top">
+    <p>Next: <a href="vector.xhtml">Vector-related graphics</a>, Previous: <a href="mesh.xhtml">Mesh-related graphics</a>, Up: <a href="../visual.xhtml">Top</a></p>
+    <hr /> 
+
+    <h3>Scalar field-related graphics</h3>
+
+    <p><strong>On this page:</strong></p>
+    <ul>
+      <li><a href="#filled">Filled graphic</a></li>
+      <li><a href="#thres">Threshold graphic</a></li>
+      <li><a href="#def">Deformed graphic</a></li>
+      <li><a href="#isolin">Isolines graphic</a></li>
+      <li><a href="#pol">Plot over line</a></li>
+      <li><a href="#slice">Slice graphic</a></li>
+      <li><a href="#cut">Cut graphic</a></li>
+      <li><a href="#rough">Rough cut mesh graphic</a></li>
+    </ul>
+
+    <h4 id="filled">Filled graphic</h4>
+    <p>This graphic shows the scalar with filled colors (see <a href="#fig-1">Figure 1</a>). The value of the field in a point can be shown by double-clicking in the <a href="../visual-parts/parts.xhtml#scene">Graphic scene</a>.</p> 
+    <p align="center"> 
+      <img width="30%" src="images-scalar/filled.png" />
+      <br clear="all" /> 
+      <span id="fig-1" class="caption"> <strong>Figure 1:</strong> Filled graphic.</span>
+    </p>
+    <div class="back"><a href="#top">Back to top</a></div>    
+        
+    <h4 id="thres">Threshold graphic</h4>
+    <p>This graphic shows a scalar field within a threshold. Two options can be modified in the <a href="../data.xhtml">Data window</a> (see <a href="#fig-2">Figure 2</a>):</p>
+    <ul>
+      <li><strong>Upper limits:</strong> Sets the upper limit of the threshold.</li>
+      <li><strong>Lower limits:</strong> Sets the lower limit of the threshold.</li>
+    </ul>
+    <p>The value of the field in a point can be shown by double-clicking in the <a href="../visual-parts/parts.xhtml#scene">Graphic scene</a>.</p> 
+    <p align="center"> 
+      <img class="hoz" width="20%" src="images-scalar/thres-1.png" /> <img class="hoz" width="25%" src="images-scalar/thres-2.png" />
+      <br clear="all" /> 
+      <span id="fig-2" class="caption"> <strong>Figure 2:</strong> Threshold graphic.</span>
+    </p>
+    <div class="back"><a href="#top">Back to top</a></div>
+    
+    <h4 id="def">Deformed graphic</h4>
+    <p>This graphic shows the mesh deformed in the Z-axis by the scalar field values (see <a href="#fig-3">Figure 3</a>). The option <strong>Scale in Z-axis</strong> can be modified in the <a href="../data.xhtml">Data window</a>: sets the scale in the Z-axis. The field can be also shown colored in the domain using the <em>Colored/Plain</em> button in the <a href="../visual-parts/parts.xhtml#main">Main bar</a>.</p>
+    <p align="center"> 
+      <img class="hoz" width="20%" src="images-scalar/plot3d-1.png" /> <img class="hoz" width="25%" src="images-scalar/plot3d-2.png" />
+      <br clear="all" /> 
+      <span id="fig-3" class="caption"> <strong>Figure 3:</strong> Deformed graphic.</span>
+    </p>
+    <div class="back"><a href="#top">Back to top</a></div>
+    
+    <h4 id="isolin">Isolines graphic</h4>
+    <p>This graphic shows a scalar field using isolines (see <a href="#fig-4">Figure 4</a>). This graphic is only available for 2D domains. Two exclusive options can be modified in the <a href="../data.xhtml">Data window</a> :</p>
+    <ul>
+      <li><strong>Number of contours:</strong> Sets the number of contours in the graphic.</li>
+      <li><strong>Contours at:</strong> Sets an array of values which the isolines will be plotted.</li>
+    </ul>
+    <p align="center"> 
+      <img class="hoz" width="20%" src="images-scalar/isolin-1.png" /> <img class="hoz" width="25%" src="images-scalar/isolin-2.png" />
+      <br clear="all" /> 
+      <span id="fig-4" class="caption"> <strong>Figure 4:</strong> Isolines graphic.</span>
+    </p>
+    <div class="back"><a href="#top">Back to top</a></div>
+    
+    <h4 id="pol">Plot over line</h4>
+    <p>This graphic shows the scalar field along a line (see <a href="#fig-5">Figure 5</a>). The complete field is shown in the left part of the Visualization window, together with the line. On the right part, the graph of the field along the line is shown. Two options can be modified in the <a href="../data.xhtml">Data window</a> :</p> modificar en el graphic scene
+    <ul>
+      <li><strong>First point:</strong> Sets the coordinates of the beginning point of the line.</li>
+      <li><strong>Second point:</strong> Sets the coordinates of the ending point of the line.</li>
+    </ul>
+    <p>The position of the line can also be changed using the mouse in the <a href="../visual-parts/parts.xhtml#scene">Graphic scene</a>.</p>
+    <p align="center"> 
+      <img class="hoz" width="20%" src="images-scalar/pol-1.png" /> <img class="hoz" width="60%" src="images-scalar/pol-2.png" />
+      <br clear="all" /> 
+      <span id="fig-5" class="caption"> <strong>Figure 5:</strong> Plot over line graphic.</span>
+    </p>
+    <div class="back"><a href="#top">Back to top</a></div>
+    
+    <h4 id="slice">Slice graphic</h4>
+    <p>This graphic shows a slice of the scalar field. It is only available for 3D domains. Two options can be modified in the <a href="../data.xhtml">Data window</a> (see <a href="#fig-6">Figure 6</a>):</p>
+    <ul>
+      <li><strong>Origin:</strong> Changes the origin point of the plane.</li>
+      <li><strong>Normal vector:</strong> Changes the normal vector of the plane.</li>
+    </ul>
+    <p>The latter options can also be changed using the mouse in the <a href="../visual-parts/parts.xhtml#scene">Graphic scene</a>. The plane can be hiding by deactivating the <em>Plane</em> button in the <a href="../visual-parts/parts.xhtml#main">Main bar</a>. The value of the field in a point can be shown by double-clicking in the <a href="../visual-parts/parts.xhtml#scene">Graphic scene</a>.</p> 
+
+    <p align="center"> 
+      <img class="hoz" width="20%" src="images-scalar/slice-1.png" /> <img class="hoz" width="25%" src="images-scalar/slice-2.png" />
+      <br clear="all" /> 
+      <span id="fig-6" class="caption"> <strong>Figure 6:</strong> Slice graphic.</span>
+    </p>
+    <div class="back"><a href="#top">Back to top</a></div>    
+
+    <h4 id="cut">Cut graphic</h4>
+    <p>This graphic shows a cut of the scalar field. It is only available for 3D domains. Two options can be modified in the <a href="../data.xhtml">Data window</a> (see <a href="#fig-7">Figure 7</a>):</p>
+    <ul>
+      <li><strong>Origin:</strong> Changes the origin point of the plane.</li>
+      <li><strong>Normal vector:</strong> Changes the normal vector of the plane.</li>
+    </ul>
+    <p>The latter options can also be changed using the mouse in the <a href="../visual-parts/parts.xhtml#scene">Graphic scene</a>. The plane can be hiding by deactivating the <em>Plane</em> button in the <a href="../visual-parts/parts.xhtml#main">Main bar</a>. The value of the field in a point can be shown by double-clicking in the <a href="../visual-parts/parts.xhtml#scene">Graphic scene</a>.</p> 
+
+    <p align="center"> 
+      <img class="hoz" width="20%" src="images-scalar/slice-1.png" /> <img class="hoz" width="25%" src="images-scalar/cut-2.png" />
+      <br clear="all" /> 
+      <span id="fig-7" class="caption"> <strong>Figure 7:</strong> Cut graphic.</span>
+    </p>
+    <div class="back"><a href="#top">Back to top</a></div>    
+
+    <h4 id="rough">Rough cut mesh graphic</h4>
+    <p>This graphic shows a rough cut of the scalar field. It is only available for 3D domains. Two options can be modified in the <a href="../data.xhtml">Data window</a> (see <a href="#fig-8">Figure 8</a>):</p>
+    <ul>
+      <li><strong>Origin:</strong> Changes the origin point of the plane.</li>
+      <li><strong>Normal vector:</strong> Changes the normal vector of the plane.</li>
+    </ul>
+    <p>The latter options can also be changed using the mouse in the <a href="../visual-parts/parts.xhtml#scene">Graphic scene</a>. The plane can be hiding by deactivating the <em>Plane</em> button in the <a href="../visual-parts/parts.xhtml#main">Main bar</a>. The value of the field in a point can be shown by double-clicking in the <a href="../visual-parts/parts.xhtml#scene">Graphic scene</a>.</p> 
+
+    <p align="center"> 
+      <img class="hoz" width="20%" src="images-scalar/slice-1.png" /> <img class="hoz" width="25%" src="images-scalar/rough-2.png" />
+      <br clear="all" /> 
+      <span id="fig-8" class="caption"> <strong>Figure 8:</strong> Rough cut graphic.</span>
+    </p>
+    <div class="back"><a href="#top">Back to top</a></div>    
+ 
+    <hr />
+    <p>&copy; 2012 - <a href="http://www.usc.es/ingmat/?lang=en">Ingeniería Matemática</a></p>
+  </body>
+</html>
