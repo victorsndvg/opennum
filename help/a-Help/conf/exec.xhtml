@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" "http://www.w3.org/Math/DTD/mathml2/xhtml-math11-f.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US">
+  <head>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" /> 
+    <title>Executable files</title>
+    <link rel="stylesheet" type="text/css" href="../sty.css" />
+  </head>
+  <body id="top">
+    <p>Next: <a href="app.xhtml">Applications</a>, Previous: <a href="ident.xhtml">Identity</a>, Up: <a href="conf.xhtml">Top</a></p>
+    <hr /> 
+
+    <h3>Executable files</h3>
+
+    <p>The distributor must store all the executable files called from the graphical interface in the folder <code>&lt;<em>installdir</em>&gt;/solvers</code>, where <code>&lt;<em>installdir</em>&gt;</code> is the installation folder. The executable files can be called from the graphical interface through an <a href="">action mark</a>.</p>
+    <p>In some cases, the user would want to manage his own version of the executable files, even if he does not have write permission in the installation folder. This is the case when:</p>
+    <ul>
+      <li>the distributor provide source code for the executable files and the user wants/has to compile himself the executable files;</li>
+      <li>the user wants to <a href="">remotely run</a> the executable files so he has to save them in the external server.</li>
+    </ul>
+    <p>To cover those cases, OpenNum follows this policy:</p>
+    <ol>
+      <li>When a executable file is called from the graphical interface, OpenNum looks for the file in the <code>solvers</code> subfolder of the <a href="ident.xhtml#fold">configuration folder</a>.</li>
+      <li>If the file does not exists in the previous location, OpenNum looks for the file in <code>&lt;<em>installdir</em>&gt;/solvers</code>, where <code>&lt;<em>installdir</em>&gt;</code> is the installation folder.</li>
+    </ol>
+    <p>Thus, an user can store the executable files in a subfolder of his HOME and still work with OpenNum.</p>
+    <div class="back"><a href="#top">Back to top</a></div>
+
+    <hr />
+    <p>&copy; 2012 - <a href="http://www.usc.es/ingmat/?lang=en">Ingeniería Matemática</a></p>
+  </body>
+</html>
+
