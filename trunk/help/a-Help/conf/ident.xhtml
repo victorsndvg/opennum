@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" "http://www.w3.org/Math/DTD/mathml2/xhtml-math11-f.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US">
+  <head>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" /> 
+    <title>Identity</title>
+    <link rel="stylesheet" type="text/css" href="../sty.css" />
+  </head>
+  <body id="top">
+    <p>Next: <a href="exec.xhtml">Executable files</a>, Up: <a href="conf.xhtml">Top</a></p>
+    <hr /> 
+
+    <h3>Identity</h3>
+
+    <p><strong>On this page:</strong></p>
+    <ul>
+      <li><a href="#main">The package name</a></li>
+      <li><a href="#imag">Changing the associated images</a></li>
+      <li><a href="#fold">Renaming the configuration folder</a></li>
+      <li><a href="#data">Renaming the materials database</a></li>
+    </ul>  
+
+<!-- rtes: "Identity" se explica como poner el nombre en code, las imagenes en la carpeta correspondiente y que implicaciones tiene (busqueda del fichero de materials, la carpeta en home, run remote,...); "Applications" -->
+
+    <p>A distributor can use a particular word as <a href="#main">package name</a>, use his own <a href="#imag">background images and logo</a>. This name will also be the name for the <a href="#fold">configuration folder</a> and the <a href="#data">materials data base</a>.</p>
+    
+    <h4 id="main">The package name</h4>
+    <p>The main file that opens the graphical interface is the Pyhton script <code>&lt;<em>installdir</em>&gt;/code/opennum.py</code>, where <code>&lt;<em>installdir</em>&gt;</code> is the installation folder. To use your own word as <dfn>package name</dfn>, just rename this file, maintaining the <code>.py</code> extension. The new name will appear in the <a href="../use/parts.xhtml">title bar</a>. In case you want to distribute several packages within the same installation, you can make several copies of <code>opennum.py</code>, a rename every copy with the appropriate name.</p>
+    <p>For example, if you want to distribute a package for solving thermal problems, just rename <code>opennum.py</code> to <code>thermal.py</code> if you want that "thermal" be the package name.</p> 
+    <div class="back"><a href="#top">Back to top</a></div>    
+    
+    <h4 id="imag">Changing the associated images.</h4>
+    <p>OpenNum uses two image files in the graphical interface (here <code>&lt;<em>installdir</em>&gt;</code> is the installation folder):</p>
+    <ul>
+      <li><code>&lt;<em>installdir</em>&gt;/images/background.png</code> is the background image that appears in the <a href="../use/visual-parts/parts.xhtml#scene">graphic scene</a> when OpenNum starts.</li>
+      <li><code>&lt;<em>installdir</em>&gt;/images/icon.xpm</code> is the icon image that appears in the Task bar in those operating systems that allow it.</li>
+    </ul>
+    <p>You can change those images by copying in the previous files your preferred ones, maintaing the original formats (PNG and XPM).</p>
+    <p>In case you want to distribute several packages within the same installation, you can make several copies of these files and rename them as <code>background.&lt;<em>name</em>&gt;.png</code> and <code>&lt;<em>name</em>&gt;.xpm</code>, where <code>&lt;<em>name</em>&gt;</code> is every package name. <scan class="rev">¿No debería ser icon.name.xpm?</scan>.</p>    
+    <div class="back"><a href="#top">Back to top</a></div>
+    
+    <h4 id="fold">Renaming the configuration folder</h4>
+    <p>With the first execution of the main file, OpenNum creates a <dfn>configuration folder</dfn> in the user's HOME. The name of this folder is the package name.</p>
+    <p>Since there is no guarantee that the user has write permission on the installation folder, this folder is used to save:</p>
+    <ul>
+      <li>the name of the last working folder in the file <code>lastfolder.dat</code>;</li>
+      <li>a modifiable copy of the <a href="../use/mat.xhtml">materials database</a> in the subfolder <code>materialsDB</code>;</li>
+      <li>a copy of the executable files in the subfolder <code>solvers</code>; this is useful when the user wants to use his own version of the <a href="exec.xhtml">executable files</a> or to launch a <a href="../run/run.xhtml">remote run</a>.</li>
+      <li>a temporal subfolder with an execution when launching a <a href="../run/run.xhtml">remote run</a>.</li>
+
+    </ul>
+    <p> These are the usual locations of the configuration folder in the user's HOME, depending on the operating system:</p>
+    <ul>
+      <li><p><strong>GNU/Linux:</strong> <code>/home/<em>&lt;user&gt;</em>/.<em>&lt;name&gt;</em></code>.</p></li>
+      <li><p><strong>Windows XP:</strong> <code>C:\Documents and Settings\<em>&lt;user&gt;</em>\Application Data\<em>&lt;name&gt;</em></code>.</p></li>
+      <li><p><strong>Windows 7:</strong> <code>C:\Users\<em>&lt;user&gt;</em>\AppData\Roaming\<em>&lt;name&gt;</em></code>.</p></li>
+      <li><p><strong>Mac OS X:</strong> <code>/Users/<em>&lt;user&gt;</em>/Library/Application Support/<em>&lt;name&gt;</em></code>.</p></li>
+    </ul>
+    <p>Here <code><em>&lt;user&gt;</em></code> stands for the username and <code><em>&lt;name&gt;</em></code> for the package name.</p>
+
+    <div class="back"><a href="#top">Back to top</a></div>
+    
+    <h4 id="data">Renaming the materials database</h4>
+    <p><span class="rev">OpenNum brings an example of <a href="../use/mat.xhtml">materials database</a> named <code>materials.xml</code></span> in the folder <code>&lt;<em>installdir</em>&gt;/materialsDB</code>, where <code>&lt;<em>installdir</em>&gt;</code> is the installation folder. You can modifiy this file for your own purposes. In case you want to distribute several packages within the same installation, you can make several copies of the materials database  and rename it as <code>materials.&lt;<em>name</em>&gt;.xml</code> where <code>&lt;<em>name</em>&gt;</code> is every package name.</p>    
+    <p>With the first execution of the graphical interface, OpenNum creates a <a href="#fold">configuration folder</a> in the user's HOME and saves there a modifiable copy of the <a href="../use/mat.xhtml">materials database</a> in the subfolder <code>materialsDB</code>. The user could modify this copy through the graphical interface.</p>
+    <p>Every time an executable file is called from the graphical interface, a copy of the latter materials database is saved in the working folder with the name <code>materials.dat.xml</code>. Thus, the executable file can rely on that a copy of the lastest modified materials database exists in the working folder.</p>
+    <div class="back"><a href="#top">Back to top</a></div>
+
+    <hr />
+    <p>&copy; 2012 - <a href="http://www.usc.es/ingmat/?lang=en">Ingeniería Matemática</a></p>
+  </body>
+</html>
+

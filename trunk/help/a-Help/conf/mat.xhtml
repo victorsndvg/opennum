@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" "http://www.w3.org/Math/DTD/mathml2/xhtml-math11-f.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US">
+  <head>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" /> 
+    <title>Materials database</title>
+    <link rel="stylesheet" type="text/css" href="../sty.css" />
+  </head>
+  <body id="top">
+    <p>Previous: <a href="app.xhtml">Applications</a>, Up: <a href="conf.xhtml">Top</a></p>
+    <hr /> 
+
+    <h3>Materials database</h3>
+
+    <p><strong>On this page:</strong></p>
+    <ul>
+      <li><a href="#desc">Description</a></li>
+      <li><a href="#fold">Folder location</a></li>
+    </ul>  
+
+    <h4 id="desc">Description</h4>
+    <p>A package can be distributed with a <a href="../use/mat.xhtml">materials database</a>, common for all the applications. A materials database can store the physical properties of a set of materials. That is useful when working with scientific solvers that simulate a physical phenomenon: the thermal behaviour of a motor, the elastic deformation of a bridge, etc. In those cases, several physical properties must be defined and associated with each part of the domain. The materials database permits to do such associaciation in two steps:</p>
+    <ol>
+      <li>the physical properties are defined for several materials in the materials database.</li>
+      <li>a material is associated with each part of the domain using a specific process designed by the distributor (for example, allowing the user to choose the materials in a menu item).</li>
+    </ol> 
+    <h4 id="fold">Folder location</h4>
+    <p>The materials database distributed with the package must be located on <code>&lt;<em>installdir</em>&gt;/materialsDB</code>, where <code>&lt;<em>installdir</em>&gt;</code> is the installation folder. As it was comented in the section <a href="ident.xhtml#data">Renaming the materials database</a> the name of the materials database can be  <code>materials.xml</code> or <code>materials.&lt;<em>name</em>&gt;.xml</code> where <code>&lt;<em>name</em>&gt;</code> is every package name.</p>
+    <p>With the first execution of the graphical interface, OpenNum creates a <a href="ident.xhtml#fold">configuration folder</a> in the user's HOME and saves there a modifiable copy of the materials database in the subfolder <code>materialsDB</code>. The user could modify this copy through the graphical interface.</p>
+    <p>Every time an executable file is called from the graphical interface, a copy of the latter materials database is saved in the working folder with the name <code>materials.dat.xml</code>. Thus, the executable file can rely on that a copy of the lastest modified materials database exists in the working folder.</p>
+    <p>Avisar de que se escribe algo en local.mnu.dat sobre la base. Esto tambien facilita la copia de ficheros en el run remote</p>
+    <p>The distributor have freedom to order al the materials, es en el momento de que el solver lea el xml, debe saber como hacerlo. Tambien se recomienda los materiales deben perteneer a la misma altura en la jerarquia para que se puedan listar en otros menus</p>
+    <div class="back"><a href="#top">Back to top</a></div>
+
+    <hr />
+    <p>&copy; 2012 - <a href="http://www.usc.es/ingmat/?lang=en">Ingeniería Matemática</a></p>
+  </body>
+</html>
+

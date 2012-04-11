@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" "http://www.w3.org/Math/DTD/mathml2/xhtml-math11-f.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US">
+  <head>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" /> 
+    <title>Applications</title>
+    <link rel="stylesheet" type="text/css" href="../sty.css" />
+  </head>
+  <body id="top">
+    <p>Next: <a href="mat.xhtml">Materials database</a>, Previous: <a href="exec.xhtml">Executable files</a>, Up: <a href="conf.xhtml">Top</a></p>
+    <hr /> 
+
+    <h3>Applications</h3>
+
+    <p><strong>On this page:</strong></p>
+    <ul>
+      <li><a href="#desc">Description</a></li>
+      <li><a href="#fold">The application folder</a></li>
+      <li><a href="#data">Sample data</a></li>
+    </ul>  
+
+    <h4 id="desc">Description</h4>
+    <p> A package can have several <a href="">applications</a> in it. Imagine that you want to distribute a package that can solve thermal and elastic problems. Probably, the data and results involved in thermal problems are different from those for elastic problems and so the menu items for both cases will be different. Thus, the package should contain two different appplications, <em>thermal</em> and <em>elastic</em>.</p>
+    <p>Let us remind, as it was commented in the <a href="">Usage </a> section, that an application can manage several executable files as long as their data and results are basically the same. In the previous example, the <em>thermal</em> application could call two solvers that only differ in the internal algorithm.</p>
+    <div class="back"><a href="#top">Back to top</a></div>
+
+    <h4 id="fold">The application folder</h4>
+    <p><strong>To create an aplication, the distributor must create a subfolder</strong> in <code>&lt;<em>installdir</em>&gt;/apps</code>, where <code>&lt;<em>installdir</em>&gt;</code> is the installation folder. In the previous example, <code>thermal</code> and <code>elastic</code> should be subfolders of <code>&lt;<em>installdir</em>&gt;/apps</code>.</p>
+    
+    <p>All the subfolders in <code>apps</code> will be shown in the menu <scan class="menu">Project - Application</scan> in alphabetical order. To change that order, the subfolders can be named as <code><em>prefix-name</em></code>, where <code><em>name</em></code> is the application's name and <code><em>prefix</em></code> is a string only used to alphabetize the applications. For example, creating the subfolders  <code>a-thermal</code> and <code>b-elastic</code>, <em>thermal</em> and <em>elastic</em> applications will appear in that order.</p>
+    <p>Every application must have an associated menu. This menu will be defined in the file <code>local.mnu.xml</code>. As we shall see in the next subsection, the distributor can prepare one or several sample cases for an appplication.</p>
+    <div class="back"><a href="#top">Back to top</a></div>
+        
+    <h4 id="data">Sample data</h4>
+    <p>An application can have several <a href="../use/elem.xhtml#sample">sample data</a> associated to it. Each sample data can contain a set of data files and outputs to exemplify the use of the application. For example, the <em>thermal</em> application could have two sample data: the first one, named <em>new</em>, could contain no data; the second one, named <em>motor heating</em>, could contain a thermal simulation of a motor. The sample case <em>new</em> will act as an empty case that the user will load to make a simulation from scratch; the second one will serve as a true example of how to introduce data for a simulation and how to visualize the obtained results.</p>
+    
+    <p><strong>To create a sample data for a particular application, the distributor must create a subfolder</strong> in <code>&lt;<em>installdir</em>&gt;/apps/<em>&lt;application&gt;</em></code>, where <code>&lt;<em>installdir</em>&gt;</code> is the installation folder and <code>&lt;<em>application</em>&gt;</code> is the application's folder. In the previous example, <code>thermal</code> should have two subfolders, <code>new</code> and <code>motor heating</code>.</p>
+
+    <p>All the subfolders in the application's folder will be shown in the menu <scan class="menu">Project - Sample data</scan> in alphabetical order. To change that order, the subfolders can be named as <code><em>prefix-name</em></code>, where <code><em>name</em></code> is the sample data's name and <code><em>prefix</em></code> is a string only used to alphabetize the sample data. For example, creating the subfolders  <code>a-new</code> and <code>b-motor heating</code>, the sample data <em>new</em> and <em>motor heating</em> will appear in that order.</p>
+
+    <p><strong>Every sample data must contain a XML file to define the menu and the preloaded data</strong> and the name of this file must be <code>local.mnu.xml</code> How to make such XML file is explained in the section <a href="../xml/xml.xhtml">XML syntaxis</a>. The sample data folder is also the natural place to save all the files related to that sample data. For example, the sample data <em>motor heating</em> could contain a meshfile with a motor and other files containing the resulting fields of a simulation.
+    </p> 
+
+    <p>Note that, since every sample data has his own <code>local.mnu.xml</code> file, the menu (not only the data) could change among different sample data of the same application. We recommend to avoid such practice although we admit that it could be useful in some special cases.</p>
+    
+    <h5 id="copy">Copying to the working folder</h5>
+    <p>When the user choose an application, </p>
+    <ol>
+      <li>all the content of the first sample data folder, in alphabetical order, is copied to the working folder and </li>
+      <li>the menu defined in <code>local.mnu.xml</code> is loaded in the graphical interface.</li>
+    </ol>  
+    <p>When the user choose a sample data for the current application, </p>
+    <ol>
+      <li>all the content of the choosen sample data folder is copied to the working folder and </li>
+      <li>the menu defined in <code>local.mnu.xml</code> is loaded in the graphical interface.</li>
+    </ol>  
+
+    <p> In the previous  example, if the user choose the <em>thermal</em> application, the content of <code>&lt;<em>installdir</em>&gt;/apps/thermal/a-new</code> will be copied. If after that, the user choose the sample data <em>motor heating</em>, the content of <code>&lt;<em>installdir</em>&gt;/apps/thermal/b-motor heating</code> will be copied.</p>
+    
+    
+
+<!--    "Sample data", lo de subcarpetas ¿es necesario que siempre haya una? ¿y New?;
+ "Applications", lo de hacer las carpetas, el prefijo, que debe contener local.mnu (link a xml), que se recomienda meter el resto de ficheros ahí -->
+
+    <div class="back"><a href="#top">Back to top</a></div>
+
+    <hr />
+    <p>&copy; 2012 - <a href="http://www.usc.es/ingmat/?lang=en">Ingeniería Matemática</a></p>
+  </body>
+</html>
+
