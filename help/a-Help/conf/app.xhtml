@@ -17,6 +17,7 @@
       <li><a href="#desc">Description</a></li>
       <li><a href="#fold">The application folder</a></li>
       <li><a href="#data">Sample data</a></li>
+      <li><a href="#menu">Menu file</a></li>
     </ul>  
 
     <h4 id="desc">Description</h4>
@@ -27,6 +28,8 @@
     <h4 id="fold">The application folder</h4>
     <p><strong>To create an aplication, the distributor must create a subfolder</strong> in <code>&lt;<em>installdir</em>&gt;/apps</code>, where <code>&lt;<em>installdir</em>&gt;</code> is the installation folder. In the previous example, <code>thermal</code> and <code>elastic</code> should be subfolders of <code>&lt;<em>installdir</em>&gt;/apps</code>.</p>
     
+    <p>The user can include his own applications by creating subfolders in the folder <code>apps</code> of the <a href="ident.xhtml#fold">configuration folder</a>.</p>
+
     <p>All the subfolders in <code>apps</code> will be shown in the menu <scan class="menu">Project - Application</scan> in alphabetical order. To change that order, the subfolders can be named as <code><em>prefix-name</em></code>, where <code><em>name</em></code> is the application's name and <code><em>prefix</em></code> is a string only used to alphabetize the applications. For example, creating the subfolders  <code>a-thermal</code> and <code>b-elastic</code>, <em>thermal</em> and <em>elastic</em> applications will appear in that order.</p>
     <p>Every application must have an associated menu. This menu will be defined in the file <code>local.mnu.xml</code>. As we shall see in the next subsection, the distributor can prepare one or several sample cases for an appplication.</p>
     <div class="back"><a href="#top">Back to top</a></div>
@@ -57,9 +60,17 @@
 
     <p> In the previous  example, if the user choose the <em>thermal</em> application, the content of <code>&lt;<em>installdir</em>&gt;/apps/thermal/a-new</code> will be copied. If after that, the user choose the sample data <em>motor heating</em>, the content of <code>&lt;<em>installdir</em>&gt;/apps/thermal/b-motor heating</code> will be copied.</p>
     
-    
+    <h4 id="menu">Menu file</h4>    
+    <p>The complete menu associated to a sample data is described in the file <code>local.mnu.xml</code>. It consists of a tree composed of <a href="">menu items</a>, <a href="">submenu items</a>, <a href="">structures</a> and <a href="">leafs</a>. Leafs can contain several data types. This information is coded using <a href="http://www.w3.org/XML/">XML format</a>, a metalanguage developted by <a href="http://www.w3.org/">W3C</a>.</p>
+    <p>In the XML format, each block of information, or <em>element</em>, is delimited by a <em>start-tag</em> and a <em>end-tag</em>. For example, the start- and end-tags for element <em>struct</em> are <code>&lt;struct&gt;</code> and <code>&lt;/struct&gt;</code>. The characters between the start- and end-tags, if any, are the element's <em>content</em>, and may contain markup, including other elements, which are called <em>child</em> elements.</p>
+    <p>Elements in XML can have <em>attributes</em>, that is, a name/value pair. For example, the element <em>struct</em> can have the attribute <em>selection</em> with the value <em>single</em>: <code>&lt;struct selection="single"&gt;</code>.</p>
+    <p> The complete list of elements and attributes allowed in the menu's description is in the Section <a href="../xml/xml.xhtml">XML syntaxis</a>.</p>
+    <p>The menu file is coded in utf-8.</p>
+    <p>falta por poner un ejemplo, hacendo ref, al xml.</p>    
+<!--     tags cada bloque de información esta delimitado por una etiqueta de inicio, <etiqueta>, y una etiqueta de finalización, </etiqueta>, donde etiqueta hace referencia al tipo de bloque que se delimita. Cada etiqueta puede tener atributos (de la forma nombre=“valor”) que añaden información al bloque.
 
-<!--    "Sample data", lo de subcarpetas ¿es necesario que siempre haya una? ¿y New?;
+El fichero está codificado en utf-8. 
+   "Sample data", lo de subcarpetas ¿es necesario que siempre haya una? ¿y New?;
  "Applications", lo de hacer las carpetas, el prefijo, que debe contener local.mnu (link a xml), que se recomienda meter el resto de ficheros ahí -->
 
     <div class="back"><a href="#top">Back to top</a></div>
