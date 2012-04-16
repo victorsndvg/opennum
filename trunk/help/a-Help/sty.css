@@ -9,7 +9,7 @@ hr {background-color: gray; }
 
 /* Caption figures */
 .caption {font-family: Times, FreeSerif, 'Century Schoolbook L', 'Times New Roman', serif; 
-          text-align: center; padding: 0% 15% 0% 15%; font-size: larger;}
+          text-align: center; padding: 0% 15% 0% 15%; font-size: larger; }
           
 /* Menu items */
 .menu {font-weight: bold; }
@@ -19,3 +19,11 @@ hr {background-color: gray; }
 
 /* Horizontal array of images */
 img.hoz {vertical-align: middle; margin-right: 20px;}
+
+/* pre, code */
+pre, code {font-family: 'Courier New', FreeMono, Courier, monospace; } /* font-size:110%; */
+
+/* xml paragraph code */
+pre.xml	{margin-left: 20px; margin-right: 20px; padding: 10px; background-color: #eed; }
+
+

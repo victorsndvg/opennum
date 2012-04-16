@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" "http://www.w3.org/Math/DTD/mathml2/xhtml-math11-f.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US">
+  <head>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" /> 
+    <title>Actions</title>
+    <link rel="stylesheet" type="text/css" href="../sty.css" />
+  </head>
+  <body id="top">
+    <p>Next: <a href="leaf.xhtml">Leafs</a>, Previous: <a href="struct.xhtml">Structures</a>, Up: <a href="xml.xhtml">Top</a></p>
+    <hr /> 
+
+    <h3>Actions</h3>
+
+    <p><strong>On this page:</strong></p>
+    <ul>
+      <li><a href="#action">Element <code>action</code></a></li>
+      <ul>
+        <li><a href="#param">Element <code>param</code></a></li>
+      </ul>  
+    </ul>
+
+    <h4 id="action">Element <code>action</code></h4>
+    <p>The element <code>action</code> defines one or several calls to executable files. The attribute <code>name=</code>"<em>value</em>" identifies which type of action will be taken. The valid values are:</p>
+    <ul>
+      <li><code><strong>exec</strong></code>, makes a system call to locally run one or several executable files; the system call does not stop the interaction with the graphical interface;</li>
+      <li><code><strong>exec_ssh</strong></code>, makes a system call to <a href="">remotely run</a> one or several executable files using the SSH protocol; the system call does not stop the interaction with the graphical interface;</li>
+      <li><code><strong>kill_exec</strong></code>, close a system call started with <code><strong>exec</strong></code>.</li>
+      <li><code><strong>close_plots</strong></code>, close all the graphic tags in the <a href="">visualization window</a>.</li>
+      <li><code><strong>reset_materials</strong></code>, copy the materials database from folder <code><em>installdir</em>/materialsDB</code> to the folder <code>materialsDB</code> in the <a href="">configuration folder</a> (here <code><em>installdir</em></code> is the installation folder). This action erases all the changes that the user has been done in the materials database.</li>
+    </ul>
+
+    <pre class="xml">&lt;submenu name="Run"&gt;
+  &lt;action name="exec"&gt;
+    ...
+  &lt;/action&gt;
+&lt;/submenu&gt;</pre>
+
+    <h5 id="param">Element <code>param</code></h5>
+    <p>The content of the element <code>param</code> is the executable file to call. The optional attribute <code>args=</code>"<em>value</em>" indicates the command line arguments that will be passed to the executable file.</p>
+    
+    <p>The element <code>param</code> is a required children of every element <code>action</code> with <code>name="<strong>exec</strong></code> or <code>name="<strong>exec_ssh</strong></code>. If one element <code>action</code> contains several elements <code>param</code>, the executable files will be called in their order of appearance. The executable file is searched following the rules indicated in the section <a href="../conf/exec.xhtml">Executable files</a>.</p> 
+    
+    <pre class="xml">&lt;action name="exec"&gt;
+  &lt;param args="-i 12 mesh.unv">electrostatics.exe&lt;/param&gt;
+&lt;/action&gt;</pre>
+    <div class="back"><a href="#top">Back to top</a></div>
+
+    <hr />
+    <p>&copy; 2012 - <a href="http://www.usc.es/ingmat/?lang=en">Ingeniería Matemática</a></p>
+  </body>
+</html>
+

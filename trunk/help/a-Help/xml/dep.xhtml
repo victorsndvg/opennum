@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" "http://www.w3.org/Math/DTD/mathml2/xhtml-math11-f.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US">
+  <head>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" /> 
+    <title>Dependencies</title>
+    <link rel="stylesheet" type="text/css" href="../sty.css" />
+  </head>
+  <body id="top">
+    <p>Next: <a href="visual.xhtml">Visualization</a>, Previous: <a href="help.xhtml">Custom help</a>, Up: <a href="xml.xhtml">Top</a></p>
+    <hr /> 
+
+    <h3>Dependencies</h3>
+
+    <p><strong>On this page:</strong></p>
+    <ul>
+      <li><a href="#file">File dependencies</a></li>
+      <li><a href="#menu">Menu dependencies</a></li>
+      <li><a href="#var">Variables</a></li>
+      <li><a href="#struc">Dependent structures</a></li>
+      <li><a href="#leaf">Dependent leafs</a></li>
+    </ul>
+    
+    <h4 id="file">File dependencies</h4>
+    <p>When an attribute admits a value with the prefix <code>file:</code>, a file can be indicated after the prefix.
+    The file path must have a slash or a backslash as folder separator and backslahes must be escaped. For example,
+    <code>"file:graphic.gr2"</code>, <code>"file:../afolder/afile.txt"</code> and <code>"file:C:\\Python26\\Lib"</code> are valid values.</p>
+    <p>If the path is relative, it starts from the working folder.</p>
+    <p>Hay que comprobar si / sirve en Windows o \ en Linux y entonces recomendar que se use solo una de ellas y siempre 
+    relativo, para que los ficheros se encuentren. En el futuro, poner un prefijo para ruta relativa a la instalacion y 
+    que solo funcione /. </p>
+    <p>Lista de atributos que lo permiten y sus enlaces.</p>
+    <div class="back"><a href="#top">Back to top</a></div>      
+
+    <h4 id="menu">Menu dependencies</h4>
+    <p>When an attribute admits a value with the prefix <code>menu:</code>, a path to another element of the menu can be indicated after the prefix.
+    Since the menu has a tree structure, a path to another element can be indicated using similar rules that apply to operating systems:</p>
+    <ul>
+      <li>. means the current element;</li>
+      <li>.. means the parent element;</li>
+      <li>... means the name of the current element;</li>
+      <li>/ is the element separator;</li>
+      <li>the name of each element is the string indicated in the attribute <code>name</code>.</li>
+    </ul>  
+    <p>The menu dependencies can be</p> 
+    <ul>
+      <li><em>absolute</em>: they start with '/' and the menu dependency starts at the first level in the hierarchical menu tree, i.e., 
+      the <a href="">menu items</a>. For example, "menu:/Mesh/Mesh file/Open File" is valid if <em>Mesh</em> is a menu item, <em>Mesh file</em>
+      is one of its submenu items, etc.</li>
+      <li><em>relative</em>: they start with '.' or '..' and the menu dependency starts at the element where it appears.
+      For example, <code>"menu:../Materials/Properties"</code> is valid if the parent has a child named <em>Materials</em> and this has a child named 
+      <em>Properties</em>.</li>
+    </ul>
+    <p>If an element's name contains symbols '.' or '/', they must be escaped. For example, <code>"menu:/Data/File\.txt/Open"</code> is a menu path 
+    that contains a reference to an element with name <code>File.txt</code>.</p>
+
+    <p>The result of a menu dependency is the string array composed by the children's name of the element that is being referenced. 
+    <span class="rev">¿Qué pasa cuando se refiere a un leaf?.</span> The only exception is
+     when the menu path ends with '...'; then the name of the element is returned. For example, 
+    if the element <code>struct</code> <em>Data</em> has three children with names <em>a</em>, <em>b</em> and <em>c</em>, then</p> 
+    <ul>
+      <li>the value of <code>"menu:../Data"</code> is the array composed by 'a', 'b' and 'c';</li>
+      <li>the value of <code>"menu:../Data/..."</code> is the array composed only by 'Data'.</li>
+    </ul>
+    <div class="back"><a href="#top">Back to top</a></div>      
+
+    <h4 id="var">Variables</h4>
+    <p>A <dfn>variable</dfn> is a string ${<em>text</em>}, where <em>text</em> is a menu dependency. A variable 
+    can appear in another string defining a file or menu dependency. A variable can contain other variables; these 
+    variables will be resolved before resolving the external one.</p>
+    <p>The variable result is the value of its menu dependency, as it is explained in the section <a href="#menu">Menu dependency</a>. For example, if 
+    the element <code>struct</code> <em>Data</em> has a single child with name <em>a</em>, then the file dependency 
+    <code>"file:../${/Data}.txt"</code> is the same than <code>"file:../a.txt"</code>.</p>
+    
+    <p>All the symbols '$', '{', '}', '\', '/', and '.' that appear in <em>text</em> must be escaped. For example, the result of 
+    <code>${/Data\.txt}</code> are the children's names of the element named <em>Data.txt</em>.</p>
+    
+    <p> If one variable 
+    returns an array, the string that contains it is evaluated in each component of the array. For example, if the element <code>struct</code> 
+    <em>Data</em> has three children with names <em>a</em>, <em>b</em> and <em>c</em>, then the dependency <code>"file:../Files/${/Data}.vtk"</code>
+    returns three values: '../Files/a.vtk', '../Files/b.vtk' and '../Files/c.vtk'. The number of results is the product of the number of results 
+    given by all the variables. Following the previous example, if there is another element <code>struct</code> <em>Folder</em> with two children 
+    named <em>f</em> and <em>g</em>, then the dependency <code>"file:../${/Folder}/${/Data}.vtk"</code> returns six values: '../f/a.vtk', 
+    '../f/b.vtk', '../f/c.vtk', '../g/a.vtk', '../g/b.vtk' and '../g/c.vtk'.</p>
+    <div class="back"><a href="#top">Back to top</a></div>      
+
+    <h4 id="struc">Dependent structures</h4>
+    <p>It is possible to create children for an element <code>struct</code> sing the information stored in another part of the menu. An element 
+    <code>struct</code> can have the attribute <code>source="menu:</code><em>value</em>" where <em>value</em> is a <a href="#menu">menu dependency</a>.
+    When the element pointed by <em>value</em></p>
+    <ul>
+      <li>is an element <code>struct</code>, the element with the <code>source</code> attribute will have as many children as the pointed 
+      <code>struct</code> and the name of children's structures will agree;</li>
+      <li>when it is an element <code>leaf</code>, the element with the <code>source</code> attribute will have as many children as elements 
+      <code>element</code> have the pointed <code>leaf</code> and the name of the children will be the <code>element</code> values of the the pointed 
+      <code>leaf</code>.</li>
+    </ul>
+    <p>To determine the structure of the children, the element <code>struct</code> with the attribute <code>source</code> must contain a child element
+    with attribute <code>default="true"</code>. The structure of this child will be the parttern to create the rest of the children. As it was commented 
+    in section <a href="struct.xhtml#custom">Customizable structures</a>, the pattern will not appear in the widget and it must not have 
+    attribute <code>name</code>, since the name will be provided by <code>source</code>.</p>
+    <pre class="xml">&lt;struct name="Materials" source="menu:/Materials database/Open/Data"&gt;
+  &lt;leaf type="char" default="true"&gt;
+  &lt;/leaf&gt;
+&lt;/struct&gt;</pre>
+    <p>If <em>Data</em> is a element <code>struct</code> with two children named <em>Silicon</em> and <em>Iron</em>, or it is an element <code>leaf</code> 
+containing two strings, <em>Silicon</em> and <em>Iron</em>, then the result is</p>
+    <pre class="xml">&lt;struct name="Materials" source="menu:/Materials database/Open/Data"&gt;
+  &lt;leaf type="char" default="true"&gt;
+  &lt;/leaf&gt;
+  &lt;leaf type="char" name="Silicon"&gt;
+  &lt;/leaf&gt;
+  &lt;leaf type="char" name="Iron"&gt;
+  &lt;/leaf&gt;
+&lt;/struct&gt;</pre>
+    <p>The attribute <code>source</code> can point to a <a href="struct.xhtml#custom">customizable structure</a>; thus, the elements of the structure
+    with attribute <code>source</code> will change when the children of the customizable structure change.</p> 
+    <div class="back"><a href="#top">Back to top</a></div>     
+    
+    <h4 id="leaf">Dependent leafs</h4>
+    <p>The information stored in an element <code>leaf</code> can depend on another element of the menu. An element <code>leaf</code> can have the
+    attribute <code>source="menu:</code><em>value</em>" where <em>value</em> is a  a <a href="#menu">menu dependency</a>. 
+      When the element pointed by <em>value</em></p>
+    <ul>
+      <li>is an element <code>struct</code>, the element with the <code>source</code> attribute will contain as many elements 
+      <code>element</code> as children has the pointed 
+      <code>struct</code> and its content will be the children's names;</li>
+      <li>when it is an element <code>leaf</code>, then the element with the <code>source</code> attribute will contain the same elements 
+      <code>element</code> than the pointed <code>leaf</code>.</li>
+    </ul>
+  
+    <pre class="xml">&lt;leaf name="Materials" type="charlist" source="menu:/Materials database/Open/Data"&gt;
+&lt;/leaf&gt;</pre>
+    <p>If <em>Data</em> is a element <code>struct</code> with two children named <em>Silicon</em> and <em>Iron</em>, or it is an element <code>leaf</code> 
+containing two strings, <em>Silicon</em> and <em>Iron</em>, then the result is</p>
+    <pre class="xml">&lt;leaf name="Materials" type="charlist" source="menu:/Materials database/Open/Data"&gt;
+  &lt;element&gt;Silicon&lt;/element&gt;
+  &lt;element&gt;Iron&lt;/element&gt;
+&lt;/leaf&gt;</pre>
+    <div class="back"><a href="#top">Back to top</a></div> 
+
+    <hr />
+    <p>&copy; 2012 - <a href="http://www.usc.es/ingmat/?lang=en">Ingeniería Matemática</a></p>
+  </body>
+</html>
+

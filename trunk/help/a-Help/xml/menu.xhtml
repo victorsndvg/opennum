@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" "http://www.w3.org/Math/DTD/mathml2/xhtml-math11-f.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US">
+  <head>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" /> 
+    <title>Menus</title>
+    <link rel="stylesheet" type="text/css" href="../sty.css" />
+  </head>
+  <body id="top">
+    <p>Next: <a href="struct.xhtml">Structures</a>, Up: <a href="xml.xhtml">Top</a></p>
+    <hr /> 
+
+    <h3>Menus</h3>
+
+    <p><strong>On this page:</strong></p>
+    <ul>
+      <li><a href="#menus">Element <code>menus</code></a></li>
+      <li><a href="#menu">Element <code>menu</code></a></li>
+      <li><a href="#submenu">Element <code>submenu</code></a></li>
+    </ul>  
+
+    <h4 id="menus">Element <code>menus</code></h4>
+    <p>Every <a href="">menu file</a> or <a href="">materials database file</a> must contain a single <code>menus</code> element as a root element. Its children elements define the menu items of the <a href="../use/parts.xhtml">menu bar</a>. The attribute <code>name=</code>"<em>value</em>" indicates that <em>value</em> is the name of the associated application. This will be the name shown in the <a href="../use/parts.xhtml">title bar</a>.</p>
+
+    <pre class="xml">&lt;menus name="Electrostatics"&gt;
+  ...
+&lt;/menus&gt;</pre>
+    <div class="back"><a href="#top">Back to top</a></div>
+
+    <h4 id="menu">Element <code>menu</code></h4>
+    <p>Each element <code>menu</code> defines a menu item of the menu items of the <a href="../use/parts.xhtml">menu bar</a>. It must be a  children of the element <code>menus</code>. The attribute <code>name=</code>"<em>value</em>" indicates the text that will appear in the menu item. The values <em>Project</em>, <em>Help</em> and <em>Materials database</em> are forbidden since they are managed by OpenNum.</p>
+
+    <pre class="xml">&lt;menus name="Electrostatics"&gt;
+  &lt;menu name="Mesh"&gt;
+    ...
+  &lt;/menu&gt;
+&lt;/menus&gt;</pre>
+    <div class="back"><a href="#top">Back to top</a></div>
+
+    <h4 id="submenu">Element <code>submenu</code></h4>
+    <p>Each element <code>submenu</code> defines a submenu item inside a menu item. It must be a children of an element <code>menu</code>. The attribute <code>name=</code>"<em>value</em>" indicates the text that will appear in the submenu item.</p>
+    
+    <pre class="xml">&lt;menu name="Properties"&gt;
+  &lt;submenu name="Materials"&gt;
+    ...
+  &lt;/submenu&gt;
+&lt;/menu&gt;</pre>
+
+  <p>Each element <code>submenu</code> can contain only one of the following elements <a href="struct.xhtml"><code>struct</code></a>, <a href="leaf.xhtml"><code>leaf</code></a> or <a href="action.xhtml"><code>action</code></a>.</p>
+    <div class="back"><a href="#top">Back to top</a></div>
+
+    <hr />
+    <p>&copy; 2012 - <a href="http://www.usc.es/ingmat/?lang=en">Ingeniería Matemática</a></p>
+  </body>
+</html>
+

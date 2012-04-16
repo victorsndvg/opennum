@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" "http://www.w3.org/Math/DTD/mathml2/xhtml-math11-f.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US">
+  <head>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" /> 
+    <title>Structures</title>
+    <link rel="stylesheet" type="text/css" href="../sty.css" />
+  </head>
+  <body id="top">
+    <p>Next: <a href="action.xhtml">Actions</a>, Previous: <a href="menu.xhtml">Menus</a>, Up: <a href="xml.xhtml">Top</a></p>
+    <hr /> 
+
+    <h3>Structures</h3>
+
+    <p><strong>On this page:</strong></p>
+    <ul>
+      <li><a href="#struct">Element <code>struct</code></a></li>
+      <li><a href="#custom">Customizable structures</a></li>
+      <li><a href="#table">Tables</a></li>
+    </ul>
+
+    <h4 id="struct">Element <code>struct</code></h4>
+    <p>An element <code>struct</code> is designed to contain other child elements <code>struct</code>, <code>leaf</code> and <code>action</code>. This element can be empty. The required attribute <code>name=</code>"<em>value</em>" indicates the ASCII string that identifies the element. The optional attribute <code>title=</code>"<em>value</em>" indicates an UTF-8 string that will be the title of the associated widget; if <code>title</code> is not present, the widget title is taken from attribute <code>name</code>.</p>
+    <p>The associated widget depends on the optional attribute <code>selection="</code><em>value</em><code>"</code>, where <em>value</em> can be</p>
+    <ul>
+      <li><strong><code>none</code></strong> (the default value) has this <a href="../use/data.xhtml#multiple">associated widget</a> and selection is not saved;</li>
+      <li><strong><code>single</code></strong> has this <a href="../use/data.xhtml#single">associated widget</a>. 
+      If one child of the structure has the attribute <code>selected="true"</code>, the child will appear as pre-selected. 
+      The last child selected by the user will take the atribute <code>selected="true"</code> and it will be saved in the 
+      <a href="">XML datafile</a>.
+      </li>
+    </ul>
+    <pre class="xml">&lt;struct name="Condition type" selection="single"&gt;
+  &lt;leaf type="float" name="Constant"&gt;
+    &lt;element&gt;10&lt;/element&gt;
+  &lt;/leaf&gt;
+  &lt;leaf type="char" name="Function" selected="true"&gt;
+    &lt;element&gt;x^2&lt;/element&gt;
+  &lt;/leaf&gt;
+&lt;/struct&gt;</pre>
+    <div class="back"><a href="#top">Back to top</a></div>      
+
+    <h4 id="custom">Customizable structures</h4>
+    <p>An element <code>struct</code> with attribute <code>customizable="true"</code> let to the user to add or delete child elements. The associated widget depends on the optional attribute <code>selection="</code><em>value</em><code>"</code>, where <em>value</em> can be</p>
+    <ul>
+      <li><strong><code>none</code></strong> (the default value) has this <a href="../use/data.xhtml#conf">associated widget</a> and selection is not saved;</li>
+      <li><strong><code>single</code></strong> has this <a href="../use/data.xhtml#confs">associated widget</a>.</li>
+    </ul>
+    <p>Every customizable structure must contain a child element with attribute <code>default="true"</code>. This child element can be a regular element <code>struct</code> or <code>leaf</code> without the attribute <code>name</code>. This element does not appear in the widget, it will serve as a pattern to create the new child elements that the user adds. The new elements will be identical to the pattern except in the attribute <code>name</code>, provided by the user. The customizable structures can contain other child elements apart from the pattern.</p>
+    <pre class="xml">&lt;struct name="Mathematical constants" customizable="true"&gt;
+  &lt;leaf type="float" default="true"&gt;
+    &lt;element&gt;0&lt;/element&gt;
+  &lt;/leaf&gt;
+  &lt;leaf type="float" name="pi"&gt;
+    &lt;element&gt;3.14159&lt;/element&gt;
+  &lt;/leaf&gt;
+&lt;/struct&gt;</pre>
+    <div class="back"><a href="#top">Back to top</a></div>      
+
+    <h4 id="table">Tables</h4>
+   <p>An element <code>struct</code> the attribute <code>tabular="true"</code> add a <em>Show</em> button in te widget. This button show as table the content of the structure. This attribute was designed for structures that have several child elements <code>leaf</code> with attribute <code>type="float"</code>. In this case, the table similar to <a href="#fig-1">Figure 1</a> appears.</p>
+    <pre class="xml">&lt;struct name="Table" tabular="true"&gt;
+  &lt;leaf type="float" name="X"&gt;
+    &lt;element&gt;3 4 5 6&lt;/element&gt;
+  &lt;/leaf&gt;
+  &lt;leaf type="float" name="Y"&gt;
+    &lt;element&gt;3 7 5 9&lt;/element&gt;
+  &lt;/leaf&gt;
+&lt;/struct&gt;</pre>
+    <p align="center"> 
+      <img width="30%" src="images/table.png" />
+      <br clear="all" /> 
+      <span id="fig-1" class="caption"> <strong>Figure 1:</strong> Table obtained with attribute <code>tabular="true"</code>.</span>
+    </p>
+
+    <div class="back"><a href="#top">Back to top</a></div>
+
+    <hr />
+    <p>&copy; 2012 - <a href="http://www.usc.es/ingmat/?lang=en">Ingeniería Matemática</a></p>
+  </body>
+</html>
+
