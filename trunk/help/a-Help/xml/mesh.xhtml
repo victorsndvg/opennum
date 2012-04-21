@@ -24,6 +24,10 @@
           <li><a href="#plot-mesh">The value <code><strong>mesh</strong></code></a></li>
           <li><a href="#plot-ref">The value <code><strong>references</strong></code></a></li>
           <li><a href="#plot-num">The value <code><strong>numbering</strong></code></a></li>
+          <li><a href="#slice">The value <code><strong>slice</strong></code></a></li>
+          <li><a href="#cut">The value <code><strong>cut</strong></code></a></li>
+          <li><a href="#rcut">The value <code><strong>rough_cut</strong></code></a></li>
+          <li><a href="#mat">The value <code><strong>materials</strong></code></a></li>
         </ul>
     </ul>
 
@@ -81,7 +85,7 @@ celldata="data:edge_ref" showvalues="true"&gt;
     
     <h4 id="plot">The attribute <code>plot</code></h4>
     <p>An element <code>struct</code> or <code>leaf</code> must have the <code>plot="</code><em>value</em>" to select a graphic type for the visualization. The attribute <code>mesh</code> is also mandatory. The posible values for <em>value</em> are detailed in the subsections below.</p>
-    <p>Some graphic type require to show optional paramters in the Data window to change some visualization aspects. For example, vector graphics permit to change the arrow length. The XML code needed to show these options is stores in the folder <code><em>installdir</em>/plots</code> where <code><em>installdir</em></code> is the installation folder. OpenNum copies that XML code to the menu configuration file the first time the visualization is demanded. OpenNum also includes the attribute <code>plotted="true"</code> to avoid subsequent copies. In order to allow OpenNum to manage their content, <strong>elements with attribute <code>plot</code> must be empty</strong>.</p>
+    <p>Some graphic type require to show optional paramters in the Data window to change some visualization aspects. For example, slice graphics permit to change the plane position. The XML code needed to show these options is stored in the folder <code><em>installdir</em>/plots</code> where <code><em>installdir</em></code> is the installation folder. OpenNum copies that XML code to the menu configuration file the first time the visualization is demanded. OpenNum also includes the attribute <code>plotted="true"</code> to avoid subsequent copies. In order to allow OpenNum to manage their content, <strong>elements with attribute <code>plot</code> must be empty</strong>.</p>
     <div class="back"><a href="#top">Back to top</a></div> 
 
     <h5 id="plot-mesh">The value <code><strong>mesh</strong></code></h5>
@@ -111,37 +115,58 @@ plot="references" selection="multiple" showvalues="true"&gt;&lt;/leaf&gt;</pre>
     <div class="back"><a href="#top">Back to top</a></div> 
     
     <h5 id="plot-num">The value <code><strong>numbering</strong></code></h5>
-    <p>The attribute <code>plot="numberring"</code> permits to an element <code>struct</code> or <code>leaf</code> to show a numbering graphic. The attribute <a href="#mesh"><code>mesh</code></a> is also required. The rest of attributes depend on the specific mesh associated field that will be displayed.</p>
+    <p>The attribute <code>plot="numbering"</code> permits to an element <code>struct</code> or <code>leaf</code> to show a numbering graphic. The attribute <a href="#mesh"><code>mesh</code></a> is also required. The rest of attributes depend on the specific mesh associated field that will be displayed.</p>
     <ul>
       <li>Adding the attributes <code>pointdata="data:vertex_num"</code> a <a href="../use/visual-graphs/mesh.xhtml#pnum">point numbering graphic</a> is shown. When an element <code>leaf</code> with <code>subtype="float"</code> is used, a widget to select the point numbering appears in the <a href="../use/data.xhtml">Data window</a>.</li>
       <pre class="xml">&lt;leaf type="float" name="Point numbering" mesh="menu:/Mesh/Open/Mesh file" pointdata="data:vertex_num" 
 plot="numbering"&gt;&lt;/leaf&gt;</pre>
 
-      <li>Adding the attributes <code>pointdata="data:element_num"</code> a <a href="../use/visual-graphs/mesh.xhtml#esssnum">element numbering graphic</a> is shown. When an element <code>leaf</code> with <code>subtype="float"</code> is used, a widget to select the element numbering appears in the <a href="../use/data.xhtml">Data window</a>.</li>
+      <li>Adding the attributes <code>pointdata="data:element_num"</code> a <a href="../use/visual-graphs/mesh.xhtml#enum">element numbering graphic</a> is shown. When an element <code>leaf</code> with <code>subtype="float"</code> is used, a widget to select the element numbering appears in the <a href="../use/data.xhtml">Data window</a>.</li>
       <pre class="xml">&lt;leaf type="float" name="Element numbering" mesh="menu:/Mesh/Open/Mesh file" pointdata="data:element_num" 
 plot="numbering"&gt;&lt;/leaf&gt;</pre>
     </ul>
     <div class="back"><a href="#top">Back to top</a></div> 
 
-    <!--
-      <li>adding the attributes <code>pointdata="data:vertex_num"</code> a <a href="../use/visual-graphs/mesh.xhtml#pnum">point numbering 
-      graphic</a> is shown. When an element <code>leaf</code> with <code>subtype="float"</code> is used, a widget to select the vertex numbering appears in the <a href="../use/data.xhtml">Data window</a>.</li>
-      <pre class="xml">&lt;leaf type="charlistz" name="Point references" mesh="menu:/Mesh/Open/Mesh file" pointdata="data:vertex_ref" 
-plot="references"
-
-
-
-<leaf mesh="menu:/Mesh/Open/Mesh file" name="Vertex numbering" plot="numbering" pointdata="data:vertex_num" title="Clicked point:" type="float">
-
-
-name="Vertex numbering" type="float"  plot="numbering" title="Clicked point:" mesh="menu:/Mesh/Open/Mesh file" pointdata="data:vertex_num"
-
-
-&gt;&lt;/leaf&gt;</pre>
-    </ul>
-    
+    <h5 id="slice">The value <code><strong>slice</strong></code></h5>
+    <p>The attribute <code>plot="slice"</code> permits to an element <code>struct</code> to show a <a href="../use/visual-graphs/mesh.xhtml#slice-mesh">slice mesh graphic</a>.</p>
+    <pre class="xml">&lt;struct name="Slice" mesh="file:example.unv"  plot="slice"&gt;&lt;/struct&gt;</pre>
     <div class="back"><a href="#top">Back to top</a></div> 
--->
+
+    <h5 id="cut">The value <code><strong>cut</strong></code></h5>
+    <p>The attribute <code>plot="cut"</code> permits to an element <code>struct</code> to show a <a href="../use/visual-graphs/mesh.xhtml#cut-mesh">cut mesh graphic</a>.</p>
+    <pre class="xml">&lt;struct name="Cut" mesh="file:example.unv"  plot="cut"&gt;&lt;/struct&gt;</pre>
+    <div class="back"><a href="#top">Back to top</a></div> 
+
+    <h5 id="rcut">The value <code><strong>rough_cut</strong></code></h5>
+    <p>The attribute <code>plot="rough_cut"</code> permits to an element <code>struct</code> to show a <a href="../use/visual-graphs/mesh.xhtml#rough-mesh">rough cut mesh graphic</a>.</p>
+    <pre class="xml">&lt;struct name="Rough cut" mesh="file:example.unv"  plot="rough_cut"&gt;&lt;/struct&gt;</pre>
+    <div class="back"><a href="#top">Back to top</a></div> 
+
+    <h5 id="mat">The value <code><strong>materials</strong></code></h5>
+    <p>The attribute <code>plot="materials"</code> permits to an element <code>struct</code> to show a <a href="../use/visual-graphs/mesh.xhtml#mat">materials graphic</a>. This graphic colors the mesh subdomains according to the assigned materials. To know such assignments, the element <code>struct</code> requires to have the attribute <code>materials="menu:</code><em>value</em>" where <em>value</em> points to an element <code>struct</code> in the menu with the following features:</p>
+    <ul>
+      <li>the element <code>struct</code> has as many children as referenced subdomains has the mesh;</li>
+      <li>every children is an element <code>leaf</code> with <code>type="charlist"</code> and <code>selection="single"</code>;</li>
+      <li>the name of every children is a reference domain number and it must contain an element <code>element</code> with <code>selected="true"</code> with the material associated to this domain.</li>
+    </ul>
+    <p>As an example, imagine that a mesh has three subdomains: those identified with reference number 1 and 3 are associated to copper and the one identified with number 5 is associated to aluminum. The element <code>struct</code> that gather the previous associations is:</p>
+    <pre class="xml">&lt;struct name="Data"&gt;
+  &lt;leaf type="charlist" name="1" selection="single"&gt;
+    &lt;element selected="true"&gt;copper&lt;/element&gt;
+  &lt;/leaf&gt;
+  &lt;leaf type="charlist" name="3" selection="single"&gt;
+    &lt;element selected="true"&gt;copper&lt;/element&gt;
+  &lt;/leaf&gt;
+  &lt;leaf type="charlist" name="5" selection="single"&gt;
+    &lt;element selected="true"&gt;aluminum&lt;/element&gt;
+  &lt;/leaf&gt;
+&lt;/struct&gt;</pre>
+  
+    <p>Then, the element struct to show the materials graphic is:</p>
+    <pre class="xml">&lt;struct name="Show materiales" mesh="file:example.unv" plot="materials" materials="../Data"&gt;
+&lt;/struct&gt;</pre>
+    <div class="back"><a href="#top">Back to top</a></div> 
+        
     <hr />
     <p>&copy; 2012 - <a href="http://www.usc.es/ingmat/?lang=en">Ingeniería Matemática</a></p>
   </body>

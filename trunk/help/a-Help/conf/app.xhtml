@@ -7,7 +7,7 @@
     <link rel="stylesheet" type="text/css" href="../sty.css" />
   </head>
   <body id="top">
-    <p>Next: <a href="mat.xhtml">Materials database</a>, Previous: <a href="exec.xhtml">Executable files</a>, Up: <a href="conf.xhtml">Top</a></p>
+    <p>Next: <a href="help.xhtml">Help</a>, Previous: <a href="exec.xhtml">Executable files</a>, Up: <a href="conf.xhtml">Top</a></p>
     <hr /> 
 
     <h3>Applications</h3>
@@ -17,11 +17,11 @@
       <li><a href="#desc">Description</a></li>
       <li><a href="#fold">The application folder</a></li>
       <li><a href="#data">Sample data</a></li>
-      <li><a href="#menu">Menu file</a></li>
+      <li><a href="#menu">The menu and data files</a></li>
     </ul>  
 
     <h4 id="desc">Description</h4>
-    <p> A package can have several <a href="">applications</a> in it. Imagine that you want to distribute a package that can solve thermal and elastic problems. Probably, the data and results involved in thermal problems are different from those for elastic problems and so the menu items for both cases will be different. Thus, the package should contain two different appplications, <em>thermal</em> and <em>elastic</em>.</p>
+    <p> A package can have several <a href="">applications</a> in it. Imagine that you want to distribute a package that can solve thermal and elastic problems. Probably, the data and results involved in thermal problems are different from those for elastic problems and so the menu items for both cases will be different. Thus, the package should contain two different applications, <em>thermal</em> and <em>elastic</em>.</p>
     <p>Let us remind, as it was commented in the <a href="">Usage </a> section, that an application can manage several executable files as long as their data and results are basically the same. In the previous example, the <em>thermal</em> application could call two solvers that only differ in the internal algorithm.</p>
     <div class="back"><a href="#top">Back to top</a></div>
 
@@ -31,7 +31,7 @@
     <p>The user can include his own applications by creating subfolders in the folder <code>apps</code> of the <a href="ident.xhtml#fold">configuration folder</a>.</p>
 
     <p>All the subfolders in <code>apps</code> will be shown in the menu <scan class="menu">Project - Application</scan> in alphabetical order. To change that order, the subfolders can be named as <code><em>prefix-name</em></code>, where <code><em>name</em></code> is the application's name and <code><em>prefix</em></code> is a string only used to alphabetize the applications. For example, creating the subfolders  <code>a-thermal</code> and <code>b-elastic</code>, <em>thermal</em> and <em>elastic</em> applications will appear in that order.</p>
-    <p>Every application must have an associated menu. This menu will be defined in the file <code>local.mnu.xml</code>. As we shall see in the next subsection, the distributor can prepare one or several sample cases for an appplication.</p>
+    <p>Every application must have an associated menu. This menu will be defined in the file <code>local.mnu.xml</code>. As we shall see in the next subsection, the distributor can prepare one or several sample cases for an application.</p>
     <div class="back"><a href="#top">Back to top</a></div>
         
     <h4 id="data">Sample data</h4>
@@ -54,25 +54,23 @@
     </ol>  
     <p>When the user choose a sample data for the current application, </p>
     <ol>
-      <li>all the content of the choosen sample data folder is copied to the working folder and </li>
+      <li>all the content of the chosen sample data folder is copied to the working folder and </li>
       <li>the menu defined in <code>local.mnu.xml</code> is loaded in the graphical interface.</li>
     </ol>  
 
     <p> In the previous  example, if the user choose the <em>thermal</em> application, the content of <code>&lt;<em>installdir</em>&gt;/apps/thermal/a-new</code> will be copied. If after that, the user choose the sample data <em>motor heating</em>, the content of <code>&lt;<em>installdir</em>&gt;/apps/thermal/b-motor heating</code> will be copied.</p>
     
-    <h4 id="menu">Menu file</h4>    
-    <p>The complete menu associated to a sample data is described in the file <code>local.mnu.xml</code>. It consists of a tree composed of <a href="">menu items</a>, <a href="">submenu items</a>, <a href="">structures</a> and <a href="">leafs</a>. Leafs can contain several data types. This information is coded using <a href="http://www.w3.org/XML/">XML format</a>, a metalanguage developted by <a href="http://www.w3.org/">W3C</a>.</p>
-    <p>In the XML format, each block of information, or <em>element</em>, is delimited by a <em>start-tag</em> and a <em>end-tag</em>. For example, the start- and end-tags for element <em>struct</em> are <code>&lt;struct&gt;</code> and <code>&lt;/struct&gt;</code>. The characters between the start- and end-tags, if any, are the element's <em>content</em>, and may contain markup, including other elements, which are called <em>child</em> elements.</p>
-    <p>Elements in XML can have <em>attributes</em>, that is, a name/value pair. For example, the element <em>struct</em> can have the attribute <em>selection</em> with the value <em>single</em>: <code>&lt;struct selection="single"&gt;</code>.</p>
-    <p> The complete list of elements and attributes allowed in the menu's description is in the Section <a href="../xml/xml.xhtml">XML syntaxis</a>.</p>
-    <p>The menu file is coded in utf-8.</p>
-    <p>falta por poner un ejemplo, hacendo ref, al xml.</p>    
-<!--     tags cada bloque de información esta delimitado por una etiqueta de inicio, <etiqueta>, y una etiqueta de finalización, </etiqueta>, donde etiqueta hace referencia al tipo de bloque que se delimita. Cada etiqueta puede tener atributos (de la forma nombre=“valor”) que añaden información al bloque.
-
-El fichero está codificado en utf-8. 
-   "Sample data", lo de subcarpetas ¿es necesario que siempre haya una? ¿y New?;
- "Applications", lo de hacer las carpetas, el prefijo, que debe contener local.mnu (link a xml), que se recomienda meter el resto de ficheros ahí -->
-
+    <h4 id="menu">The menu and data files</h4>    
+    <p>All the information required to create the application menu and the data attached to it is included in the menu file <code>local.mnu.xml</code>. It consists of a tree composed of <a href="">menu items</a>, <a href="">submenu items</a>, <a href="">structures</a> and <a href="">leafs</a>. Leafs can contain several data types. The complete list of elements and attributes allowed in the menu's description is in the Section <a href="../xml/xml.xhtml">XML syntaxis</a>. The menu file is coded in utf-8.</p>
+    <p>Every <a href="#data">sample data</a> folder must contain a file <code>local.mnu.xml</code> to describe the application's menu and  its preloaded data. Once a sample data is selected by the user, all its content is copied to the working folder, including the menu file.    Whenever data is modified through a widget in the <a href="../use/data.xhtml">Data window</a>, OpenNum updates the menu file.</p>
+    <p>OpenNum also writes and updates a <em>data file</em> with the same hierarchical tree than the menu file, but with simplified elements to ease the data read by an executable file. This file is saved in each working folder with the name <code>local.dat.xml</code>. The differences between both files are explained in the section <a href="../xml/data.xhtml">Data file</a> of the <a href="../xml/xml.xhtml">XML syntax</a>. The main features of the data file are:</p>
+    <ul>
+      <li>the hierarchical tree is the same than the menu tree;</li>
+      <li>only the attributes relevant for data interpretation are maintained;</li>
+      <li>in the selection lists, only the selected items are saved;</li>
+      <li>the file is coded in iso-8859-15.</li>
+    </ul>  
+    <p>Executable files can read directly the data file to work with data collected by the graphical interface; usually that implies to change their input data procedure. Since the element <a href="../xml/action.xhtml"><code>action</code></a> permits to call several executable files, another option is to construct a data converter that write another data file with the correct for the solver and that is called before the solver.</p>
     <div class="back"><a href="#top">Back to top</a></div>
 
     <hr />

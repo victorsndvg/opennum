@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" "http://www.w3.org/Math/DTD/mathml2/xhtml-math11-f.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US">
+  <head>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" /> 
+    <title>Animation</title>
+    <link rel="stylesheet" type="text/css" href="../sty.css" />
+  </head>
+  <body id="top">
+    <p>Previous: <a href="graph.xhtml">Graph visualization</a>, Up: <a href="visual.xhtml">Top</a></p>
+    <hr /> 
+
+    <h3>Animation</h3>
+
+    <p><strong>On this page:</strong></p>
+    <ul>
+      <li><a href="#evol">The attribute <code>evolution</code></a></li>
+      <li><a href="#interp">The attribute <code>interpolation</code></a></li>
+    </ul>
+
+    <p>Given any of the graphics explained in the sections <a href="mesh.xhtml">Mesh visualization</a> and <a href="field.xhtml">Field  visualization</a>, the visualization can be animated by indicating a <a href="">PVD file</a> in the attribute <code>mesh</code>. Besides, we can decide </p>
+    <ul>
+      <li>the type of interpolation by using the attribute <a href="#interp"><code>interpolation</code></a>;</li>
+      <li>the name of the animation parameter by using the attribute <a href="#evol"><code>evolution</code></a>.</li>
+    </ul>        
+
+    <h4 id="evol">The attribute <code>evolution</code></h4>
+    <p>The attribute <code>evolution=</code>"<em>value</em>" indicates that the field depend on the parameter <em>value</em> (for example, time, frequency, etc.). The name of the parameter serves to rename the <a href="../use/visual-parts/parts.xhtml#param">Parameter bar</a> and some buttons within.</p>
+    <div class="back"><a href="#top">Back to top</a></div> 
+    
+    <h4 id="interp">The attribute <code>interpolation</code></h4>
+    <p>The attribute <code>interpolation=</code>"<em>value</em>" determines how the interpolation must be performed in the animation. <em>value</em> can be</p>
+    <ul>
+      <li><code><strong>true</strong></code>: (this is the default value) a linear interpolation will be performed in the parameter interval and <span class="rev">the step length will be proportional to the length of the parameter interval</span>; besides, values indicated in the <strong>Parameter</strong> button of the <a href="../use/visual-parts/parts.xhtml#param">Parameter bar</a> could be anyone;
+        <pre class="xml">&lt;struct name="Example" mesh="file:heat.pvd" celldata="data:temperature" plot="filled" 
+evolution="Time" interpolation="true"&gt;&lt;/struct&gt;</pre>
+      </li>
+      <li><code><strong>false</strong></code>: there is no interpolation in the parameter interval and <span class="rev">the step length will be constant</span>; besides, values indicated in the <strong>Parameter</strong> button of the <a href="../use/visual-parts/parts.xhtml#param">Parameter bar</a> could only be those saved in the PVD file.</li>
+        <pre class="xml">&lt;struct name="Example" mesh="file:fluid.pvd" celldata="data:pressure" plot="threshold" 
+evolution="Frequency" interpolation="false"&gt;&lt;/struct&gt;</pre>
+    </ul>
+    <div class="back"><a href="#top">Back to top</a></div> 
+        
+    <hr />
+    <p>&copy; 2012 - <a href="http://www.usc.es/ingmat/?lang=en">Ingeniería Matemática</a></p>
+  </body>
+</html>
+

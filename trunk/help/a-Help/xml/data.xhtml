@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" "http://www.w3.org/Math/DTD/mathml2/xhtml-math11-f.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US">
+  <head>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" /> 
+    <title>Data file</title>
+    <link rel="stylesheet" type="text/css" href="../sty.css" />
+  </head>
+  <body id="top">
+    <p>Previous: <a href="form.xhtml">Formulas</a>, Up: <a href="xml.xhtml">Top</a></p>
+    <hr /> 
+
+    <h3>Data file</h3>
+    
+   <p><strong>On this page:</strong></p>
+    <ul>
+      <li><a href="#elem">Changes in elements</a></li>
+      <li><a href="#att">Changes in attributes</a></li>
+      <li><a href="#att">Selected items</a></li>
+      <li><a href="#mat">Link to the materials database</a></li>
+    </ul>  
+
+    
+    <p>Whenever a data is modified through a widget in the <a href="../use/data.xhtml">Data window</a>, OpenNum updates the menu file and the <a href="../conf/app.xhtml">data file</a>. The data file has the same hierarchical tree than the menu file, but with simplified elements to ease the data read by an executable file. This file is saved in each working folder with the name <code>local.dat.xml</code> using  iso-8859-15 encoding.</p>
+    <p>The differences in XML syntax between both files are explained in this section.</p>
+
+    <h4 id="elem">Changes in elements</h4>
+    <p>The element <code>menus</code> in the menu file is changed by <code>data</code> in the data file. The rest of the elements are maintained.</p>
+    <p>All the elements <code>element</code> inside every <code>leaf</code> are packed in a single element named <code>elements</code>. For example, the element</p>
+    <pre class="xml">&lt;leaf type="float" name="Constants"&gt;
+  &lt;element&gt; 0. &lt;/element&gt;
+  &lt;element&gt; 5. &lt;/element&gt;
+  &lt;element&gt; 7. &lt;/element&gt;
+  &lt;/leaf&gt;</pre>
+    <p>is changed by</p>
+    <pre class="xml">&lt;leaf type="float" name="Constants"&gt;
+  &lt;elements totalnum="3"&gt; 0. 5. 7. &lt;/elements&gt;
+  &lt;/leaf&gt;</pre>
+    <p>When the element <code>leaf</code> has attribute <code>type="float"</code> values are separated by blank spaces inside <code>elements</code>; for any other type, values are separated by return. A new attribute <code>totalnum=</code>"<em>number</em>" is included where <em>number</em> is the number of single values saved in <code>elements</code>.</p>
+    <div class="back"><a href="#top">Back to top</a></div>
+    
+    <h4 id="att">Changes in attributes</h4>      
+    <p>Most of the attributes are removed in the datafile. The only preserved attributes are:</p>
+    <ul>
+      <li>attribute <code>name</code> for elements <code>menu</code>, <code>struct</code> and <code>leaf</code>;</li>
+      <li>attributes <code>type</code> and <code>subtype</code> for element <code>leaf</code>;</li>      
+    </ul>
+    <div class="back"><a href="#top">Back to top</a></div>
+        
+    <h4 id="att">Selected items</h4>
+    <p>In those elements with attribute <code>selection="single"</code> or <code>selection="multiple"</code> only the selected items are saved in the data file.</p>
+    <div class="back"><a href="#top">Back to top</a></div>
+
+    <h4 id="mat">Link to the materials database</h4>
+    <p>The data file includes an element <code>menu</code> that referes to the <a href="../conf/mat.xhtml">materials database</a> <span class="rev">(when the distributor includes a materials data base in his package)</span>:</p>
+    <pre class="xml">&lt;menu name="Materials file"&gt;
+  &lt;submenu name="Open"&gt;
+    &lt;leaf name="materialsDB" totalnum="1" type="file"&gt;
+      &lt;elements&gt;
+        materials.dat.xml
+      &lt;/elements&gt;
+    &lt;/leaf&gt;
+  &lt;/submenu&gt;
+&lt;/menu&gt;</pre>
+    <p>This menu does not appear in the graphical interface; it permits to the executable file that reads the data file to known the location of the materials definition.</p> 
+    <div class="back"><a href="#top">Back to top</a></div>
+    
+    <hr />
+    <p>&copy; 2012 - <a href="http://www.usc.es/ingmat/?lang=en">Ingeniería Matemática</a></p>
+  </body>
+</html>
+

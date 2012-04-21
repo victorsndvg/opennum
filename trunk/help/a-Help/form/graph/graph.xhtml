@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" "http://www.w3.org/Math/DTD/mathml2/xhtml-math11-f.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US">
+  <head>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" /> 
+    <title>GR2 format</title>
+    <link rel="stylesheet" type="text/css" href="../../sty.css" />
+  </head>
+  <body id="top">
+    <p>Previous: <a href="../field/field.xhtml">Field formats</a>, Up: <a href="../form.xhtml">Top</a></p>
+    <hr /> 
+
+    <h3>GR2 format</h3>
+
+    <p><strong>On this page:</strong></p>
+    <ul>
+      <li><a href="#desc">Description</a></li>
+      <li><a href="#var">Variables</a></li>
+      <li><a href="#file">Writing a <em>.gr2</em> file</a></li>
+    </ul>
+
+    <h4 id="desc">Description</h4>
+    <p>The format GR2 (<em>Graph 2D</em>) is related with the data files admited by the module TRACXX of  
+    <a href="https://www.rocq.inria.fr/modulef/">Modulef</a>. The file extension for the format GR2 is also <em>.gr2</em>.</p>
+
+    <p>The main features of this format are:</p>
+    <ul>
+      <li>The file can store several graphs, each of them with different abscisas.</li>
+      <li>The file also stores strings defining the graph title, labels and legend.</li>
+    </ul>
+    <div class="back"><a href="#top">Back to top</a></div>
+    
+    <h4 id="var">Variables</h4>
+    <p>The variables needed to define a <em>.gr2</em> file are:</p>
+    <ul>
+      <li><var>title</var> is a string with the graph title;</li>
+      <li><var>xlabel</var> is a string with the label for abscissas;</li>
+      <li><var>ylabel</var> is a string with the label for ordinates;</li>
+      <li><var>n</var> is a integer value with the number of graphics; for each <var>i</var> in {1, ..., <var>n</var>}, </li>
+      <li><var>np<sub>i</sub></var> is a integer value with the total number of points that form the <var>i</var>-th graph;</li>
+      <li><var>x<sub>i</sub></var> is a double array of length <var>np<sub>i</sub></var> containing the abscissas of the <var>i</var>-th graph;</li>
+      <li><var>y<sub>i</sub></var> is a double array of length <var>np<sub>i</sub></var> containing the ordinates of the <var>i</var>-th graph;</li>
+      <li><var>legend<sub>i</sub></var> is a string with a legend description of the <var>i</var>-th graph.</li>
+    </ul>
+    <div class="back"><a href="#top">Back to top</a></div>
+            
+    <h4 id="file">Writing a <em>.gr2</em> file</h4>
+    <p>Every <em>.gr2</em> file must be written in ASCII and be composed of the following records:</p>
+    <ol>
+      <li>A first record containing <var>n</var>; for each <var>i</var> in {1, ..., <var>n</var>},
+        <ol class="alpha">
+          <li>a record containing <var>np<sub>i</sub></var>;</li>
+          <li>a record containing <var>x<sub>i</sub></var> with its components separated by blank spaces;</li>
+          <li>a record containing <var>y<sub>i</sub></var> with its components separated by blank spaces;</li>
+        </ol>
+      </li>
+      <li>A record containing <var>title</var>;</li>
+      <li>A record containing <var>xlabel</var>;</li>
+      <li>A record containing <var>ylabel</var>;</li>
+      <li>Finally, for each <var>i</var> in {1, ..., <var>n</var>}, a record containing <var>legend<sub>i</sub></var>.</li>
+      </ol>           
+      <p>We present an example of a <em>.gr2</em> file that define two graphs, the first one, <em>Aluminum conductivity</em>, is composed of 3 
+      points and the second one, <em>Copper conductivity</em> has 4 points. The title is <em>Conductivity  vs. temperature</em> and the axis labels 
+      are <em>Temperature (K)</em> and <em>Conductivity (W/(m·K))</em>:</p>
+      <pre class="xml">2
+3
+293.  295. 298.
+204.3 205. 220.
+4
+293. 295. 298. 300. 
+385. 386. 390. 401.
+Conductivity  vs. temperature
+Temperature (K)
+Conductivity (W/(m·K))
+Aluminum conductivity
+Copper conductivity</pre>   
+    <div class="back"><a href="#top">Back to top</a></div>
+    
+    <hr />
+    <p>&copy; 2012 - <a href="http://www.usc.es/ingmat/?lang=en">Ingeniería Matemática</a></p>
+  </body>
+</html>
+

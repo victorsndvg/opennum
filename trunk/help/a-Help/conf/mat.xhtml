@@ -7,7 +7,7 @@
     <link rel="stylesheet" type="text/css" href="../sty.css" />
   </head>
   <body id="top">
-    <p>Previous: <a href="app.xhtml">Applications</a>, Up: <a href="conf.xhtml">Top</a></p>
+    <p>Previous: <a href="help.xhtml">Help</a>, Up: <a href="conf.xhtml">Top</a></p>
     <hr /> 
 
     <h3>Materials database</h3>
@@ -33,13 +33,10 @@
     <p>The distributor have freedom to order al the materials, es en el momento de que el solver lea el xml, debe saber como hacerlo. Tambien se recomienda los materiales deben perteneer a la misma altura en la jerarquia para que se puedan listar en otros menus</p>
     <div class="back"><a href="#top">Back to top</a></div>
 
-    <h4 id="menu">Materials database file</h4>    
-    <p>The complete menu associated to a materials database consists of a tree composed of <a href="">menu items</a>, <a href="">submenu items</a>, <a href="">structures</a> and <a href="">leafs</a>. Leafs can contain several data types. This information is coded using <a href="http://www.w3.org/XML/">XML format</a>, a metalanguage developted by <a href="http://www.w3.org/">W3C</a>.</p>
-    <p>In the XML format, each block of information, or <em>element</em>, is delimited by a <em>start-tag</em> and a <em>end-tag</em>. For example, the start- and end-tags for element <em>struct</em> are <code>&lt;struct&gt;</code> and <code>&lt;/struct&gt;</code>. The characters between the start- and end-tags, if any, are the element's <em>content</em>, and may contain markup, including other elements, which are called <em>child</em> elements.</p>
-    <p>Elements in XML can have <em>attributes</em>, that is, a name/value pair. For example, the element <em>struct</em> can have the attribute <em>selection</em> with the value <em>single</em>: <code>&lt;struct selection="single"&gt;</code>.</p>
-    <p> The complete list of elements and attributes allowed in the menu's description is in the Section <a href="../xml/xml.xhtml">XML syntaxis</a>.</p>
-    <p>The materials database file is coded in utf-8.</p>
-    <p>falta por poner un ejemplo, hacendo ref, al xml.</p>
+    <h4 id="menu">The materials database file</h4>    
+    <p>The materials database file is a XML file encoded in utf-8 and constructed in the same way than the <a href="app.xhtml#menu">menu file</a>. The <code>materials.xml</code> file is a  tree composed of <a href="">menu items</a>, <a href="">submenu items</a>, <a href="">structures</a> and <a href="">leafs</a>. It describes the tree shown in the menu item <strong>Materials database</strong> of the graphical interface.</p>
+    <p>The complete list of elements and attributes allowed in the menu's description is in the Section <a href="../xml/xml.xhtml">XML syntaxis</a>.</p>
+    <p>Some examples are discussed in the sample data attached to OpenNum.</p>
     <div class="back"><a href="#top">Back to top</a></div>
     
     <hr />
