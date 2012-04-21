@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" "http://www.w3.org/Math/DTD/mathml2/xhtml-math11-f.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US">
+  <head>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" /> 
+    <title>Help</title>
+    <link rel="stylesheet" type="text/css" href="../sty.css" />
+  </head>
+  <body id="top">
+    <p>Next: <a href="mat.xhtml">Material database</a>, Previous: <a href="app.xhtml">Applications</a>, Up: <a href="conf.xhtml">Top</a></p>
+    <hr /> 
+
+    <h3>Help</h3>
+
+    <p>You can distribute your own help with the package. Help files must be located in the folder <code>&lt;<em>installdir</em>&gt;/help</code>, where <code>&lt;<em>installdir</em>&gt;</code> is the installation folder.</p>
+    <p>All the subfolders in <code>help</code> will be shown as submenu items in the menu  <scan class="menu">Help</scan> in alphabetical order. To change that order, the subfolders can be named as <code><em>prefix-name</em></code>, where <code><em>name</em></code> is the submenu's name and <code><em>prefix</em></code> is a string only used to alphabetize the submenus items. For example, creating the subfolders  <code>a-Getting Started</code> and <code>b-Applications Manual</code>, <em>Getting Started</em> and <em>Applications manual</em> will appear as submenus, in that order.</p>
+    <p>Every subfolder must contain at least one HTML / XHTML file to act as an index of the rest of the files: OpenNum searches the names <code>index.xhtml</code>, <code>index.html</code> and <code>index.htm</code>, in that order. Its content is shown when the users selects the submenu item in the <strong>Help</strong> menu. To show them, OpenNum calls the application associated by the operating system to HTML files (usually, a web browser).</p>
+    <div class="back"><a href="#top">Back to top</a></div>
+    
+    <hr />
+    <p>&copy; 2012 - <a href="http://www.usc.es/ingmat/?lang=en">Ingeniería Matemática</a></p>
+  </body>
+</html>
+

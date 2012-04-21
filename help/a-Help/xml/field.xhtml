@@ -7,136 +7,166 @@
     <link rel="stylesheet" type="text/css" href="../sty.css" />
   </head>
   <body id="top">
-    <p>Previous: <a href="mesh.xhtml">Mesh visualization</a>, Up: <a href="visual.xhtml">Top</a></p>
+    <p>Next: <a href="graph.xhtml">Graph visualization</a>, Previous: <a href="mesh.xhtml">Mesh visualization</a>, Up: <a href="visual.xhtml">Top</a></p>
     <hr /> 
 
     <h3>Field visualization</h3>
 
     <p><strong>On this page:</strong></p>
     <ul>
-      <li><a href="file">File dependencies</a></li>
-      <li><a href="#menu">Menu dependencies</a></li>
-      <li><a href="#var">Variables</a></li>
-      <li><a href="#struc">Dependent structures</a></li>
-      <li><a href="#leaf">Dependent leafs</a></li>
+      <li><a href="#mesh">The attribute <code>mesh</code></a></li>
+      <li><a href="#add">Adding more meshes to the Graphic scene</a></li>
+      <li><a href="#point">The attribute <code>pointdata</code></a></li>
+      <li><a href="#cell">The attribute <code>celldata</code></a></li>
+      <li><a href="#show">Listing the values of an associated mesh field</a></li>
+      <li><a href="#plot">The attribute <code>plot</code></a></li>
+        <ul>
+          <li><a href="#filled">The value <code><strong>filled</strong></code></a></li>
+          <li><a href="#thres">The value <code><strong>threshold</strong></code></a></li>
+          <li><a href="#cont">The value <code><strong>contour</strong></code></a></li>
+          <li><a href="#slice">The value <code><strong>slice</strong></code></a></li>
+          <li><a href="#cut">The value <code><strong>cut</strong></code></a></li>
+          <li><a href="#rough">The value <code><strong>rough_cut</strong></code></a></li>
+          <li><a href="#pol">The value <code><strong>plot_over_line</strong></code></a></li>
+          <li><a href="#sdef">The value <code><strong>scalar_deformed</strong></code></a></li>
+          <li><a href="#vector">The value <code><strong>vector_field</strong></code></a></li>
+          <li><a href="#vdef">The value <code><strong>vector_deformed</strong></code></a></li>
+          <li><a href="#vcomp">The value <code><strong>vector_components</strong></code></a></li>
+        </ul>
     </ul>
-    
-    <h4 id="file">File dependencies</h4>
-    <p>When an attribute admits a value with the prefix <code>file:</code>, a file can be indicated after the prefix.
-    The file path must have a slash or a backslash as folder separator and backslahes must be escaped. For example,
-    <code>"file:graphic.gr2"</code>, <code>"file:../afolder/afile.txt"</code> and <code>"file:C:\\Python26\\Lib"</code> are valid values.</p>
-    <p>If the path is relative, it starts from the working folder.</p>
-    <p>Hay que comprobar si / sirve en Windows o \ en Linux y entonces recomendar que se use solo una de ellas y siempre 
-    relativo, para que los ficheros se encuentren. En el futuro, poner un prefijo para ruta relativa a la instalacion y 
-    que solo funcione /. </p>
-    <p>Lista de atributos que lo permiten y sus enlaces.</p>
-    <div class="back"><a href="#top">Back to top</a></div>      
 
-    <h4 id="menu">Menu dependencies</h4>
-    <p>When an attribute admits a value with the prefix <code>menu:</code>, a path to another element of the menu can be indicated after the prefix.
-    Since the menu has a tree structure, a path to another element can be indicated using similar rules that apply to operating systems:</p>
+    <p>An element <code>struct</code> or <code>leaf</code> can create a field visualization in the <a href="../use/visual-parts/parts.xhtml#scene">Graphic scene</a>. To do so, the element must have</p>
     <ul>
-      <li>. means the current element;</li>
-      <li>.. means the parent element;</li>
-      <li>... means the name of the current element;</li>
-      <li>/ is the element separator;</li>
-      <li>the name of each element is the string indicated in the attribute <code>name</code>.</li>
-    </ul>  
-    <p>The menu dependencies can be</p> 
-    <ul>
-      <li><em>absolute</em>: they start with '/' and the menu dependency starts at the first level in the hierarchical menu tree, i.e., 
-      the <a href="">menu items</a>. For example, "menu:/Mesh/Mesh file/Open File" is valid if <em>Mesh</em> is a menu item, <em>Mesh file</em>
-      is one of its submenu items, etc.</li>
-      <li><em>relative</em>: they start with '.' or '..' and the menu dependency starts at the element where it appears.
-      For example, <code>"menu:../Materials/Properties"</code> is valid if the parent has a child named <em>Materials</em> and this has a child named 
-      <em>Properties</em>.</li>
+      <li>the attribute <a href="#mesh"><code>mesh</code></a> to know which file describes the mesh,</li>
+      <li>the attribute <a href="#pointdata"><code>pointdata</code></a> or <a href="#celldata"><code>celldata</code></a> to know wich field will be plotted on the previous mesh and </li>
+      <li>the attribute <a href="#plot"><code>plot</code></a> to know which graphic type will be plotted.</li>
     </ul>
-    <p>If an element's name contains symbols '.' or '/', they must be escaped. For example, <code>"menu:/Data/File\.txt/Open"</code> is a menu path 
-    that contains a reference to an element with name <code>File.txt</code>.</p>
-
-    <p>The result of a menu dependency is the string array composed by the children's name of the element that is being referenced. 
-    <span class="rev">¿Qué pasa cuando se refiere a un leaf?.</span> The only exception is
-     when the menu path ends with '...'; then the name of the element is returned. For example, 
-    if the element <code>struct</code> <em>Data</em> has three children with names <em>a</em>, <em>b</em> and <em>c</em>, then</p> 
-    <ul>
-      <li>the value of <code>"menu:../Data"</code> is the array composed by 'a', 'b' and 'c';</li>
-      <li>the value of <code>"menu:../Data/..."</code> is the array composed only by 'Data'.</li>
-    </ul>
-    <div class="back"><a href="#top">Back to top</a></div>      
-
-    <h4 id="var">Variables</h4>
-    <p>A <dfn>variable</dfn> is a string ${<em>text</em>}, where <em>text</em> is a menu dependency. A variable 
-    can appear in another string defining a file or menu dependency. A variable can contain other variables; these 
-    variables will be resolved before resolving the external one.</p>
-    <p>The variable result is the value of its menu dependency, as it is explained in the section <a href="#menu">Menu dependency</a>. For example, if 
-    the element <code>struct</code> <em>Data</em> has a single child with name <em>a</em>, then the file dependency 
-    <code>"file:../${/Data}.txt"</code> is the same than <code>"file:../a.txt"</code>.</p>
+    <p>The optional attribute <a href="#add"><code>add_mesh</code></a> can include other meshes in wireframe mode.</p>
     
-    <p>All the symbols '$', '{', '}', '\', '/', and '.' that appear in <em>text</em> must be escaped. For example, the result of 
-    <code>${/Data\.txt}</code> are the children's names of the element named <em>Data.txt</em>.</p>
-    
-    <p> If one variable 
-    returns an array, the string that contains it is evaluated in each component of the array. For example, if the element <code>struct</code> 
-    <em>Data</em> has three children with names <em>a</em>, <em>b</em> and <em>c</em>, then the dependency <code>"file:../Files/${/Data}.vtk"</code>
-    returns three values: '../Files/a.vtk', '../Files/b.vtk' and '../Files/c.vtk'. The number of results is the product of the number of results 
-    given by all the variables. Following the previous example, if there is another element <code>struct</code> <em>Folder</em> with two children 
-    named <em>f</em> and <em>g</em>, then the dependency <code>"file:../${/Folder}/${/Data}.vtk"</code> returns six values: '../f/a.vtk', 
-    '../f/b.vtk', '../f/c.vtk', '../g/a.vtk', '../g/b.vtk' and '../g/c.vtk'.</p>
-    <div class="back"><a href="#top">Back to top</a></div>      
+    <h4 id="mesh">The attribute <code>mesh</code></h4>
+        <p>An element <code>struct</code> or <code>leaf</code> can refer to a mesh with the attribute <code>mesh="</code><em>prefix:value</em>", where <em>prefix</em> can be</p>
+    <ul>
+      <li><code><strong>file</strong></code> and then <em>value</em> must be a file containing a mesh that comply one of the <a href="">valid formats</a>; <em>value</em> must follow the rules explained in the section <a href="dep.xhtml#file">File dependencies</a>;</li>
+      <li><code><strong>menu</strong></code> and then <em>value</em> must be a menu path that points to a element <code>leaf</code> with attributes <code>type="file"</code>, <code>subtype="mesh"</code> or <code>subtype="field"</code>. <em>value</em> must follow the rules explained in the section <a href="dep.xhtml#menu">Menu dependencies</a>.</li>
+    </ul>
 
-    <h4 id="struc">Dependent structures</h4>
-    <p>It is possible to create children for an element <code>struct</code> sing the information stored in another part of the menu. An element 
-    <code>struct</code> can have the attribute <code>source="menu:</code><em>value</em>" where <em>value</em> is a <a href="#menu">menu dependency</a>.
-    When the element pointed by <em>value</em></p>
-    <ul>
-      <li>is an element <code>struct</code>, the element with the <code>source</code> attribute will have as many children as the pointed 
-      <code>struct</code> and the name of children's structures will agree;</li>
-      <li>when it is an element <code>leaf</code>, the element with the <code>source</code> attribute will have as many children as elements 
-      <code>element</code> have the pointed <code>leaf</code> and the name of the children will be the <code>element</code> values of the the pointed 
-      <code>leaf</code>.</li>
-    </ul>
-    <p>To determine the structure of the children, the element <code>struct</code> with the attribute <code>source</code> must contain a child element
-    with attribute <code>default="true"</code>. The structure of this child will be the parttern to create the rest of the children. As it was commented 
-    in section <a href="struct.xhtml#custom">Customizable structures</a>, the pattern will not appear in the widget and it must not have 
-    attribute <code>name</code>, since the name will be provided by <code>source</code>.</p>
-    <pre class="xml">&lt;struct name="Materials" source="menu:/Materials database/Open/Data"&gt;
-  &lt;leaf type="char" default="true"&gt;
-  &lt;/leaf&gt;
-&lt;/struct&gt;</pre>
-    <p>If <em>Data</em> is a element <code>struct</code> with two children named <em>Silicon</em> and <em>Iron</em>, or it is an element <code>leaf</code> 
-containing two strings, <em>Silicon</em> and <em>Iron</em>, then the result is</p>
-    <pre class="xml">&lt;struct name="Materials" source="menu:/Materials database/Open/Data"&gt;
-  &lt;leaf type="char" default="true"&gt;
-  &lt;/leaf&gt;
-  &lt;leaf type="char" name="Silicon"&gt;
-  &lt;/leaf&gt;
-  &lt;leaf type="char" name="Iron"&gt;
-  &lt;/leaf&gt;
-&lt;/struct&gt;</pre>
-    <p>The attribute <code>source</code> can point to a <a href="struct.xhtml#custom">customizable structure</a>; thus, the elements of the structure
-    with attribute <code>source</code> will change when the children of the customizable structure change.</p> 
-    <div class="back"><a href="#top">Back to top</a></div>     
-    
-    <h4 id="leaf">Dependent leafs</h4>
-    <p>The information stored in an element <code>leaf</code> can depend on another element of the menu. An element <code>leaf</code> can have the
-    attribute <code>source="menu:</code><em>value</em>" where <em>value</em> is a  a <a href="#menu">menu dependency</a>. 
-      When the element pointed by <em>value</em></p>
-    <ul>
-      <li>is an element <code>struct</code>, the element with the <code>source</code> attribute will contain as many elements 
-      <code>element</code> as children has the pointed 
-      <code>struct</code> and its content will be the children's names;</li>
-      <li>when it is an element <code>leaf</code>, then the element with the <code>source</code> attribute will contain the same elements 
-      <code>element</code> than the pointed <code>leaf</code>.</li>
-    </ul>
-  
-    <pre class="xml">&lt;leaf name="Materials" type="charlist" source="menu:/Materials database/Open/Data"&gt;
+    <p>The attribute <code>mesh</code> can refer to several meshes <span class="rev">using <a href="">variables</a></span>. In that case, all the meshes will be shown in the same <a href="../use/visual-parts/parts.xhtml#scene">Graphic scene</a>.</p>
+    <pre class="xml">&lt;leaf type="charlist" name="Line references" mesh="menu:/Mesh/Open/Mesh file"&gt;
 &lt;/leaf&gt;</pre>
-    <p>If <em>Data</em> is a element <code>struct</code> with two children named <em>Silicon</em> and <em>Iron</em>, or it is an element <code>leaf</code> 
-containing two strings, <em>Silicon</em> and <em>Iron</em>, then the result is</p>
-    <pre class="xml">&lt;leaf name="Materials" type="charlist" source="menu:/Materials database/Open/Data"&gt;
-  &lt;element&gt;Silicon&lt;/element&gt;
-  &lt;element&gt;Iron&lt;/element&gt;
+    <p>You can find a practical example in the section <a href="#filled">... plot</a>.</p>
+    <div class="back"><a href="#top">Back to top</a></div> 
+        
+    <h4 id="add">Adding more meshes to the Graphic scene</h4>
+    <p> The optional attribute <code>add_mesh="</code><em>prefix:value</em> permits to add more meshes to the Graphic scene. The rules for <em>prefix</em> and <em>value</em> are the same than those for the attribute <code>mesh</code>. The additional meshes will be shown as <em>wireframe</em>, that is, no field will be shown on them. The attribute <code>add_mesh</code> is useful to show meshes that help to understand the spatial position of the main mesh.</p>
+    <pre class="xml">&lt;leaf type="charlist" name="Line references" mesh="menu:/Mesh/Open/Mesh file" add_mesh="file:auxiliar-mesh.unv"&gt;
 &lt;/leaf&gt;</pre>
+    <div class="back"><a href="#top">Back to top</a></div> 
+    
+    <h4 id="point">The attribute <code>pointdata</code></h4>
+    <p>In order to visualize a field defined on the the nodes of the mesh indicated with the attribute <code>mesh</code>, an element <code>struct</code> or <code>leaf</code> must also have the attribute <code>pointdata="</code><em>prefix:value</em>" where <em>prefix</em> and <em>value</em> depend on the <a href="">field format</a>:</p>
+    <ul>
+      <li><strong>VTK format:</strong> the mesh and the field are given in the same file and the field has a name to identify it; the file is indicated in the attribute <code>mesh</code> and the field name is indicated in the attribute <code>pointdata</code> with prefix <code>data:</code></li>
+      <pre class="xml">&lt;struct name="Scalar field" mesh="file:example.vtu" pointdata="data:Temperature"&gt;
+&lt;/leaf&gt;</pre>
+      <li><strong>MFF format:</strong> the mesh is given by a file with MFM format and the field is given in another file with MFF format; the mesh file is indicated in the attribute <code>mesh</code> and the field file name is indicated in the attribute <code>pointdata="</code><em>prefix:value</em>" where <em>prefix</em> can be
+        <ul>
+          <li><code><strong>file</strong></code> and then <em>value</em> must be a MFF file containing the field; <em>value</em> must follow the rules explained in the section <a href="dep.xhtml#file">File dependencies</a>;
+            <pre class="xml">&lt;struct name="Scalar field" mesh="file:example.mfm" pointdata="file:example-field.mff"&gt;
+&lt;/leaf&gt;</pre>
+          </li>
+          <li><code><strong>menu</strong></code> and then <em>value</em> must be a menu path that points to a element <code>leaf</code> with attributes <code>type="file"</code>, <code>subtype="field"</code>. <em>value</em> must follow the rules explained in the section <a href="dep.xhtml#menu">Menu dependencies</a>.
+            <pre class="xml">&lt;struct name="Scalar field" mesh="file:example.mfm" pointdata="menu:/Fields/Temperature"&gt;
+&lt;/leaf&gt;</pre>
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <p>You can find a practical example in the section <a href="#filled">... plot</a>.</p>
+    <div class="back"><a href="#top">Back to top</a></div> 
+    
+    <h4 id="cell">The attribute <code>celldata</code></h4>
+    <p>In order to visualize a field defined on the the elements (or cells) of the mesh indicated with the attribute <code>mesh</code>, an element <code>struct</code> or <code>leaf</code> must also have the attribute <code>celldata="</code><em>prefix:value</em>" where <em>prefix</em> and <em>value</em> depend on the <a href="">field format</a>:</p>
+    <ul>
+      <li><strong>VTK format:</strong> the mesh and the field are given in the same file and the field has a name to identify it; the file is indicated in the attribute <code>mesh</code> and the field name is indicated in the attribute <code>celldata</code> with prefix <code>data:</code></li>
+      <pre class="xml">&lt;struct name="Scalar field" mesh="file:example.vtu" celldata="data:Temperature"&gt;
+&lt;/leaf&gt;</pre>
+      <li><strong>MFF format:</strong> the mesh is given by a file with MFM format and the field is given in another file with MFF format; the mesh file is indicated in the attribute <code>mesh</code> and the field file name is indicated in the attribute <code>celldata="</code><em>prefix:value</em>" where <em>prefix</em> can be
+        <ul>
+          <li><code><strong>file</strong></code> and then <em>value</em> must be a MFF file containing the field; <em>value</em> must follow the rules explained in the section <a href="dep.xhtml#file">File dependencies</a>;
+            <pre class="xml">&lt;struct name="Scalar field" mesh="file:example.mfm" celldata="file:example-field.mff"&gt;
+&lt;/leaf&gt;</pre>
+          </li>
+          <li><code><strong>menu</strong></code> and then <em>value</em> must be a menu path that points to a element <code>leaf</code> with attributes <code>type="file"</code>, <code>subtype="field"</code>. <em>value</em> must follow the rules explained in the section <a href="dep.xhtml#menu">Menu dependencies</a>.
+            <pre class="xml">&lt;struct name="Scalar field" mesh="file:example.mfm" celldata="menu:/Fields/Temperature"&gt;
+&lt;/leaf&gt;</pre>
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <p>You can find a practical example in the section <a href="#filled">... plot</a>.</p>
+    <div class="back"><a href="#top">Back to top</a></div> 
+
+    <h4 id="plot">The attribute <code>plot</code></h4>
+    <p>An element <code>struct</code> or <code>leaf</code> must have the <code>plot="</code><em>value</em>" to select a graphic type for the visualization. The attribute <code>mesh</code> and one of the attributes <code>pointdata</code> and <code>celldata</code> are also mandatory. The posible values for <em>value</em> are detailed in the subsections below.</p>
+    <p>Some graphic type require to show optional paramters in the Data window to change some visualization aspects. For example, slice graphics permit to change the plane position. The XML code needed to show these options is stored in the folder <code><em>installdir</em>/plots</code> where <code><em>installdir</em></code> is the installation folder. OpenNum copies that XML code to the menu configuration file the first time the visualization is demanded. OpenNum also includes the attribute <code>plotted="true"</code> to avoid subsequent copies. In order to allow OpenNum to manage their content, <strong>elements with attribute <code>plot</code> must be empty</strong>.</p>
+    <div class="back"><a href="#top">Back to top</a></div> 
+
+    <h5 id="filled">The value <code><strong>filled</strong></code></h5>
+    <p>The attribute <code>plot="filled"</code> permits to an element <code>struct</code> to show a <a href="../use/visual-graphs/scalar.xhtml#filled">filled graphic</a>. It is only available for scalar fields.</p>
+    <pre class="xml">&lt;struct name="Filled" mesh="menu:/Mesh/Open/Mesh file" pointdata="data:Temperature" plot="filled"&gt;&lt;/struct&gt;</pre>
+    <div class="back"><a href="#top">Back to top</a></div> 
+    
+    <h5 id="thres">The value <code><strong>threshold</strong></code></h5>
+    <p>The attribute <code>plot="threshold"</code> permits to an element <code>struct</code> to show a <a href="../use/visual-graphs/scalar.xhtml#thres">threshold graphic</a>. It is only available for scalar fields.</p>
+    <pre class="xml">&lt;struct name="Example" mesh="menu:/Mesh/Open/Mesh file" pointdata="data:Temperature" plot="threshold"&gt;&lt;/struct&gt;</pre>
+    <div class="back"><a href="#top">Back to top</a></div> 
+
+    <h5 id="cont">The value <code><strong>contour</strong></code></h5>
+    <p>The attribute <code>plot="contour"</code> permits to an element <code>struct</code> to show a <a href="../use/visual-graphs/scalar.xhtml#isolin">contour graphic</a>. The field must be scalar.</p>
+    <pre class="xml">&lt;struct name="Example" mesh="menu:/Mesh/Open/Mesh file" pointdata="data:Temperature" plot="contour"&gt;&lt;/struct&gt;</pre>
+    <div class="back"><a href="#top">Back to top</a></div> 
+
+    <h5 id="slice">The value <code><strong>slice</strong></code></h5>
+    <p>The attribute <code>plot="slice"</code> permits to an element <code>struct</code> to show a <a href="../use/visual-graphs/scalar.xhtml#slice">slice graphic</a>. It is only available for scalar fields on 3D meshes.</p>
+    <pre class="xml">&lt;struct name="Example" mesh="menu:/Mesh/Open/Mesh file" pointdata="data:Temperature" plot="slice"&gt;&lt;/struct&gt;</pre>
+    <div class="back"><a href="#top">Back to top</a></div> 
+
+    <h5 id="cut">The value <code><strong>cut</strong></code></h5>
+    <p>The attribute <code>plot="cut"</code> permits to an element <code>struct</code> to show a <a href="../use/visual-graphs/scalar.xhtml#cut">cut graphic</a>. It is only available for scalar fields on 3D meshes.</p>
+    <pre class="xml">&lt;struct name="Example" mesh="menu:/Mesh/Open/Mesh file" pointdata="data:Temperature" plot="cut"&gt;&lt;/struct&gt;</pre>
+    <div class="back"><a href="#top">Back to top</a></div> 
+
+    <h5 id="rough">The value <code><strong>rough_cut</strong></code></h5>
+    <p>The attribute <code>plot="rough_cut"</code> permits to an element <code>struct</code> to show a <a href="../use/visual-graphs/scalar.xhtml#rough">rough cut graphic</a>. It is only available for scalar fields on 3D meshes.</p>
+    <pre class="xml">&lt;struct name="Example" mesh="menu:/Mesh/Open/Mesh file" pointdata="data:Temperature" plot="rough_cut"&gt;&lt;/struct&gt;</pre>
+    <div class="back"><a href="#top">Back to top</a></div> 
+    
+    <h5 id="pol">The value <code><strong>plot_over_line</strong></code></h5>
+    <p>The attribute <code>plot="plot_over_line"</code> permits to an element <code>struct</code> to show a <a href="../use/visual-graphs/scalar.xhtml#pol">plot over line graphic</a>. It is only available for scalar fields.</p>
+    <pre class="xml">&lt;struct name="Example" mesh="menu:/Mesh/Open/Mesh file" pointdata="data:Temperature" plot="plot_over_line"&gt;&lt;/struct&gt;</pre>
+    <div class="back"><a href="#top">Back to top</a></div> 
+
+    <h5 id="sdef">The value <code><strong>scalar_deformed</strong></code></h5>
+    <p>The attribute <code>plot="rough_cut"</code> permits to an element <code>leaf</code> with <code>type="float"</code> to show a <a href="../use/visual-graphs/scalar.xhtml#def">scalar deformed graphic</a>. It is only available for scalar fields on 2D meshes.</p>
+    <pre class="xml">&lt;leaf type="float" name="Example" mesh="menu:/Mesh/Open/Mesh file" pointdata="data:Temperature" 
+plot="scalar_deformed"&gt;&lt;/leaf&gt;</pre>
+    <div class="back"><a href="#top">Back to top</a></div> 
+        
+    <h5 id="vector">The value <code><strong>vector_field</strong></code></h5>
+    <p>The attribute <code>plot="vector"</code> permits to an element <code>struct</code> to show a <a href="../use/visual-graphs/vector.xhtml#vec">vector field graphic</a>. It is only available for vector fields.</p>
+    <pre class="xml">&lt;struct name="Example" mesh="menu:/Mesh/Open/Mesh file" pointdata="data:Displacement" plot="vector_field"&gt;&lt;/struct&gt;</pre>
+    <div class="back"><a href="#top">Back to top</a></div> 
+
+    <h5 id="vdef">The value <code><strong>vector_deformed</strong></code></h5>
+    <p>The attribute <code>plot="vector_components"</code> permits to an element <code>leaf</code> with attribute <code>type="float"</code> to show a <a href="../use/visual-graphs/vector.xhtml#vdef">vector deformed graphic</a>. It is only available for vector fields.</p>
+    <pre class="xml">&lt;leaf type="float" name="Example" mesh="menu:/Mesh/Open/Mesh file" pointdata="data:Displacement" 
+plot="vector_deformed"&gt;&lt;/leaf&gt;</pre>
+    <div class="back"><a href="#top">Back to top</a></div> 
+
+    <h5 id="vcomp">The value <code><strong>vector_components</strong></code></h5>
+    <p>The attribute <code>plot="vector_components"</code> permits to an element <code>leaf</code> with attributes <code>type="charlist"</code> and <code>selection="single"</code> to show a <a href="../use/visual-graphs/vector.xhtml#comp">vector component graphic</a>. It is only available for vector fields.</p>
+    <pre class="xml">&lt;leaf type="charlist" name="Example" selection="single" mesh="menu:/Mesh/Open/Mesh file" pointdata="data:Displacement" 
+plot="vector_component"&gt;&lt;/leaf&gt;</pre>
     <div class="back"><a href="#top">Back to top</a></div> 
 
     <hr />

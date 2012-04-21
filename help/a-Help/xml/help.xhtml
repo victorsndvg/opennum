@@ -15,6 +15,7 @@
     <p><strong>On this page:</strong></p>
     <ul>
       <li><a href="#tip">Attribute <code>tooltip</code></a></li>
+      <li><a href="#hlp">Attributes <code>helpdata</code> and <code>helpconfig</code></a></li>
     </ul>
 
     <h4 id="tip">Attribute <code>tooltip</code></h4>
@@ -42,109 +43,15 @@
     <p>If the attribute <code>helpconfig</code> is missing, OpenNum takes <code>helpconfig="url, -1, -1, Help"</code>.</p>
     
     <pre class="xml">&lt;leaf name="one" type="float" helpdata="http://www.usc.es/"&gt;
-  ...
-&lt;/leaf&gt;
-
-&lt;struct name="cuatro" helpdata="file.png" helpconfig="url,200,200,Image"&gt;
-  ...
-&lt;/struct&gt;
-
-&lt;struct name="tres" helpdata="help/interface/doc.html" helpconfig="urlinst,300,200,Document"&gt;
-  ...
-&lt;/struct&gt;
-
-&lt;leaf name="two" type="float" helpdata="&lt;b&gt;HTML Help!&lt;/b&gt;" helpconfig="code,400,300,Help"&gt;
-  ...
-&lt;/leaf&gt;</pre>
-    
-<!--    <p>An element <code>leaf</code> is designed to contain data. The required attribute <code>name=</code>"<em>value</em>" indicates the ASCII string that identifies the element. The optional attribute <code>title=</code>"<em>value</em>" indicates an UTF-8 string that will be the title of the associated widget; if <code>title</code> is not present, the widget title is taken from attribute <code>name</code>.</p>
-
-    <h5 id="elem">Element <code>element</code></h5>
-    <p>Each element <code>element</code> contains a single scalar data (real, integer or string). It must be a children of the element <code>leaf</code>. Its use is ilustrated in the next sections, devoted to the specific data types.</p>
-    <div class="back"><a href="#top">Back to top</a></div>
-        
-    <h4 id="float">Introducing integer/real scalars and arrays</h4>
-    <p>An element <code>leaf</code> with attribute <code>type="float"</code> manages a real or integer scalars and arrays through <a href="../use/data.xhtml#real">this widget</a>. This element can be empty. To save an initial value, write every single data in an element <code>element</code>.</p>
-    <pre class="xml">&lt;leaf type="float" name="Conductivity"&gt;
-    &lt;element&gt;1.23&lt;/element&gt;
-    &lt;element&gt;5.e+05&lt;/element&gt;
-&lt;/leaf&gt;
-
-&lt;leaf name="Permittivity" type="float" title="Permittivity (&epsilon;)"&gt;
-&lt;/leaf&gt;</pre>
-    <div class="back"><a href="#top">Back to top</a></div>
--->    
-    <h4 id="file">Introducing files</h4>
-    <p>An element <code>leaf</code> with attribute <code>type="file"</code> manages files through <a href="../use/data.xhtml#ff">this widget</a>. This element can be empty. To save an initial value, write the filename in an element <code>element</code>. Two sub-types can be defined:</p>
-    <ul>
-      <li><strong>Mesh files:</strong> When the element also has the attribute <code>subtype="mesh"</code>, manages finite element mesh files. The previous attribute can indicate the permitted file types and extensions using <code>subtype="mesh: </code><em>desc</em> | <em>extension list</em> | <em>desc</em> | <em>extension list</em> | ...<code>"</code>, where
-      <ul>
-        <li><em>desc</em> is a description of a file type and</li>
-        <li><em>extension list</em> is a list of extensions associated to this file type, separated by semicolons; each extension must be preceded by <code>*.</code></li>
-      </ul>
-      <p>Files must have one of the <a href="">valid mesh formats</a> in case you want to visualize them with OpenNum .</p>
-      <pre class="xml">&lt;leaf type="file" name="Mesh file" subtype="mesh:All supported (*.mfm;*.unv)|*.mfm;*.unv| 
-  Modulef Formatted Meshes (*.mfm)|*.mfm| Universal files (*.unv)|*.unv"&gt;
-&lt;/leaf&gt;</pre>
-      </li>
-      <li><strong>Field files:</strong> When the element also has the attribute <code>subtype="field"</code>, manages finite element field files. The previous attribute can indicate the permitted file types and extensions using <code>subtype="mesh: </code><em>desc</em> | <em>extension list</em> | <em>desc</em> | <em>extension list</em> | ...<code>"</code>, where
-      <ul>
-        <li><em>desc</em> is a description of a file type and</li>
-        <li><em>extension list</em> is a list of extensions associated to this file type, separated by semicolons; each extension must be preceded by <code>*.</code></li>
-      </ul>
-      <p>Files must have one of the <a href="">valid field formats</a> in case you want to visualize them with OpenNum .</p>
-      <pre class="xml">&lt;leaf type="file" name="Field file" subtype="field:All supported (*.vtk;*.vtu)|*.vtk;*.vtu|
-Visualization Toolkit (VTK) (*.vtk)|*.vtk|Visualization Toolkit (VTU) (*.vtu)|*.vtu"&gt;
-&lt;/leaf&gt;</pre>
-      </li>
-    </ul>
-    <p>For both subtypes <code>mesh</code> and <code>field</code>, an optional attribute <code>mesh_name="</code><em>prefix</em><code>:</code><em>value</em><code>"</code> permits to show <em>value</em> as the text label in a visualization, when the button <a href="">Labels</a> is active. Here <em>prefix</em> can be:</p>
-    <ul>
-      <li><code><strong>data</strong></code>, and then <em>value</em> is a string scalar;</li>
-      <li><code><strong>menu</strong></code>, and then <em>value</em> is a menu path, as it is explained in section <a href="dep.xhtml">Dependencies</a>.</li>
-    </ul>
-    <p>When attribute <code>mesh_name</code> does not appear, the text label is the filename.</p>
-    <div class="back"><a href="#top">Back to top</a></div>
-
-    <h4 id="fold">Introducing folders</h4>
-    <p>An element <code>leaf</code> with attribute <code>type="folder"</code> manages folders through <a href="../use/data.xhtml#ff">this widget</a>. This element can be empty. To save an initial value, write the folder path in an element <code>element</code>.</p>
-    <pre class="xml">&lt;leaf" type="folder" name="Folder for outputs&gt;
-  &lt;element&gt;../output&lt;/element&gt;
 &lt;/leaf&gt;</pre>
 
-    <h4 id="char">Selecting string scalars</h4>
-    <p>An element <code>leaf</code> with attribute <code>type="char"</code> manages a string scalar through <a href="../use/data.xhtml#str">this widget</a>. This element can be empty. To save an initial value, write every single data in an element <code>element</code>.</p>
-    <pre class="xml">&lt;leaf" type="char" name="Heat expression&gt;
-    &lt;element&gt;x^2+^2-z&lt;/element&gt;
-&lt;/leaf&gt;
+    <pre class="xml">&lt;struct name="cuatro" helpdata="file.png" helpconfig="url,200,200,Image"&gt;
+&lt;/struct&gt;</pre>
 
-&lt;leaf name="temp" type="char" title="Temperature expression (&deg;C)"&gt;
-&lt;/leaf&gt;</pre>
-    <div class="back"><a href="#top">Back to top</a></div>
+    <pre class="xml">&lt;struct name="tres" helpdata="help/interface/doc.html" helpconfig="urlinst,300,200,Document"&gt;
+&lt;/struct&gt;</pre>
 
-    <h4 id="str">Selecting string arrays</h4>
-    <p>An element <code>leaf</code> with attribute <code>type="charlist"</code> manages string arrays. The user cannot change the element content, just select it. If the content must change, you can use instead an element <code>struct</code> with attribute <a href="customizable"><code>customizable</code></a>. The selection can be single or multiple depending on the attribute <code>selection</code>:</p>
-    <ul>
-      <li><strong>Single selection:</strong> requires the attribute <code>selection="single"</code> (this is the default value); the string array is shown through <a href="../use/data.xhtml#single">this widget</a>. If one element <code>element</code> has the attribute <code>selected="true"</code>, the string that encloses will appear as pre-selected. The last string selected by the user will take the atribute <code>selected="true"</code>. 
-      <pre class="xml">&lt;leaf type="charlist" name="Boundary type"&gt;
-  &lt;element&gt;Isolated&lt;/element&gt;
-  &lt;element selected="true"&gt;Conductor&lt;/element&gt;
-&lt;/leaf&gt;</pre>
-      </li>
-      <li><strong>Multiple selection:</strong> requires the attribute <code>selection="multiple"</code>; the string array is shown through <a href="../use/data.xhtml#multiple">this widget</a>. If one or several elements <code>element</code> have the attribute <code>selected="true"</code>, the strings that enclose will appear as pre-selected. The last strings selected by the user will take the atribute <code>selected="true"</code>. 
-      <pre class="xml">&lt;leaf type="charlist" name="Isolated surfaces" selection="multiple"&gt;
-  &lt;element&gt;Up&lt;/element&gt;
-  &lt;element selected="true"&gt;Down&lt;/element&gt;
-  &lt;element selected="true"&gt;Right&lt;/element&gt;
-  &lt;element&gt;Left&lt;/element&gt;
-&lt;/leaf&gt;</pre>
-      </li>
-    </ul>      
-    <div class="back"><a href="#top">Back to top</a></div>      
-
-    <h4 id="out">Visualization of plain text files</h4>
-    <p>An element <code>leaf</code> with attributes <code>type="charlist"</code> and <code>showfile="file:</code><em>filename</em><code>"</code> shows the content of the file <em>filename</em> through <a href="../use/data.xhtml#out">this widget</a>.</p>
-    <pre class="xml">&lt;leaf type="charlist" showfile="file:output.txt" title="Results:"&gt;
+    <pre class="xml">&lt;leaf name="two" type="float" helpdata="&lt;b&gt;HTML Help!&lt;/b&gt;" helpconfig="code,400,300,Help"&gt;
 &lt;/leaf&gt;</pre>
     <div class="back"><a href="#top">Back to top</a></div>
 

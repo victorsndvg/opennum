@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" "http://www.w3.org/Math/DTD/mathml2/xhtml-math11-f.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US">
+  <head>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" /> 
+    <title>MFF format</title>
+    <link rel="stylesheet" type="text/css" href="../../sty.css" />
+  </head>
+  <body id="top">
+    <p>Previous: <a href="vtk.xhtml">VTK format</a>, Up: <a href="field.xhtml">Top</a></p>
+    <hr /> 
+
+    <h3>MFF format</h3>
+
+    <p><strong>On this page:</strong></p>
+    <ul>
+      <li><a href="#desc">Description</a></li>
+      <li><a href="#var">Variables</a></li>
+      <li><a href="#file">Writing a <em>.mff</em> file</a></li>
+    </ul>
+
+    <h4 id="desc">Description</h4>
+    <p>The format MFF (<em>Modulef Formatted Mesh</em>) is related with the structure D.S. <strong>B</strong> used in 
+    <a href="https://www.rocq.inria.fr/modulef/">Modulef</a>. The file extension for the format MFF is also <em>.mff</em>.</p>
+
+    <p>The main features of this format are:</p>
+    <ul>
+      <li>The <em>.mff</em> stores a single field; the associated mesh must be given in another <a href="../mesh/mfm.xhtml"><em>.mfm</em> file</a>.</li>
+      <li>Fields can be scalar or vector; they can be defined on mesh nodes or mesh elements.</li>
+      <li>Field data must be <code>double</code> numbers.</li>
+    </ul>
+    <div class="back"><a href="#top">Back to top</a></div>
+    
+    <h4 id="var">Variables</h4>
+    <p>The variables needed to define a field are:</p>
+    <ul>
+      <li><var>n</var>, integer with the total number of values;</li>
+      <li><var>v</var>, double array of length <var>n</var> containing the values associated to the field.</li>
+    </ul>
+    <p>The meaning of <var>n</var> and <var>v</var> depend on the field type:</p>
+    <ul>
+      <li>For scalar pointdata fields, <var>v(i)</var> is the scalar value of the field on the <var>i</var>-th node respect to
+      the global node index of the associated mesh, 1 &le; <var>i</var> &le; <var>nnod</var>; <var>n</var> is the total number of nodes, 
+      <var>nnod</var>.</li>
+      <li>For vector pointdata fields, <var>v((i-1)*dim + j)</var> is the <var>j</var>-th component of the vector value of the field 
+      on the <var>i</var>-th node respect to the global node index of the associated mesh, 1 &le; <var>j</var> &le; <var>dim</var>, 
+      1 &le; <var>i</var> &le; <var>nnod</var>; <var>n</var> is the product of the dimension, <var>dim</var>, by
+      total number of nodes, <var>nnod</var>.</li>
+      <li>For scalar celldata fields, <var>v(k)</var> is the scalar value of the field on the <var>k</var>-th element respect to
+      the global element index of the associated mesh, 1 &le; <var>k</var> &le; <var>nel</var>; <var>n</var> is the total number of elements, 
+      <var>nel</var>.</li>
+      <li>For vector celldata fields, <var>v((k-1)*dim + j)</var> is the <var>j</var>-th component of the vector value of the field 
+      on the <var>k</var>-th element respect to the global element index of the associated mesh, 1 &le; <var>j</var> &le; <var>dim</var>, 
+      1 &le; <var>k</var> &le; <var>nel</var>; <var>n</var> is the product of the dimension, <var>dim</var>, by
+      total number of elements, <var>nel</var>.</li>
+    </ul>
+    <div class="back"><a href="#top">Back to top</a></div>
+            
+    <h4 id="file">Writing a <em>.mff</em> file</h4>
+    <p>Every <em>.mff</em> file must be written in ASCII and be composed of a single record containing <var>n</var>, <var>v</var>
+    in that order, separated by blank spaces.</p>
+    <div class="back"><a href="#top">Back to top</a></div>
+    
+    <hr />
+    <p>&copy; 2012 - <a href="http://www.usc.es/ingmat/?lang=en">Ingeniería Matemática</a></p>
+  </body>
+</html>
+

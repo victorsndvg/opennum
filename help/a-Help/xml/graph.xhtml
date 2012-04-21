@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" "http://www.w3.org/Math/DTD/mathml2/xhtml-math11-f.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US">
+  <head>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" /> 
+    <title>Graph visualization</title>
+    <link rel="stylesheet" type="text/css" href="../sty.css" />
+  </head>
+  <body id="top">
+    <p>Next: <a href="anim.xhtml">Animation</a>, Previous: <a href="field.xhtml">Field visualization</a>, Up: <a href="visual.xhtml">Top</a></p>
+    <hr /> 
+
+    <h3>Graph visualization</h3>
+
+    <p>An element <code>struct</code> can create a <a href="../use/visual-graphs/graph.xhtml">graph visualization</a> in the <a href="../use/visual-parts/parts.xhtml#scene">Graphic scene</a>. To do so, the element must have </p>
+    <ul>
+      <li>the attribute <code>data</code> to know which file describes the graph,</li>
+      <li>the attribute <code>plot="2d_graph"</code> to indicate that the know which graphic type will be plotted.</li>
+    </ul>
+
+    <h4 id="data">The attribute <code>data</code></h4>
+        <p>An element <code>struct</code> can refer to graph file with the attribute <code>data="</code><em>prefix:value</em>", where <em>prefix</em> can be</p>
+    <ul>
+      <li><code><strong>file</strong></code> and then <em>value</em> must be a file containing a graph that comply one of the <a href="">valid formats</a>; <em>value</em> must follow the rules explained in the section <a href="dep.xhtml#file">File dependencies</a>;
+        <pre class="xml">&lt;struct name="2D graph" data="file:example.gr2" plot="2d_graph"&gt;
+&lt;/leaf&gt;</pre>
+      </li>
+      <li><code><strong>menu</strong></code> and then <em>value</em> must be a menu path that points to a element <code>leaf</code> with attributes <code>type="file"</code>. <em>value</em> must follow the rules explained in the section <a href="dep.xhtml#menu">Menu dependencies</a>.
+        <pre class="xml">&lt;struct name="2D graph" data="menu:/Files/graph" plot="2d_graph"&gt;
+&lt;/leaf&gt;</pre>
+      </li>
+    </ul>
+    <div class="back"><a href="#top">Back to top</a></div> 
+    
+    <hr />
+    <p>&copy; 2012 - <a href="http://www.usc.es/ingmat/?lang=en">Ingeniería Matemática</a></p>
+  </body>
+</html>
+

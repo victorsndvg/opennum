@@ -12,8 +12,9 @@
 
     <h2>XML syntax</h2>
 
-    <p>In this section, the complete list of elements and attributes allowed in the menu's description is given.</p>
-    
+    <p>In this section, the complete list of elements and attributes allowed in the menu's description is given. This information is coded using <a href="http://www.w3.org/XML/">XML format</a>, a metalanguage developted by <a href="http://www.w3.org/">W3C</a>.</p>
+    <p>In the XML format, each block of information, or <em>element</em>, is delimited by a <em>start-tag</em> and a <em>end-tag</em>. For example, the start- and end-tags for element <em>struct</em> are <code>&lt;struct&gt;</code> and <code>&lt;/struct&gt;</code>. The characters between the start- and end-tags, if any, are the element's <em>content</em>, and may contain markup, including other elements, which are called <em>child</em> elements.</p>
+    <p>Elements in XML can have <em>attributes</em>, that is, a name/value pair. For example, the element <em>struct</em> can have the attribute <em>selection</em> with the value <em>single</em>: <code>&lt;struct selection="single"&gt;</code>.</p>
     <ul>
       <li><a href="menu.xhtml">Menus</a>
         <p>Describes the elements to create menu and submenu items.</p>
@@ -36,8 +37,14 @@
       <li><a href="visual.xhtml">Visualization</a>
         <p>Describes the elements to create visualizations.</p> 
       </li>
-
+      <li><a href="form.xhtml">Formulas</a>
+        <p>Describes how to apply formulas to fields.</p> 
+      </li>
+      <li><a href="data.xhtml">Data file</a>
+        <p>Indicates Describes the elements to create visualizations.</p> 
+      </li>
     </ul>  
+
     <hr />
     <p>&copy; 2012 - <a href="http://www.usc.es/ingmat/?lang=en">Ingeniería Matemática</a></p>
   </body>

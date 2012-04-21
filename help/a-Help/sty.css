@@ -26,4 +26,14 @@ pre, code {font-family: 'Courier New', FreeMono, Courier, monospace; } /* font-s
 /* xml paragraph code */
 pre.xml	{margin-left: 20px; margin-right: 20px; padding: 10px; background-color: #eed; }
 
+/* table */
+table {margin-left: auto; margin-right: auto; /*margin: 45px; *width: 480px;*/ border-collapse: collapse;
+text-align: center; }
+th {font-weight: normal;padding: 9px 7px; border-bottom: 2px solid; }
+td {padding: 8px 7px 0px 7px; }
+tbody tr:hover td {background-color: #F0F0F0; }
+tbody.l {padding: 8px 7px 0px 7px; text-align: left;}
+
+/* alphanumeric lists */
+ol.alpha {list-style-type: lower-alpha; } 
 

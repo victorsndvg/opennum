@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" "http://www.w3.org/Math/DTD/mathml2/xhtml-math11-f.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US">
+  <head>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" /> 
+    <title>VTK format</title>
+    <link rel="stylesheet" type="text/css" href="../../sty.css" />
+  </head>
+  <body id="top">
+    <p>Next: <a href="mff.xhtml">MFF format</a>, Up: <a href="field.xhtml">Top</a></p>
+    <hr /> 
+
+    <h3>VTK formats</h3>
+
+    <p><strong>On this page:</strong></p>
+    <ul>
+      <li><a href="#leg">VTK legacy format</a></li>
+      <li><a href="#xml">VTK XML format</a></li>
+    </ul>
+
+    <p>The <a href="http://www.vtk.org/">Visualization Toolkit</a> (VTK) is an open-source, freely available software system for 3D computer graphics, image processing and visualization, distributed by <a href="http://www.kitware.com/">Kitware, Inc.</a> VTK  also provides some of its <a href="http://www.vtk.org/VTK/img/file-formats.pdf">own file formats</a>.</p>
+    
+    <p>The Visualization Toolkit admits <em>celldata</em> fields (defined in the elements of the mesh) and <em>pointdata</em> (defined on the nodes of the mesh). The fields can be scalar and vector. Every file can contain several field data, each of them identified with a name. This name must be given in the attribute <a href="../../xml/field.xhtml#point"><code>pointdata</code></a> or <a href="../../xml/field.xhtml#cell"><code>celldata</code></a> when the filed is visualized in the graphical interface.</p>
+    
+    <p>The Visualization Toolkit admits fields of the follwing types: <code>bit</code>, <code>unsigned_char</code>, <code>char</code>, <code>unsigned_short</code>, <code>short</code>, <code>unsigned_int</code>, <code>int</code>,
+<code>unsigned_long</code>, <code>long</code>, <code>float</code>, or <code>double</code>. <span class="rev">OpenNum has been tested with <code>int</code>, <code>float</code> and <code>double</code> fields</span>.</p>
+    
+    <p><span class="rev"><strong>OpenNum only admits that the fields are defined on unstructured grids</strong></span> since it is the most useful dataset to store finite element meshes. In this regard, VTK only permit Lagrange P1 and P2 finite elements.</p>
+    
+    <h4 id="leg">VTK legacy format</h4>
+    <p>The <a href="http://www.vtk.org/VTK/img/file-formats.pdf"><em>VTK legacy</em></a> is the simplest VTK format. The file extension is <em>.vtk</em>.</p>
+    <div class="back"><a href="#top">Back to top</a></div>
+    
+    <h4 id="xml">VTK XML format</h4>
+    <p>The <a href="http://www.vtk.org/VTK/img/file-formats.pdf"><em>VTK XML</em></a> is a more sophisticated VTK format that allows data streaming and parallel I/O. The files containing <em>UnstructuredGrid</em> datasets have extension <em>.vtu</em>.</p>
+    <div class="back"><a href="#top">Back to top</a></div>
+
+    <hr />
+    <p>&copy; 2012 - <a href="http://www.usc.es/ingmat/?lang=en">Ingeniería Matemática</a></p>
+  </body>
+</html>
+
