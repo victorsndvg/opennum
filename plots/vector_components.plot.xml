@@ -1,0 +1,7 @@
+<leaf type="charlist" selection="single" title="Choose a component:" tooltip="Choose the component of the vector field that will be drawn as a scalar field">
+	<!-- exactly one element must be selected initially -->
+	<element selected="true">1st component</element>
+	<element>2nd component</element>
+	<element>3rd component</element>
+	<element>Modulus</element>
+</leaf>
