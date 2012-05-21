@@ -1,0 +1,43 @@
+<menus name="Basic structs">
+
+
+	<menu name="Structs">
+		<submenu name="Selection = none">
+			<struct name="value">
+				<leaf name="Float 1" type="float">
+				</leaf>
+				<leaf name="Float 2" type="float">
+				</leaf>
+			</struct>
+		</submenu>
+
+		<submenu name="Selection = single">
+			<struct name="value" selection="single">
+				<leaf name="Float 1" type="float">
+				</leaf>
+				<leaf name="Float 2" type="float">
+				</leaf>
+			</struct>
+		</submenu>
+
+		<submenu name="Multiple levels">
+			<struct name="Struct 1: level 1">
+				<struct name="Struct 1: level 2">
+					<leaf name="Float 1" type="float">
+					</leaf>
+					<leaf name="Float 2" type="float">
+					</leaf>
+				</struct>
+				<struct name="Struct 2: level 2">
+					<struct name="Struct 1: level 3">
+						<leaf name="Text 1" type="char">
+						</leaf>
+					</struct>
+				</struct>
+			</struct>
+		</submenu>
+
+	</menu>
+
+
+</menus>

@@ -1,0 +1,25 @@
+<menus name="Basic leafs (II)">
+
+
+	<menu name="List boxes">
+
+		<submenu name="Selection = single">
+			<leaf name="Charlist" type="charlist">
+				<element>Element 1</element>
+				<element>Element 2</element>
+				<element>Element 3</element>
+			</leaf>
+		</submenu>
+
+		<submenu name="Selection = multiple">
+			<leaf name="Charlist" type="charlist" selection="multiple">
+				<element>Element 1</element>
+				<element>Element 2</element>
+				<element>Element 3</element>
+			</leaf>
+		</submenu>
+
+	</menu>
+
+
+</menus>
