@@ -472,8 +472,8 @@ class Window(wx.Frame):
         menu_help.AppendItem(item_h3)
  #       item_h2 = wx.MenuItem(menu_help, self.ID_HELP2, u'&Applications', u'HTML documentation of applications')
  #       menu_help.AppendItem(item_h2)
-        item_h1 = wx.MenuItem(menu_help, self.ID_HELP1, u'&Math models', u'HTML documentation about math models')
-        menu_help.AppendItem(item_h1)
+#        item_h1 = wx.MenuItem(menu_help, self.ID_HELP1, u'&Math models', u'HTML documentation about math models')
+#        menu_help.AppendItem(item_h1)
 #        item_h3 = wx.MenuItem(menu_help, self.ID_HELP3, u'&Test PDF', u'PDF documentation test')
 #        menu_help.AppendItem(item_h3)
         menu_help.AppendSeparator()
@@ -1035,11 +1035,11 @@ class Window(wx.Frame):
             elif (id==self.ID_HELP2):
                 self.launch_auto(os.path.join(u'apps',u'index.html'))
             elif (id==self.ID_HELP3):
-		self.launch_auto(os.path.join(u'User_guide',u'index.html'))
+		self.launch_auto(os.path.join(u'a-Help',u'index.xhtml'))
             elif (id==self.ID_HELP4):
 		self.launch_auto(os.path.join(u'interface',u'index.html'))
             elif (id==self.ID_HELP5):
-		self.launch_auto(os.path.join(u'Getting_Started',u'index.html'))
+		self.launch_auto(os.path.join(u'a-Help',u'use',u'elem.xhtml'))
                 #self.launch_auto(u'sample.pdf')
 
 #        elif (id % config.ID_SPACES == config.SPACE_MENU_APP):
