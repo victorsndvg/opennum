@@ -1,0 +1,15 @@
+<struct title="Choose options for lines:" tooltip="Choose the scale and density for lines">
+	<leaf type="float" name="Number" title="Select the number of lines:">
+	</leaf>
+	<leaf type="float" name="Size" title="Select the size of the lines:">
+	</leaf>
+	<leaf type="float" name="Radius" title="Select the radius for the seeds:">
+	</leaf>
+	<leaf type="float" name="Center" title="Select the center for the seeds:" totalnum="3">
+	</leaf>
+	<struct name="Runge-Kutta Method Order" selection="single" title="Choose Order">
+		<struct name="2"></struct>
+		<struct name="4"></struct>
+		<struct name="4-5"></struct>
+	</struct>
+</struct>

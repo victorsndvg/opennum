@@ -1,0 +1,6 @@
+<struct title="Data range:">
+	<leaf name="X range" title="X range (left,right):" tooltip="Give 2 reals as the X data range" type="float">
+	</leaf>
+	<leaf name="Y range" title="Y range (down,up):" tooltip="Give 2 reals as the Y data range" type="float">
+	</leaf>
+</struct>

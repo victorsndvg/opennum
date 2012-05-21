@@ -1,0 +1,6 @@
+<struct title="Choose field limits:" tooltip="Enter lower and upper limit for the field. Blank means no limit">
+	<leaf name="Upper limit" type="float">
+	</leaf>
+	<leaf name="Lower limit" type="float">
+	</leaf>
+</struct>

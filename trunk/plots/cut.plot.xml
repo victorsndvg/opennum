@@ -1,0 +1,8 @@
+<struct title="Configuration:">
+	<leaf name="Origin" title="Origin coordinates (X Y Z):" type="float">
+		<!-- filled on first exec -->
+	</leaf>
+	<leaf name="Normal vector" title="Normal vector components (X Y Z):" type="float">
+		<!-- filled on first exec -->
+	</leaf>
+</struct>

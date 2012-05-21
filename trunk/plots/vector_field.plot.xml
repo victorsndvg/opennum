@@ -1,0 +1,7 @@
+<struct title="Choose options for arrows:" tooltip="Choose the scale and density for arrows">
+	<leaf type="float" name="Scale" title="Select the scale for arrows:" tooltip="Enter the scale coefficient for arrows">
+	</leaf>
+	<leaf type="float" name="Density" title="Select the density for arrows (%):" tooltip="Enter the density percentage for arrows">
+		<element>100.0</element>
+	</leaf>
+</struct>

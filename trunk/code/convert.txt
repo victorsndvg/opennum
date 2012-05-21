@@ -1,0 +1,32 @@
+FileMrwConvert.py:
+	FileMrw.py
+	FileMrwScalars.py
+	FileMrwReconvxx.py
+	FileMrwVTK.py
+	FileMrwVTU.py
+	FileMrwConvert.py
+
+	- mfm -> vtk
+	- mfm -> vtu
+	- mfm + mff -> vtk
+	- mfm + mff -> vtu
+
+	- mff puede ser point_data o cell_data
+	- opción para calcular submalla
+
+FileMrwUNV.py: (python)
+	FileMrw.py
+	FileMrwModulef.py
+	FileMrwVTK.py
+	FileMrwVTU.py
+	FileMrwUNV.py
+
+	- unv -> vtk
+	- unv -> vtu
+	- unv -> mfm
+
+	- conversión a vtk y vtu: soporta líneas (11), triángulos (41),
+	  cuadriláteros (44), tetraedros (111) y hexaedros (115)
+
+	- conversión a mfm: soporta líneas (11), triangulos (41)
+	  y tetraedros (111)

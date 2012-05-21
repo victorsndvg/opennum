@@ -1,0 +1,6 @@
+<struct title="Extreme point coordinates:" tooltip="You can edit the coordinates of the extreme points of the line">
+	<leaf type="float" name="First point" title="Coordinates of the first point (X Y Z):">
+	</leaf>
+	<leaf type="float" name="Second point" title="Coordinates of the second point (X Y Z):">
+	</leaf>
+</struct>

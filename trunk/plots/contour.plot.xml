@@ -1,0 +1,12 @@
+<struct selection="single" title="Choose mode:" tooltip="Select the mode of operation">
+    <leaf name="Number of contours" title="Choose the number of contours:" type="float" selected="true" tooltip="Number of contours to be drawn (at automatically generated values)">
+      <element>8</element>
+    </leaf>
+    <leaf name="Contours at" type="float" title="Contours at:" tooltip="Give the values where contours will be drawn">
+      <element>-1</element>
+      <element>-0.5</element>
+      <element>0</element>
+      <element>0.5</element>
+      <element>1</element>
+    </leaf>
+</struct>
