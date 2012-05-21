@@ -1,0 +1,18 @@
+<menus name="Basic menu">
+
+
+	<menu name="Menu 1">
+		<submenu name="Submenu 1">
+		</submenu>
+		<submenu name="Submenu 2">
+		</submenu>
+	</menu>
+
+
+	<menu name="Menu 2">
+		<submenu name="Submenu 1: Level 1">
+			<submenu name="Submenu 1: Level 2">
+			</submenu>
+		</submenu>
+	</menu>
+</menus>

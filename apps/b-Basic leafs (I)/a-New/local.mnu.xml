@@ -1,0 +1,29 @@
+<menus name="Basic leafs (I)">
+
+
+	<menu name="Text boxes">
+
+		<submenu name="Float box">
+			<leaf name="float" type="float" >
+			</leaf>
+		</submenu>
+
+		<submenu name="Text box">
+			<leaf name="text" type="char" >
+			</leaf>
+		</submenu>
+
+		<submenu name="File box">
+			<leaf name="file" type="file" >
+			</leaf>
+		</submenu>
+
+		<submenu name="Folder box">
+			<leaf name="folder" type="folder" >
+			</leaf>
+		</submenu>
+
+	</menu>
+
+
+</menus>
