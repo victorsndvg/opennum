@@ -1,4 +1,4 @@
-<menus name="Beginner: visualization">
+<menus name="Beginner: visualization (II)">
 
 	<menu name="2D field">
 		<submenu name="Scalar field">
@@ -85,5 +85,13 @@
 		</submenu>
 	</menu>
 
+	<menu name="Chart">
+		<submenu name="Line chart">
+			<struct name="Representatioin">
+				<struct name="Line chart" plot="2d_graph" data="file:linechart.gr2" >
+				</struct>
+			</struct>
+		</submenu>
+	</menu>
 
 </menus>
