@@ -1,0 +1,62 @@
+<menus name="Intermediate: structs">
+
+	<menu name="Structs">
+		<submenu name="Properties">
+			<struct name="Properties">
+				<struct name="Table" show="tabular" title="Fill in the following data:">
+					<leaf name="Col 1" type="float">
+						<element>0</element>
+						<element>1</element>
+					</leaf>
+					<leaf name="Col 2" type="float">
+						<element>0</element>
+						<element>10</element>
+					</leaf>
+					<leaf name="Col 3" type="float">
+						<element>0</element>
+						<element>100</element>
+					</leaf>
+					<leaf name="Col 4" type="float">
+						<element>0</element>
+						<element>1000</element>
+					</leaf>
+				</struct>
+
+				<struct name="Line chart" show="plot" title="Fill in the following data:" tooltip="X and Y array sizes must agree.">
+					<leaf name="X" type="float">
+						<element>0</element>
+						<element>1</element>
+					</leaf>
+					<leaf name="Y" type="float">
+						<element>0</element>
+						<element>1</element>
+					</leaf>
+				</struct>
+
+				<struct name="Table and line chart" show="all" title="Fill in the following data:" tooltip="X and Y array sizes must agree.">
+					<leaf name="X" type="float">
+						<element>0</element>
+						<element>1</element>
+						<element>2</element>
+						<element>3</element>
+						<element>4</element>
+					</leaf>
+					<leaf name="Y" type="float">
+						<element>1</element>
+						<element>3</element>
+						<element>2</element>
+						<element>0</element>
+						<element>2</element>
+					</leaf>
+				</struct>
+
+				<struct name="Customizable struct" customize="true">
+					<leaf default="true" type="char">
+					</leaf>
+				</struct>
+
+			</struct>
+		</submenu>
+	</menu>
+						
+</menus>

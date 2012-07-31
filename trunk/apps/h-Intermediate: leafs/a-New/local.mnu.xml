@@ -1,0 +1,29 @@
+<menus name="Intermediate: leafs">
+
+	<menu name="Leafs">
+		<submenu name="Properties">
+			<struct name="Properties">
+
+				<leaf name="Mesh file extensions" subtype="mesh:All supported (*.mfm;*.unv)|*.mfm;*.unv| Modulef Formatted Meshes (*.mfm)|*.mfm| Universal files (*.unv)|*.unv" title="Choose mesh file:" tooltip="Select the 2D mesh file that will be used" type="file">
+				</leaf>
+
+				<leaf name="Field file extensions" subtype="field:All supported (*.mff;*.vtk)|*.mff;*.vtk| Modulef Formatted Fields (*.mff)|*.mff| Visualization Toolkit (*.vtk)|*.vtk" type="file">
+				</leaf>
+
+				<leaf name="Text box with tooltip" type="char" tooltip="This is a tooltip message">
+				</leaf>
+
+				<leaf name="Show plain text file" type="charlist" showfile="file:file.txt">
+				</leaf>
+
+				<leaf name="List from file" type="charlist" source="file:file.txt">
+				</leaf>
+
+				<leaf name="Menu dependencies" type="charlist" source="menu:/Leafs/Properties/Properties">
+				</leaf>
+
+			</struct>
+		</submenu>
+	</menu>
+
+</menus>

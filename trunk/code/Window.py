@@ -279,7 +279,7 @@ class Window(wx.Frame):
 		if not ok:
 		    self.errormsg(u'Error reading application list')
 
-            	if False:#len(apps.get()) == 1: # one application => load it		    
+            	if len(apps.get()) == 1: # one application => load it (1st sample data)		    
 		    self.menuapp = wx.MenuItem(self.menu_folder, self.ID_NULL, u'&Application')
         	    self.menu_folder.AppendItem(self.menuapp)
 		    self.menuapp.Enable(False)
@@ -472,8 +472,8 @@ class Window(wx.Frame):
         menu_help.AppendItem(item_h3)
  #       item_h2 = wx.MenuItem(menu_help, self.ID_HELP2, u'&Applications', u'HTML documentation of applications')
  #       menu_help.AppendItem(item_h2)
-#        item_h1 = wx.MenuItem(menu_help, self.ID_HELP1, u'&Math models', u'HTML documentation about math models')
-#        menu_help.AppendItem(item_h1)
+        item_h1 = wx.MenuItem(menu_help, self.ID_HELP1, u'&Math models', u'HTML documentation about math models')
+        menu_help.AppendItem(item_h1)
 #        item_h3 = wx.MenuItem(menu_help, self.ID_HELP3, u'&Test PDF', u'PDF documentation test')
 #        menu_help.AppendItem(item_h3)
         menu_help.AppendSeparator()
@@ -638,7 +638,7 @@ class Window(wx.Frame):
 
                 
     def reset_materials(self):
-        if dialogs.ask_ok_cancel(self, 'If you continue, your materials database copy will be reset, all changes you made to it will be lost'):
+        if dialogs.ask_ok_cancel(self, 'If you continue, your materials database copy will be reset, all changes you made to it will be lost.'):
             self.copy_materials(True)
             self.load_materials()
             self.menu_postload(False) # false => does not test mesh existence
@@ -758,7 +758,7 @@ class Window(wx.Frame):
     def menu_copy_load(self, dirs):
         print 'menu_copy_load', dirs
         ret = None
-        if dialogs.ask_ok_cancel(self, 'If you continue, some data (files or folders) in your current working folder may be erased'):
+        if dialogs.ask_ok_cancel(self, 'If you continue, some files in the current working folder may be overwritten'):
             # cerra log
             # para que non falle ao intentar borrar un arquivo aberto
             self.logger.end()
@@ -904,7 +904,8 @@ class Window(wx.Frame):
 			self.errormsg(u'Error reading application list')
             	    if len(apps.get()) == 1: # one application => load it
 			self.only_one_app = True
-		    	if len(apps.get()[0][3]) == 1: # one example => load it
+		    	#if len(apps.get()[0][3]) == 1: # one example => load it
+			if True: # one application => load 1st example
 			    self.only_one_example = True
                     	    if self.menu_copy2(apps.get()[0][2]+u'/'+apps.get()[0][3][0][2]):
                             	if self.menu_load(True):
@@ -1035,11 +1036,11 @@ class Window(wx.Frame):
             elif (id==self.ID_HELP2):
                 self.launch_auto(os.path.join(u'apps',u'index.html'))
             elif (id==self.ID_HELP3):
-		self.launch_auto(os.path.join(u'a-Help',u'index.xhtml'))
+		self.launch_auto(os.path.join(u'User_guide',u'index.html'))
             elif (id==self.ID_HELP4):
 		self.launch_auto(os.path.join(u'interface',u'index.html'))
             elif (id==self.ID_HELP5):
-		self.launch_auto(os.path.join(u'a-Help',u'use',u'elem.xhtml'))
+		self.launch_auto(os.path.join(u'Getting_Started',u'index.html'))
                 #self.launch_auto(u'sample.pdf')
 
 #        elif (id % config.ID_SPACES == config.SPACE_MENU_APP):
