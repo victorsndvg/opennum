@@ -176,7 +176,7 @@ class PlotMaterials(Plot.Plot):
         self.lbA.SetNumberOfEntries(size)
         n = 0
         while n < size:
-            self.lbA.SetEntry(n,None,self.names[n],self.cols[n])
+            self.lbA.SetEntry(n,vtk.vtkPolyData(),self.names[n],self.cols[n])
             n += 1
 
 

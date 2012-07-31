@@ -1,0 +1,64 @@
+<menus name="Intermediate: embedded help">
+
+	<menu name="Leafs">
+		<submenu name="Properties">
+			<struct name="Properties">
+
+				<struct name="Help button"  helpconfig="code,400,80">
+
+					<leaf name="Html code" title="Html code:" type="char" helpconfig="code,400,100" helpdata="&lt;p&gt;Link to University of Santiago de Compostela:&lt;/p&gt;&lt;p&gt; &lt;a href=http://www.usc.es&gt;USC web page&lt;/a&gt;&lt;/p&gt;">
+					</leaf>
+
+					<leaf name="Html with external link" title="Html with external link:" type="char" helpconfig="frontcode,500,100" helpdata="&lt;p&gt;Link to The Research Group in Mathematical Engineering from the University of Santiago de Compostela:&lt;/p&gt;&lt;p&gt; &lt;a href=http://www.usc.es/ingmat/?lang=en&gt;Mat+i web page&lt;/a&gt;&lt;/p&gt;">
+					</leaf>
+
+					<leaf name="External link" title="External link:" type="char" helpconfig="url,800,640" helpdata="http://www.usc.es">
+					</leaf>
+
+					<leaf name="Local link" title="Local link:" type="char" helpconfig="urlinst,800,640" helpdata="apps/j-Intermediate: embedded help/a-New/index.html" hidden="true">
+					</leaf>
+
+				</struct>
+			</struct>
+		</submenu>
+	</menu>
+
+	<menu name="Structs">
+		<submenu name="Help button">
+			<struct name="Properties">
+
+				<struct name="Help button"  helpconfig="code,400,80">
+
+					<struct name="Html code" title="Html code:" type="char" helpconfig="code,400,100" helpdata="&lt;p&gt;Link to University of Santiago de Compostela:&lt;/p&gt;&lt;p&gt; &lt;a href=http://www.usc.es&gt;USC web page&lt;/a&gt;&lt;/p&gt;">
+						<leaf name="hidden leaf" type="float" hidden="true">
+						</leaf>						
+					</struct>
+
+					<struct name="Html with external link" title="Html with external link:" type="char" helpconfig="frontcode,500,100" helpdata="&lt;p&gt;Link to The Research Group in Mathematical Engineering from the University of Santiago de Compostela:&lt;/p&gt;&lt;p&gt; &lt;a href=http://www.usc.es/ingmat/?lang=en&gt;Mat+i web page&lt;/a&gt;&lt;/p&gt;">
+						<leaf name="Leaf" type="float">
+						</leaf>						
+					</struct>
+
+					<struct name="External link" title="External link:" type="char" helpconfig="url,800,640" helpdata="http://www.usc.es">
+						<leaf name="Leaf" type="float">
+						</leaf>						
+					</struct>
+
+					<struct name="Local link" title="Local link:" type="char" helpconfig="urlinst,800,640" helpdata="apps/j-Intermediate: embedded help/a-New/index.html">
+						<leaf name="Leaf" type="float">
+						</leaf>						
+					</struct>
+
+				</struct>
+
+
+				<struct name="Customizable struct" customize="true">
+					<leaf default="true" type="char">
+					</leaf>
+				</struct>
+
+			</struct>
+		</submenu>
+	</menu>
+
+</menus>

@@ -2,4 +2,14 @@
 
 SourceForge: Initial commit
 
+2012-05-23
 
+Apps: Begginer examples added.
+Sourceforge: File opennum_src_20120523 added.
+
+2012-07-31
+
+Apps: Begginer and Intermediate examples added.
+Help: Some corrections.
+PlotMaterials.py: bug found with the new version of vtk. Fixed!
+GUI: autoload applications with only one example. New mode 'frontcode' in WindowHelp. Plot source allows 'menu' prefix.

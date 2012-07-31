@@ -222,6 +222,18 @@ class Node():
         else:
             return ''
 
+    # leaf type = file, folder # leaf with source => not selected elements missing
+    def get_first_selected_name(self):
+        if self.get_tag() != 'leaf': # isinstance requires import
+            print 'Warning: called get_first_name() not on a Leaf'
+        ch = self.get_children()
+        if len(ch)>0:
+	    for child in ch:
+		if (child.get_attribs().get(u'selected')==u'true'):
+		    return child.get_name()
+        else:
+            return None
+
 
 
     # para saber se hai que mostar algo á esquerda
@@ -650,7 +662,7 @@ class Node():
         #    return u'No main file'
         #    # this ?
         elif len(meshfilenames) == 1:
-            if fieldfilename is None:
+            if fieldfilename is None  or not fieldfilename.lower().endswith('.mff'):
                 if meshfilenames[0] == '':
                     return 'Empty mesh file name'
                 tracker = filemanager.get_tracker_mesh_file(meshfilenames[0])
@@ -679,7 +691,7 @@ class Node():
                         meshfilenames[0]+' , '+fieldfilename+'): Allowed .mfm and .mff'
         else:
             trackers = []
-            if fieldfilename is None:
+            if fieldfilename is None  or not fieldfilename.lower().endswith('.mff'):
                 # crea trackers para todos los ficheros
                 i = 0
 		#comprobacion de trackernodefile de pvd
@@ -794,7 +806,10 @@ class Node():
                 return ret
             else:
                 # filename
-                file = node.get_first_name()
+                file = node.get_first_selected_name()
+		if file is None:
+		    file = node.get_first_name()
+
                 if objects is not None: # punteiros
                     objects.append(node)
 
@@ -1183,7 +1198,7 @@ class Node():
 	    	    sourcefile.close()				#añadido
 		return source
 	    elif parsed[0] != 2:
-                return u'Can not parse "source" string value: only allows "menu:" prefix'
+                return u'Can not parse "source" string value: only allows "menu:" and "file:" prefix'
             source_path = parsed[1]
             
             #novo 1

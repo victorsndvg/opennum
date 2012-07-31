@@ -25,7 +25,7 @@ def add_pre(parent, data, configuration, instpath=None):
 
     if len(configparts) > 0:
         modo = configparts[0]
-        if modo != 'code' and modo != 'url' and modo != 'urlinst':
+        if modo != 'code' and modo != 'frontcode' and modo != 'url' and modo != 'urlinst':
             return 'Invalid mode'
     if len(configparts) > 1 and len(configparts[1])>0:
         try:
@@ -80,6 +80,9 @@ class WindowHtml(wx.Frame):
             ret = html.SetPage(data)
         elif mode == 'url':
             ret = html.LoadPage(data)
+	elif mode == 'frontcode':
+	    html.Bind(wx.html.EVT_HTML_LINK_CLICKED, self.OnURLClick)
+            ret = html.SetPage(data)
 
         if ret is True:
             self.Show()
@@ -91,3 +94,7 @@ class WindowHtml(wx.Frame):
         elif ret is False:
             self.error = 'Error loading page'
 
+    def OnURLClick(self,event):
+	url = event.GetLinkInfo().GetHref()
+	print 'launching ' + url
+	wx.LaunchDefaultBrowser(url.replace(' ', '%20')) 
