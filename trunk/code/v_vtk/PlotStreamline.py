@@ -41,7 +41,7 @@ class PlotStreamline(Plot.Plot):
             self.clicker.set_mode('vectors')
 
         # variables cambiantes a traves del xml
-        self.lastnlin = 300
+        self.lastnlin = 20
         self.lastancho = 5e-4
         self.lastradio = 2e-3
         self.lastcenter = [0.0, 0.0, 0.0]
@@ -235,7 +235,7 @@ class PlotStreamline(Plot.Plot):
         if interactive:
             self.set_iren()    # Configura el interactor
             if self.data1.get('fielddomain') == 'cell':
-                self.clicker.set_point_cell('point') # así ok
+                self.clicker.set_point_cell('point') # asÃ­ ok
                 self.clicker.set_objects(self.cellcenters_click, self.rens[0], self.iren, self.widget) # ALPHA-vc
             else:
                 self.clicker.set_point_cell(self.data1.get('fielddomain'))

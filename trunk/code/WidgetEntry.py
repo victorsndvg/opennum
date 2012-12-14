@@ -23,6 +23,7 @@ class WidgetEntry(Widget.Widget):
     def __init__(self, mode, parent, window, struct, index):
         Widget.Widget.__init__(self, parent, window, struct, index)
         self.mode = mode
+
         #self.password = self.struct.get_attribs().get(config.AT_SUBTYPE) == 'password'
         
         self.replace_set = set()
@@ -53,12 +54,56 @@ class WidgetEntry(Widget.Widget):
         self.entry.Bind(wx.EVT_KILL_FOCUS, self.event_focus_out)
 
 
+    def parse_complex(self, string,startchar,endchar,lista):
+	"""
+	Parse a list of complex and check the syntax. Recursive function.
+
+	string: type String.
+	startchar: type Character.
+	endchar: type Character.
+	list: type List.
+	"""
+
+	start = string.find(startchar)
+	end = string.find(endchar)
+
+	if start<end and start != -1 and end != -1:
+	    complexstr = string[start:end+1]
+	    try:
+		if complexstr.find(',') == -1 or not len(map(float, complexstr[1:-1].replace(',', ' ').split())) == 2:
+		    return -1
+		lista.append(complexstr)
+		return self.parse_complex(string[end+1:],startchar,endchar,lista)
+	    except:
+		return -1
+	    return 1
+	elif (start == -1 and end != -1) or (start != -1 and end == -1):
+	    return -1
+	else:
+	    return 0
+
+    def func(self,string,char):
+	index = 0
+	lista = []
+        while index < len( string ):
+	    index = string.find( char, index )
+	    if index == -1:
+		break
+	    lista.append(index)
+	    index += 1
+	return lista
+
     def save_mem(self):
         print 'widget entry save mem'
         val = self.entry.GetValue()
         if self.mode == 0: # float
             val2 = self.preprocess_val(val)
             vals = val2.split()
+	elif self.mode == 2: #complex
+	    vals = []
+	    if self.parse_complex(val,'(',')',vals) == -1:
+		vals = [val]
+
         else: # string
             if val == '':
                 #vals = []

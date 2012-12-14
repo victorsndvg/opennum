@@ -93,12 +93,17 @@ class WidgetFolderFile(Widget.Widget):
 		
 		if attribs.get(config.AT_SUBTYPE) == u'field':
 	#            file_extensions = u'All supported (*.mff;*.vtu)|*.mff;*.vtu|Modulef Formatted Fields (*.mff)|*.mff|VTK XML Point Data Fields on Unstructured Grid (*.vtu)|*.vtu'
-		    file_extensions = u'All supported (*.mff)|*.mff|Modulef Formatted Fields (*.mff)|*.mff|' +\
-		        'All Files (*)|*'
+		    file_extensions = u'All supported (*.mff;*.vtk;*.vtu)|*.mff;*.vtk;*.vtu|' +\
+                        'Modulef Formatted Fields (*.mff)|*.mff|' +\
+                        'VTK Unstructured Grid Fields (*.vtk)|*.vtk|' +\
+                        'VTK XML Unstructured Grid Fields (*.vtu)|*.vtu|' +\
+                        'All Files (*)|*'
+
+		if attribs.get(config.AT_SUBTYPE) == u'data':
+		    file_extensions = u'All Files (*)|*'
+
 	    if len(attribmeshfield) == 2:
-		if attribmeshfield[0] == u'mesh':
-		    file_extensions = attribmeshfield[1]
-		if attribmeshfield[0] == u'field':
+		if attribmeshfield[0] == u'mesh' or attribmeshfield[0] == u'field' or attribmeshfield[0] == u'data':
 		    file_extensions = attribmeshfield[1]
         
         if self.ff == FOLDER:
@@ -148,9 +153,7 @@ class WidgetFolderFile(Widget.Widget):
             return [string]
         pre = string[:i]
         post = string[i+1:]
-        if pre == u'mesh':
-            return [pre, post]
-        if pre == u'field':
+        if pre == u'mesh' or pre == u'field' or pre == u'data':
             return [pre, post]
 	else:
             return [string]

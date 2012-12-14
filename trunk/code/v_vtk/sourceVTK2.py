@@ -109,7 +109,7 @@ def unselect_source(src):
 #vtkStreamingDemandDrivenPipeline (0x8b02000): Input port 0 of algorithm vtkAppendFilter(0x8b01d60) has 0 connections but is not optional.
 
 def get_append(sources):
-    print 'sourceVTK2: creating Append'
+#    print 'sourceVTK2: creating Append'
 
     # aqui para no importarlo siempre
     import vtk
@@ -129,7 +129,7 @@ def get_append(sources):
 
 
 def config_append(src, sources):
-    print 'sourceVTK2: configuring Append'
+#    print 'sourceVTK2: configuring Append'
     src.RemoveAllInputs()
     # comentado en favor doutro metodo
     #complement_missing_fields(sources) # #
@@ -149,7 +149,7 @@ def get_void():
     src = vtk.vtkPassThrough()
     src.SetInput(u)
 
-    print 'void bounds', src.GetOutput().GetBounds() # 1 -1 1 -1 1 -1
+#    print 'void bounds', src.GetOutput().GetBounds() # 1 -1 1 -1 1 -1
 
     return src
 

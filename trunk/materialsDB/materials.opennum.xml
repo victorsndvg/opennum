@@ -1,0 +1,16 @@
+<menus>
+	<menu name="Materials database">
+		<submenu name="Open">
+			<struct name="List" customize="true">
+				<leaf default="true" type="float">
+				</leaf>
+				<leaf name="Material 1" type="float">
+				</leaf>
+				<leaf name="Material 2" type="float">
+				</leaf>
+				<leaf name="Material 3" type="float">
+				</leaf>
+			</struct>
+		</submenu>
+	</menu>
+</menus>

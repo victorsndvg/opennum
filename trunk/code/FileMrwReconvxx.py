@@ -207,7 +207,7 @@ class FileMrwReconvxx(FileMrw.FileMrw):
 #        if self.lnn * self.nel != self.nnod: # non é así: pode haber vertices usados por dous
 #            return 'nel * lnn != nnod'
 
-        print 'element_type:', self.element_type
+#        print 'element_type:', self.element_type
 
         expected = self.firstline + num_nn + num_mm + num_nrc + num_nra + num_nrv + num_z + num_nsd
 #        if count != expected:

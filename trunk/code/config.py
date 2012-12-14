@@ -16,6 +16,7 @@ DIR_APPS = u'apps'
 DIR_SOLVERS = u'solvers'
 DIR_DOCS = u'help'
 DIR_MATERIALS = u'materialsDB'
+DIR_CONFIG = u'config'
 DIR_IMAGES = u'images'
 
 FILE_MENULOCAL = u'local.mnu.xml'
@@ -28,6 +29,29 @@ FILE_MATERIALS_SUFFIX = u'.xml'
 FILE_MATERIALS_DAT = u'materials.dat.xml'
 NAME_MATERIALS_DATABASE = u'Materials database'
 NAME_MATERIALS_FILE = u'Materials file'
+
+FILE_CONFIG = u'config.xml'
+FILE_CONFIG_PREFIX = u'config.'
+FILE_CONFIG_SUFFIX = u'.xml'
+FILE_CONFIG_DAT = u'config.dat.xml'
+NAME_CONFIG_FILE = u'Config file'
+
+CONFIG_MENU_NAME = u'Configuration'
+CONFIG_SUBMENU_NAME = u'Preferences'
+CONFIG_STRUCT_NAME = u'Options'
+
+CONFIG_MAXIMIZE_OPTION = u'Maximize at start'
+CONFIG_WARNONLOAD_OPTION = u'Show warning on load'
+CONFIG_WIDGETS_PANEL_SIZE = u'Default widgets panel width'
+CONFIG_WINDOW_SIZE = u'Default window size'
+CONFIG_WINDOW_WIDTH = u'Window width'
+CONFIG_WINDOW_HEIGHT = u'Window height'
+
+
+CONFIG_INTERNACIONALIZATION = u'Internationalization'
+
+VALUE_YES = u'yes'
+VALUE_NO = u'no'
 
 VALUE_TRUE = u'true'
 VALUE_FALSE = u'false'
@@ -56,6 +80,7 @@ AT_TYPE = u'type'
 AT_SUBTYPE = u'subtype'
 AT_TITLE = u'title'
 AT_HIDDEN = u'hidden' # heavy
+AT_HELP = u'help' # heavy
 
 # interno. non previsto o seu uso no local.mnu.xml. só en menu en principio
 AT_SAVETHIS = u'savethis'
@@ -72,5 +97,6 @@ AT_HELPWINDOWDATA = u'helpdata'
 AT_HELPWINDOWCONFIG = u'helpconfig'
 
 IS_MATERIALS = 'is_materials'
+IS_CONFIG = 'is_config'
 PATHS_RELATIVE_MATERIALS = False
 

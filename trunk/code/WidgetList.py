@@ -17,7 +17,7 @@ class WidgetList(Widget.Widget):
     def __init__(self, selection, parent, window, struct, index):
         Widget.Widget.__init__(self, parent, window, struct, index)
         self.selection = selection
-
+	self.parent = parent
         self.names = []
         selected = []
         self.selectedset = set()

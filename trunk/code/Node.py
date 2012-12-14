@@ -10,7 +10,7 @@ import os.path
 import Source # para procesar cadenas fuente mesh=...
 import Formulas as psps # para postproceso
 
-
+Debug = False
 
 class Node():
 
@@ -405,8 +405,8 @@ class Node():
             return u'"data" attribute is incompatible with "formula" attribute'
 #        if (mesh is not None or add_mesh is not None or point is not None or cell is not None) and formula is not None: # ou compatible con point/cell para indicar o tipo de datos
 #            return u'"mesh","add_mesh","pointdata","celldata" attributes are incompatible with "formula" attribute'
-        if (mesh is not None or add_mesh is not None) and formula is not None:
-            return u'"mesh","add_mesh" attributes are incompatible with "formula" attribute'
+#        if (mesh is not None or add_mesh is not None) and formula is not None:
+#            return u'"mesh","add_mesh" attributes are incompatible with "formula" attribute'
         if data is None and mesh is None and formula is None:
             return u'Missing "mesh" or "data" or "formula" attributes'
 
@@ -438,7 +438,7 @@ class Node():
 
                     # con variables (por se acaso, xa que so admite un nodo)
                     nodes = self.parse_path_varx(path, True, False, objects, True, None) # objects duplicados abaixo ?
-                    print 'parse_path_varx.objects', map(Node.get_path, objects)
+                    if Debug: print 'parse_path_varx.objects', map(Node.get_path, objects)
                     if isinstance(nodes, basestring): # error
                         return "Invalid path: " + nodes
                     if nodes is None: # invalid node
@@ -456,7 +456,7 @@ class Node():
                     if node.get_attribs().get(config.PLOT_MESH) is not None or \
                         node.get_attribs().get(config.PLOT_FORMULA) is not None: # se ten grafico
                         type2 = 'menu-field'
-                    elif node.get_tag() == 'leaf' and node.get_attribs().get(config.AT_TYPE) == 'float': # se e un leaf float
+                    elif node.get_tag() == 'leaf' and (node.get_attribs().get(config.AT_TYPE) == 'float' or node.get_attribs().get(config.AT_TYPE) == 'complex'): # se e un leaf float
                         type2 = 'menu-value'
                     else:
                         return 'Type of node unknown'
@@ -470,7 +470,7 @@ class Node():
                         return 'Error in dependence of formula: ' + res
                     if objects is not None:
                         objects.extend(res.get('dependencies')) # objects duplicados arriba ?
-                        print 'subdata.dependencies', map(Node.get_path,res.get('dependencies'))
+                        if Debug: print 'subdata.dependencies', map(Node.get_path,res.get('dependencies'))
 
                     if res.get('fielddomain') != result.get('fielddomain'):
                         return 'Mismatched field domains: ' + unicode(result.get('fielddomain')) + ' and ' + unicode(res.get('fielddomain'))
@@ -561,7 +561,7 @@ class Node():
                 else:
                     temp2 = temp[:i]
 
-                result['fieldname'] = temp2.replace(' ','_')
+                result['fieldname'] = temp2#.replace(' ','_') deprecated
 
             elif tupf[0] == 0:
                 result['fieldname'] = tupf[1]
@@ -577,9 +577,9 @@ class Node():
             result['filesdata'] = [tupm[1]]
             result['filenames'].append(tupm[1])
 
-        print 'DEBUG: get_data5.filenames: ', result['filenames']
+#        print 'DEBUG: get_data5.filenames: ', result['filenames']
 
-        if objects is not None:
+        if Debug and objects is not None:
             print 'start pointers for', self.get_path()
             # un plot pode ter varios structs !!!
             #clear ?
@@ -1186,16 +1186,19 @@ class Node():
                 return u'Can not parse "source" string value'
 	    #parsed[0] == 1 => type == file: list file lines
             elif parsed[0] == 1:				#añadido
-		sourcefile = open(parsed[1])			#añadido
+		sourcefile = None				#añadido
 		source = []					#añadido
-		try:						#añadido
-		    line = sourcefile.readline()		#añadido
-		    while line:					#añadido
-			line = line.strip('\n')	.strip()		#añadido
-			source.append(line)			#añadido
+		if os.path.isfile(parsed[1]):
+		    sourcefile = open(parsed[1])		#añadido
+		    try:					#añadido
 			line = sourcefile.readline()		#añadido
-		finally:					#añadido
-	    	    sourcefile.close()				#añadido
+			while line:				#añadido
+			    line = line.strip('\n').strip()	#añadido
+			    source.append(line)			#añadido
+			    line = sourcefile.readline()	#añadido
+		    finally:					#añadido
+			if sourcefile is not None:
+			    sourcefile.close()			#añadido
 		return source
 	    elif parsed[0] != 2:
                 return u'Can not parse "source" string value: only allows "menu:" and "file:" prefix'
