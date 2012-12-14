@@ -178,11 +178,39 @@ class Applications2():
 			submenu2 = SubMenu.SubMenu()
 			submenu2.tag = u'submenu'
 			submenu2.set_name(app[1])
-			
+
+			if submenu2.get_name().lower() == u'separator' and app[1] != app[2] and app[0] != u'':
+			    submenu2.get_attribs()['separator'] = config.VALUE_TRUE			
+			    submenu.add_child(submenu2)
+			    continue
+
 			examples = app[3]
 			if len(examples)>=1:
 			    submenu2.get_attribs()[config.AT_COPY] = os.path.join(app[2], examples[0][2])
 			    submenu.add_child(submenu2)
+		
+		return submenu
+
+
+#################################################
+# Nuevos menus Application y Sample data
+	def build_help(self):
+		submenu = SubMenu.SubMenu()
+		submenu.tag = u'menu'
+		submenu.get_attribs()[config.AT_SAVETHIS] = config.VALUE_FALSE
+		submenu.get_attribs()[config.AT_HELP] = config.VALUE_TRUE
+		submenu.set_name(u'Help')
+		for app in self.tree:
+			submenu2 = SubMenu.SubMenu()
+			submenu2.tag = u'submenu'
+			submenu2.set_name(app[1])
+
+			if submenu2.get_name().lower() == u'separator' and app[1] != app[2] and app[0] != u'':
+			    submenu2.get_attribs()['separator'] = config.VALUE_TRUE
+			else:
+			    submenu2.get_attribs()[config.AT_SOURCE] = app[2]
+			    submenu2.get_attribs()[config.AT_HELP] = config.VALUE_TRUE
+			submenu.add_child(submenu2)
 	
 		
 		return submenu

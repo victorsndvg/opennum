@@ -92,6 +92,9 @@ class Plot(wx.Panel):
 
         # para PlotReferences: segrega mallas adicionales (self.src2) de mallas principales (self.src)
         self.additional = False
+	self.wireMadd = None
+	self.wireAadd = None
+	self.additionalAlist = []	#lista de mallas adicionales
         # datos para comprobar se unha fonte ten un campo
         self.fielddata = None
 
@@ -243,7 +246,7 @@ class Plot(wx.Panel):
             #else:
             self.set_additional(True) # ???
 
-        print 'data1:', self.data1
+#        print 'data1:', self.data1
         return True
 
 
@@ -252,7 +255,7 @@ class Plot(wx.Panel):
         result = self.tracker.update()
         self.filename = self.tracker.get_vtkfile()
         self.revision = self.tracker.get_revision()
-        print u'Plot.tracker: vtk_filename', self.filename, u'revision', self.revision, u'result', result
+#        print u'Plot.tracker: vtk_filename', self.filename, u'revision', self.revision, u'result', result
         if result is None:
             self.window.errormsg(u'Error converting mesh to vtk. Not creating plot')
             return False
@@ -326,15 +329,16 @@ class Plot(wx.Panel):
             # en algun caso vtkAssignAttribute duplicado
             if pc is not None and sv is not None and fn is not None:
                 self.timemanager.set_attributes(fn, sv, pc)
-	    self.set_additional(False)
-	    self.has_src = False
-	    #si trackernodefiles.is_nodepvd tiene series temporales y mallas adicionales
-	    if self.tracker.is_nodepvd:								#añadido
-		self.has_src = True								#añadido
-            	self.set_additional(True)							#añadido
-	    else:										#añadido
-		self.has_src = False
-            	self.set_additional(False) # se non dá excepción ao intentar usar self.src2=None en add_additional_2
+	    #se considera que todos los trackers pueden tener mallas adicionales
+#	    self.set_additional(False)
+#	    self.has_src = False
+	    #si trackernodefiles.is_nodepvd tiene series temporales y mallas adicionales. deprecated
+#	    if self.tracker.is_nodepvd:								#añadido
+#		self.has_src = True								#añadido
+#            	self.set_additional(True)							#añadido
+#	    else:										#añadido
+#		self.has_src = False
+#            	self.set_additional(False) # se non dá excepción ao intentar usar self.src2=None en add_additional_2
         else:
             self.has_src = True
 
@@ -351,7 +355,6 @@ class Plot(wx.Panel):
         
         # aqui tratamos por separado o timemanager porque hai que inicialo (tempo 0).
         if self.timemanager is not None:
-	    print '#1 aqui tratamos por separado o timemanager porque hai que inicialo (tempo 0).'
             res = self.update_tracker_pvd()
             if isinstance(res,basestring):
                 self.window.errormsg(res)
@@ -381,10 +384,10 @@ class Plot(wx.Panel):
             self.update_time_data_legend()
             self.timebar.put_status(self.get_status())
   
-        print 'self.src.output.range:', self.src.GetOutput().GetScalarRange()
+#        print 'self.src.output.range:', self.src.GetOutput().GetScalarRange()
 
-        print 'Plot sourceVTK2.prints'
-        sourceVTK2.prints(self.src)
+#        print 'Plot sourceVTK2.prints'
+#        sourceVTK2.prints(self.src)
 
         
         return True
@@ -483,8 +486,11 @@ class Plot(wx.Panel):
     def update_tracker_pvd(self):
         if self.timemanager is None:
             return True
-
-        res = self.timemanager.set_tracker(self.tracker)
+	#Se captura el error en la actualizacion de trackerpvd vacio o con mallas adicionales	
+	try:									#añadido
+	    res = self.timemanager.set_tracker(self.tracker)
+	except:									#añadido
+	    res = True								#añadido
 
         if isinstance(res,basestring):
             return 'Error initializing for .pvd: '+res
@@ -505,12 +511,11 @@ class Plot(wx.Panel):
 
     def update_tracker_source(self, index=None): # que fai para os pvds: nada: self.has_src é false
 
-        if not self.has_src:
-            return True
-
-        print 'tracker.plot', self.tracker
-        
         mnames = []
+
+	#Con trackerformula2 se actualizan las mallas adicionales en add_additional_2
+        if not self.has_src:
+	    return True
         		
         if self.additional:								#añadido
             src = self.tracker.get_src_group_f(1, self.fielddata, mnames,index)		#añadido
@@ -637,10 +642,11 @@ class Plot(wx.Panel):
     def src_update0(self, changes):
         if not self.done:
             return False
+
         if len(changes) > 0:
-            print 'Plot sourceVTK2.prints'
-            sourceVTK2.prints(self.src)
-            print 'changing plot self.src', changes
+#            print 'Plot sourceVTK2.prints'
+#            sourceVTK2.prints(self.src)
+#            print 'changing plot self.src', changes
             ret = self.src_update1(changes)
             self.check_additional(changes)
             return ret
@@ -796,18 +802,70 @@ class Plot(wx.Panel):
 # <additional>
     def add_additional_2(self):
         if self.additional:
-            self.wireMadd = vtk.vtkDataSetMapper()
-            self.wireMadd.SetInputConnection(self.src2.GetOutputPort())
-            self.wireMadd.ScalarVisibilityOff()
-            self.wireAadd = vtk.vtkActor()
-            self.wireAadd.SetMapper(self.wireMadd)
-            self.wireAadd.GetProperty().SetRepresentationToWireframe()
-            self.wireAadd.GetProperty().SetColor(mesh3_color)
-            self.rens[0].AddActor(self.wireAadd) # additional meshes
+	    for actor in self.additionalAlist:					#añadido
+		self.rens[0].RemoveActor(actor)					#añadido
+	    self.additionalAlist= []
+	    try:
+		if self.src2 is None and not self.has_src:
+		# Mallas adicionales con trackerformula2
+		    self.additionaltracker = self.tracker.get_additional_trackers(self.data1['filesmesh2'])		#añadido
+		    # Si existen mallas adicionales se añaden a la lista de actores y al render
+		    if len(self.additionaltracker) > 0:
+			for tr in self.additionaltracker:
+			    self.wireMadd = vtk.vtkDataSetMapper()
+			    self.wireMadd.SetInputConnection(tr.get_src().GetOutputPort())
+			    self.wireMadd.ScalarVisibilityOff()
+			    self.wireAadd = vtk.vtkActor()
+			    self.wireAadd.SetMapper(self.wireMadd)
+			    self.wireAadd.GetProperty().SetRepresentationToWireframe()
+			    self.wireAadd.GetProperty().SetColor(mesh3_color)
+			    self.rens[0].AddActor(self.wireAadd) # additional meshes
+			    self.additionalAlist.append(self.wireAadd)
+		else:
+		# Mallas adicionales en otros casos
+		# Si existen mallas adicionales se añaden a la lista de actores y al render
+		    self.wireMadd = vtk.vtkDataSetMapper()
+		    self.wireMadd.SetInputConnection(self.src2.GetOutputPort())
+		    self.wireMadd.ScalarVisibilityOff()
+		    self.wireAadd = vtk.vtkActor()
+		    self.wireAadd.SetMapper(self.wireMadd)
+		    self.wireAadd.GetProperty().SetRepresentationToWireframe()
+		    self.wireAadd.GetProperty().SetColor(mesh3_color)
+		    self.rens[0].AddActor(self.wireAadd) # additional meshes
+		    self.additionalAlist.append(self.wireAadd)
+	    except:
+		pass
+#		self.set_additional(False)
 
-    def check_additional(self, changes):
-        if self.additional and changes.get('new'): # así ?
-            self.wireMadd.SetInputConnection(self.src2.GetOutputPort())
+
+    def check_additional(self, changes):						#modificado
+	self.additionaltracker = []							#añadido
+        if self.additional:# and changes.get('new'): # así ?				#modificado
+	    if changes.get('new') and self.wireMadd is not None:			#añadido
+	        self.wireMadd.SetInputConnection(self.src2.GetOutputPort())		#modificado
+	    else:									#añadido
+		# Actualización de plots
+		self.add_additional_2()							#añadido
+		# En el caso de no haber mallas adicionales se borra la lista de sus actores del render
+		if self.src2 is None:							#añadido
+		    for actor in self.additionalAlist:					#añadido
+			self.rens[0].RemoveActor(actor)					#añadido
+		    self.additionalAlist = []						#añadido
+                    self.wireMadd = None						#añadido
+		    self.wireAadd = None						#añadido
+		    # Si es un trackerformula se actualizan las mallas adicionales
+		    if not self.has_src and len(self.additionaltracker) > 0:		#añadido
+			self.add_additional_2()						#añadido
+
+	else: #Si no hay que añadir mallas adicionales, elimina las obsoletas		#añadido
+	    if self.wireAadd is not None:						#añadido
+		for actor in self.additionalAlist:					#añadido
+		    self.rens[0].RemoveActor(actor)					#añadido
+		self.additionalAlist = []						#añadido
+                self.wireMadd = None							#añadido
+		self.wireAadd = None							#añadido
+		self.src2 = None							#añadido
+
 # </additional>
 
 
@@ -1003,7 +1061,7 @@ class Plot(wx.Panel):
         if self.done and self.outline is True:
             self.outF.SetInputConnection(src.GetOutputPort())
             #self.outF.Update()
-            print 'update outline bounds', src.GetOutput().GetBounds()
+#            print 'update outline bounds', src.GetOutput().GetBounds()
             self.cubeA.SetBounds(src.GetOutput().GetBounds())
 
 
@@ -1537,6 +1595,8 @@ class Plot(wx.Panel):
     def set_data(self, data):
         self.data1['filenames'] = data.get('filenames')
         self.data1['dim'] = data.get('dim')
+	# Necesario para las mallas adicionales en trackerformula2
+        self.data1['filesmesh2'] = data.get('filesmesh2')			#añadido
         self.call_dim(False) # calculates dim to show # uses self.tracker
         self.update_legend_data()
 
@@ -1555,7 +1615,7 @@ class Plot(wx.Panel):
             self.timer.Stop()
             self.timer = None
             
-        print 'plot to_close' # non entra ao cerrar a aplicación ! xa entra
+        print 'Plot closed' # non entra ao cerrar a aplicación ! xa entra
 
 
 

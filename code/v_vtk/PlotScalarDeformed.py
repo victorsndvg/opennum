@@ -176,11 +176,11 @@ class PlotScalarDeformed(Plot.Plot):
             if maxdist<zdist:					#añadido
 		maxdist = zdist 				#añadido
             if self.maxrange == 0:				#añadido
-		return 1.0					#añadido
+		return 0.0					#añadido
             else:						#añadido
 		return self.round_to_1(maxdist/(self.maxrange*20))#añadido
 	else:
-            return 1.0
+            return 0.0
 
     def round_to_1(self,x):					#añadido
 	from math import floor, log10				#añadido
@@ -188,4 +188,4 @@ class PlotScalarDeformed(Plot.Plot):
 		res = round(x, -int(floor(log10(x))))		#añadido
 		return res
 	except:
-		return 1.0
+		return 0.0

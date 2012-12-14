@@ -45,7 +45,11 @@ def get_array(src, fn, sv, pc):
 
         return r
 
+def real(var):
+	return var.real
 
+def imag(var):
+	return var.imag
 
 def create_lambda(formula, variables):
 
@@ -59,6 +63,11 @@ def create_lambda(formula, variables):
         safe_dict = dict([ (k, globals().get(k, None)) for k in safe_list ])
         #add any needed builtins back in.
         safe_dict['abs'] = abs
+        safe_dict['int'] = int
+        safe_dict['float'] = float
+        safe_dict['complex'] = complex
+        safe_dict['imag'] = imag
+        safe_dict['real'] = real
 
         func = 'lambda ' + ','.join(variables) + ': ' + formula
 

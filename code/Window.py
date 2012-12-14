@@ -53,6 +53,7 @@ class Window(wx.Frame):
     ID_TDEL = 23*config.ID_SPACES+config.SPACE_MENU
     ID_MESHES = 24*config.ID_SPACES+config.SPACE_MENU
     ID_MACTION = 25*config.ID_SPACES+config.SPACE_MENU
+    MIN_PROTECTED_ID = 26
 
 
 
@@ -76,19 +77,23 @@ class Window(wx.Frame):
         self.path_local = None
         self.path_exe = unicode(path,sys.getfilesystemencoding())
         self.configdir = configdir # parece que xa está en unicode
-	# flag para la comprobacion de existencia de materialsdb en la aplicacion
+	# flag para la comprobacion de existencia de materialsdb
 	self.MaterialsDB_exists = False					#añadido
+	# flag para la comprobacion de existencia de config
+	self.ConfigFile_exists = False					#añadido
+	# flag para la aplicacion de cambios de configuracion. Solo dentro del menu de configuracion.
+	self.apply_config_flag = True					#añadido
 
         if self.configdir is None:
             self.errormsg(u'Error: Could not create config dir. Some funcionality may be affected')
 
         # se existe o directorio apps no directorio home, utilizao, se non, utiliza o suministrado no paquete
-        # usa self.path_exe e self.configdir
         self.appsdir = self.calculate_appsdir()
 
         self.menus = Menus.Menus(self)
         self.apps2 = None
         self.materials = None
+        self.config = None
 
         # para a venta de datos tabulares
         self.tabular = None
@@ -101,18 +106,25 @@ class Window(wx.Frame):
         self.timer = None
         self.menulast = [] # special menus [Materials Database]
 
-
         self.path_local_save_filename = None
         self.path_local_dir_materials = None
         self.path_local_materials = None
         self.path_local_remotedata = None
+	self.init_config() #load initial configuration
         if self.configdir is not None:
             self.path_local_save_filename = os.path.join(self.configdir, config.FILE_LASTFOLDER)
             self.path_local_materials_dir = os.path.join(self.configdir, config.DIR_MATERIALS)
             self.path_local_materials = os.path.join(self.configdir, config.DIR_MATERIALS, config.FILE_MATERIALS)
+            self.path_local_config_dir = os.path.join(self.configdir, config.DIR_CONFIG)
+            self.path_local_config = os.path.join(self.configdir, config.DIR_CONFIG, config.FILE_CONFIG)
             self.path_local_remotedata = os.path.join(self.configdir, config.FILE_REMOTEDATA)
             self.copy_materials() # copy if materials do not exist. with force=True always
             self.load_materials() # to self.materials
+            self.copy_config() # copy if config do not exist. with force=True always
+            self.load_config() # to self.config
+	    self.apply_config() #apply the configuration from file
+	    if self.maximize_window:
+		self.Maximize()
             
         self.remotedata = {}
         self.load_remotedata()
@@ -137,9 +149,9 @@ class Window(wx.Frame):
         self.splitterB.SetMinimumPaneSize(80)
         self.splitterB.SetSashGravity(1.0)
         #self.splitterB.SetSashPosition(400)
-        self.splitterB.SplitHorizontally(self.splitterA, self.panelC, 400)
+        self.splitterB.SplitHorizontally(self.splitterA, self.panelC, self.window_height)
         self.splitterA.SetMinimumPaneSize(100)
-        self.splitterA.SplitVertically(self.panelA, self.panelB, 240)
+        self.splitterA.SplitVertically(self.panelA, self.panelB, self.splitterA_size)
 # ...
         self.splitterA.Layout()
         self.splitterB.Layout()
@@ -163,7 +175,8 @@ class Window(wx.Frame):
         #self.SetSizerAndFit(box)
         #self.SetMinSize(box.GetMinSize())
         self.SetMinSize((400,300))
-        self.SetSize((900,600))
+        self.SetSize((self.window_width,self.window_height))
+	
 
         self.timer = wx.Timer(self)
 
@@ -201,13 +214,16 @@ class Window(wx.Frame):
 
 
 
-    # se existe o directorio apps no directorio home, utilizao, se non, utiliza o suministrado no paquete
-    def calculate_appsdir(self):
-        dirappshome = os.path.join(self.configdir, config.DIR_APPS)
-        if os.path.isdir(dirappshome):
-            appsdir = dirappshome
+    # se existe o directorio apps no directorio home, utilizao, se non, utiliza o suministrado no paquete.
+    # agora permite a busqueda noutros directorios. Ex: help
+    def calculate_appsdir(self,apps_dir=None):				#modificado
+	if apps_dir is None:						#añadido
+	    apps_dir = config.DIR_APPS					#añadido
+        dirappshome = os.path.join(self.configdir, apps_dir)		#modificado
+        if os.path.isdir(dirappshome):					#modificado
+            appsdir = dirappshome					#añadido
         else:
-            appsdir = os.path.join(self.path_exe, os.pardir, config.DIR_APPS)
+            appsdir = os.path.join(self.path_exe, os.pardir, apps_dir) #modificado
         return appsdir
 
 
@@ -216,7 +232,7 @@ class Window(wx.Frame):
         # pseudo separador. provisional
         pos = self.menubar.GetMenuCount()
         menu_sep = wx.Menu()
-        self.menubar.Append(menu_sep, u' - ')
+        self.menubar.Append(menu_sep, u' | ')
         self.menubar.EnableTop(pos, False)
 
 
@@ -241,24 +257,24 @@ class Window(wx.Frame):
         self.menu_folder = wx.Menu()
 
         #item_o = wx.MenuItem(menu_folder, self.ID_OPEN, u'&Open...\tCtrl+F', u'Select a working folder')
-	self.item_o = wx.MenuItem(self.menu_folder, self.ID_OPEN, u'&Select folder...\tCtrl+F', u'Select a working folder')#añadido
+	self.item_o = wx.MenuItem(self.menu_folder, self.ID_OPEN, self.folder_name+'\tCtrl+F', u'Select a working folder')#añadido
         self.menu_folder.AppendItem(self.item_o)
 
-	self.menuapp = wx.MenuItem(self.menu_folder, self.ID_NULL, u'&Application')
+	self.menuapp = wx.MenuItem(self.menu_folder, self.ID_NULL, self.applications_name)
         self.menu_folder.AppendItem(self.menuapp)
 	self.menuapp.Enable(False)
 
-	self.menusampledata = wx.MenuItem(self.menu_folder, self.ID_NULL, u'&Sample data')
+	self.menusampledata = wx.MenuItem(self.menu_folder, self.ID_NULL, self.sample_data_name)
 	self.menu_folder.AppendItem(self.menusampledata)
 	self.menusampledata.Enable(False)
 
         #self.menu_folder.AppendSeparator()
 
-        self.item_q = wx.MenuItem(self.menu_folder, self.ID_EXIT, u'&Quit\tCtrl+Q', u'Exit program')
+        self.item_q = wx.MenuItem(self.menu_folder, self.ID_EXIT, self.quit_name+u'\tCtrl+Q', u'Exit program')
         self.menu_folder.AppendItem(self.item_q)
 
         #self.menubar.Append(menu_folder, u'&Folder')
-	self.menubar.Append(self.menu_folder, u'&Project')								#añadido
+	self.menubar.Append(self.menu_folder, self.project_name)								#añadido
 
 
 
@@ -280,7 +296,7 @@ class Window(wx.Frame):
 		    self.errormsg(u'Error reading application list')
 
             	if len(apps.get()) == 1: # one application => load it (1st sample data)		    
-		    self.menuapp = wx.MenuItem(self.menu_folder, self.ID_NULL, u'&Application')
+		    self.menuapp = wx.MenuItem(self.menu_folder, self.ID_NULL, self.application_name)
         	    self.menu_folder.AppendItem(self.menuapp)
 		    self.menuapp.Enable(False)
 		else:
@@ -289,17 +305,18 @@ class Window(wx.Frame):
 		    self.application = apps.build_application()
 		    self.apps_index = self.application.reindex(self.apps_index)
 		    self.menuapp = self.build_menu(self.application)
-	    	    self.menu_folder.AppendSubMenu(self.menuapp, '&Application')
+	    	    self.menu_folder.AppendSubMenu(self.menuapp, self.applications_name)
 
-            self.menusampledata = wx.MenuItem(self.menu_folder, self.ID_NULL, u'&Sample data')
+            self.menusampledata = wx.MenuItem(self.menu_folder, self.ID_NULL, self.sample_data_name)
             self.menu_folder.AppendItem(self.menusampledata)
 	    self.menusampledata.Enable(False)
-
-            self.item_q = wx.MenuItem(self.menu_folder, self.ID_EXIT, u'&Quit\tCtrl+Q', u'Exit program')
+	    if not (self.has_app or os.path.exists(config.FILE_MENULOCAL)):
+		self.menu_folder.AppendSeparator()
+            self.item_q = wx.MenuItem(self.menu_folder, self.ID_EXIT, self.quit_name+u'\tCtrl+Q', u'Exit program')
             self.menu_folder.AppendItem(self.item_q)
 
 # Necesario para que reindexe materials database cuando no existe lastfolder o directorio nuevo
-	    self.menus.reindex(self.apps_index)
+#	    self.menus.reindex(self.apps_index)
 
 ##################################################
 
@@ -316,7 +333,7 @@ class Window(wx.Frame):
 
 	self.sample_data = apps.build_sampledata(self.menus.get_name())
 	if len(self.sample_data.get_children()) == 1:
-	    self.menusampledata = wx.MenuItem(self.menu_folder, self.ID_NULL, u'&Sample data')
+	    self.menusampledata = wx.MenuItem(self.menu_folder, self.ID_NULL, self.sample_data_name)
             self.menu_folder.AppendItem(self.menusampledata)
 	    self.menusampledata.Enable(False)
 	else:
@@ -324,15 +341,35 @@ class Window(wx.Frame):
 	    self.menusampledata = self.build_menu(self.sample_data)
 
 	    if apps.has_app(self.menus.get_name()):
-	    	self.menu_folder.AppendSubMenu(self.menusampledata, '&Sample data ('+self.menus.get_name()+')')
+	    	self.menu_folder.AppendSubMenu(self.menusampledata, self.sample_data_name + u'('+self.menus.get_name()+')')
 	    else:
-	    	self.menu_folder.AppendSubMenu(self.menusampledata, '&Sample data')
-
-        self.item_q = wx.MenuItem(self.menu_folder, self.ID_EXIT, u'&Quit\tCtrl+Q', u'Exit program')
+	    	self.menu_folder.AppendSubMenu(self.menusampledata, self.sample_data_name)
+	self.menu_folder.AppendSeparator()
+        self.item_q = wx.MenuItem(self.menu_folder, self.ID_EXIT, self.quit_name+u'\tCtrl+Q', u'Exit program')
         self.menu_folder.AppendItem(self.item_q)
 
 # Necesario para que reindexe materials database cuando no existe lastfolder o directorio nuevo
-	self.menus.reindex(self.apps_index)
+#	self.menus.reindex(self.apps_index)
+
+##################################################
+
+
+    def load_menuconfig(self):
+
+	self.menu_folder.DeleteItem(self.item_q)
+	self.apps_index = self.config.reindex(self.apps_index)
+	if self.config is not None:
+	    if len(self.config.get_children()) > 0:
+		configmenus = self.config.get_children()
+		for ch in configmenus:
+		    if ch.get_name() == config.CONFIG_MENU_NAME:
+			menuconfig = self.build_menu(ch)
+			self.menu_folder.AppendSubMenu(menuconfig, ch.get_name())
+			self.item_q = wx.MenuItem(self.menu_folder, self.ID_EXIT, self.quit_name+u'\tCtrl+Q', u'Exit program')
+			self.menu_folder.AppendItem(self.item_q)
+
+# Necesario para que reindexe materials database cuando no existe lastfolder o directorio nuevo
+#	self.menus.reindex(self.apps_index)
 
 ##################################################
 
@@ -341,11 +378,15 @@ class Window(wx.Frame):
 	    self.load_menuapp()
 	    if self.has_app or os.path.exists(config.FILE_MENULOCAL):
 	    	self.load_menusampledata()
+	    if self.config is not None:
+		self.load_menuconfig()
+	self.menus.reindex(self.apps_index)
 
 ###################################################
-# Nuevos menus Application y Sample data
+# Nuevos menus Application, Sample data y Help
+# Se añade el flag help para la creacion del menu help
 
-    def build_menu(self,submenus):
+    def build_menu(self,submenus,help=False):					#modificado
         menus = submenus.get_children()
 	if True:
             menu_temp = wx.Menu()
@@ -357,6 +398,10 @@ class Window(wx.Frame):
                 if (attribs.get(u'selected') == u'true'):
                     (selected,kind) = True,wx.ITEM_CHECK
 #                    (selected,kind) = False,wx.ITEM_RADIO
+		    #permite añadir separadores entre subsubmenus
+            	if (attribs.get(u'separator') == u'true'):	#añadido
+        	    menu_temp.AppendSeparator()			#añadido
+		    continue					#añadido
 #--------------------------------------------------------------------------------------------------------------------------------------------------------
 		#Permite a los submenus mostrar como text el tag title
                 if (attribs.get(u'title') == None):                         #añadido
@@ -365,9 +410,14 @@ class Window(wx.Frame):
                 	item_name = attribs.get(u'title')                   #añadido
 #--------------------------------------------------------------------------------------------------------------------------------------------------------
                 item_sample_temp = wx.Menu()
-
-                item_temp = wx.MenuItem(menu_temp, submenu.get_index() * config.ID_SPACES + \
-                        config.SPACE_MENU_DYN, item_name, u'select ' + submenu.get_name(), kind)                 #--------------------------------------------------------------------------------------------------------------------------------------------------------
+		# Si es menu help trabajamos con otras ids
+		if help:							#añadido
+		    submenuid = config.SPACE_MENU				#añadido
+		else:								#añadido
+		    submenuid = config.SPACE_MENU_DYN				#añadido
+		
+                item_temp = wx.MenuItem(menu_temp, submenu.get_index() * config.ID_SPACES \
+                        + submenuid , item_name, u'select ' + submenu.get_name(), kind)                 #--------------------------------------------------------------------------------------------------------------------------------------------------------
                 #Permite visualizar subsubmenus.
                 #subitem_temp = wx.Menu()                                #añadido
 		subsubmenuAdded = False
@@ -385,9 +435,14 @@ class Window(wx.Frame):
                     	subitem_name = subattribs.get(u'name')          #añadido
                     else:                                               #añadido
                     	subitem_name = subattribs.get(u'title')         #añadido
+		    # Si es menu help trabajamos con otras ids
+		    if help:							#añadido
+			subsubmenuid = config.SPACE_MENU			#añadido
+		    else:							#añadido
+			subsubmenuid = config.SPACE_MENU_DYN			#añadido
                     #subitem_temp.Append(subsubmenu.get_index()*config.ID_SPACES + config.SPACE_MENU_DYN, subitem_name)    # añadido
-                    subitem_temp = wx.MenuItem(item_sample_temp, subsubmenu.get_index() * config.ID_SPACES + \
-                        config.SPACE_MENU_DYN, subitem_name, u'select ' + subsubmenu.get_name(), kind)
+                    subitem_temp = wx.MenuItem(item_sample_temp, subsubmenu.get_index() * config.ID_SPACES \
+                        + subsubmenuid, subitem_name, u'select ' + subsubmenu.get_name(), kind)
                     item_sample_temp.AppendItem(subitem_temp)                  #añadido
 		    subsubmenuAdded = True
 
@@ -407,26 +462,40 @@ class Window(wx.Frame):
         for menu in menus:
             if menu.is_hidden():
                 continue
+	    menuattribs = menu.get_attribs()
+	    # permite añadir separadores entre menus			
+	    if (menuattribs.get(u'separator') == u'true'):		#añadido
+#		pos = self.menubar.GetMenuCount()			#añadido
+#        	menu_sep = wx.Menu()					#añadido
+#        	self.menubar.Append(menu_sep, u'|')			#añadido
+#		self.menubar.EnableTop(pos, False)			#añadido
+		self.interface_separa()
+		continue						#añadido
             menu_temp = wx.Menu()
+
             for submenu in menu.get_children():
                 if submenu.is_hidden():
                     continue
                 (selected,kind) = False,wx.ITEM_NORMAL
                 attribs = submenu.get_attribs()
+		#permite añadir separadores entre submenus
+            	if (attribs.get(u'separator') == u'true'):		#añadido
+        	    menu_temp.AppendSeparator()				#añadido
+		    continue						#añadido
                 if (attribs.get(u'selected') == u'true'):
                     (selected,kind) = True,wx.ITEM_CHECK
 #                    (selected,kind) = False,wx.ITEM_RADIO
-#--------------------------------------------------------------------------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------
 		#Permite a los submenus mostrar como text el tag title
-                if (attribs.get(u'title') == None):                         #añadido
+                if (attribs.get(u'title') is None):                         #añadido
                 	item_name = attribs.get(u'name')                    #añadido
                 else:                                                       #añadido
                 	item_name = attribs.get(u'title')                   #añadido
-#--------------------------------------------------------------------------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------
                 item_temp = wx.MenuItem(menu_temp, submenu.get_index() * config.ID_SPACES + \
                         config.SPACE_MENU_DYN, item_name, u'select ' + submenu.get_name(), kind)
 
-                 #--------------------------------------------------------------------------------------------------------------------------------------------------------
+                 #--------------------------------------------------------------------
                 #Permite visualizar subsubmenus.
                 subitem_temp = wx.Menu()                                #añadido
                 subitemAdded = False                                    #añadido
@@ -437,6 +506,10 @@ class Window(wx.Frame):
                         continue                                        #añadido
                     (selected,kind) = False,wx.ITEM_NORMAL              #añadido
                     subattribs = subsubmenu.get_attribs()               #añadido
+		    #permite añadir separadores entre subsubmenus
+            	    if (subattribs.get(u'separator') == u'true'):	#añadido
+        	    	subitem_temp.AppendSeparator()			#añadido
+		    	continue					#añadido
                     if (subattribs.get(u'selected') == u'true'):        #añadido
                         (selected,kind) = True,wx.ITEM_CHECK            #añadido
 		#Permite a los submenus mostrar como text el tag title
@@ -448,40 +521,46 @@ class Window(wx.Frame):
                     subitemAdded = True                                 #añadido
                 if subitemAdded:                                        #añadido
                     item_temp.SetSubMenu(subitem_temp)                  #añadido
-                #---------------------------------------------------------------------------------------------------------------------------------------------------------
+                #---------------------------------------------------------------------
                 
                 menu_temp.AppendItem(item_temp)
                 if (selected): # this must go after preceding line
                     item_temp.Check()
-            if menu.get_name() == config.NAME_MATERIALS_DATABASE: # ou outra comprobación
+            if menu.get_name() == self.materialsdb_name: # ou outra comprobación
                 self.menulast.append( (menu_temp, u'&'+menu.get_name()) )
 		self.MaterialsDB_exists = True				#añadido
+	    elif menu.get_name() == config.NAME_CONFIG_FILE:
+                self.menulast.append( (menu_temp, u'&'+menu.get_name()) )
+		self.Configfile_exists = True				#añadido
             else:
                 self.menubar.Append(menu_temp, u'&'+menu.get_name())
 
+# Construccion del menu Help al estilo Apps y Sample data
+    def load_menuhelp(self):					#añadido
+	helpdir = self.calculate_appsdir(config.DIR_DOCS)	#añadido
+	apps = Applications2.Applications2()			#añadido	
+	ok = apps.read(helpdir)					#añadido
+	if not ok:						#añadido
+	    self.errormsg(u'Error reading application list')	#añadido
+	
+	self.menu_help = apps.build_help()			#añadido'
+	if len(self.menu_help.get_children()) == 0:		#añadido
+	    menuhelpwx = None					#añadido
+	else:							#añadido
+	    if self.apps_index < self.MIN_PROTECTED_ID:
+		index = self.MIN_PROTECTED_ID
+	    else:
+		index = self.apps_index
+	    self.menu_help.reindex(index)			#añadido
+	    menuhelpwx = self.build_menu(self.menu_help,help=True)#añadido
+	return menuhelpwx					#añadido
 
 
     def interface_post1(self):
-
-        menu_help = wx.Menu()
-        item_h5 = wx.MenuItem(menu_help, self.ID_HELP5, u'&Getting Started', u'HTML documentation about getting started with the application')
-        menu_help.AppendItem(item_h5)
-#        item_h4 = wx.MenuItem(menu_help, self.ID_HELP4, u'Graphical &Interface', u'HTML documentation about MaxFEM GUI')
-#        menu_help.AppendItem(item_h4)
-        item_h3 = wx.MenuItem(menu_help, self.ID_HELP3, u'&User guide', u'HTML user guide')
-        menu_help.AppendItem(item_h3)
- #       item_h2 = wx.MenuItem(menu_help, self.ID_HELP2, u'&Applications', u'HTML documentation of applications')
- #       menu_help.AppendItem(item_h2)
-        item_h1 = wx.MenuItem(menu_help, self.ID_HELP1, u'&Math models', u'HTML documentation about math models')
-        menu_help.AppendItem(item_h1)
-#        item_h3 = wx.MenuItem(menu_help, self.ID_HELP3, u'&Test PDF', u'PDF documentation test')
-#        menu_help.AppendItem(item_h3)
-        menu_help.AppendSeparator()
-        item_h = wx.MenuItem(menu_help, self.ID_ABOUT, u'Abou&t', u'HTML authoring and basic information about MaxFEM')
-        menu_help.AppendItem(item_h)
-#        item_h = wx.MenuItem(menu_help, self.ID_ABOUT, u'&About', u'About this program')
-#        menu_help.AppendItem(item_h)
-        self.menubar.Append(menu_help, u'&Help')
+# Construccion del menu Help al estilo Apps y Sample data
+	menuhelpwx = self.load_menuhelp()			#añadido
+	if menuhelpwx is not None:				#añadido
+            self.menubar.Append(menuhelpwx, self.help_name)		#añadido
 
         # pseudo separador. provisional
         if len(self.menulast) > 0:
@@ -491,12 +570,30 @@ class Window(wx.Frame):
         for menu in self.menulast:
             self.menubar.Append(menu[0], menu[1]) # 0 menu 1 name
 
+        self.menulast = []
+
+#        menu_help = wx.Menu()
+#        item_h5 = wx.MenuItem(menu_help, self.ID_HELP5, u'&Getting Started', u'HTML documentation about getting started with the application')
+#        menu_help.AppendItem(item_h5)
+#        item_h4 = wx.MenuItem(menu_help, self.ID_HELP4, u'Graphical &Interface', u'HTML documentation about MaxFEM GUI')
+#        menu_help.AppendItem(item_h4)
+#        item_h3 = wx.MenuItem(menu_help, self.ID_HELP3, u'&User guide', u'HTML user guide')
+#        menu_help.AppendItem(item_h3)
+#        item_h2 = wx.MenuItem(menu_help, self.ID_HELP2, u'&Applications', u'HTML documentation of applications')
+#        menu_help.AppendItem(item_h2)
+#        item_h1 = wx.MenuItem(menu_help, self.ID_HELP1, u'&Math models', u'HTML documentation about math models')
+#        menu_help.AppendItem(item_h1)
+#        item_h3 = wx.MenuItem(menu_help, self.ID_HELP3, u'&Test PDF', u'PDF documentation test')
+#        menu_help.AppendItem(item_h3)
+#        menu_help.AppendSeparator()
+#        item_h = wx.MenuItem(menu_help, self.ID_ABOUT, u'Abou&t', u'HTML authoring and basic information about MaxFEM')
+#        menu_help.AppendItem(item_h)
+#        item_h = wx.MenuItem(menu_help, self.ID_ABOUT, u'&About', u'About this program')
+#        menu_help.AppendItem(item_h)
+
         # pseudo separador. provisional
         #if len(self.menulast) > 0:
         #    self.interface_separa()
-
-        self.menulast = []
-
 
 
     def process_pending(self):
@@ -577,6 +674,174 @@ class Window(wx.Frame):
                 print 'PATH_WRITE_FAILED'
                 pass
 
+    def reset_config(self):
+        if dialogs.ask_ok_cancel(self, 'If you continue, your configuration file copy will be reset, all changes you made to it will be lost.'):
+            self.copy_config(True)
+            self.load_config()
+            self.menu_postload(False) # false => does not test mesh existence
+
+
+    def copy_config(self, force=False):
+        try:
+            if self.path_local_config is not None:
+                if force or not os.path.exists(self.path_local_config):
+                    print u'Copying configuration file to:', self.path_local_config, '...'
+                    if not os.path.exists(self.path_local_config_dir):
+                        try:
+                            os.mkdir(self.path_local_config_dir)
+                        except OSError, e:
+                            print 'Error creating materials directory:', e
+
+                    from_file1 = os.path.join(self.path_exe, os.pardir, config.DIR_CONFIG, config.FILE_CONFIG)
+                    from_file2 = os.path.join(self.path_exe, os.pardir, config.DIR_CONFIG, config.FILE_CONFIG_PREFIX + self.title + config.FILE_CONFIG_SUFFIX)
+                    
+                    if os.path.exists(from_file1):
+                        from_file = from_file1
+                    else:
+                        if os.path.exists(from_file2):
+                            from_file = from_file2
+                        else:
+                            #self.errormsg(u'Error copying materials database to local folder. '+\
+                #'File not found. Some funcionality may be affected.')
+			    print u'Error copying configuration file to local folder. '+\
+                'File not found. Some funcionality may be affected.'
+                            return
+
+                    shutil.copy2( from_file, self.path_local_config )
+        except (IOError, shutil.Error, OSError), err:
+            print repr(err)
+            self.errormsg(u'Error copying materials database to local folder. '+\
+                'Some funcionality may be affected');
+
+
+    def load_config(self):
+        ok = True
+	print self.path_local_config
+        if self.path_local_config is not None:
+            menuconfig = Menus.Menus(self)
+            ok &= menuconfig.load_file(self.path_local_config)
+            if ok:
+                self.config = menuconfig
+        else:
+            ok &= False
+        return ok
+
+
+
+
+
+
+
+
+    def save_config(self):
+        if self.config is not None and self.path_local_config is not None:
+            # True: force: para que o garde ainda que un atributo indique o contrario
+            self.config.save_menu(self.path_local_config, True)
+	    self.apply_config()
+            # BUG: working dir not set. consider other conditions
+#            if self.path_local is not None:
+#                self.config.save_data(config.FILE_CONFIG_DAT, force=True)
+
+
+    def init_config(self):
+	self.languaje = u'English'
+	self.project_name = u'&Project'
+	self.folder_name = u'Select folder'
+	self.applications_name = u'Applications'
+	self.sample_data_name = u'Sample data'
+	self.quit_name = u'&Quit'
+	self.help_name = u'&Help'
+	self.materialsdb_name = u'&Help'
+	self.maximize_window = False
+	self.warning_on_load = True
+	self.splitterA_size = 240
+	self.window_width = 900
+	self.window_height = 600
+
+
+
+
+
+
+
+
+
+    def apply_config(self):
+	if self.config is None 	or not self.apply_config_flag:
+	    return
+
+	for menuch in self.config.get_children():
+# Config file interface options
+	    if menuch.get_name() == config.CONFIG_MENU_NAME:
+		for submenuch in menuch.get_children():
+		    if submenuch.get_name() == config.CONFIG_SUBMENU_NAME:
+			for structch in submenuch.get_children():
+			    if structch.get_name() == config.CONFIG_STRUCT_NAME:
+				for ch in structch.get_children():
+				    try:
+					#Maximized at start: yes/no
+					if ch.get_name() == config.CONFIG_MAXIMIZE_OPTION:
+					    prop = ch.get_elements_selected()[0]
+					    self.maximize_window = (prop.lower() == config.VALUE_YES)
+					#Enabled warning dialog when load app or example: yes/no
+					elif ch.get_name() == config.CONFIG_WARNONLOAD_OPTION:
+					    prop = ch.get_elements_selected()[0]
+					    self.warning_on_load = (prop.lower() == config.VALUE_NO)
+					#Set PanelWidgets size
+					elif ch.get_name() == config.CONFIG_WIDGETS_PANEL_SIZE:
+					    self.splitterA_size = int(ch.get_elements()[0])
+					    #cambia en el aire.
+					    self.splitterA.SetSashPosition(self.splitterA_size, redraw=True)
+					#Set Window size
+					elif ch.get_name() == config.CONFIG_WINDOW_SIZE:
+					    for wsch in ch.get_children():
+						if wsch.get_name() == config.CONFIG_WINDOW_WIDTH:
+						    self.window_width = int(wsch.get_elements()[0])
+						if wsch.get_name() == config.CONFIG_WINDOW_HEIGHT:
+						    self.window_height = int(wsch.get_elements()[0])
+					    #cambia en el aire
+					    self.SetSize((self.window_width,self.window_height))
+				    except:
+					pass
+# Config file internationalization options
+	    elif menuch.get_name() == config.CONFIG_INTERNACIONALIZATION:	
+		for submenuch in menuch.get_children():
+		    if submenuch.get_name() == self.languaje:
+			for structch in submenuch.get_children():
+			    if structch.get_name() == u'Project':
+				for ch in structch.get_children():
+				    elementlist = ch.get_elements()
+				    if ch.get_name() == u'Project':
+					if len(elementlist) > 0:
+					    self.project_name = ch.get_elements()[0]
+				    elif ch.get_name() == u'Folder':
+					if len(elementlist) > 0:
+					    self.folder_name = ch.get_elements()[0]
+				    elif ch.get_name() == u'Applications':
+					if len(elementlist) > 0:
+					    self.applications_name = ch.get_elements()[0]
+				    elif ch.get_name() == u'Sample data':
+					if len(elementlist) > 0:
+					    self.sample_data_name = ch.get_elements()[0]
+				    elif ch.get_name() == u'Quit':
+					if len(elementlist) > 0:
+					    self.quit_name = ch.get_elements()[0]
+			    if structch.get_name() == u'Help':
+				for ch in structch.get_children():
+				    if ch.get_name() == u'Help':
+					self.help_name = ch.get_elements()[0]
+			    if structch.get_name() == u'Materials':
+				for ch in structch.get_children():
+				    if ch.get_name() == u'Database':
+					self.materialsdb_name = ch.get_elements()[0]
+
+
+
+    def reset_materials(self):
+        if dialogs.ask_ok_cancel(self, 'If you continue, your materials database copy will be reset, all changes you made to it will be lost.'):
+            self.copy_materials(True)
+            self.load_materials()
+            self.menu_postload(False) # false => does not test mesh existence
 
 
     def copy_materials(self, force=False):
@@ -674,6 +939,7 @@ class Window(wx.Frame):
         self.menus.save_menu()
         self.menus.save_data(extras=extra)
         self.save_materials()
+	self.save_config()
 
 
 
@@ -729,7 +995,17 @@ class Window(wx.Frame):
                     self.menus.del_childs_by_name(ch.get_name()) # whithout this, Materials Database Reset increments the number of menu items
                     self.menus.add_child(ch) # resets parent of ch
 		#self.menus.reindex(self.apps_index)
-
+# Config menu en la barra de menús
+#            if self.config is not None:
+#                for ch in self.config.get_children(): # normalmente só hai un
+#                    # para que non o garde co menu
+#                    # pero asi non o garda o materials tampouco! [ agora si: force=True en Menus.save_menu ]
+#                    ch.get_attribs()[config.AT_SAVETHIS] = config.VALUE_FALSE # pasar a get_data() ?
+#                    # para leaf folder file que garde rutas absolutas
+#                    ch.get_data()[config.IS_CONFIG] = True
+#                    self.menus.del_childs_by_name(ch.get_name()) # whithout this, Materials Database Reset increments the number of menu items
+#                    self.menus.add_child(ch) # resets parent of ch
+		#self.menus.reindex(self.apps_index)
 	    self.menus.reindex(self.apps_index)
 
             self.interface_all()
@@ -758,7 +1034,7 @@ class Window(wx.Frame):
     def menu_copy_load(self, dirs):
         print 'menu_copy_load', dirs
         ret = None
-        if dialogs.ask_ok_cancel(self, 'If you continue, some files in the current working folder may be overwritten'):
+        if self.warning_on_load or dialogs.ask_ok_cancel(self, 'If you continue, some files in the current working folder may be overwritten'):
             # cerra log
             # para que non falle ao intentar borrar un arquivo aberto
             self.logger.end()
@@ -994,6 +1270,7 @@ class Window(wx.Frame):
 
     def event_menu(self, event):
         id = event.GetId()
+
         if (id % config.ID_SPACES == config.SPACE_MENU):
             if (id==self.ID_EXIT):
                 self.Close()
@@ -1002,14 +1279,40 @@ class Window(wx.Frame):
         self.panelA.display_set(None) # save mem
         self.save_all() # menu data materials
 #        self.menu_choice()
-
+	self.apply_config_flag = False
 
         if (id % config.ID_SPACES == config.SPACE_MENU):
+            index = id // config.ID_SPACES
 
             if (id==self.ID_EXIT):
                 self.Close()
             elif (id==self.ID_OPEN):
                 result = self.event_folder()
+            elif (id==self.ID_TDEL):
+                self.panelB.rem()
+            elif (id==self.ID_DUMP):
+                self.menus.dump()
+            elif (id==self.ID_SAVE):
+                # protexer de salvar sen directorio de traballo
+                self.menus.save_data()
+	    else:
+		try:
+		    submenu = self.menu_help.get_index( index )
+		except:
+		    submenu = None
+		# Control de eventos del menu Help al estilo Apps y Sample data
+		if submenu is not None:							#añadido
+		    if submenu.get_attribs()[config.AT_HELP] == config.VALUE_TRUE:	#añadido
+			try:								#añadido
+			    dirname = submenu.get_attribs()[config.AT_SOURCE]		#añadido
+			except:								#añadido
+			    dirname = submenu.get_attribs()[u'name']			#añadido
+			if not self.launch_auto(os.path.join(dirname, u'index.xhtml')):	#añadido
+			    if not self.launch_auto(os.path.join(dirname, u'index.html')):#añadido
+				if not self.launch_auto(os.path.join(dirname, u'index.htm')):#añadido
+				    self.errormsg(u'File '+dirname+u'/'+u'index.[xhtml | html | htm] not exists.')#añadido
+##############################################################33
+# Deprecated actions
 #            elif (id==self.ID_VADD):
 #                self.panelB.add_p()
 #            elif (id==self.ID_MADD):
@@ -1018,33 +1321,24 @@ class Window(wx.Frame):
 #                self.aux_meshes()
 #            elif (id==self.ID_MACTION):
 #                self.panelB.maction()
-            elif (id==self.ID_TDEL):
-                self.panelB.rem()
-            elif (id==self.ID_DUMP):
-                self.menus.dump()
-            elif (id==self.ID_SAVE):
-                # protexer de salvar sen directorio de traballo
-                self.menus.save_data()
-            elif (id==self.ID_ABOUT):
+#            elif (id==self.ID_ABOUT):
 #                dialogs.about(self.title, self.path_exe)
-                self.launch_auto(os.path.join(u'About',u'index.html'), False)
+#                self.launch_auto(os.path.join(u'About',u'index.html'), False)
 #        item_h3 = wx.MenuItem(menu_help, self.ID_HELP3, u'&Test PDF', u'PDF documentation test')
 #        menu_help.AppendItem(item_h3)
-
-            elif (id==self.ID_HELP1):
-                self.launch_auto(os.path.join(u'Math_models',u'index.html'), False)
-            elif (id==self.ID_HELP2):
-                self.launch_auto(os.path.join(u'apps',u'index.html'))
-            elif (id==self.ID_HELP3):
-		self.launch_auto(os.path.join(u'User_guide',u'index.html'))
-            elif (id==self.ID_HELP4):
-		self.launch_auto(os.path.join(u'interface',u'index.html'))
-            elif (id==self.ID_HELP5):
-		self.launch_auto(os.path.join(u'Getting_Started',u'index.html'))
-                #self.launch_auto(u'sample.pdf')
-
+#            elif (id==self.ID_HELP1):
+#                self.launch_auto(os.path.join(u'Math_models',u'index.html'), False)
+#            elif (id==self.ID_HELP2):
+#                self.launch_auto(os.path.join(u'apps',u'index.html'))
+#            elif (id==self.ID_HELP3):
+#		self.launch_auto(os.path.join(u'User_guide',u'index.html'))
+#            elif (id==self.ID_HELP4):
+#		self.launch_auto(os.path.join(u'interface',u'index.html'))
+#            elif (id==self.ID_HELP5):
+#		self.launch_auto(os.path.join(u'Getting_Started',u'index.html'))
+#                #self.launch_auto(u'sample.pdf')
 #        elif (id % config.ID_SPACES == config.SPACE_MENU_APP):
-
+#
 #            index = id // config.ID_SPACES
 #            result = self.copy_mnu(self.apps.get_filename(index))
 
@@ -1058,6 +1352,10 @@ class Window(wx.Frame):
 		if submenu is None:
 		    if self.sample_data is not None:
 		        submenu = self.sample_data.get_index( index )
+		if submenu is None:
+		    if self.config is not None:
+			submenu = self.config.get_index( index )
+			self.apply_config_flag = True
             if (submenu is None):
                 print index, id
             else:
@@ -1067,7 +1365,7 @@ class Window(wx.Frame):
             	if copyvalue is not None:					#añadido
                     if self.menu_copy_load(copyvalue):				#añadido
 			if not self.has_app:
-		            self.has_app = True			#añadido
+		            self.has_app = True					#añadido
 			    self.interface_all()				#añadido
 
                 actions = submenu.get_actions()
@@ -1086,6 +1384,8 @@ class Window(wx.Frame):
                         self.panelB.rem()
                     elif name == u'reset_materials':
                         self.reset_materials()
+                    elif name == u'reset_config':
+                        self.reset_config()
                     else:
                         self.errormsg(u'Unknown action: ' + name)
                 children1 = submenu.get_children()
@@ -1100,20 +1400,25 @@ class Window(wx.Frame):
                     self.panelA.display_set(display)
 
 
-
+#Se añade control de lanzamiento
     def launch_auto(self, path, allow_home=True):
-        path1 = os.path.join(self.configdir,config.DIR_DOCS,path)
-        path2 = os.path.join(self.path_exe,os.pardir,config.DIR_DOCS,path)
+        path1 = os.path.abspath(os.path.join(self.configdir,config.DIR_DOCS,path))
+        path2 = os.path.abspath(os.path.join(self.path_exe,os.pardir,config.DIR_DOCS,path))
         if allow_home and os.path.exists(path1):
-            if os.name == 'nt':
-                self.launch(path1)
-            else:
-                self.launch('file://'+path1)
-        else:
-            if os.name == 'nt':
-                self.launch(path2)
-            else:
-                self.launch('file://'+path2)
+#            if os.name == 'nt':
+#                self.launch(path1)
+#            else:
+#                self.launch('file://'+path1)
+            self.launch('file:///'+path1)
+	    return True					#añadido
+        elif os.path.exists(path2):
+#            if os.name == 'nt':
+#                self.launch(path2)
+#            else:
+#                self.launch('file://'+path2)
+            self.launch('file:///'+path2)
+	    return True					#añadido
+	return False					#añadido
 
 
 
@@ -1211,8 +1516,8 @@ class Window(wx.Frame):
 			filegr2.write(str(v) + u' ')					#añadido
 		    filegr2.write(u'\n')						#añadido
 		filegr2.write(signals.get(u'title') + u'\n')				#añadido
-		filegr2.write(signals.get(u'xlabel') + u'\n')				#añadido
-		filegr2.write(signals.get(u'ylabel') + u'\n')				#añadido
+		filegr2.write(u'X (' +signals.get(u'xlabel') + u')' + u'\n')		#añadido
+		filegr2.write(u'Y' + u'\n')						#añadido
 		for sig in sigs:							#añadido
 		    filegr2.write(sig.get(u'yaxis').get(u'legend') + u'\n')		#añadido
 		filegr2.close()								#añadido

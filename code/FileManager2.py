@@ -9,7 +9,7 @@ import FileManager2Trackers as FMT
 
 
 
-Debug = True
+Debug = False
 
 
 

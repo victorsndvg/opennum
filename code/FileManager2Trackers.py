@@ -13,7 +13,7 @@ import FilePVD
 import Formulas as psps # para postproceso
 from v_vtk import sourceVTK2
 
-
+Debug = False
 
 # Tracker used in other classes
 
@@ -36,7 +36,8 @@ class Tracker:
         self.name = '-'
         self.center = None
         self.has_series_ = False
-	self.is_nodepvd = False
+	self.is_nodepvd = False			#añadido. identificacion de trackernode
+	self.is_void = False			#añadido. identificacion de trackervoid
 
 
 
@@ -97,6 +98,13 @@ class Tracker:
                 changed = None
         return changed
 
+
+# Devielve una lista de trackers a partir de una lista de mallas individuales
+    def get_additional_trackers(self,filesmesh):				#añadido
+	trackerlist = []							#añadido
+	for fn in filesmesh:							#añadido	
+	    trackerlist.append(self.fm.get_tracker_mesh_file(fn))		#añadido
+	return trackerlist
 
 
 # public
@@ -262,6 +270,7 @@ class TrackerVoid(Tracker):
     def __init__(self, fm):
         Tracker.__init__(self, fm)
         self.needs_vtkfiles = False
+	self.is_void = True
 
     def get_src(self, labels=None):
         # non se engaden labels para o obxecto baleiro
@@ -460,7 +469,7 @@ class TrackerMFMMFFFiles(Tracker):
             elif self.params.get('fielddomain') == 'cell':
                 anum = cnum
 
-            print 'point', pnum, 'cell', cnum, 'field', fnum, 'point_or_cell', anum
+            if Debug: print 'point', pnum, 'cell', cnum, 'field', fnum, 'point_or_cell', anum
                 
             if anum == fnum:
                 if self.params.get('fielddomain') == 'point':
@@ -763,7 +772,11 @@ class TrackerNodeFiles(Tracker):
         if self.trackers is not None:						#añadido
 	    t = []
 	    for tr in self.trackers:
-		t.append(tr.get_tracker(index))
+		# Captura del error. Necesario en mallas adicionales
+		try:								#añadido
+		    t.append(tr.get_tracker(index))
+		except:								#añadido
+		    pass							#añadido
             return t 								#añadido
 				
         rel = self.times[index].get('file')					#añadido
@@ -782,11 +795,16 @@ class TrackerNodeFiles(Tracker):
         return tracker								#añadido
 
 
+    # Devuelve la lista de tiempos 
     def get_times(self):							#añadido
 	times = []								#añadido
 	for tr in self.trackers:						#añadido
-	    lasttime = tr.get_times()						#añadido
-	    times.append(tr.get_times())					#añadido
+	    # Captura del error. Necesario en mallas adicionales
+	    try:								#añadido
+		lasttime = tr.get_times()					#añadido
+		times.append(tr.get_times())					#añadido
+	    except:								#añadido
+		pass								#añadido
 	return lasttime								#añadido
 
 
@@ -800,13 +818,22 @@ class TrackerNodeFiles(Tracker):
 	if self.is_nodepvd:							#añadido
 	    if index is not None:						#añadido
 		for tr in trackers:						#añadido
-		    t = tr.get_tracker(index)					#añadido
-		    labels1 = []						#añadido
-		    src = t.get_src(labels1,index)				#añadido	
-		    if isinstance(src, basestring):				#añadido
-			return (src, [])					#añadido
-		    srcs.append(src)						#añadido
-		    labels.append(labels1) # append non extend. habilitar varias/ningunha label por src#añadido
+		    # Captura del error. Necesario en la actualización de mallas adicionales
+		    try:							#añadido
+			t = tr.get_tracker(index)				#añadido
+			labels1 = []						#añadido
+			src = t.get_src(labels1,index)				#añadido	
+			if isinstance(src, basestring):				#añadido
+			    return (src, [])					#añadido
+			srcs.append(src)					#añadido
+			labels.append(labels1) # append non extend. habilitar varias/ningunha label por src#añadido
+		    except:							#añadido
+                	labels1 = []
+                	src = tr.get_src(labels1,index)
+                	if isinstance(src, basestring):
+                    	    return (src, [])
+                	srcs.append(src)
+                	labels.append(labels1) # append non extend. habilitar varias/ningunha label por src
 	    else:
 		return ['Error','Index in multiple PVD trackerNodeFiles is None']
 
@@ -1130,7 +1157,7 @@ class TrackerFormula(Tracker):
                     floattext = float(text)
                 except ValueError:
                     return "Error converting '" + text + "' to float"
-                print 'Variable ' + name + ': ' + unicode(floattext)
+                if Debug: print 'Variable ' + name + ': ' + unicode(floattext)
                 varias.append((name,'value',floattext))
 #            elif type2 == 'data': # caso non permitido
 #                text = var[2]
@@ -1177,7 +1204,7 @@ class TrackerFormula(Tracker):
             size = array.GetNumberOfTuples()
             comp = array.GetNumberOfComponents()
 
-            print 'Variable ' + n + ': size ' + unicode(size) + ' comp ' + unicode(comp)
+            if Debug: print 'Variable ' + n + ': size ' + unicode(size) + ' comp ' + unicode(comp)
 
             if the_size is None:
                 the_size = size
@@ -1639,7 +1666,7 @@ class TrackerFormula2(Tracker):
             size = array.GetNumberOfTuples()
             comp = array.GetNumberOfComponents()
 
-            print 'Variable ' + n + ': size ' + unicode(size) + ' comp ' + unicode(comp)
+            if Debug: print 'Variable ' + n + ': size ' + unicode(size) + ' comp ' + unicode(comp)
 
             if the_size is None:
                 the_size = size
@@ -1705,7 +1732,7 @@ class TrackerFormula2(Tracker):
 #                ret = tracker.update()
 #                if ret is None:
 #                    return 'Error updating formula-time sub object (b)'
-                print 'present tracker', tracker
+#                print 'present tracker', tracker
                 vardata[i]['tracker'] = tracker
                 vardata[i]['revision'] = -1
             else:
@@ -1741,23 +1768,54 @@ class TrackerFormula2(Tracker):
                     return 'Error reading value: 1 value needed; ' + unicode(len(texts)) + ' values found.'
                 text = texts[0]
                 try:
-                    floattext = float(text)
+                    numtext = float(text)
                 except ValueError:
-                    return "Error converting '" + text + "' to float"
-                print 'Variable ' + name + ': ' + unicode(floattext)
-                vardata[i]['value'] = floattext
+		    vals = []									#añadido
+		    if self.parse_complex(text,'(',')',vals) == -1:				#añadido
+			return "Error converting '" + text + "' to a numeric type"		#añadido
+		    numtext = vals[0]								#añadido
+                if Debug: print 'Variable ' + name + ': ' + unicode(numtext)			#añadido
+                vardata[i]['value'] = numtext
             else:
                 vardata[i]['value'] = None
         return True
 
 
+    def parse_complex(self, string,startchar,endchar,lista):
+	"""
+	Parse a list of complex and check the syntax. Recursive function.
+
+	string: type String.
+	startchar: type Character.
+	endchar: type Character.
+	list: type List.
+	"""
+
+	start = string.find(startchar)
+	end = string.find(endchar)
+
+	if start<end and start != -1 and end != -1:
+	    complexstr = string[start:end+1]
+	    try:
+		if not len(map(float, complexstr[1:-1].replace(',', ' ').split())) == 2:
+		    return -1
+		complexparts = map(float, complexstr[1:-1].replace(',', ' ').split())
+		lista.append(complex(complexparts[0], complexparts[1]))
+		return self.parse_complex(string[end+1:],startchar,endchar,lista)
+	    except:
+		return -1
+	    return 1
+	elif (start == -1 and end != -1) or (start != -1 and end == -1):
+	    return -1
+	else:
+	    return 0
 
     # depende de tracker. modificar index_calculated en cada chamada
     def parse_variables_srcs(self, vardata, index):
         for i in xrange(len(vardata)):
             tracker = vardata[i].get('tracker')
 	    data = self.data['formula_data'][i]
-	    if tracker.is_nodepvd:								#añadido
+	    if tracker is not None and tracker.is_nodepvd:					#añadido
 		labels = []									#añadido
 		fielddata = {}									#añadido
 		fielddata['name'] = data.get('fieldname')					#añadido
@@ -1767,11 +1825,10 @@ class TrackerFormula2(Tracker):
                 vardata[i]['srcfieldname'] = data.get('fieldname')
 	    else:
 		if index >= 0 and tracker is not None and tracker.has_series(): # reempraza por tempo 'index'
-		    print 'if index >= 0 and tracker is not None and tracker.has_series()'
 		    tracker = tracker.get_tracker(index)
                     if not isinstance(tracker, Tracker):
 			return unicode(tracker)
-		if isinstance(tracker, Tracker) or tracker is None:
+		if isinstance(tracker, Tracker):# or tracker is None:
 		    # non válido para os pvd (local local?)
 		    src = tracker.get_src_group(1) # ou tracker.get_src_group_f(1, self.fielddata, mnames) "ou sin f"
                     if isinstance(src, basestring):
@@ -2002,4 +2059,5 @@ class TrackerFormula2(Tracker):
                     if tracker2 is not None and isinstance(tracker2, Tracker):
                         files.extend(tracker2.get_original_files())
         return files
+
 

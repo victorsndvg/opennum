@@ -165,6 +165,8 @@ class Widget(wx.Panel):
                 widget = WidgetEntry.WidgetEntry(0, parent, window, struct, index)
             elif (type_ == u'char'):
                 widget = WidgetEntry.WidgetEntry(1, parent, window, struct, index)
+            elif (type_ == u'complex'):
+                widget = WidgetEntry.WidgetEntry(2, parent, window, struct, index)
             elif (type_ == u'charlist' and showfile is None):
                 if (selection is None or selection == "single"):
 #                    widget = WidgetChoice.WidgetChoice(parent, window, struct, index)

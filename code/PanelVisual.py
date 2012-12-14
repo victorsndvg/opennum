@@ -230,7 +230,7 @@ class PanelVisual(wx.Panel):
 
 # mode: ...
     def internal(self, struct, mode, item=None):
-        print 'PanelVisual: internal:', struct.get_tag(), struct.get_name(), mode
+#        print 'PanelVisual: internal:', struct.get_tag(), struct.get_name(), mode
     
 # rethink: add (plot=!="true") != update (plot ="true")
         
@@ -285,7 +285,7 @@ class PanelVisual(wx.Panel):
             was = False
 	
 
-        print 'plotlist was', was is not None, filenames, fieldname, typename, extra, struct
+#        print 'plotlist was', was is not None, filenames, fieldname, typename, extra, struct
         
         filemanager = self.window.filemanager
 
@@ -326,6 +326,9 @@ class PanelVisual(wx.Panel):
                 self.window.errormsg(u'Error creating plot: ' + tracker)
             elif tracker is None:
                 self.window.errormsg(u'Error creating plot: Undefined plot files')
+	    # si añadimos un nuevo tracker vacio
+            elif tracker.is_void:								#añadido
+                self.window.errormsg(u'Error creating plot: No mesh has been selected')		#añadido
             else:
                 if tracker.is_changed() is not None:
                     if tracker.update() is not None:
@@ -335,7 +338,7 @@ class PanelVisual(wx.Panel):
                     else: # tracker.update() is None
                         self.window.errormsg(u'Error converting mesh to vtk. Not creating plot')
                 else: # tracker.is_changed() is Non
-		    print filenames, fieldname, typename, extra, struct, tracker, data
+#		    print filenames, fieldname, typename, extra, struct, tracker, data
                     self.window.errormsg(u'Unable to access file(s) to create plot')
 
             self.window.add_text(u'Adding visualization end ...\n')
@@ -354,17 +357,22 @@ class PanelVisual(wx.Panel):
                 # reformar: unha soa funcion update_tracker_data fará todo
                 if tracker.is_changed() is not None:
                     if tracker.update() is not None:
-
                         if view.updated_tracker(tracker):
                             if view.updatable_tracker():
-
                                 if tracker is not view.get_tracker_():
                                     view.set_tracker_(tracker)
+				# Si es nodepvd se permite por defecto que tenga mallas adicionales
+				# En caso de que no las tenga se compruba en plot.check_additional. deprecated
+				# Todos los trackers tienen la posibilidad de tener mallas adicionales.
+				    if True:#tracker.is_nodepvd:							#añadido
+			            	view.set_additional(True)							#añadido
+				# Si el tracker esta vacio no se actualiza nada
+				    elif tracker.is_void:								#añadido
+					return										#añadido
 
                                 view.set_data(data)
                                     
                                 res = view.update_tracker()
-                                
                                 if isinstance(res, basestring):
                                     self.window.errormsg(u'Error updating plot with new data files: ' + res)
                                 

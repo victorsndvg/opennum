@@ -99,7 +99,7 @@ class PlotVectorDeformed(Plot.Plot):
             self.warpT.SetInputConnection(self.src.GetOutputPort())
 	
 	self.warpT.GetOutput().GetPointData().SetVectors(self.vectors)
-	print self.warpT
+#	print self.warpT
 
         
 	#Creacion de una tabla de color
@@ -128,7 +128,7 @@ class PlotVectorDeformed(Plot.Plot):
 	self.wireM2.SetLookupTable(lut)				#añadido
 	self.wireM2.Update()					#añadido
 
-	print self.wireM2 
+#	print self.wireM2 
 
         self.wireA2 = vtk.vtkActor()
         self.wireA2.SetMapper(self.wireM2)

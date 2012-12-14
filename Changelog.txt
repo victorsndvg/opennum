@@ -13,3 +13,15 @@ Apps: Begginer and Intermediate examples added.
 Help: Some corrections.
 PlotMaterials.py: bug found with the new version of vtk. Fixed!
 GUI: autoload applications with only one example. New mode 'frontcode' in WindowHelp. Plot source allows 'menu' prefix.
+
+2012-12-14
+
+Additional meshes: allows additional meshes with animation and field visualization.
+Complex: complex datatype added.
+Formulas: int(), float(), complex(), imag() and real() functions added.
+File subtype: new beahaviour for the xml file subtype tag and subtype=data added.
+Widget header: multiline widget header added.
+Scalar deformed plot: modification of the best scale algorithm.
+Streamline plot: modification of the default number of streamlines.
+Help: Automatic menu building added and new dirs distribution.
+Separator: menu separators from xml and dirs added.

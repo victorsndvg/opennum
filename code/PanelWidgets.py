@@ -66,6 +66,9 @@ class PanelWidgets(wx.ScrolledWindow): #Panel):
 
         self.add_widget(struct)
 
+	# poner alguna condición para no evaluar constantemente
+#	self.window.apply_config() #actualiza la configuracion en tiempo real
+
 	#Scroll automatico para cada widget añadido.
 	w,h = self.GetVirtualSizeTuple()			#añadido
 	self.Scroll(0,h)					#añadido
@@ -120,7 +123,7 @@ class PanelWidgets(wx.ScrolledWindow): #Panel):
 		    self.widgetcounter = self.widgetcounter + 1			#añadido
 		#Gestion del foco del primer widget en panelWidgets
 		if self.widgetcounter == 1 and widget is not None:		#añadido
-			widget.SetFocus()					#añadido
+		    widget.SetFocus()					#añadido
                     
 #        for a in self.widgets:
             #a.Fit()
@@ -197,4 +200,5 @@ class PanelWidgets(wx.ScrolledWindow): #Panel):
     def event_struct_change(self, event):
         #print 'pulsou', event.struct, event.index
         self.display_add(event.struct, event.index)
+	self.window.apply_config()
 

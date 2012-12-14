@@ -1,0 +1,121 @@
+<menus name="Config file">
+	<menu name="Configuration">
+		<submenu name="Preferences">
+			<struct name="Options" title="Window settings:">
+				<leaf name="Maximize at start" title="Choose option:" type="charlist" selection="single">
+					<element>Yes</element>
+					<element selected="true">No</element>
+				</leaf>
+				<leaf name="Show warning on load" title="Choose option:" type="charlist" selection="single">
+					<element selected="true">Yes</element>
+					<element>No</element>
+				</leaf>
+				<leaf name="Default widgets panel width" title="Give width (pixels):" type="float">
+					<element>240</element>
+				</leaf>
+				<struct name="Default window size" title="Select dimension (pixels):">
+					<leaf name="Window width" title="Give width:" type="float">
+						<element>900</element>
+					</leaf>
+					<leaf name="Window height" title="Give height:" type="float">
+						<element>600</element>
+					</leaf>
+				</struct>
+			</struct>
+		</submenu>
+		<submenu name="Reset">
+			<action name="reset_config">
+			</action>
+		</submenu>
+	</menu>
+<!-- Para seleccionar el idioma, es necesario cambiar la variable LANGUAGE en config.py-->
+	<menu name="Internationalization">
+		<submenu name="English">
+			<struct name="Project" title="Choose option:">
+				<leaf name="Project" type="char">
+					<element>&#38;Project</element>
+				</leaf>
+				<leaf name="Folder" type="char">
+					<element>Select folder...</element>
+				</leaf>
+				<leaf name="Applications" type="char">
+					<element>Applications</element>
+				</leaf>
+				<leaf name="Sample data" type="char">
+					<element>Sample data</element>
+				</leaf>
+				<leaf name="Quit" type="char">
+					<element>&#38;Quit</element>
+				</leaf>
+			</struct>
+			<struct name="Help" title="Choose option:">
+				<leaf name="Help" type="char">
+					<element>&#38;Help</element>
+				</leaf>
+			</struct>
+			<struct name="Materials" title="Choose option:">
+				<leaf name="Database" type="char">
+					<element>&#38;Materials database</element>
+				</leaf>
+			</struct>
+		</submenu>
+		<submenu name="Spanish">
+			<struct name="Project" title="Choose option:">
+				<leaf name="Project" type="char">
+					<element>&#38;Proyecto</element>
+				</leaf>
+				<leaf name="Folder" type="char">
+					<element>Seleccionar directorio ...</element>
+				</leaf>
+				<leaf name="Applications" type="char">
+					<element>Aplicaciones</element>
+				</leaf>
+				<leaf name="Sample data" type="char">
+					<element>Ejemplos</element>
+				</leaf>
+				<leaf name="Quit" type="char">
+					<element>&#38;Salir</element>
+				</leaf>
+			</struct>
+			<struct name="Help" title="Choose option:">
+				<leaf name="Help" type="char">
+					<element>&#38;Ayuda</element>
+				</leaf>
+			</struct>
+			<struct name="Materials" title="Choose option:">
+				<leaf name="Database" type="char">
+					<element>&#38;Base de datos de Materiales</element>
+				</leaf>
+			</struct>
+		</submenu>
+		<submenu name="Galician">
+			<struct name="Project" title="Choose option:">
+				<leaf name="Project" type="char">
+					<element>&#38;Proxecto</element>
+				</leaf>
+				<leaf name="Folder" type="char">
+					<element>Seleccionar cartafol ...</element>
+				</leaf>
+				<leaf name="Applications" type="char">
+					<element>Aplicativos</element>
+				</leaf>
+				<leaf name="Sample data" type="char">
+					<element>Exemplos</element>
+				</leaf>
+				<leaf name="Quit" type="char">
+					<element>&#38;Saír</element>
+				</leaf>
+			</struct>
+			<struct name="Help" title="Choose option:">
+				<leaf name="Help" type="char">
+					<element>&#38;Axuda</element>
+				</leaf>
+			</struct>
+			<struct name="Materials" title="Choose option:">
+				<leaf name="Database" type="char">
+					<element>&#38;Base de datos de Materiais</element>
+				</leaf>
+			</struct>
+		</submenu>
+	</menu>
+</menus>
