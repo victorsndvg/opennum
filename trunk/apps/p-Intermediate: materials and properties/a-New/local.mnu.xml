@@ -1,0 +1,47 @@
+<menus name="Intermediate: animation">
+	<menu name="Assign">
+		<submenu name="Materials">
+			<struct celldata="data:element_ref" mesh="file:mesh.mfm" name="Content" plot="references" showvalues="true" title="Choose subdomain:">
+				<leaf default="true" selection="single" source="menu:/Materials database/Open/List" title="Choose material:" tooltip="Choose a material for the selected domain reference" type="charlist">
+				</leaf>
+				<leaf name="1" selection="single" source="menu:/Materials database/Open/List" title="Choose material:" tooltip="Choose a material for the selected domain reference" type="charlist">
+					<element selected="true">Material 2</element>
+				</leaf>
+				<leaf name="2" selection="single" source="menu:/Materials database/Open/List" title="Choose material:" tooltip="Choose a material for the selected domain reference" type="charlist">
+					<element selected="true">Material 3</element>
+				</leaf>
+			</struct>
+		</submenu>
+		<submenu name="Properties">
+			<struct celldata="data:element_ref" mesh="file:mesh.mfm" name="Content" plot="references" showvalues="true" title="Choose subdomain:">
+				<leaf default="true" selection="single" source="menu:/Materials database/Open/List" title="Choose material:" tooltip="Choose a material for the selected domain reference" type="charlist">
+				</leaf>
+				<leaf name="1" selection="single" source="menu:/Assign/Properties list" title="Choose property:" tooltip="Choose a material for the selected domain reference" type="charlist">
+					<element selected="true">Dielectric</element>
+				</leaf>
+				<leaf name="2" selection="single" source="menu:/Assign/Properties list" title="Choose property:" tooltip="Choose a material for the selected domain reference" type="charlist">
+					<element selected="true">Conductor</element>
+				</leaf>
+			</struct>
+		</submenu>
+		<submenu name="Properties list" hidden="true">
+			<struct name="Conductor" type="charlist">
+			</struct>
+			<struct name="Dielectric" type="charlist">
+			</struct>
+		</submenu>
+	</menu>
+	<menu name="Visualization">
+		<submenu name="Materials">
+			<struct materials="menu:/Assign/Materials/Content" mesh="file:mesh.mfm" name="Materials" plot="materials">
+			</struct>
+		</submenu>
+		<submenu name="Properties">
+			<struct materials="menu:/Assign/Properties/Content" mesh="file:mesh.mfm" name="Materials" plot="materials">
+			</struct>
+		</submenu>
+		<submenu name="Close plots">
+			<action name="close_plots" />
+		</submenu>
+	</menu>		
+</menus>

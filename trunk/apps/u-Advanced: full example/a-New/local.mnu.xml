@@ -1,0 +1,347 @@
+<menus name="Advanced: full example">
+
+
+    <menu name="Mesh">
+        <submenu name="Open">
+            <leaf name="Mesh file" type="file" subtype="mesh:All supported (*.mfm;*.unv)|*.mfm;*.unv| Modulef Formatted Meshes (*.mfm)|*.mfm| Universal files (*.unv)|*.unv" title="Choose mesh file:" tooltip="Select the 3D mesh file that will be used">
+            </leaf>
+        </submenu>
+    </menu>
+
+
+    <menu name="Properties">
+        <submenu name="Materials">
+            <struct name="Materials" title="Choose domain references:" mesh="menu:/Mesh/Open/Mesh file" celldata="data:element_ref" showvalues="true" plot="references" tooltip="Select a domain reference for assigning a material to it">
+                <leaf default="true" title="Choose material:" selection="single" source="menu:/Materials database/Open/Materials" type="charlist" tooltip="Choose a material for the selected domain reference">
+                </leaf>
+            </struct>
+        </submenu>
+    </menu>
+
+
+    <menu name="Boundary conditions">
+        <submenu name="Potential B.C." title="Dirichlet: electric scalar potential, V (V)">
+        <struct name="Electric scalar potential" title="Electric scalar potential:" tooltip="You can add, delete or edit the electric scalar potential conditions" customize="true">
+          <struct default="true" selection="single" title="The condition is given by:" tooltip="Choose whether the condition is given as a function or as a constant value">
+            <struct name="A function" title="Fill the following data:" tooltip="Select the surface references of the boundaries associated to the condition and which function to apply">
+              <leaf name="Surface references" selection="multiple" mesh="menu:/Mesh/Open/Mesh file" celldata="data:face_ref" showvalues="true" plot="references" type="charlist">
+              </leaf>
+              <leaf name="Function name" selection="single" type="charlist">
+                    <element selected="true">Function defined by user</element>
+                    <element>Example 1: Cylinder</element>
+                    <element>Example 2: Cell</element>
+                    <element>Example 3: Ortotropy</element>
+              </leaf>
+            </struct>
+            <struct name="A constant" title="Fill in the following data:" tooltip="Select the surface references of the boundaries associated to the condition and a constant value">
+              <leaf name="Surface references" selection="multiple" mesh="menu:/Mesh/Open/Mesh file" celldata="data:face_ref" showvalues="true" plot="references" type="charlist">
+              </leaf>
+              <leaf name="Constant value" title="Constant value (V):" type="float">
+              </leaf>
+            </struct>
+          </struct>
+        </struct>
+        </submenu>
+
+        <submenu name="Normal current density B.C." title="Neumann: inward current flow, -J&#183;n (A&#8260;m&#178;)">
+        <struct name="Normal current density" title="Normal current density:" tooltip="You can add, delete or edit the normal current density conditions." customize="true" helpconfig="code,450,100" helpdata=" Electric insulation, J&#183;n = 0, is assumed by default.">
+          <struct title="The condition is given by:" tooltip="Choose whether the condition is given as a function or as a constant value" default="true" selection="single">
+            <struct name="A function" title="Fill the following data:" tooltip="Select the surface references of the boundaries associated to the condition and which function to apply">
+              <leaf name="Surface references" selection="multiple" mesh="menu:/Mesh/Open/Mesh file" celldata="data:face_ref" showvalues="true" plot="references" type="charlist">
+              </leaf>
+              <leaf name="Function name" selection="single" type="charlist">
+                    <element selected="true">Function defined by user</element>
+                    <element>Example 1: Cylinder</element>
+                    <element>Example 2: Cell</element>
+                    <element>Example 3: Ortotropy</element>
+              </leaf>
+            </struct>
+            <struct name="A constant" title="Fill in the following data:" tooltip="Select the surface references of the boundaries associated to the condition and a constant value">
+              <leaf name="Surface references" selection="multiple" mesh="menu:/Mesh/Open/Mesh file" celldata="data:face_ref" showvalues="true" plot="references" type="charlist">
+              </leaf>
+              <leaf name="Constant value" type="float" title="Constant value (A&#8260;m&#178;):">
+              </leaf>
+            </struct>
+          </struct>
+        </struct>
+        </submenu>
+
+        <submenu name="Intensity B.C." title="Neumann: inward current intensity, I (A)">
+        <struct name="Current intensity" title="Current intensity:" tooltip="You can add, delete or edit the current intensity conditions" customize="true">
+          <struct default="true" selection="single" title="The condition is given by:" tooltip="Choose whether the condition is given as a function or as a constant value">
+            <struct name="A function" title="Fill the following data:" tooltip="Select the surface references of the boundaries associated to the condition and which function to apply">
+              <leaf name="Surface references" selection="multiple" mesh="menu:/Mesh/Open/Mesh file" celldata="data:face_ref" showvalues="true" plot="references" type="charlist">
+              </leaf>
+              <leaf name="Function name" selection="single" type="charlist">
+                    <element selected="true">Function defined by user</element>
+                    <element>Example 1: Cylinder</element>
+                    <element>Example 2: Cell</element>
+                    <element>Example 3: Ortotropy</element>
+              </leaf>
+            </struct>
+            <struct name="A constant" title="Fill in the following data:" tooltip="Select the surface references of the boundaries associated to the condition and a constant value">
+              <leaf name="Surface references" selection="multiple" mesh="menu:/Mesh/Open/Mesh file" celldata="data:face_ref" showvalues="true" plot="references" type="charlist">
+              </leaf>J&#183;n
+              <leaf name="Constant value" title="Constant value (A):" type="float">
+              </leaf>
+            </struct>
+          </struct>
+        </struct>
+        </submenu>
+    </menu>
+
+    <menu name="Data">
+      <submenu name="Temperature" title="Temperature field for materials, T (&#176;C)">
+        <leaf name="Field" type="file" subtype="field:Visualization Toolkit (VTU) (*.vtu)|*.vtu" title="Choose temperature field:" tooltip="Select the temperature field for temperature dependant materials">
+        </leaf>
+      </submenu>
+    </menu>
+
+
+    <menu name="Solver">
+        <submenu name="Run">
+            <action name="exec">
+                <param args="-xml">direct_current_3d</param>
+            </action>
+        </submenu>
+
+        <submenu name="Run remote">
+            <action name="exec_ssh">
+                <param args="-xml">direct_current_3d</param>
+            </action>
+        </submenu>
+        
+        <submenu name="Stop">
+            <action name="kill_exec">
+            </action>
+        </submenu>
+    </menu>  
+
+
+ <menu name="Visualization">
+    <submenu name="Mesh">
+        <struct name="Mesh" title="Choose representation:">
+            
+            <struct name="Triangulation" mesh="menu:/Mesh/Open/Mesh file" plot="mesh"></struct>
+
+            <leaf name="Domain references" title="Choose domain references:" type="charlist" selection="multiple" mesh="menu:/Mesh/Open/Mesh file" celldata="data:element_ref" showvalues="true" plot="references"></leaf>
+
+            <leaf name="Face references" title="Choose face references:" type="charlist" selection="multiple" mesh="menu:/Mesh/Open/Mesh file" celldata="data:face_ref" showvalues="true" plot="references"></leaf>
+
+            <leaf name="Line references" title="Choose line references:" type="charlist" selection="multiple" mesh="menu:/Mesh/Open/Mesh file" celldata="data:edge_ref" showvalues="true" plot="references"></leaf>
+
+            <leaf name="Point references" title="Choose point references:" type="charlist" selection="multiple" mesh="menu:/Mesh/Open/Mesh file" pointdata="data:vertex_ref" showvalues="true" plot="references"></leaf>
+
+            <leaf name="Element numbering" type="float"  plot="numbering" title="Clicked element:" mesh="menu:/Mesh/Open/Mesh file" celldata="data:element_num"></leaf>
+
+            <leaf name="Vertex numbering" type="float"  plot="numbering" title="Clicked point:" mesh="menu:/Mesh/Open/Mesh file" pointdata="data:vertex_num"></leaf>
+
+            <struct name="Materials" mesh="menu:/Mesh/Open/Mesh file" materials="menu:/Properties/Materials/Materials" plot="materials"></struct>
+
+            <struct name="Slice" mesh="menu:/Mesh/Open/Mesh file" plot="slice"></struct>
+            
+            <struct name="Cut" mesh="menu:/Mesh/Open/Mesh file" plot="cut"></struct>
+
+            <struct name="Rough cut" mesh="menu:/Mesh/Open/Mesh file" plot="rough_cut"></struct>
+
+        </struct>
+    </submenu>
+    
+        <submenu name="Temperature field" title="Temperature field, T (&#176;C, scalar)">
+            <struct name="Temperature" title="Choose the field representation:" tooltip="Choose the way of representing the field">
+                <struct name="Filled"  mesh="menu:/Data/Temperature/Field" pointdata="data:Temperature" plot="filled">
+                </struct>
+                <struct name="Threshold"  mesh="menu:/Data/Temperature/Field" pointdata="data:Temperature" plot="threshold">
+                </struct>
+                <struct name="Isosurfaces"  mesh="menu:/Data/Temperature/Field" pointdata="data:Temperature" plot="contour">
+                </struct>
+                <struct name="Plot over line"  mesh="menu:/Data/Temperature/Field" pointdata="data:Temperature" plot="plot_over_line">
+                </struct>
+                <struct name="Slice"  mesh="menu:/Data/Temperature/Field" pointdata="data:Temperature" plot="slice">
+                </struct>
+                <struct name="Cut"  mesh="menu:/Data/Temperature/Field" pointdata="data:Temperature" plot="cut">
+                </struct>
+                <struct name="Rough cut"  mesh="menu:/Data/Temperature/Field" pointdata="data:Temperature" plot="rough_cut">
+                </struct>
+            </struct>
+        </submenu>
+
+    <submenu name="Potential, V (V, scalar)">
+        <struct name="Potential" title="Choose the field representation:" tooltip="Choose the way of representing the field">
+            <struct name="Filled"  mesh="file:fichpot.vtu" pointdata="data:Potential (V)" plot="filled">
+            </struct>
+            <struct name="Threshold"  mesh="file:fichpot.vtu" pointdata="data:Potential (V)" plot="threshold">
+            </struct>
+            <struct name="Isosurfaces"  mesh="file:fichpot.vtu" pointdata="data:Potential (V)" plot="contour">
+            </struct>
+            <struct name="Plot over line"  mesh="file:fichpot.vtu" pointdata="data:Potential (V)" plot="plot_over_line">
+            </struct>
+            <struct name="Slice" mesh="file:fichpot.vtu" pointdata="data:Potential (V)" plot="slice">
+            </struct>
+            <struct name="Cut" mesh="file:fichpot.vtu" pointdata="data:Potential (V)" plot="cut">
+            </struct>
+            <struct name="Rough cut" mesh="file:fichpot.vtu" pointdata="data:Potential (V)" plot="rough_cut">
+            </struct>
+        </struct>
+    </submenu>
+
+    <submenu name="Electric field" title="Electric field, E (V&#8260;m, vector)">
+        <struct name="Electric field" title="Choose the vector field representation:" tooltip="Choose the way of representing the vector field">
+            <struct name="Vectors" mesh="file:fichgradpot.vtu" pointdata="data:Electric field (V/m)" plot="vector_field">
+            </struct>
+
+            <struct name="Vector components" title="Choose component:">
+                <struct name="1st component" title="Choose the field representation:" tooltip="Choose the way of representing the field">
+                    <struct name="Filled" formula="a[0];a=menu:../../../Vectors" pointdata="data:Electric field (V/m), 1st component" plot="filled">
+                    </struct>
+                    <struct name="Threshold" formula="a[0];a=menu:../../../Vectors" pointdata="data:Electric field (V/m), 1st component" plot="threshold">
+                    </struct>
+                    <struct name="Isosurfaces" formula="a[0];a=menu:../../../Vectors" pointdata="data:Electric field (V/m), 1st component" plot="contour">
+                    </struct>
+                    <struct name="Plot over line" formula="a[0];a=menu:../../../Vectors" pointdata="data:Electric field (V/m), 1st component" plot="plot_over_line">
+                    </struct>
+                    <struct name="Slice" formula="a[0];a=menu:../../../Vectors" pointdata="data:Electric field (V/m), 1st component" plot="slice">
+                    </struct>
+                    <struct name="Cut" formula="a[0];a=menu:../../../Vectors" pointdata="data:Electric field (V/m), 1st component" plot="cut">
+                    </struct>
+                    <struct name="Rough cut" formula="a[0];a=menu:../../../Vectors" pointdata="data:Electric field (V/m), 1st component" plot="rough_cut">
+                    </struct>
+                </struct>
+                <struct name="2nd component" title="Choose the field representation:" tooltip="Choose the way of representing the field">
+                    <struct name="Filled" formula="a[1];a=menu:../../../Vectors" pointdata="data:Electric field (V/m), 2nd component" plot="filled">
+                    </struct>
+                    <struct name="Threshold" formula="a[1];a=menu:../../../Vectors" pointdata="data:Electric field (V/m), 2nd component" plot="threshold">
+                    </struct>
+                    <struct name="Isosurfaces" formula="a[1];a=menu:../../../Vectors" pointdata="data:Electric field (V/m), 2nd component" plot="contour">
+                    </struct>
+                    <struct name="Plot over line" formula="a[1];a=menu:../../../Vectors" pointdata="data:Electric field (V/m), 2nd component" plot="plot_over_line">
+                    </struct>
+                    <struct name="Slice" formula="a[1];a=menu:../../../Vectors" pointdata="data:Electric field (V/m), 2nd component" plot="slice">
+                    </struct>
+                    <struct name="Cut" formula="a[1];a=menu:../../../Vectors" pointdata="data:Electric field (V/m), 2nd component" plot="cut">
+                    </struct>
+                    <struct name="Rough cut" formula="a[1];a=menu:../../../Vectors" pointdata="data:Electric field (V/m), 2nd component" plot="rough_cut">
+                    </struct>
+                </struct>
+                <struct name="3rd component" title="Choose the field representation:" tooltip="Choose the way of representing the field">
+                    <struct name="Filled" formula="a[2];a=menu:../../../Vectors" pointdata="data:Electric field (V/m), 3rd component" plot="filled">
+                    </struct>
+                    <struct name="Threshold" formula="a[2];a=menu:../../../Vectors" pointdata="data:Electric field (V/m), 3rd component" plot="threshold">
+                    </struct>
+                    <struct name="Isosurfaces" formula="a[2];a=menu:../../../Vectors" pointdata="data:Electric field (V/m), 3rd component" plot="contour">
+                    </struct>
+                    <struct name="Plot over line" formula="a[2];a=menu:../../../Vectors" pointdata="data:Electric field (V/m), 3rd component" plot="plot_over_line">
+                    </struct>
+                    <struct name="Slice" formula="a[2];a=menu:../../../Vectors" pointdata="data:Electric field (V/m), 3rd component" plot="slice">
+                    </struct>
+                    <struct name="Cut" formula="a[2];a=menu:../../../Vectors" pointdata="data:Electric field (V/m), 3rd component" plot="cut">
+                    </struct>
+
+                    <struct name="Rough cut" formula="a[2];a=menu:../../../Vectors" pointdata="data:Electric field (V/m), 3rd component" plot="rough_cut">
+                    </struct>
+                </struct>
+                <struct name="Modulus" title="Choose the field representation:" tooltip="Choose the way of representing the field">
+                    <struct name="Filled" formula="sqrt(a[0]*a[0]+a[1]*a[1]+a[2]*a[2]);a=menu:../../../Vectors" pointdata="data:Electric field (V/m), modulus" plot="filled">
+                    </struct>
+                    <struct name="Threshold" formula="sqrt(a[0]*a[0]+a[1]*a[1]+a[2]*a[2]);a=menu:../../../Vectors" pointdata="data:Electric field (V/m), modulus" plot="threshold">
+                    </struct>
+                    <struct name="Isosurfaces" formula="sqrt(a[0]*a[0]+a[1]*a[1]+a[2]*a[2]);a=menu:../../../Vectors" pointdata="data:Electric field (V/m), modulus" plot="contour">
+                    </struct>
+                    <struct name="Plot over line" formula="sqrt(a[0]*a[0]+a[1]*a[1]+a[2]*a[2]);a=menu:../../../Vectors" pointdata="data:Electric field (V/m), modulus" plot="plot_over_line">
+                    </struct>
+                    <struct name="Slice" formula="sqrt(a[0]*a[0]+a[1]*a[1]+a[2]*a[2]);a=menu:../../../Vectors" pointdata="data:Electric field (V/m), modulus" plot="slice">
+                    </struct>
+                    <struct name="Cut" formula="sqrt(a[0]*a[0]+a[1]*a[1]+a[2]*a[2]);a=menu:../../../Vectors" pointdata="data:Electric field (V/m), modulus" plot="cut">
+                    </struct>
+                    <struct name="Rough cut" formula="sqrt(a[0]*a[0]+a[1]*a[1]+a[2]*a[2]);a=menu:../../../Vectors" pointdata="data:Electric field (V/m), modulus" plot="rough_cut">
+                    </struct>
+                </struct>
+            </struct>
+        </struct>
+    </submenu>
+
+    <submenu name="Current density" title="Current density, J (A&#8260;m&#178;, scalar)">
+        <struct name="Current density" title="Choose subdomains to represent:">
+            <leaf mesh="menu:/Mesh/Open/Mesh file" name="Subdomains to plot" selection="multiple" pointdata="data:element_ref" showvalues="true" title="Choose subdomain:" type="charlist">
+            </leaf>
+	    <struct name="Current density" title="Choose the vector field representation:" tooltip="Choose the way of representing the vector field">
+                    <struct name="Vectors" mesh="file:fichcurrentdensity${../../Subdomains to plot}.vtu" plot="vector_field" pointdata="data:Current density (A/m^2)">
+                    </struct>
+
+		    <struct name="Vector components" title="Choose component:">
+		        <struct name="1st component" title="Choose the field representation:" tooltip="Choose the way of representing the field">
+		            <struct name="Filled" formula="a[0];a=menu:../../../Vectors" pointdata="data:Current density (A/m^2), 1st component" plot="filled">
+		            </struct>
+		            <struct name="Threshold" formula="a[0];a=menu:../../../Vectors" pointdata="data:Current density (A/m^2), 1st component" plot="threshold">
+		            </struct>
+		            <struct name="Isosurfaces" formula="a[0];a=menu:../../../Vectors" pointdata="data:Current density (A/m^2), 1st component" plot="contour">
+		            </struct>
+		            <struct name="Plot over line" formula="a[0];a=menu:../../../Vectors" pointdata="data:Current density (A/m^2), 1st component" plot="plot_over_line">
+		            </struct>
+		            <struct name="Slice" formula="a[0];a=menu:../../../Vectors" pointdata="data:Current density (A/m^2), 1st component" plot="slice">
+		            </struct>
+		            <struct name="Cut" formula="a[0];a=menu:../../../Vectors" pointdata="data:Current density (A/m^2), 1st component" plot="cut">
+		            </struct>
+		            <struct name="Rough cut" formula="a[0];a=menu:../../../Vectors" pointdata="data:Current density (A/m^2), 1st component" plot="rough_cut">
+		            </struct>
+		        </struct>
+		        <struct name="2nd component" title="Choose the field representation:" tooltip="Choose the way of representing the field">
+		            <struct name="Filled" formula="a[1];a=menu:../../../Vectors" pointdata="data:Current density (A/m^2), 2nd component" plot="filled">
+		            </struct>
+		            <struct name="Threshold" formula="a[1];a=menu:../../../Vectors" pointdata="data:Current density (A/m^2), 2nd component" plot="threshold">
+		            </struct>
+		            <struct name="Isosurfaces" formula="a[1];a=menu:../../../Vectors" pointdata="data:Current density (A/m^2), 2nd component" plot="contour">
+		            </struct>
+		            <struct name="Plot over line" formula="a[1];a=menu:../../../Vectors" pointdata="data:Current density (A/m^2), 2nd component" plot="plot_over_line">
+		            </struct>
+		            <struct name="Slice" formula="a[1];a=menu:../../../Vectors" pointdata="data:Current density (A/m^2), 2nd component" plot="slice">
+		            </struct>
+		            <struct name="Cut" formula="a[1];a=menu:../../../Vectors" pointdata="data:Current density (A/m^2), 2nd component" plot="cut">
+		            </struct>
+		            <struct name="Rough cut" formula="a[1];a=menu:../../../Vectors" pointdata="data:Current density (A/m^2), 2nd component" plot="rough_cut">
+		            </struct>
+		        </struct>
+		        <struct name="3rd component" title="Choose the field representation:" tooltip="Choose the way of representing the field">
+		            <struct name="Filled" formula="a[2];a=menu:../../../Vectors" pointdata="data:Current density (A/m^2), 3rd component" plot="filled">
+		            </struct>
+		            <struct name="Threshold" formula="a[2];a=menu:../../../Vectors" pointdata="data:Current density (A/m^2), 3rd component" plot="threshold">
+		            </struct>
+		            <struct name="Isosurfaces" formula="a[2];a=menu:../../../Vectors" pointdata="data:Current density (A/m^2), 3rd component" plot="contour">
+		            </struct>
+		            <struct name="Plot over line" formula="a[2];a=menu:../../../Vectors" pointdata="data:Current density (A/m^2), 3rd component" plot="plot_over_line">
+		            </struct>
+		            <struct name="Slice" formula="a[2];a=menu:../../../Vectors" pointdata="data:Current density (A/m^2), 3rd component" plot="slice">
+		            </struct>
+		            <struct name="Cut" formula="a[2];a=menu:../../../Vectors" pointdata="data:Current density (A/m^2), 3rd component" plot="cut">
+		            </struct>
+		            <struct name="Rough cut" formula="a[2];a=menu:../../../Vectors" pointdata="data:Current density (A/m^2), 3rd component" plot="rough_cut">
+		            </struct>
+		        </struct>
+		        <struct name="Modulus" title="Choose the field representation:" tooltip="Choose the way of representing the field">
+		            <struct name="Filled" formula="sqrt(a[0]*a[0]+a[1]*a[1]+a[2]*a[2]);a=menu:../../../Vectors" pointdata="data:Current density (A/m^2), modulus" plot="filled">
+		            </struct>
+		            <struct name="Threshold" formula="sqrt(a[0]*a[0]+a[1]*a[1]+a[2]*a[2]);a=menu:../../../Vectors" pointdata="data:Current density (A/m^2), modulus" plot="threshold">
+		            </struct>
+		            <struct name="Isosurfaces" formula="sqrt(a[0]*a[0]+a[1]*a[1]+a[2]*a[2]);a=menu:../../../Vectors" pointdata="data:Current density (A/m^2), modulus" plot="contour">
+		            </struct>
+		            <struct name="Plot over line" formula="sqrt(a[0]*a[0]+a[1]*a[1]+a[2]*a[2]);a=menu:../../../Vectors" pointdata="data:Current density (A/m^2), modulus" plot="plot_over_line">
+		            </struct>
+		            <struct name="Slice" formula="sqrt(a[0]*a[0]+a[1]*a[1]+a[2]*a[2]);a=menu:../../../Vectors" pointdata="data:Current density (A/m^2), modulus" plot="slice">
+		            </struct>
+		            <struct name="Cut" formula="sqrt(a[0]*a[0]+a[1]*a[1]+a[2]*a[2]);a=menu:../../../Vectors" pointdata="data:Current density (A/m^2), modulus" plot="cut">
+		            </struct>
+		            <struct name="Rough cut" formula="sqrt(a[0]*a[0]+a[1]*a[1]+a[2]*a[2]);a=menu:../../../Vectors" pointdata="data:Current density (A/m^2), modulus" plot="rough_cut">
+		            </struct>
+		        </struct>
+		    </struct>
+	    </struct>
+        </struct>
+    </submenu>
+
+
+    <submenu name="Close all">
+        <action name="close_plots" />
+    </submenu>
+ </menu>
+
+</menus>

@@ -1,0 +1,105 @@
+<menus name="Advanced: variables">
+	<menu name="Data">
+		<submenu name="Input strings">
+			<struct name="Strings">
+				<leaf name="String 1" type="char">
+					<element>This is the first string. </element>
+				</leaf>
+				<leaf name="String 2" type="char">
+					<element>This is the second string. </element>
+				</leaf>
+			</struct>
+		</submenu>
+		<submenu name="Input media">
+			<struct name="Define media">
+				<struct name="Fluid" customize="true">
+					<leaf default="true" title="Description:" type="char">
+					</leaf>
+					<leaf name="Fluid 1" title="Description:" type="char">
+						<element>Short description for Fluid 1.</element>
+					</leaf>
+					<leaf name="Fluid 2" title="Description:" type="char">
+						<element>Short description for Fluid 2.</element>
+					</leaf>
+				</struct>
+				<struct name="Solid" customize="true">
+					<leaf default="true" title="Description:" type="char">
+					</leaf>
+					<leaf name="Solid 1" title="Description:" type="char">
+						<element>Short description for Solid 1.</element>
+					</leaf>
+					<leaf name="Solid 2" title="Description:" type="char">
+						<element>Short description for Solid 2.</element>
+					</leaf>
+					<leaf name="Solid 3" title="Description:" type="char">
+						<element>Short description for Solid 3.</element>
+					</leaf>
+				</struct>
+			</struct>
+		</submenu>
+	</menu>
+	<menu name="Lists">
+		<submenu name="Strings">
+			<struct name="Lists">
+				<leaf name="String list" type="charlist" source="menu:/Data/Input strings/Strings">
+				</leaf>
+				<leaf name="String content list" type="charlist" source="menu:/Data/Input strings/Strings/${/Data/Input strings/Strings}">
+				</leaf>
+				<leaf name="List media types" title="Media type list:" type="charlist" source="menu:/Data/Input media/Define media" selection="single">
+				</leaf>
+				<leaf name="List all media" title="Media list:" type="charlist" source="menu:/Data/Input media/Define media/${/Data/Input media/Define media}" selection="single">
+				</leaf>
+				<leaf name="List all descriptions" title="Descriptions list:" type="charlist" source="menu:/Data/Input media/Define media/${/Data/Input media/Define media}/${/Data/Input media/Define media/${/Data/Input media/Define media}}">
+				</leaf>
+				<struct name="Dependant selection" title="Fill in the following options:">
+					<leaf name="Select media" type="charlist" source="menu:/Data/Input media/Define media/${/Data/Input media/Define media}" selection="single">
+					</leaf>
+					<leaf name="Description of selected media" title="Description:" type="charlist" source="menu:/Data/Input media/Define media/${/Data/Input media/Define media}/${../Select media}" selection="multiple">
+					</leaf>
+				</struct>
+			</struct>
+		</submenu>
+	</menu>
+	<menu name="Visualization">
+		<submenu name="Mesh">
+			<struct name="Mesh" title="Choose media:">
+				<struct name="Fluid" title="Choose fluid and plot:">
+					<leaf name="Select media" title="Choose fluid(s):" type="charlist" source="menu:/Data/Input media/Define media/Fluid" selection="multiple">
+					</leaf>
+					<struct name="Plot" type="charlist" mesh="file:${../Select media}.vtu" plot="mesh">
+					</struct>
+				</struct>
+				<struct name="Solid" title="Choose solid and plot:">
+					<leaf name="Select media" title="Choose solid(s):" type="charlist" source="menu:/Data/Input media/Define media/Solid" selection="multiple">
+					</leaf>
+					<struct name="Plot" type="charlist" mesh="file:${../Select media}.vtu" plot="mesh">
+					</struct>
+				</struct>
+			</struct>
+		</submenu>
+		<submenu name="Field">
+			<struct name="Field" title="Choose media:">
+				<struct name="Fluid" title="Choose fluid and plot:">
+					<leaf name="Select media" title="Choose fluid(s):" type="charlist" source="menu:/Data/Input media/Define media/Fluid" selection="multiple">
+					</leaf>
+					<leaf name="[Additional mesh]" title="Choose solid(s):" type="charlist" source="menu:/Data/Input media/Define media/Fluid" selection="multiple">
+					</leaf>
+					<struct name="Plot" type="charlist" mesh="file:${../Select media}.vtu" add_mesh="file:${../[Additional mesh]}.vtu" pointdata="data:Active power density (W/m^3)" plot="filled">
+					</struct>
+				</struct>
+				<struct name="Solid" title="Choose solid and plot:">
+					<leaf name="Select media" title="Choose solid(s):" type="charlist" source="menu:/Data/Input media/Define media/Solid" selection="multiple">
+					</leaf>
+					<leaf name="[Additional mesh]" title="Choose solid(s):" type="charlist" source="menu:/Data/Input media/Define media/Solid" selection="multiple">
+					</leaf>
+					<struct name="Plot" type="charlist" mesh="file:${../Select media}.vtu" add_mesh="file:${../[Additional mesh]}.vtu" pointdata="data:Active power density (W/m^3)" plot="filled">
+					</struct>
+				</struct>
+			</struct>
+		</submenu>
+		<submenu name="Close all">
+			<action name="close_plots">
+			</action>
+		</submenu>
+	</menu>
+</menus>
