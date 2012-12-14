@@ -25,3 +25,4 @@ Scalar deformed plot: modification of the best scale algorithm.
 Streamline plot: modification of the default number of streamlines.
 Help: Automatic menu building added and new dirs distribution.
 Separator: menu separators from xml and dirs added.
+Apps: a full set of examples to learn how to use Opennum.

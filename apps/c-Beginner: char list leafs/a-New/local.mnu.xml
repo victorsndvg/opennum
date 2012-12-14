@@ -1,0 +1,22 @@
+<menus name="Beginner: char list leafs">
+	<menu name="Char list leafs">
+		<submenu name="Selection single">
+			<leaf name="option" type="charlist">
+				<element>Element 1</element>
+				<element>Element 2</element>
+				<element>Element 3</element>
+			</leaf>
+		</submenu>
+		<submenu name="Selection multiple">
+			<leaf name="option" type="charlist" selection="multiple">
+				<element>Element 1</element>
+				<element>Element 2</element>
+				<element>Element 3</element>
+			</leaf>
+		</submenu>
+		<submenu name="Show file content">
+			<leaf name="plain text file" type="charlist" showfile="file:file.txt">
+			</leaf>
+		</submenu>
+	</menu>
+</menus>

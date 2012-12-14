@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<VTKFile type="Collection" version="0.1" byte_order="LittleEndian">
+  <Collection>
+    <DataSet timestep="0.0000000" group="" part="0" file="out_solution_J_10.vtu"/>
+    <DataSet timestep="1.98019799E-04" group="" part="0" file="out_solution_J_9.vtu"/>
+    <DataSet timestep="3.96039599E-04" group="" part="0" file="out_solution_J_8.vtu"/>
+    <DataSet timestep="5.94059413E-04" group="" part="0" file="out_solution_J_7.vtu"/>
+    <DataSet timestep="7.92079198E-04" group="" part="0" file="out_solution_J_6.vtu"/>
+    <DataSet timestep="9.90099041E-04" group="" part="0" file="out_solution_J_5.vtu"/>
+    <DataSet timestep="1.18811883E-03" group="" part="0" file="out_solution_J_4.vtu"/>
+    <DataSet timestep="1.38613861E-03" group="" part="0" file="out_solution_J_3.vtu"/>
+    <DataSet timestep="1.58415840E-03" group="" part="0" file="out_solution_J_2.vtu"/>
+    <DataSet timestep="1.78217818E-03" group="" part="0" file="out_solution_J_1.vtu"/>
+  </Collection>
+</VTKFile>
