@@ -296,7 +296,7 @@ class Window(wx.Frame):
 		    self.errormsg(u'Error reading application list')
 
             	if len(apps.get()) == 1: # one application => load it (1st sample data)		    
-		    self.menuapp = wx.MenuItem(self.menu_folder, self.ID_NULL, self.application_name)
+		    self.menuapp = wx.MenuItem(self.menu_folder, self.ID_NULL, self.applications_name)
         	    self.menu_folder.AppendItem(self.menuapp)
 		    self.menuapp.Enable(False)
 		else:
