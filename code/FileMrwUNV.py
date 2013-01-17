@@ -83,6 +83,15 @@ class UNV(FileMrw.FileMrw):
         elif size == 2 and ide == 11: # 11 Rod
             return (1,3) # VTK_LINE (=3)
 
+        elif size == 3 and ide == 22: # 2 Tapered beam
+            return (1,21) # VTK_QUADRATIC_EDGE (=21)
+
+        elif size == 6 and ide == 42: # 42 Plane Stress Parabolic Triangle 
+            return (2,22) # VTK_QUADRATIC_TRIANGLE (=22)
+
+        elif size == 10 and ide == 118: # 118 Solid Parabolic Tetrahedron
+            return (3,24) # VTK_QUADRATIC_TETRA (=24)
+
 #        elif size == 1:
 #            return (0,1) # VTK_VERTEX (=1)
 
@@ -212,9 +221,11 @@ class UNV(FileMrw.FileMrw):
             if not line1 or line1.startswith(endDataSet): #Se nos atopamos co EOF
                 loop = False
             else:
-                line2 = file.readline()
                 record1 = map(int, line1.split())
-                record2 = map(int, line2.split())
+		record2 = []
+		while (len(record2)<record1[-1]):
+		    line2 = file.readline()
+                    record2.extend(map(int, line2.split()))
                 if (record1[1] >= 11) and (record1[1]<=32): #Beam elements 11 = Rod
                     line3 = file.readline()
                     record3 = map(int, line3.split())
@@ -304,14 +315,43 @@ class UNV(FileMrw.FileMrw):
 
         maxdim = 0
         # CELLS
+	isfirst_triangle = True
+	isfirst_tetra = True
+	t3_ordering = None
+	t4_ordering = None
         for element in self.elements:
             translated = []
             # suponho que as labels empezan a contar en 1 (VTK empeza en 0)
             # suponho que a orde de vertices e a mesma en UNV e VTK
+
+            info = UNV.get_info_vtk(len(element.nodeLabels),element.feDescID)
+
+            if info is not None:
+		if info == (2,22) and isfirst_triangle:
+		    isfirst_triangle= False
+		    t3_ordering = self.node_ordering(element.nodeLabels, info)
+		if info == (3,24) and isfirst_tetra:
+		    isfirst_tetra= False
+		    t4_ordering = self.node_ordering(element.nodeLabels, info)
+
             for n in element.nodeLabels:
                 translated.append(n-1)
 
-            info = UNV.get_info_vtk(len(element.nodeLabels),element.feDescID)
+	    if t3_ordering is not None and info == (2,22):
+                aux = [translated[t3_ordering[0]],translated[t3_ordering[1]],translated[t3_ordering[2]], \
+		       translated[t3_ordering[3]],translated[t3_ordering[4]],translated[t3_ordering[5]]]
+		translated = aux
+
+	    if t4_ordering is not None and info == (3,24):
+                aux = [translated[t4_ordering[0]],translated[t4_ordering[1]],translated[t4_ordering[2]], \
+		       translated[t4_ordering[3]],translated[t4_ordering[4]],translated[t4_ordering[5]], \
+		       translated[t4_ordering[6]],translated[t4_ordering[7]],translated[t4_ordering[8]], \
+                       translated[t4_ordering[9]]]
+		translated = aux
+
+#	    if len(translated) == 6:
+#                aux = [translated[0],translated[2],translated[4],translated[1],translated[3],translated[5]]
+#		translated=aux
 
             if info is not None:
                 vtk.add_cell_type(translated, info[1])
@@ -455,9 +495,135 @@ class UNV(FileMrw.FileMrw):
         for a in array:
             aux.extend(a)
         return aux
+
+
+    def issingular_edge(self,lista1,lista2):
+	import sys
+	if isinstance(lista1,list) and isinstance(lista2,list):
+	    eps = sys.float_info.epsilon
+	    if len(lista1) == len(lista2) == 3:
+		res = [0,0,0]
+		maxval = None 
+		for i in range(3):
+		    res[i] = abs((lista1[i]-lista2[i]))
+		return max(res)<eps
+	    else:
+		return 'Lists length must agree.'
+	else:
+	    return 'Wrong data type.'
     
-    
-    
+
+    def ismidpoint(self,lista1,lista2,lista3):
+	import sys
+	if isinstance(lista1,list) and isinstance(lista2,list) and isinstance(lista3,list):
+	    eps = sys.float_info.epsilon
+	    if len(lista1) == len(lista2) == len(lista3) == 3:
+		res = [0,0,0]
+		maxval = None 
+		for i in range(3):
+		    res[i] = abs(((lista2[i]+lista3[i])/2-lista1[i]))
+		return max(res)<eps
+	    else:
+		return 'Lists length must agree.'
+	else:
+	    return 'Wrong data type.'
+
+    def coord_diff(self,lista1,lista2):
+	if isinstance(lista1,list) and isinstance(lista2,list):
+	    if len(lista1) == len(lista2) == 3:
+		res = [0,0,0]
+		for i in range(3):
+		    res[i] = lista1[i]-lista2[i]
+		return res
+	    else:
+		return 'Lists length must agree.'
+	else:
+	    return 'Wrong data type.'
+
+
+    def node_ordering(self, nodelist, info):
+	# (2,22) # VTK_QUADRATIC_TRIANGLE (=22)
+	# (3,24) # VTK_QUADRATIC_TETRA (=24)
+#	if info != (2,22) or info != (3,24):
+#	    return 'Non quadratic (Nedelec) mesh'
+
+	vertexlist = [i for i in nodelist]
+	midpointlist = []
+	edgelist = []
+	labels = []
+	for node in self.nodes:
+	    labels.append(node.label)
+	####################################################
+	# Localizacion de puntos medios
+	lennodelist = len(nodelist)
+	node_index= [0*i for i in range(lennodelist)]
+	for i in range(lennodelist):
+	    node_index[i] = self.binary_search(labels,nodelist[i])   
+	for i in range(lennodelist):
+	    i_node = node_index[i]
+	    ismidpointb = False
+	    for j in range(lennodelist):
+		if not ismidpointb:
+		    j_node = node_index[j]
+		    for k in range(j+1,lennodelist):
+			k_node = node_index[k]
+			if not self.issingular_edge(self.nodes[j_node].coords,self.nodes[k_node].coords) and \
+			    self.ismidpoint(self.nodes[i_node].coords,self.nodes[j_node].coords,self.nodes[k_node].coords):
+			    ismidpointb = True
+			    midpointlist.append(nodelist[i])
+			    edgelist.append([nodelist[j],nodelist[k]])
+			    vertexlist.remove(nodelist[i])
+	####################################################3
+	# Reordenacion dos nodos segun el orden de los vertices	
+	for i in range(len(vertexlist)-1):
+	    for j in range(len(edgelist)-1):
+		if (vertexlist[i] == edgelist[j][0] or vertexlist[i] == edgelist[j][1]) and \
+		   (vertexlist[i+1] == edgelist[j][0] or vertexlist[i+1] == edgelist[j][1]):
+		    aux = midpointlist[j]
+		    midpointlist[j] = midpointlist[i]
+		    midpointlist[i] = aux
+	####################################################3
+	# Reordenacion,, determinante positivo
+	auxnodelist = vertexlist + midpointlist
+	orderlist= [0*i for i in range(lennodelist)]
+	coord0 = self.nodes[node_index[0]].coords
+	coord1 = self.nodes[node_index[1]].coords
+	coord2 = self.nodes[node_index[2]].coords
+	if info == (2,22):
+	    a2 = self.coord_diff(coord1,coord0)
+	    a3 = self.coord_diff(coord2,coord1)
+	    if (a2[0]*a3[1]-a2[1]*a3[0])<0:
+		aux = nodelist[2]
+		auxnodelist[2] = nodelist[1]
+		auxnodelist[1] = aux
+		aux = nodelist[3]
+		auxnodelist[3] = nodelist[5]
+		auxnodelist[5] = aux
+	    for i in range(lennodelist):
+		for j in range(lennodelist):
+		    if nodelist[i] == auxnodelist[j]:
+			orderlist[j] = i
+	    return orderlist
+	if info == (3,24):
+	    coord3 = self.nodes[node_index[3]].coords
+	    a2 = self.coord_diff(coord1,coord0)
+	    a3 = self.coord_diff(coord2,coord0)
+	    a4 = self.coord_diff(coord3,coord0)
+	    if (a2[0]*a3[1]*a4[2]+a2[2]*a3[0]*a4[1]+a2[1]*a3[2]*a4[0]- \
+		a2[2]*a3[1]*a4[0]-a2[1]*a3[0]*a4[2]-a2[0]*a3[2]*a4[1])<0:
+		aux = nodelist[4]
+		auxnodelist[4] = nodelist[6]
+		auxnodelist[6] = aux
+		aux = nodelist[8]
+		auxnodelist[8] = nodelist[9]
+		auxnodelist[9] = aux
+	    for i in range(lennodelist):
+		for j in range(lennodelist):
+		    if nodelist[i] == auxnodelist[j]:
+			orderlist[j] = i
+	    return orderlist
+	return None
+		   
     
     def binary_search(self,seq,search):    
         #Devolve center se atopamos o punto, senon -(center+1) sendo (center+1) a posicion correspondente
