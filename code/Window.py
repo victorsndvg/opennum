@@ -526,7 +526,7 @@ class Window(wx.Frame):
                 menu_temp.AppendItem(item_temp)
                 if (selected): # this must go after preceding line
                     item_temp.Check()
-            if menu.get_name() == self.materialsdb_name: # ou outra comprobación
+            if ((menu.get_name() == self.materialsdb_name) or (menu.get_name() == self.materialsdb_name[1:])): # ou outra comprobación
                 self.menulast.append( (menu_temp, u'&'+menu.get_name()) )
 		self.MaterialsDB_exists = True				#añadido
 	    elif menu.get_name() == config.NAME_CONFIG_FILE:
