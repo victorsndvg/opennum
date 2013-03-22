@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" "http://www.w3.org/Math/DTD/mathml2/xhtml-math11-f.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US">
+  <head>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" /> 
+    <title>Beginner: menu</title>
+    <link rel="stylesheet" type="text/css" href="../../sty.css" />
+  </head>
+  <body id="top">
+    <p>Next: <a href="leafs1.xhtml">Leafs</a>, Up: <a href="index.xhtml">Top</a></p>
+    <hr /> 
+
+    <h3>Menu</h3>
+	<p>
+	As a starting point of a series of tutorials, we begin with an example that shows the creation of the menu bar and the definition of the elements it contains.
+	</p>
+	<p>
+	This example shows the basis for creating the structure of the menu bar. Discuss the attribute <code>name</code>, mandatory for most tags, which defines the name and title of each item, and the attributes <code>hidden</code> and <code>separator</code>.
+	</p>
+
+    <h4 id="menus">Application name</h4>
+	<p>
+	It's mandatory to use <a href="../../xml/menu.xhtml#menus"><code>menus</code></a> tag as the root of the XML hierarchy. The <code>name</code> attribute sets the application name displayed in the title bar. This example creates a menu of an application called <em>Beginner: menu</em>.
+	</p>
+
+    <pre class="xml">&lt;menus name="Beginner: menu"&gt;
+    ...
+&lt;/menus&gt;</pre>
+
+    <h4 id="menubar">Menu bar</h4>
+	<p> 
+	The tag <a href="../../xml/menu.xhtml#menu"><code>menu</code></a> allways appears as child of the tag <a href="../../xml/menu.xhtml#menus"><code>menus</code></a>. This tag allows to create items in the menu bar. This example creates a menu called <em>Menu 1</em>.
+	</p>
+
+    <pre class="xml">&lt;menu name="Menu 1"&gt;
+    ...
+&lt;/menu&gt;</pre>
+
+    <h4 id="submenus">Submenus</h4>
+	<p>
+	The tag <a href="../../xml/menu.xhtml#submenu"><code>submenu</code></a> sets the subitems shown when clicking on an menu bar item . This examples create a submenu called <em>Submenu 1</em>.
+	</p>
+	<pre class="xml">&lt;submenu name="Submenu 1"&gt;
+&lt;/submenu&gt;</pre>
+	<p align="center"> 
+	    <img width="15%" src="images/beginnermenu1.png" />
+	    <br clear="all" /> 
+	    <span id="fig-1" class="caption"> <strong>Figure 1:</strong> Submenu.</span>
+	</p>
+	<p>
+	The element submenu can contain other submenu elements and build a second level of submenus. The following code shows how to build a two level submenu.
+	</p>
+	<pre class="xml">&lt;menu name="Menu 2"&gt;
+    &lt;submenu name="Submenu 1: Level 1"&gt;
+        &lt;submenu name="Submenu 1: Level 2"&gt;
+        &lt;/submenu&gt;
+    &lt;/submenu&gt;
+&lt;/menu&gt;</pre>
+
+	<p align="center"> 
+	    <img width="30%" src="images/beginnermenu2.png" />
+	    <br clear="all" /> 
+	    <span id="fig-2" class="caption"> <strong>Figure 2:</strong> Two level submenu.</span>
+	</p>
+
+    <h4 id="Attributes">Some common attributes</h4>
+	<p>
+	With the <code>title</code> attribute you can force to show a different title to the value asigned to the <em>name</em> attribute, this can be usefull to write titles in unicode.
+	</p>
+	<p>
+	With the <code>hidden="true"</code> attribute you can create item in the hierarchy that will not be shown, this can be usefull to define hide options to the final users.
+	</p>
+	<p> 
+	If you want to separate some elements in different groups of <a href="../../xml/menu.xhtml#menu"><code>menu</code></a> or <a href="../../xml/menu.xhtml#submenu"><code>submenu</code></a> you can use the attribute <code>separator=true</code>.  This example creates a menu separator and a submenu separator, and uses the <code>title</code> and <code>hidden</code> attributes.
+	</p>
+
+	<pre class="xml">&lt;menu name="Menu 1"&gt;
+    &lt;submenu name="Submenu 1"&gt;
+    &lt;/submenu&gt;
+    &lt;submenu separator="true"&gt;
+    &lt;/submenu&gt;
+    &lt;submenu name="Submenu 2" title="Submenu 2: title"&gt;
+    &lt;/submenu&gt;
+    &lt;/submenu&gt;
+    &lt;submenu name="Hidden submenu" hidden="true"&gt;
+    &lt;/submenu&gt;
+&lt;/menu&gt;
+&lt;menu separator="true"&gt;
+&lt;/menu&gt;
+&lt;menu name="Menu 2"&gt;
+&lt;/menu&gt;</pre>
+
+	<p align="center"> 
+	    <img width="13%" src="images/beginnermenu3.png" />
+	    <br clear="all" /> 
+	    <span id="fig-3" class="caption"> <strong>Figure 3:</strong> Menu and submenu separators.</span>
+	</p>
+
+    <div class="back"><a href="#top">Back to top</a></div>
+    <hr />
+    <p>&copy; 2012 - <a href="http://www.usc.es/ingmat/?lang=en">Ingeniería Matemática</a></p>
+  </body>
+</html>
+

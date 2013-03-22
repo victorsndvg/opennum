@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" "http://www.w3.org/Math/DTD/mathml2/xhtml-math11-f.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US">
+  <head>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" /> 
+    <title>Intermediate: Visualization with data</title>
+    <link rel="stylesheet" type="text/css" href="../../sty.css" />
+  </head>
+  <body id="top">
+    <p>Next: <a href="visualizationwithmenu.xhtml">Visualization with menu</a>, Previous: <a href="visualizationwithfile.xhtml">Visualization with file</a>, Up: <a href="index.xhtml">Top</a></p>
+    <hr /> 
+
+    <h3>Visualization with data</h3>
+	<p>
+	In this example you can see the modifier <code>data</code> and how to use it. It can be used in <code>pointdata</code> and <code>celldata</code> attributes. Both  <code>pointdata</code> and <code>celldata</code> attributes always goes along <code>plot</code> attribute.
+	</p>
+	<p>
+	With <code>data</code> modifier you specify directly a field name to visualize it. This tutorial review some basic concepts from the <a href="../beginner/visualization2.xhtml"> Field visualization</a> tutorial.
+	</p>
+
+    <h4 id="mesh">Pointdata and celldata</h4>
+	<p>
+	Below is shown an example of the use of the <code>pointdata="data:[...]"</code> atribute, being analog the use of <code>celldata</code> attribute.
+	</p>
+
+	<pre class="xml">&lt;struct name="Field" mesh="file:field3D.vtu" plot="filled"  pointdata="data:Active power density (W/m^3)"&gt;
+&lt;/struct&gt;</pre>
+
+
+    <div class="back"><a href="#top">Back to top</a></div>
+    <hr />
+    <p>&copy; 2012 - <a href="http://www.usc.es/ingmat/?lang=en">Ingeniería Matemática</a></p>
+  </body>
+</html>
+

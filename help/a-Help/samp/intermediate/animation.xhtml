@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" "http://www.w3.org/Math/DTD/mathml2/xhtml-math11-f.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US">
+  <head>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" /> 
+    <title>Intermediate: embedded help</title>
+    <link rel="stylesheet" type="text/css" href="../../sty.css" />
+  </head>
+  <body id="top">
+    <p>Next: <a href="visualizationwithfile.xhtml">Visualization with file</a>, Previous: <a href="embeddedhelp.xhtml">Embedded help</a>, Up: <a href="index.xhtml">Top</a></p>
+    <hr /> 
+
+    <h3>Animation</h3>
+	<p>
+	<strong>OpenNum</strong> gives you the possibility to visualize the time or frequency evolution of a field. This means that you can view animations with <strong>OpenNum</strong>.
+	</p>
+	<p>
+	To display an animation you must use <em>PVD (Paraview Data)</em> files in the <code>mesh</code> attribute, this is the default file format for <a href="http://www.paraview.org">ParaView</a> visualizer. The field file set pointed by the PVD file must contain any <a href="../../form/field/vtk.xhtml"> <em>VTK</em> file type supported by <strong>OpenNum</strong></a> (polygonal, uniform rectilinear, nonuniform rectilinear, curvilinear, or unstructured).
+	</p>
+	<p>
+	In this example we introduce the new attribute <code>evolution</code> which speficies if the user will see time or frequency field sequencies. This attribute allways appear along the <code>mesh</code>, <code>plot</code> and <code>poindata</code> or <code>celldata</code> attributes.
+	</p>
+
+    <h4 id="timeanimation">Time animation</h4>
+	<p>
+	The default behavior of <strong>OpenNum</strong> while working with <em>PVD</em> files is to show a time animation bar. This behavior can be forced using the attribute <code>evolution="time"</code>.
+	</p>
+
+	<pre class="xml">&lt;struct name="Time animation"  evolution="time" plot="vector_field" mesh="file:animation/animation.pvd" pointdata="data:Magnetic field"&gt;
+&lt;/struct&gt;</pre>
+
+	<p align="center"> 
+	    <img width="50%" src="images/animation-time.png" />
+	    <br clear="all" /> 
+	    <span id="fig-1" class="caption"> <strong>Figure 1:</strong> Time animation bar.</span>
+	</p>
+
+    <h4 id="freqanimation">Frequency animation</h4>
+	<p>
+	To visualize frequency animations you have to use the attribute <code>evolution="frequency"</code>. The difference with the time animations is that frequency animation do not allow to do data interpolation in the middle of two given timesteps.
+	</p>
+
+	<pre class="xml">&lt;struct name="Frequency animation"  evolution="frequency" plot="vector_field" mesh="file:animation/animation.pvd" pointdata="data:Frequency field"&gt;
+&lt;/struct&gt;</pre>
+
+	<p align="center"> 
+	    <img width="55%" src="images/animation-frequency.png" />
+	    <br clear="all" /> 
+	    <span id="fig-2" class="caption"> <strong>Figure 2:</strong> Frequency animation bar.</span>
+	</p>
+
+    <div class="back"><a href="#top">Back to top</a></div>
+    <hr />
+    <p>&copy; 2012 - <a href="http://www.usc.es/ingmat/?lang=en">Ingeniería Matemática</a></p>
+  </body>
+</html>
+

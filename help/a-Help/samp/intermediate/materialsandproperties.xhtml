@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" "http://www.w3.org/Math/DTD/mathml2/xhtml-math11-f.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US">
+  <head>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" /> 
+    <title>Intermediate: Materials and properties</title>
+    <link rel="stylesheet" type="text/css" href="../../sty.css" />
+  </head>
+  <body id="top">
+    <p>Previous: <a href="visualizationwithdata.xhtml">Visualization with data</a>, Up: <a href="index.xhtml">Top</a></p>
+    <hr /> 
+
+    <h3>Materials and properties</h3>
+	<p>
+	In simulation applications is common the existence of a materials database, usually used to assign properties to differents subdomains. <strong>OpenNum</strong> allows to manage a <em>XML</em> based database to save and apply diferent properties. The creation of this database will be explain in the <a href="../advance/materialsdatabase.xhtml"> Materials database</a> tutorial.
+	</p>
+
+	<p>
+	<strong>OpenNum</strong> allows to visualize the assigned materials or properties labeled on a mesh, this is possible with the new <code>plot="materials"</code> that we introduce in this example. We assume that there is no database, if one exists, its use would be analogous.
+	</p>
+
+    <h4 id="assignmatsandprops">Assign materials and properties</h4>
+	<p>
+	Its very import to build the right component hierarchy to map some properties on subdomains for finally visualize it as a plot. We must create a <a href="../../xml/struct.xhtml"><code>struct</code></a> tag for displaying a mesh and its subdomains and a customizable <a href="../../xml/leaf.xhtml"><code>leaf</code></a> child for applying the properties.
+	</p>
+
+	<p>
+	It is mandatory the use of <code>mesh</code>, <code>plot="references"</code>, <code>showvalues="true"</code> and <code>celldata="data:element_ref"</code> in the <a href="../../xml/struct.xhtml"><code>struct</code></a> tag.
+	</p>
+
+	<p>
+	The <a href="../../xml/leaf.xhtml"><code>leaf</code></a> tag must be of <code>type="charlist"</code> and point to a <code>source="menu:/Assign/Properties list"</code> where <em>/Assign/Properties list</em> is an existing list of properties in the <em>XML</em> menu.
+	</p>
+
+	<pre class="xml">&lt;struct celldata="data:element_ref" mesh="file:mesh.mfm" name="Content" plot="references" showvalues="true"&gt;
+	&lt;leaf default="true" source="menu:/Assign/Properties list" type="charlist"&gt;
+	&lt;/leaf&gt;
+&lt;/struct&gt;</pre>
+
+	<p align="center"> 
+	    <img width="40%" src="images/materialsandproperties-assign.png" />
+	    <br clear="all" /> 
+	    <span id="fig-1" class="caption"> <strong>Figure 1:</strong> Assign materials or properties.</span>
+	</p>
+
+
+    <h4 id="showmatsandprops">Show materials and properties</h4>
+	<p>
+	To display materials or properties assigned to a mesh you have to use the <code>plot="materials"</code> and the <code>materials="menu:/Assign/Properties/Content"</code> attributes, where <em>/Assign/Properties/Content</em> is a valid hierarchy to  <a href="./materialsandproperties.xhtml#assignmatsandprops"><code>Assign materials and properties</code></a>.
+	</p>
+
+	<pre class="xml">&lt;struct materials="menu:/Assign/Properties/Content" mesh="file:mesh.mfm" name="Materials" plot="materials"&gt;
+&lt;/struct&gt;</pre>
+
+
+	<p align="center"> 
+	    <img width="40%" src="images/materialsandproperties-show.png" />
+	    <br clear="all" /> 
+	    <span id="fig-1" class="caption"> <strong>Figure 1:</strong> Show materials or properties.</span>
+	</p>
+
+    <div class="back"><a href="#top">Back to top</a></div>
+    <hr />
+    <p>&copy; 2012 - <a href="http://www.usc.es/ingmat/?lang=en">Ingeniería Matemática</a></p>
+  </body>
+</html>
+

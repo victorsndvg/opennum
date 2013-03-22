@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" "http://www.w3.org/Math/DTD/mathml2/xhtml-math11-f.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US">
+  <head>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" /> 
+    <title>Beginner: Char list leafs</title>
+    <link rel="stylesheet" type="text/css" href="../../sty.css" />
+  </head>
+  <body id="top">
+    <p>Next: <a href="structs.xhtml">Structs</a>, Previous: <a href="leafs1.xhtml">Leafs</a>, Up: <a href="index.xhtml">Top</a></p>
+    <hr /> 
+
+    <h3>Char list leafs</h3>
+	<p>
+	The tag <a href="../../xml/leaf.xhtml"><code>leaf</code></a> is not only used for data input, may also be used to allow for single or multiple selections from a list of options.
+	</p>
+	<p>
+	This example shows the use and behavior of the new attributes <code>selection</code> and <code>showfile</code> along with the attribute <code>type="charlist"</code>. 
+	</p>
+	<p>The <code>selection</code> attribute allows to select one or several option from a list displayed in a box or combo box. To create this list you can use the new tag <a href="../../xml/leaf.xhtml"><code>element</code></a> as a child of a <a href="../../xml/leaf.xhtml"><code>leaf</code></a>.
+	</p>
+	<p>
+	The <code>showfile</code> attribute shows the content of a plain text file in a text box.
+	</p>
+    <h4 id="Single">Single selection</h4>
+
+	<p>
+	The tag <a href="../../xml/leaf.xhtml"><code>leaf</code></a> with the attributes <code>type="charlist"</code> and <code>selection="single"</code> display a combo box that allows to keep selected one between several options. <code>selection="single"</code> is the default behavior of the <a href="../../xml/leaf.xhtml"><code>leaf</code></a> of <code>type="charlist"</code>. The sample code teaches how to build a widget of this type.
+	</p>
+
+	<pre class="xml">&lt;leaf name="Charlist" type="charlist" selection="single"&gt;
+	&lt;element&gt;Element 1&lt;/element&gt;
+	&lt;element&gt;Element 2&lt;/element&gt;
+	&lt;element&gt;Element 3&lt;/element&gt;
+&lt;/leaf&gt;</pre>
+
+	<p>
+	To write a evenly spaced list of floats you can use the Matlab&#174; format (<code>start:step:end</code>).
+	</p>
+
+	<p align="center"> 
+	    <img width="20%" src="images/leaf-singleselection.png" />
+	    <br clear="all" /> 
+	    <span id="fig-1" class="caption"> <strong>Figure 1:</strong>Single selection widget.</span>
+	</p>
+
+
+    <h4 id="Multiple">Multiple selection</h4>
+
+	<p>
+	The tag <a href="../../xml/leaf.xhtml"><code>leaf</code></a> with the attributes <code>type="charlist"</code> and <code>selection="multiple"</code> display a box that allows to keep selected some options from a list. The sample code teaches how to build a multiple selection widget.
+	</p>
+
+	<pre class="xml">&lt;leaf name="Charlist" type="charlist" selection="multiple"&gt;
+	&lt;element&gt;Element 1&lt;/element&gt;
+	&lt;element&gt;Element 2&lt;/element&gt;
+	&lt;element&gt;Element 3&lt;/element&gt;
+&lt;/leaf&gt;</pre>
+
+
+
+	<p align="center"> 
+	    <img width="20%" src="images/leaf-multipleselection.png" />
+	    <br clear="all" /> 
+	    <span id="fig-2" class="caption"> <strong>Figure 2:</strong>Multiple selection widget.</span>
+	</p>
+
+
+    <h4 id="Showfile">Show file</h4>
+
+	<p>
+	The tag <a href="../../xml/leaf.xhtml"><code>leaf</code></a> with the attributes <code>type="charlist"</code> and <code>showfile="file:filename.txt"</code> shows the content of a plain text file. This sample code teaches the use of the attribute <code>showfile="file:filename.txt"</code>
+	</p>
+
+	<pre class="xml">&lt;leaf name="plain text file" type="charlist" showfile="file:file.txt"&gt;
+&lt;/leaf&gt;</pre>
+
+
+
+	<p align="center"> 
+	    <img width="20%" src="images/leaf-showfile.png" />
+	    <br clear="all" /> 
+	    <span id="fig-3" class="caption"> <strong>Figure 2:</strong>Plain text widget.</span>
+	</p>
+
+
+    <div class="back"><a href="#top">Back to top</a></div>
+    <hr />
+    <p>&copy; 2012 - <a href="http://www.usc.es/ingmat/?lang=en">Ingeniería Matemática</a></p>
+  </body>
+</html>
+
