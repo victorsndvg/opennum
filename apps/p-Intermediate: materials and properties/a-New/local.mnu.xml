@@ -1,4 +1,4 @@
-<menus name="Intermediate: animation">
+<menus name="Intermediate: materials and properties">
 	<menu name="Assign">
 		<submenu name="Materials">
 			<struct celldata="data:element_ref" mesh="file:mesh.mfm" name="Content" plot="references" showvalues="true" title="Choose subdomain:">
@@ -14,7 +14,7 @@
 		</submenu>
 		<submenu name="Properties">
 			<struct celldata="data:element_ref" mesh="file:mesh.mfm" name="Content" plot="references" showvalues="true" title="Choose subdomain:">
-				<leaf default="true" selection="single" source="menu:/Materials database/Open/List" title="Choose material:" tooltip="Choose a material for the selected domain reference" type="charlist">
+				<leaf default="true" selection="single" source="menu:/Assign/Properties list" title="Choose material:" tooltip="Choose a material for the selected domain reference" type="charlist">
 				</leaf>
 				<leaf name="1" selection="single" source="menu:/Assign/Properties list" title="Choose property:" tooltip="Choose a material for the selected domain reference" type="charlist">
 					<element selected="true">Dielectric</element>

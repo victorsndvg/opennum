@@ -6,7 +6,7 @@
 				</struct>
 				<leaf name="Surface references" type="charlist" plot="references" mesh="file:2Dmesh.mfm" celldata="data:element_ref" showvalues="true">
 				</leaf>
-				<leaf name="Line references" type="charlist" plot="references" mesh="file:2Dmesh.mfm" celldata="data:edge_ref">
+				<leaf name="Line references" type="charlist" plot="references" mesh="file:2Dmesh.mfm" celldata="data:edge_ref" showvalues="true">
 				</leaf>
 				<leaf name="Point references" type="charlist"  plot="references" mesh="file:2Dmesh.mfm" pointdata="data:vertex_ref" showvalues="true">
 				</leaf>
