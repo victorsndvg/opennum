@@ -1,0 +1,24 @@
+<menus name="Beginner: menus">
+	<menu name="Menu 1">
+		<submenu name="Submenu 1">
+		</submenu>
+		<submenu separator="true">
+		</submenu>
+		<submenu name="Submenu 2" title="Submenu 2: title">
+		</submenu>
+	</menu>
+	<menu separator="true">
+	</menu>
+	<menu name="Menu 2">
+		<submenu name="Submenu 1: Level 1">
+			<submenu name="Submenu 1: Level 2">
+			</submenu>
+			<submenu name="Hidden submenu 1" hidden="true">
+			</submenu>
+		</submenu>
+	</menu>
+	<menu name="Hidden menu" hidden="true">
+		<submenu name="Submenu 4">
+		</submenu>
+	</menu>
+</menus>

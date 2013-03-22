@@ -1,0 +1,338 @@
+<?xml version='1.0' encoding='iso-8859-15'?>
+<data>
+	<menu name="Materials file">
+		<submenu name="Open">
+			<leaf name="materialsDB" totalnum="1" type="file">
+				<elements>
+				materials.dat.xml
+				</elements>
+			</leaf>
+		</submenu>
+	</menu>
+	<menu name="Mesh">
+		<submenu name="Open">
+			<leaf name="Mesh file" subtype="mesh" totalnum="1" type="file">
+				<elements>
+				mallacubaelec.mfm
+				</elements>
+			</leaf>
+		</submenu>
+	</menu>
+	<menu name="Properties">
+		<submenu name="Materials">
+			<struct name="Materials">
+				<leaf name="5" totalnum="1" type="charlist">
+					<elements>
+					Collector bar
+					</elements>
+				</leaf>
+				<leaf name="7" totalnum="1" type="charlist">
+					<elements>
+					Cathodic block
+					</elements>
+				</leaf>
+				<leaf name="8" totalnum="1" type="charlist">
+					<elements>
+					Rammed paste
+					</elements>
+				</leaf>
+				<leaf name="27" totalnum="1" type="charlist">
+					<elements>
+					Cast iron
+					</elements>
+				</leaf>
+				<leaf name="28" totalnum="1" type="charlist">
+					<elements>
+					Cast iron
+					</elements>
+				</leaf>
+			</struct>
+		</submenu>
+	</menu>
+	<menu name="Boundary conditions">
+		<submenu name="Potential B.C.">
+			<struct name="Electric scalar potential">
+				<struct name="Condition 1">
+					<struct name="A constant">
+						<leaf name="Surface references" totalnum="1" type="charlist">
+							<elements>
+							53
+							</elements>
+						</leaf>
+						<leaf name="Constant value" totalnum="1" type="float">
+							<elements>
+							0 
+							</elements>
+						</leaf>
+					</struct>
+				</struct>
+			</struct>
+		</submenu>
+		<submenu name="Normal current density B.C.">
+			<struct name="Normal current density">
+				<struct name="Condition 2">
+					<struct name="A constant">
+						<leaf name="Surface references" totalnum="1" type="charlist">
+							<elements>
+							32
+							</elements>
+						</leaf>
+						<leaf name="Constant value" totalnum="1" type="float">
+							<elements>
+							4577 
+							</elements>
+						</leaf>
+					</struct>
+				</struct>
+			</struct>
+		</submenu>
+		<submenu name="Intensity B.C.">
+			<struct name="Current intensity">
+			</struct>
+		</submenu>
+	</menu>
+	<menu name="Data">
+		<submenu name="Temperature">
+			<leaf name="Field" subtype="field" totalnum="0" type="file">
+				<elements>
+				</elements>
+			</leaf>
+		</submenu>
+	</menu>
+	<menu name="Solver">
+		<submenu name="Run">
+		</submenu>
+		<submenu name="Run remote">
+		</submenu>
+		<submenu name="Stop">
+		</submenu>
+	</menu>
+	<menu name="Visualization">
+		<submenu name="Mesh">
+			<struct name="Mesh">
+				<struct name="Triangulation">
+				</struct>
+				<leaf name="Domain references" totalnum="0" type="charlist">
+					<elements>
+					</elements>
+				</leaf>
+				<leaf name="Face references" totalnum="0" type="charlist">
+					<elements>
+					</elements>
+				</leaf>
+				<leaf name="Line references" totalnum="0" type="charlist">
+					<elements>
+					</elements>
+				</leaf>
+				<leaf name="Point references" totalnum="0" type="charlist">
+					<elements>
+					</elements>
+				</leaf>
+				<leaf name="Element numbering" totalnum="0" type="float">
+					<elements>
+					</elements>
+				</leaf>
+				<leaf name="Vertex numbering" totalnum="0" type="float">
+					<elements>
+					</elements>
+				</leaf>
+				<struct name="Materials">
+				</struct>
+				<struct name="Slice">
+				</struct>
+				<struct name="Cut">
+				</struct>
+				<struct name="Rough cut">
+				</struct>
+			</struct>
+		</submenu>
+		<submenu name="Temperature field">
+			<struct name="Temperature">
+				<struct name="Filled">
+				</struct>
+				<struct name="Threshold">
+				</struct>
+				<struct name="Isosurfaces">
+				</struct>
+				<struct name="Plot over line">
+				</struct>
+				<struct name="Slice">
+				</struct>
+				<struct name="Cut">
+				</struct>
+				<struct name="Rough cut">
+				</struct>
+			</struct>
+		</submenu>
+		<submenu name="Potential, V (V, scalar)">
+			<struct name="Potential">
+				<struct name="Filled">
+				</struct>
+				<struct name="Threshold">
+				</struct>
+				<struct name="Isosurfaces">
+				</struct>
+				<struct name="Plot over line">
+				</struct>
+				<struct name="Slice">
+				</struct>
+				<struct name="Cut">
+				</struct>
+				<struct name="Rough cut">
+				</struct>
+			</struct>
+		</submenu>
+		<submenu name="Electric field">
+			<struct name="Electric field">
+				<struct name="Vectors">
+				</struct>
+				<struct name="Vector components">
+					<struct name="1st component">
+						<struct name="Filled">
+						</struct>
+						<struct name="Threshold">
+						</struct>
+						<struct name="Isosurfaces">
+						</struct>
+						<struct name="Plot over line">
+						</struct>
+						<struct name="Slice">
+						</struct>
+						<struct name="Cut">
+						</struct>
+						<struct name="Rough cut">
+						</struct>
+					</struct>
+					<struct name="2nd component">
+						<struct name="Filled">
+						</struct>
+						<struct name="Threshold">
+						</struct>
+						<struct name="Isosurfaces">
+						</struct>
+						<struct name="Plot over line">
+						</struct>
+						<struct name="Slice">
+						</struct>
+						<struct name="Cut">
+						</struct>
+						<struct name="Rough cut">
+						</struct>
+					</struct>
+					<struct name="3rd component">
+						<struct name="Filled">
+						</struct>
+						<struct name="Threshold">
+						</struct>
+						<struct name="Isosurfaces">
+						</struct>
+						<struct name="Plot over line">
+						</struct>
+						<struct name="Slice">
+						</struct>
+						<struct name="Cut">
+						</struct>
+						<struct name="Rough cut">
+						</struct>
+					</struct>
+					<struct name="Modulus">
+						<struct name="Filled">
+						</struct>
+						<struct name="Threshold">
+						</struct>
+						<struct name="Isosurfaces">
+						</struct>
+						<struct name="Plot over line">
+						</struct>
+						<struct name="Slice">
+						</struct>
+						<struct name="Cut">
+						</struct>
+						<struct name="Rough cut">
+						</struct>
+					</struct>
+				</struct>
+			</struct>
+		</submenu>
+		<submenu name="Current density">
+			<struct name="Current density">
+				<leaf name="Subdomains to plot" totalnum="0" type="charlist">
+					<elements>
+					</elements>
+				</leaf>
+				<struct name="Current density">
+					<struct name="Vectors">
+					</struct>
+					<struct name="Vector components">
+						<struct name="1st component">
+							<struct name="Filled">
+							</struct>
+							<struct name="Threshold">
+							</struct>
+							<struct name="Isosurfaces">
+							</struct>
+							<struct name="Plot over line">
+							</struct>
+							<struct name="Slice">
+							</struct>
+							<struct name="Cut">
+							</struct>
+							<struct name="Rough cut">
+							</struct>
+						</struct>
+						<struct name="2nd component">
+							<struct name="Filled">
+							</struct>
+							<struct name="Threshold">
+							</struct>
+							<struct name="Isosurfaces">
+							</struct>
+							<struct name="Plot over line">
+							</struct>
+							<struct name="Slice">
+							</struct>
+							<struct name="Cut">
+							</struct>
+							<struct name="Rough cut">
+							</struct>
+						</struct>
+						<struct name="3rd component">
+							<struct name="Filled">
+							</struct>
+							<struct name="Threshold">
+							</struct>
+							<struct name="Isosurfaces">
+							</struct>
+							<struct name="Plot over line">
+							</struct>
+							<struct name="Slice">
+							</struct>
+							<struct name="Cut">
+							</struct>
+							<struct name="Rough cut">
+							</struct>
+						</struct>
+						<struct name="Modulus">
+							<struct name="Filled">
+							</struct>
+							<struct name="Threshold">
+							</struct>
+							<struct name="Isosurfaces">
+							</struct>
+							<struct name="Plot over line">
+							</struct>
+							<struct name="Slice">
+							</struct>
+							<struct name="Cut">
+							</struct>
+							<struct name="Rough cut">
+							</struct>
+						</struct>
+					</struct>
+				</struct>
+			</struct>
+		</submenu>
+		<submenu name="Close all">
+		</submenu>
+	</menu>
+</data>

@@ -1,0 +1,50 @@
+<menus name="Beginner: mesh visualization">
+	<menu name="2D Mesh">
+		<submenu name="Visualization">
+			<struct name="representation">
+				<struct name="Triangulation" plot="mesh" mesh="file:2Dmesh.mfm">
+				</struct>
+				<leaf name="Surface references" type="charlist" plot="references" mesh="file:2Dmesh.mfm" celldata="data:element_ref" showvalues="true">
+				</leaf>
+				<leaf name="Line references" type="charlist" plot="references" mesh="file:2Dmesh.mfm" celldata="data:edge_ref" showvalues="true">
+				</leaf>
+				<leaf name="Point references" type="charlist"  plot="references" mesh="file:2Dmesh.mfm" pointdata="data:vertex_ref" showvalues="true">
+				</leaf>
+				<leaf name="Element numbering" type="float"  plot="numbering" mesh="file:2Dmesh.mfm" celldata="data:element_num">
+				</leaf>
+				<leaf name="Vertex numbering" type="float"  plot="numbering" mesh="file:2Dmesh.mfm" pointdata="data:vertex_num">
+				</leaf>
+        		</struct>
+    		</submenu>
+		<submenu name="Close plots">
+			<action name="close_plots" />
+		</submenu>
+	</menu>
+	<menu name="3D Mesh">
+		<submenu name="Visualization">
+			<struct name="representation" >
+				<struct name="Triangulation" plot="mesh" mesh="file:3Dmesh.unv">
+				</struct>
+				<leaf name="Surface references" type="charlist" plot="references" mesh="file:3Dmesh.unv" celldata="data:element_ref" showvalues="true">
+				</leaf>
+				<leaf name="Line references" type="charlist" plot="references" mesh="file:3Dmesh.unv" celldata="data:edge_ref" showvalues="true">
+				</leaf>
+				<leaf name="Point references" type="charlist"  plot="references" mesh="file:3Dmesh.unv" pointdata="data:vertex_ref" showvalues="true">
+				</leaf>
+				<leaf name="Element numbering" type="float"  plot="numbering" mesh="file:3Dmesh.unv" celldata="data:element_num">
+				</leaf>
+				<leaf name="Vertex numbering" type="float"  plot="numbering" mesh="file:3Dmesh.unv" pointdata="data:vertex_num">
+				</leaf>
+				<struct name="Slice" plot="slice" mesh="file:3Dmesh.unv">
+				</struct>
+				<struct name="Cut" plot="cut" mesh="file:3Dmesh.unv">
+				</struct>
+				<struct name="Rough cut" plot="rough_cut" mesh="file:3Dmesh.unv">
+				</struct>
+        		</struct>
+    		</submenu>
+		<submenu name="Close plots">
+			<action name="close_plots" />
+		</submenu>
+	</menu>
+</menus>

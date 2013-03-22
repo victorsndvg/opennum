@@ -1,0 +1,16 @@
+<menus name="Beginner: actions">
+	<menu name="Actions">
+		<submenu name="Run executable file">
+			<action name="exec">
+				<param>executable.bat</param>
+			</action>
+		</submenu>
+		<submenu name="Stop execution">
+			<action name="kill_exec">
+			</action>
+		</submenu>
+		<submenu name="Clear data and visualization panels">
+			<action name="close_plots" />
+		</submenu>
+	</menu>
+</menus>
