@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" "http://www.w3.org/Math/DTD/mathml2/xhtml-math11-f.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US">
+  <head>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" /> 
+    <title>Beginner: Mesh visualization</title>
+    <link rel="stylesheet" type="text/css" href="../../sty.css" />
+  </head>
+  <body id="top">
+    <p>Next: <a href="visualization2.xhtml">Field visualization</a>, Previous: <a href="actions.xhtml">Actions</a>, Up: <a href="index.xhtml">Top</a></p>
+    <hr /> 
+
+    <h3>Mesh visualization</h3>
+	<p>
+	One of the possibilities offered by the <strong>OpenNum</strong> XML syntax is to define graphical components for the interface that allows us to represent different visualizations with a single click.
+	</p>
+
+	<p>
+	This examples show us new attributes for the <a href="../../xml/leaf.xhtml"><code>leaf</code></a> and <a href="../../xml/struct.xhtml"><code>struct</code></a> tags, like <code>plot</code>, <code>mesh</code>, <code>celldata</code>, <code>pointdata</code> and <code>showvalues</code>. It's important for the following examples to maintain the type of tags to obtain the expected result, is supposed that we have a mesh file called <em>3Dmesh.unv</em> in the current working directory.	
+	</p>
+    <h4 id="Triangulation">Triangulation</h4>
+
+	<p>
+	This type of visualization allows us to represent a wireframe mesh. 
+	</p>
+
+	<p>
+	As is the first occurrence of the attributes <code>plot</code> and <code>mesh</code> is important to clarify its meaning. The <code>plot</code> attribute shows a representation of the selected kind, and <code>mesh</code> attribute refers to the file containing the data to be displayed.
+	</p>
+
+	<p>
+	To represent a wired mesh we must use the <a href="../../xml/struct.xhtml"><code>struct</code></a> tag with the attribute <code>plot="mesh"</code>.
+	</p>
+
+	<pre class="xml">&lt;struct name="Triangulation" plot="mesh" mesh="file:3Dmesh.unv"&gt;
+&lt;/struct&gt;</pre>
+
+	<p align="center"> 
+	    <img width="20%" src="images/plot-triangulation.png" />
+	    <br clear="all" /> 
+	    <span id="fig-1" class="caption"> <strong>Figure 1:</strong>Wireframe mesh.</span>
+	</p>
+
+    <h4 id="Surface-refs">Surface references</h4>
+
+	<p>
+	This type of visualization allows us to represent and select some referenced surfaces.
+	</p>
+
+	<p>
+	This is the first occurrence of the <code>celldata</code> and <code>showvalues</code> attibutes. It's important to clarify that <code>celldata</code> and <code>pointdata</code> are excluding and refers to the type of data stored in the mesh file. The attribute <code>showvalues="true"</code> allows us to display a list with the identifiers of the referenced surfaces.
+	</p>
+
+	<p>
+	To represent surface references we must use the  <a href="../../xml/leaf.xhtml"><code>leaf</code></a> tag with the attibutes <code>plot="references"</code>, <code>celldata="data:element_ref"</code> and some more showed in the following sample code.
+	</p>
+
+	<pre class="xml">&lt;leaf name="Surface references" type="charlist" plot="references" mesh="file:3Dmesh.unv" celldata="data:element_ref" showvalues="true"&gt;
+&lt;/leaf&gt;</pre>
+
+	<p align="center"> 
+	    <img width="20%" src="images/plot-surface-refs.png" />
+	    <br clear="all" /> 
+	    <span id="fig-2" class="caption"> <strong>Figure 2:</strong>Surface reference selected.</span>
+	</p>
+    <h4 id="Line-refs">Line references</h4>
+
+	<p>
+	This type of visualization allows us to represent and select some referenced edges. To do this, it's mandatory to use the <a href="../../xml/leaf.xhtml"><code>leaf</code></a> tag with the attibute <code>celldata="data:edge_ref"</code> and some more attribute showed in the following sample code.
+	</p>
+
+	<pre class="xml">&lt;leaf name="Line references" type="charlist" plot="references" mesh="file:3Dmesh.unv" celldata="data:edge_ref" showvalues="true"&gt;
+&lt;/leaf&gt;</pre>
+
+
+    <h4 id="Point-refs">Point references</h4>
+
+	<p>
+	This type of visualization allows us to represent and select some referenced vertex.
+	</p>
+
+	<p>
+	To display this kind of representation, you have to use the <a href="../../xml/leaf.xhtml"><code>leaf</code></a> tag with the attibute <code>celldata="data:vertex_ref"</code> and some more attribute showed in the following sample code.
+	</p>
+
+	<pre class="xml">&lt;leaf name="Point references" type="charlist"  plot="references" mesh="file:3Dmesh.unv" pointdata="data:vertex_ref" showvalues="true"&gt;
+&lt;/leaf&gt;</pre>
+
+
+    <h4 id="Element-num">Element numbering</h4>
+
+	<p>
+	Other type of visualization allows us to locate an identify some elements by reference number. This means that with this kind of representation you can click on an element and to know the associated reference number or locate an element if you know the associated reference number.
+	</p>
+
+	<p>
+	To display the <em>element numbering plot</em> you have to use <a href="../../xml/leaf.xhtml"><code>leaf</code></a> tag with the attibute <code>celldata="data:element_num"</code> and some more attribute showed in the following sample code.
+	</p>
+
+	<pre class="xml">&lt;leaf name="Element numbering" type="float"  plot="numbering" mesh="file:3Dmesh.unv" celldata="data:element_num"&gt;
+&lt;/leaf&gt;</pre>
+
+
+    <h4 id="Vertex-num">Vertex numbering</h4>
+
+	<p>
+	In the same way that <em>element numbering</em>, <em>vertex numbering</em> lets identifying and locating the vertex of a mesh.
+	</p>
+
+	<p>
+	To display the <em>vertex numbering plot</em> you have to use <a href="../../xml/leaf.xhtml"><code>leaf</code></a> tag with the attibute <code>pointdata="data:vertex_num"</code> and some more attribute showed in the following sample code.
+	</p>
+
+	<pre class="xml">&lt;leaf name="Vertex numbering" type="float"  plot="numbering" mesh="file:3Dmesh.unv" pointdata="data:vertex_num"&gt;
+&lt;/leaf&gt;</pre>
+
+
+    <h4 id="Slice">Slice</h4>
+
+	<p>
+	this type of visualization allow us to represent a slice, result of the intersection beteween the mesh and a plane.
+	</p>
+
+	<p>
+	To display this plot you have to use <a href="../../xml/struct.xhtml"><code>struct</code></a> tag with the attibute <code>plot="slice"</code> and some more attribute showed in the following sample code.
+	</p>
+
+	<pre class="xml">&lt;struct name="Slice" plot="slice" mesh="file:3Dmesh.unv"&gt;
+&lt;/struct&gt;</pre>
+
+	<p align="center"> 
+	    <img width="20%" src="images/plot-slice.png" />
+	    <br clear="all" /> 
+	    <span id="fig-3" class="caption"> <strong>Figure 3:</strong>Slice plot.</span>
+	</p>
+
+    <h4 id="Cut">Cut</h4>
+
+	<p>
+	this type of visualization allow us to represent a slice, result of the intersection beteween the mesh and a cube.
+	</p>
+
+	<p>
+	To display this plot you have to use <a href="../../xml/struct.xhtml"><code>struct</code></a> tag with the attibute <code>plot="cut"</code> and some more attribute showed in the following sample code.
+	</p>
+
+
+	<pre class="xml">&lt;struct name="Cut" plot="cut" mesh="file:3Dmesh.unv"&gt;
+&lt;/struct&gt;</pre>
+
+	<p align="center"> 
+	    <img width="20%" src="images/plot-cut.png" />
+	    <br clear="all" /> 
+	    <span id="fig-4" class="caption"> <strong>Figure 4:</strong>Cut plot.</span>
+	</p>
+    <h4 id="Rough-cut">Rough cut</h4>
+
+	<p>
+	this type of visualization allow us to represent a slice, result of the intersection beteween the mesh and a cube, but keepen visible only the non sectioned elements.
+	</p>
+
+	<p>
+	To display this plot you have to use <a href="../../xml/struct.xhtml"><code>struct</code></a> tag with the attibute <code>plot="slice"</code> and some more attribute showed in the following sample code.
+	</p>
+
+
+	<pre class="xml">&lt;struct name="Rough cut" plot="rough_cut" mesh="file:3Dmesh.unv"&gt;
+&lt;/struct&gt;</pre>
+
+
+	<p align="center"> 
+	    <img width="20%" src="images/plot-rough-cut.png" />
+	    <br clear="all" /> 
+	    <span id="fig-5" class="caption"> <strong>Figure 5:</strong>Rough cut plot.</span>
+	</p>
+
+    <div class="back"><a href="#top">Back to top</a></div>
+    <hr />
+    <p>&copy; 2012 - <a href="http://www.usc.es/ingmat/?lang=en">Ingeniería Matemática</a></p>
+  </body>
+</html>
+

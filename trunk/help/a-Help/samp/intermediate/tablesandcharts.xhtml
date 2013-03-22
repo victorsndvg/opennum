@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" "http://www.w3.org/Math/DTD/mathml2/xhtml-math11-f.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US">
+  <head>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" /> 
+    <title>Intermediate: tables and charts</title>
+    <link rel="stylesheet" type="text/css" href="../../sty.css" />
+  </head>
+  <body id="top">
+    <p>Next: <a href="embeddedhelp.xhtml">Embedded help</a>, Previous: <a href="fileextensions.xhtml">File extensions</a>, Up: <a href="index.xhtml">Top</a></p>
+    <hr /> 
+
+    <h3>Tables and charts</h3>
+	<p>
+	This example teaches how to organize the <a href="../../xml/leaf.xhtml"><code>leaf</code></a> and <a href="../../xml/struct.xhtml"><code>struct</code></a> elements to show tables and charts with <strong>OpenNum</strong>.
+	</p>
+	<p>
+	 We discuss the new attribute <code>show</code> for the <a href="../../xml/struct.xhtml"><code>struct</code></a> tags.
+	</p>
+
+    <h4 id="tables">Tables</h4>
+	<p>
+	To represent single values or arrays of floats or complex in a table you have to use the attribute <code>show="tabular"</code> in a <a href="../../xml/struct.xhtml"><code>struct</code></a> tag.
+	</p>
+	<p>
+	You have to define at least a <a href="../../xml/leaf.xhtml"><code>leaf</code></a> tag as child of the <a href="../../xml/struct.xhtml"><code>struct</code></a> tag with the attribute <code>show="tabular"</code>, this will create the <em>Show</em> button that displays the entered data in a table.
+	</p>
+
+	<pre class="xml">&lt;struct name="Table" show="tabular"&gt;
+    &lt;leaf name="Col 1" type="float"&gt;
+    &lt;/leaf&gt;
+    &lt;leaf name="Col 2" type="float"&gt;
+    &lt;/leaf&gt;
+    ...
+&lt;/struct&gt;</pre>
+
+	<p align="center"> 
+	    <img width="15%" src="images/tablesandcharts-table.png" />
+	    <br clear="all" /> 
+	    <span id="fig-1" class="caption"> <strong>Figure 1:</strong> Show button.</span>
+	</p>
+
+    <h4 id="charts">Charts</h4>
+	<p>
+	<strong>OpenNum</strong> also allows you to represent 2D charts. To do this you have to create at least two <a href="../../xml/leaf.xhtml#float"><code>float leaf</code></a> tags as child of the <a href="../../xml/struct.xhtml"><code>struct</code></a> tag and use the attribute <code>show="plot"</code>.
+	</p>
+	<p>
+	The first <a href="../../xml/leaf.xhtml"><code>leaf</code></a> child represents the abscissa axis and the following  <a href="../../xml/leaf.xhtml"><code>leaf</code></a> tags represents different variables in the ordinate axis. The dimension of all the dependant variables must agree with abscissa dimension.
+	</p>
+
+	<pre class="xml">&lt;struct name="Line chart" show="plot"&gt;
+    &lt;leaf name="Abscissa" type="float"&gt;
+    &lt;/leaf&gt;
+    &lt;leaf name="Ordinate 1" type="float"&gt;
+    &lt;/leaf&gt;
+    ...
+&lt;/struct&gt;</pre>
+
+
+    <h4 id="other">Tables and charts</h4>
+	<p>
+	If you want to show both tables and charts at the same time you can use the attribute <code>show="all"</code>, with the same restrictions that the charts, as follows:
+	</p>
+
+	<pre class="xml">&lt;struct name="Line chart" show="all"&gt;
+    &lt;leaf name="Abscissa" type="float"&gt;
+    &lt;/leaf&gt;
+    &lt;leaf name="Ordinate 1" type="float"&gt;
+    &lt;/leaf&gt;
+    ...
+&lt;/struct&gt;</pre>
+
+	<p align="center"> 
+	    <img width="40%" src="images/tablesandcharts.png" />
+	    <br clear="all" /> 
+	    <span id="fig-2" class="caption"> <strong>Figure 2:</strong> Tables and charts.</span>
+	</p>
+
+    <div class="back"><a href="#top">Back to top</a></div>
+    <hr />
+    <p>&copy; 2012 - <a href="http://www.usc.es/ingmat/?lang=en">Ingeniería Matemática</a></p>
+  </body>
+</html>
+

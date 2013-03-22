@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" "http://www.w3.org/Math/DTD/mathml2/xhtml-math11-f.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US">
+  <head>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" /> 
+    <title>Beginner: Actions</title>
+    <link rel="stylesheet" type="text/css" href="../../sty.css" />
+  </head>
+  <body id="top">
+    <p>Next: <a href="visualization1.xhtml">Mesh visualization</a>, Previous: <a href="structs.xhtml">Structs</a>, Up: <a href="index.xhtml">Top</a></p>
+    <hr /> 
+
+    <h3>Actions</h3>
+	<p>
+	In this example we introduce a new tag, the <a href="../../xml/action.xhtml"><code>action</code></a> tag. With this tag you can launch or stop a executable process and clean the widgets and visualization areas.
+	</p>
+
+	<p>
+	The <a href="../../xml/action.xhtml"><code>action</code></a> tag can only appear as a unique <a href="../../xml/menu.xhtml#submenu"><code>submenu</code></a> child. The <code>name</code> attribute of the <a href="../../xml/action.xhtml"><code>action</code></a> tag indicates the type of action to perform.
+	</p>
+
+    <h4 id="Run">Run executable file</h4>
+
+	<p>
+	To run a executable file its mandatory the use of the <a href="../../xml/action.xhtml"><code>action</code></a> tag with the <code>name="exec"</code> attribute. The <a href="../../xml/action.xhtml"><code>action</code></a> tag can contain childs with the <code>param</code> tag, those elements are an ordered list of executables to run.
+	</p>
+
+	<pre class="xml">&lt;action name="exec"&gt;
+	&lt;param&gt;executable.bat&lt;/param&gt;
+&lt;/action&gt;</pre>
+
+    <h4 id="Run">Stops executable file</h4>
+
+	<p>
+	To stop a process started from <strong>OpenNum</strong>, you can use the <a href="../../xml/action.xhtml"><code>action</code></a> tag with the <code>name="kill_exec"</code> attribute. This will kill the last process launched from <strong>OpenNum</strong>.
+	</p>
+
+	<pre class="xml">&lt;action name="kill_exec"&gt;
+&lt;/action&gt;</pre>
+
+
+    <h4 id="Run">Close plots</h4>
+
+	<p>
+	It is also posible to close all the the open plots and clear de widget area with <a href="../../xml/action.xhtml"><code>action</code></a> tag. To get this action done you have to set the attribute <code>name="close_plots"</code>.
+	</p>
+
+	<pre class="xml">&lt;action name="close_plots" /&gt;</pre>
+
+
+    <div class="back"><a href="#top">Back to top</a></div>
+    <hr />
+    <p>&copy; 2012 - <a href="http://www.usc.es/ingmat/?lang=en">Ingeniería Matemática</a></p>
+  </body>
+</html>

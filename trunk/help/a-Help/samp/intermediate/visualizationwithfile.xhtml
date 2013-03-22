@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" "http://www.w3.org/Math/DTD/mathml2/xhtml-math11-f.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US">
+  <head>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" /> 
+    <title>Intermediate: Visualization with file</title>
+    <link rel="stylesheet" type="text/css" href="../../sty.css" />
+  </head>
+  <body id="top">
+    <p>Next: <a href="visualizationwithdata.xhtml">Visualization with data</a>, Previous: <a href="animation.xhtml">Animation</a>, Up: <a href="index.xhtml">Top</a></p>
+    <hr /> 
+
+    <h3>Visualization with file</h3>
+	<p>
+	In this example you can see the modifier <code>file</code> and how to use it. It can be used in <code>mesh</code>, <code>add_mesh</code>, <code>data</code>, <code>showfile</code> and <code>source</code> attributes.
+	</p>
+	<p>
+	With this modifier you specify directly a file path to show its content or visualize it. This tutorial extends some basic concepts from the <a href="../beginner/visualization1.xhtml"> Mesh visualization</a>, <a href="../beginner/visualization2.xhtml"> Field visualization</a> and <a href="../beginner/leafs2.xhtml"> Char list leafs</a> tutorials.
+	</p>
+
+    <h4 id="mesh">Mesh</h4>
+	<p>
+	<code>mesh</code> is the attribute used to specify the mesh to represent, in both <em>mesh</em> and <em>field</em> representations the mesh file can be directly referenced with the <code>file</code> modifier as follows:
+	</p>
+
+	<pre class="xml">&lt;struct name="Mesh" mesh="file:mesh3D.mfm"  plot="mesh"&gt;
+&lt;/struct&gt;</pre>
+
+	<pre class="xml">&lt;struct name="Field" mesh="file:field3D.vtu"  plot="mesh" pointdata="data:Active power density (W/m^3)" &gt; 
+&lt;/struct&gt;</pre>
+
+    <h4 id="addmesh">Add mesh</h4>
+	<p>
+	<code>add_mesh</code> is the attribute used to visualize fields and additional meshes simultaneously, you can use the <code>file</code> modifier as follows:
+	</p>
+
+	<pre class="xml">&lt;struct name="Field with additional mesh" mesh="file:field3D.vtu" add_mesh="file:mesh3D2.mfm" plot="filled"  pointdata="data:Active power density (W/m^3)"&gt;
+&lt;/struct&gt;</pre>
+
+    <h4 id="data">Data</h4>
+	<p>
+	<code>data</code> is the attribute used to visualize 2D charts, with this attribute you can use the <code>file</code> modifier as follows:
+	</p>
+
+	<pre class="xml">&lt;struct name="Show line chart" data="file:linechart.gr2" plot="2d_graph"&gt;
+&lt;/struct&gt;</pre>
+
+    <h4 id="source">Showfile</h4>
+	<p>
+	<code>showfile</code> is the attribute used to show the content of a plain text file, you can use the <code>file</code> modifier as follows:
+	</p>
+
+	<pre class="xml">&lt;leaf name="File content" type="charlist" showfile="file:file.txt""&gt;
+&lt;/leaf&gt;</pre>
+
+    <h4 id="source">Source</h4>
+	<p>
+	<code>source</code> is the attribute used to create a single or multiple selection list from the content of a file, you can use the <code>file</code> modifier as follows:
+	</p>
+
+	<pre class="xml">&lt;leaf name="Selection single" type="charlist" source="file:file.txt"&gt;
+&lt;/leaf&gt;</pre>
+
+	<pre class="xml">&lt;leaf name="Selection multiple" type="charlist" source="file:file.txt" selection="multiple"&gt;
+&lt;/leaf&gt;</pre>
+
+    <div class="back"><a href="#top">Back to top</a></div>
+    <hr />
+    <p>&copy; 2012 - <a href="http://www.usc.es/ingmat/?lang=en">Ingeniería Matemática</a></p>
+  </body>
+</html>
+

@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" "http://www.w3.org/Math/DTD/mathml2/xhtml-math11-f.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US">
+  <head>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" /> 
+    <title>Beginner: Field visualization</title>
+    <link rel="stylesheet" type="text/css" href="../../sty.css" />
+  </head>
+  <body id="top">
+    <p>Previous: <a href="visualization1.xhtml">Mesh visualization</a>, Up: <a href="index.xhtml">Top</a></p>
+    <hr /> 
+
+    <h3>Field Visualization</h3>
+	<p>
+	Continuing with the display possibilites, this example focus on field visualization.
+	</p>
+
+	<p>
+	To define any visualization type, as was seen in the previous example (<a href="visualization1.xhtml">Visualization (I)</a>), are involved several attributes as <code>plot</code>, <code>mesh</code>, <code>pointdata</code> or <code>celldata</code>. <code>plot</code> attribute is used to define the type of representation of a field, <code>mesh</code> to indicate de file or source where data is stored, <code>pointdata</code> and <code>celldata</code> are used to indicate the name of the field or variable stored and also if the data refer to points or cells.
+	</p>
+
+	<p>
+	We assume that we start from the existence of the files <code> sclarfield3D.vtu</code> and <code>vectorfield3D.vtu</code> in the working folder, and these contain the required fields. 
+	</p>
+
+    <h4 id="Run">Filled</h4>
+
+	<p>
+	For smoothed representation of a scalar field, you must create a <a href="../../xml/struct.xhtml"><code>struct</code></a> element with the attribute <code>plot="filled"</code> and attributes <code>mesh</code> and <code>pointdata</code> pointing to the appropriate mesh and field.
+	</p>
+
+	<pre class="xml">&lt;struct name="Filled"  plot="filled" mesh="file:scalarfield3D.vtu" pointdata="data:Potential (V)"&gt;
+&lt;/struct&gt;</pre>
+
+	<p align="center"> 
+	    <img width="20%" src="images/plot-filled.png" />
+	    <br clear="all" /> 
+	    <span id="fig-1" class="caption"> <strong>Figure 1:</strong>Filled.</span>
+	</p>
+
+    <h4 id="Run">Threshold</h4>
+
+	<p>
+	Threshold allows a smoothed representation of a scalar field as in the case of filled, but in this case allows to define in wich limits represent the field values. 
+	</p>
+
+	<p>
+	You must create a <a href="../../xml/struct.xhtml"><code>struct</code></a> element with the attribute <code>plot="threshold"</code> and attributes <code>mesh</code> and <code>pointdata</code> pointing to the appropriate mesh and field.
+	</p>
+
+	<p align="center"> 
+	    <img width="20%" src="images/plot-threshold.png" />
+	    <br clear="all" /> 
+	    <span id="fig-2" class="caption"> <strong>Figure 2:</strong>Threshold.</span>
+	</p>
+
+	<pre class="xml">&lt;struct name="Threshold"  plot="threshold" mesh="file:scalarfield3D.vtu" pointdata="data:Potential (V)"&gt;
+&lt;/struct&gt;</pre>
+
+    <h4 id="Run">Contours</h4>
+
+	<p>
+	Countours plot represents a set of isosurfaces or isolines of a scalar field, depending on the mesh dimension. For creating this kind of visualization you must use a <a href="../../xml/struct.xhtml"><code>struct</code></a> tag with the attribute <code>plot="contour"</code>.
+	</p>
+
+	<pre class="xml">&lt;struct name="Isosurfaces"  plot="contour" mesh="file:scalarfield3D.vtu" pointdata="data:Potential (V)"&gt;
+&lt;/struct&gt;</pre>
+
+	<p align="center"> 
+	    <img width="20%" src="images/plot-contour.png" />
+	    <br clear="all" /> 
+	    <span id="fig-3" class="caption"> <strong>Figure 3:</strong>Contour.</span>
+	</p>
+
+    <h4 id="Run">Plot over line</h4>
+
+	<p>
+	<em>Plot over line</em> is a type of visualization that allows freely moving a line to represent the scalar field through the intersection of this line and the mesh.
+	</p>
+
+	<p>
+	For creating this kind of visualization you must use a <a href="../../xml/struct.xhtml"><code>struct</code></a> tag with the attribute <code>plot="plot_over_line"</code>.
+	</p>
+
+	<pre class="xml">&lt;struct name="Plot over line"  plot="plot_over_line" mesh="file:scalarfield3D.vtu" pointdata="data:Potential (V)"&gt;
+&lt;/struct&gt;</pre>
+
+	<p align="center"> 
+	    <img width="20%" src="images/plot-over-line.png" />
+	    <br clear="all" /> 
+	    <span id="fig-4" class="caption"> <strong>Figure 4:</strong>Plot over line.</span>
+	</p>
+
+    <h4 id="Run">Vectors</h4>
+
+	<p>
+	It is also posiible to represent vector fields with colored arrows. To visualize this kind of plot you must use  <a href="../../xml/struct.xhtml"><code>struct</code></a> tag with the attribute <code>plot="vector_field"</code>.
+	</p>
+
+	<pre class="xml">&lt;struct name="Vectors" plot="vector_field" mesh="file:vectorfield3D.vtu" pointdata="data:Magnetic field (A/m), real part"&gt;
+&lt;/struct&gt;</pre>
+
+	<p align="center"> 
+	    <img width="20%" src="images/plot-vector.png" />
+	    <br clear="all" /> 
+	    <span id="fig-5" class="caption"> <strong>Figure 5:</strong>Vectors.</span>
+	</p>
+
+    <h4 id="Run">Deformed mesh</h4>
+
+	<p>
+	This kind of plot is used to deform a mesh with vector data. To visualize this kind of plot you must use  <a href="../../xml/leaf.xhtml"><code>leaf</code></a> tag with the attribute <code>plot="vector_deformed"</code>.
+	</p>
+
+	<pre class="xml">&lt;leaf  name="Deformed mesh" plot="vector_deformed" mesh="file:vectorfield3D.vtu" pointdata="data:Magnetic field (A/m), real part"&gt;
+&lt;/leaf&gt;</pre>
+
+    <h4 id="Run">Streamlines</h4>
+
+	<p>
+	This is a plot that generates a streamline for an arbitrary vector dataset. This kind of plot must be used over 3D meshes. 
+	</p>
+
+	<p>
+	You must create a <a href="../../xml/struct.xhtml"><code>struct</code></a> element with the attribute <code>plot="streamline"</code> and attributes <code>mesh</code> and <code>pointdata</code> pointing to the appropriate mesh and field.
+	</p>
+
+	<pre class="xml">&lt;struct name="Streamlines" plot="streamline" mesh="file:vectorfield3D.vtu" pointdata="data:Magnetic field (A/m), real part"&gt;
+&lt;/struct&gt;</pre>
+
+	<p align="center"> 
+	    <img width="20%" src="images/plot-streamlines.png" />
+	    <br clear="all" /> 
+	    <span id="fig-6" class="caption"> <strong>Figure 6:</strong>Streamlines.</span>
+	</p>
+
+    <h4 id="Run">Vector components</h4>
+
+	<p>
+	This type of display makes easy the viewing of each component of a vector field. To visualize this kind of plot you mus use a <a href="../../xml/leaf.xhtml"><code>leaf</code></a> tag with the attribute <code>plot="vector_components"</code>. 
+	</p>
+
+	<p>
+	As we have a list of component of single selection, a difference from other views, is the appearance fo the <code>selection="single"</code> attribute.
+	</p>
+
+	<pre class="xml">&lt;leaf name="Vector components" plot="vector_components" mesh="file:vectorfield3D.vtu" pointdata="data:Magnetic field (A/m), real part" selection="single" type="charlist"&gt;
+&lt;/leaf&gt;</pre>
+
+
+    <div class="back"><a href="#top">Back to top</a></div>
+    <hr />
+    <p>&copy; 2012 - <a href="http://www.usc.es/ingmat/?lang=en">Ingeniería Matemática</a></p>
+  </body>
+</html>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" "http://www.w3.org/Math/DTD/mathml2/xhtml-math11-f.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US">
+  <head>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" /> 
+    <title>Intermediate: Visualization with menu</title>
+    <link rel="stylesheet" type="text/css" href="../../sty.css" />
+  </head>
+  <body id="top">
+    <p>Previous: <a href="materialsandproperties.xhtml">Materials and properties</a>, Previous: <a href="visualizationwithdata.xhtml">Visualization with data</a>, Up: <a href="index.xhtml">Top</a></p>
+    <hr /> 
+
+    <h3>Visualization with menu</h3>
+	<p>
+	In this example you can see the modifier <code>menu</code> and how to use it. It can be used in <code>mesh</code>, <code>pointdata</code>, <code>celldata</code>, <code>add_mesh</code>, <code>data</code>, <code>showfile</code> and <code>source</code> attributes.
+	</p>
+	<p>
+	With this modifier you can dinamically specify  different paths in the <em>XML</em> menu to show  or visualize its content. This tutorial extends some basic concepts from the <a href="../beginner/visualization1.xhtml"> Mesh visualization</a>, <a href="../beginner/visualization2.xhtml"> Field visualization</a> and <a href="../beginner/leafs2.xhtml"> Char list leafs</a> tutorials.
+	</p>
+	<p>
+	This tutorial assumes the existence of some paths in the xml hierarchy, to better understanding the use of this modifier we encourage to follow this tutorial with the corresponding <em>XML</em> example.
+	</p>
+
+    <h4 id="mesh">Mesh</h4>
+	<p>
+	<code>mesh</code> is the attribute used to specify the mesh to represent, in both <em>mesh</em> and <em>field</em> representations the mesh file can be directly referenced with the <code>menu:/path/to/a/mesh</code> modifier, where <em>/path/to/a/mesh</em> must be an existing path to any type of <a href="../../xml/leaf.xhtml"><code>leaf</code></a> which contains a valid mesh or field fiel on the file system, as follows:
+	</p>
+
+	<pre class="xml">&lt;struct name="Mesh" mesh="menu:/path/to/a/mesh"  plot="mesh"&gt;
+&lt;/struct&gt;</pre>
+
+    <h4 id="pointcell">Pointdata or celldata</h4>
+	<p>
+	<code>pointdata</code> or <code>celldata</code> attributes are used to define the field type and to give the name of a field contained in some file. You can use the <code>menu:/path/to/a/field/name</code> modifier, where <em>/path/to/a/field/name</em> must be a existing path to any type of <a href="../../xml/leaf.xhtml"><code>leaf</code></a> or <a href="../../xml/struct.xhtml"><code>struct</code></a> which name represents a valid field in the mesh file, as follows:
+	</p>
+
+	<pre class="xml">&lt;struct name="Field" mesh="file:field3D.vtu" pointdata="menu:/path/to/a/field/name" plot="vector_field"&gt;
+&lt;/struct&gt;</pre>
+
+    <h4 id="addmesh">Add mesh</h4>
+	<p>
+	<code>add_mesh</code> is the attribute used to visualize fields and additional meshes simultaneously, you can use the <code>menu</code> modifier as follows:
+	</p>
+
+	<pre class="xml">&lt;struct name="Field with additional mesh" mesh="file:field3D.vtu" add_mesh="menu:/path/to/a/mesh" pointdata="menu:/Visualization/Choose field/field"&gt;
+&lt;/struct&gt;</pre>
+
+    <h4 id="data">Data</h4>
+	<p>
+	<code>data</code> is the attribute used to visualize 2D charts, with this attribute you can use the <code>menu:/path/to/a/chart</code> modifier, where <em>/path/to/a/chart</em> must be an existing path to any type of <a href="../../xml/leaf.xhtml"><code>leaf</code></a> which represents a valid chart file on the file system, as follows:
+	</p>
+
+	<pre class="xml">&lt;struct name="From menu" plot="2d_graph" data="menu:/path/to/a/chart"&gt;
+&lt;/struct&gt;</pre>
+
+    <h4 id="source">Showfile</h4>
+	<p>
+	<code>showfile</code> is the attribute used to show the content of a plain text file, you can use the <code>menu:/path/to/a/text/file</code> modifier, where <em>/path/to/a/text/file</em> must be an existing path to any type of <a href="../../xml/leaf.xhtml"><code>leaf</code></a> which represents a valid text file on the file system, as follows:
+	</p>
+
+	<pre class="xml">&lt;leaf name="File content" type="charlist" showfile="menu:/path/to/a/text/file"&gt;
+&lt;/leaf&gt;</pre>
+
+    <h4 id="source">Source</h4>
+	<p>
+	<code>source</code> is the attribute used to create a combobox with selectable list from the content of a file, you can use the <code>menu</code> modifier as follows:
+	</p>
+
+	<pre class="xml">&lt;leaf name="Selection single" type="charlist" source="menu:/Materials database/Open/List"&gt;
+&lt;/leaf&gt;</pre>
+
+	<pre class="xml">&lt;leaf name="Selection multiple" type="charlist" source="menu:/Materials database/Open/List" selection="multiple"&gt;
+&lt;/leaf&gt;</pre>
+	
+	<p>
+	The path <em>/Materials database/Open/List</em> will be explained in the <a href="materialsandproperties.xhtml">Materials and properties</a> tutorial.
+	</p>
+	
+    <div class="back"><a href="#top">Back to top</a></div>
+    <hr />
+    <p>&copy; 2012 - <a href="http://www.usc.es/ingmat/?lang=en">Ingeniería Matemática</a></p>
+  </body>
+</html>
+
