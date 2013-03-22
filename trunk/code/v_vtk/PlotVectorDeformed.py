@@ -25,7 +25,7 @@ class PlotVectorDeformed(Plot.Plot):
         #self.plotbar.add(self.cb2)
         
         self.add_sw_1(selection=1)
-        
+        self.add_opacity_1(selection=0) # Opacity: 100%/75%/50%/25%/0%
         #self.Bind(wx.EVT_CHOICE, self.c2, self.cb2)
 
 
@@ -136,7 +136,7 @@ class PlotVectorDeformed(Plot.Plot):
         self.wireA2.GetProperty().SetColor(Plot.edges_color)
 
         self.add_sw_2(self.wireA2)
-
+        self.add_opacity_2([self.wireA2]) # Opacity: 100%/75%/50%/25%/0%
 #Para pintar el wireframe original(sin desplazamiento)
 #        self.wireM = vtk.vtkDataSetMapper()			#añadido
 #        self.wireM.SetInputConnection(self.src.GetOutputPort())#añadido

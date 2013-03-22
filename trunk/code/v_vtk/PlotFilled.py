@@ -26,6 +26,8 @@ class PlotFilled(Plot.Plot):
         self.add_outline_1()
         
         self.add_swe_1(selection=1) # wireframe/surface/surface+edges
+
+        self.add_opacity_1(selection=0) # Opacity: 100%/75%/50%/25%/0%
         
         self.clicker = None
 
@@ -100,6 +102,7 @@ class PlotFilled(Plot.Plot):
         self.wireA.GetProperty().SetEdgeColor(Plot.edges_color)
 
         self.add_swe_2(self.wireA) # wireframe/surface/surface+edges
+        self.add_opacity_2([self.wireA]) # wireframe/surface/surface+edges
 	axes = vtk.vtkAxesActor()
         self.rens[0].AddActor(self.wireA) # malla con cores
 

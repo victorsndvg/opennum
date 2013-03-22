@@ -36,6 +36,7 @@ class PlotVectorField(Plot.Plot):
         self.cbl = wx.Choice(self.plotbar, wx.ID_ANY, choices = choices)
         self.cbl.SetSelection(0) # in windows appears without selection
         self.plotbar.add(self.cbl)
+        self.add_opacity_1(selection=0) # Opacity: 100%/75%/50%/25%/0%
 
         self.Bind(wx.EVT_CHOICE, self.cl, self.cbl)
 
@@ -268,6 +269,7 @@ class PlotVectorField(Plot.Plot):
 
 
 #        self.rens[0].AddActor(self.wireA)
+        self.add_opacity_2([self.linA,self.wireA2]) # Opacity: 100%/75%/50%/25%/0%
         self.rens[0].AddActor(self.wireA2)
         self.rens[0].AddActor(self.linA)
        
