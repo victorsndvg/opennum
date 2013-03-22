@@ -1,0 +1,44 @@
+<menus name="Intermediate: embedded help">
+	<menu name="Leafs">
+		<submenu name="Help">
+			<struct name="Help" title="Ways of giving help:">
+				<leaf name="Html, links in the same window" title="Click in the help button:" type="char" helpconfig="code,400,100" helpdata="&lt;p&gt;Link to University of Santiago de Compostela:&lt;/p&gt;&lt;p&gt; &lt;a href=http://www.usc.es&gt;USC web page&lt;/a&gt;&lt;/p&gt;">
+				</leaf>
+				<leaf name="Html, links in default browser" title="Click in the help button:" type="char" helpconfig="frontcode,500,100" helpdata="&lt;p&gt;Link to The Research Group in Mathematical Engineering from the University of Santiago de Compostela:&lt;/p&gt;&lt;p&gt; &lt;a href=http://www.usc.es/ingmat/?lang=en&gt;Mat+i web page&lt;/a&gt;&lt;/p&gt;">
+				</leaf>
+				<leaf name="External url" title="Click in the help button:" type="char" helpconfig="url,800,640" helpdata="http://www.usc.es">
+				</leaf>
+				<leaf name="Local url" title="Click in the help button:" type="char" helpconfig="urlinst,500,450" helpdata="apps/k-Intermediate: embedded help/a-New/index.html">
+				</leaf>
+				<leaf name="Tooltip" title="Keep the cursor on this text:" type="char" tooltip="This is a tooltip message">
+				</leaf>
+			</struct>
+		</submenu>
+	</menu>
+	<menu name="Structs">
+		<submenu name="Help">
+			<struct name="Help" title="Ways of giving help:">
+				<struct name="Html, links in the same window" title="Click in the help button:" helpconfig="code,400,100" helpdata="&lt;p&gt;Link to University of Santiago de Compostela:&lt;/p&gt;&lt;p&gt; &lt;a href=http://www.usc.es&gt;USC web page&lt;/a&gt;&lt;/p&gt;">
+					<leaf name="Leaf" type="float" >
+					</leaf>						
+				</struct>
+				<struct name="Html, links in default browser" title="Click in the help button:" helpconfig="frontcode,500,100" helpdata="&lt;p&gt;Link to The Research Group in Mathematical Engineering from the University of Santiago de Compostela:&lt;/p&gt;&lt;p&gt; &lt;a href=http://www.usc.es/ingmat/?lang=en&gt;Mat+i web page&lt;/a&gt;&lt;/p&gt;">
+					<leaf name="Leaf" type="float">
+					</leaf>						
+				</struct>
+				<struct name="External url" title="Click in the help button:" helpconfig="url,800,640" helpdata="http://www.usc.es">
+					<leaf name="Leaf" type="float">
+					</leaf>						
+				</struct>
+				<struct name="Local url" title="Click in the help button:" helpconfig="urlinst,500,450" helpdata="apps/k-Intermediate: embedded help/a-New/index.html">
+					<leaf name="Leaf" type="float">
+					</leaf>						
+				</struct>
+				<struct name="Tooltip" title="Keep the cursor on this text:" tooltip="This is a tooltip message">
+					<leaf name="Leaf" type="float">
+					</leaf>						
+				</struct>
+			</struct>
+		</submenu>
+	</menu>
+</menus>

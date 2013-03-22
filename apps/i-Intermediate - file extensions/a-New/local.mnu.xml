@@ -1,0 +1,16 @@
+<menus name="Intermediate: file extensions">
+	<menu name="Files">
+		<submenu name="Extensions">
+			<struct name="Extensions">
+				<leaf name="Mesh file" title="Choose mesh file:" type="file" subtype="mesh">
+				</leaf>
+				<leaf name="Field file" title="Choose field file:" type="file" subtype="field">
+				</leaf>
+				<leaf name="All files" title="Choose a file:" type="file" subtype="data">
+				</leaf>
+				<leaf name="Customized file extensions" title="Choose a file:" type="file" subtype="data:All supported (*.txt;*.csv)|*.txt;*.csf| Plain text file (*.txt)|*.txt| Comma separated values (*.csv)|*.csv">
+				</leaf>
+			</struct>
+		</submenu>
+	</menu>
+</menus>
