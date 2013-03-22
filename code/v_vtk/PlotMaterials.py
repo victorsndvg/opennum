@@ -28,6 +28,7 @@ class PlotMaterials(Plot.Plot):
         self.button_table.Bind(wx.EVT_TOGGLEBUTTON, self.handler_table)
 
         self.add_sw_1(selection=1)
+        self.add_opacity_1(selection=0) # Opacity: 100%/75%/50%/25%/0%
         
         self.has_field = False
         self.numbers = [] # last selected numbers [to avoid Render with the same selection]
@@ -117,6 +118,7 @@ class PlotMaterials(Plot.Plot):
 
 # podese descomentar, está preparado
 #        self.rens[0].AddActor(self.sbA)
+        self.add_opacity_2([self.wireA]) # Opacity: 100%/75%/50%/25%/0%
         self.rens[0].AddActor(self.lbA)
         self.rens[0].AddActor(self.wireA)
 

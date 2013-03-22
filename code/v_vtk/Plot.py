@@ -1535,7 +1535,52 @@ class Plot(wx.Panel):
         self.textActor.SetVisibility(tf)
 # # # # </legend>
 
+# # # # Opacity: 100%/Opacity: 75%/Opacity: 50%/Opacity: 25%/Opacity: 0%
+    def add_opacity_1(self, selection=1):								#añadido
+        self.opacity_pos = selection									#añadido
+        self.opacity_choices = [u'Opacity: 100%', u'Opacity: 90%', u'Opacity: 80%', u'Opacity: 70%',\
+u'Opacity: 60%', u'Opacity: 50%', u'Opacity: 40%', u'Opacity: 30%', u'Opacity: 20%', u'Opacity: 10%']	#añadido
+        self.opacity_widget = wx.Choice(self.plotbar, wx.ID_ANY, choices = self.opacity_choices)	#añadido
+        self.opacity_widget.SetSelection(self.opacity_pos) # in windows appears without selection	#añadido
+        self.opacity_widget.Bind(wx.EVT_CHOICE, self.handler_opacity)					#añadido
+        self.plotbar.add(self.opacity_widget)								#añadido
 
+
+    def add_opacity_2(self, obj):									#añadido
+        self.opacity_data = obj # Actor array!								#añadido
+
+
+    def handler_opacity(self, event):									#añadido
+        if not self.done:										#añadido
+            return											#añadido
+        self.opacity_pos = self.opacity_widget.GetSelection()						#añadido
+        self.adjust_opacity()										#añadido
+        self.widget.Render()										#añadido
+
+
+    def adjust_opacity(self):										#añadido
+	for actor in self.opacity_data:									#añadido
+            if self.opacity_pos == 0:									#añadido
+		actor.GetProperty().SetOpacity(1.)							#añadido
+            elif self.opacity_pos == 1:									#añadido
+		actor.GetProperty().SetOpacity(0.9)							#añadido
+            elif self.opacity_pos == 2:									#añadido
+		actor.GetProperty().SetOpacity(0.8)							#añadido
+            elif self.opacity_pos == 3:									#añadido
+		actor.GetProperty().SetOpacity(0.7)							#añadido
+	    elif self.opacity_pos == 4:									#añadido
+		actor.GetProperty().SetOpacity(0.6)							#añadido
+	    elif self.opacity_pos == 5:									#añadido
+		actor.GetProperty().SetOpacity(0.5)							#añadido
+	    elif self.opacity_pos == 6:									#añadido
+		actor.GetProperty().SetOpacity(0.4)							#añadido
+	    elif self.opacity_pos == 7:									#añadido
+		actor.GetProperty().SetOpacity(0.3)							#añadido
+	    elif self.opacity_pos == 8:									#añadido
+		actor.GetProperty().SetOpacity(0.2)							#añadido
+	    elif self.opacity_pos == 9:									#añadido
+		actor.GetProperty().SetOpacity(0.1)							#añadido
+# # # # Opacity: 100%/Opacity: 75%/Opacity: 50%/Opacity: 25%/Opacity: 0%
 
 ## axes indicator
     def add_axes_2(self):

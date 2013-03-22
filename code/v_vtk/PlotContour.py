@@ -23,6 +23,7 @@ class PlotContour(Plot.Plot):
         self.edges_button.Bind(wx.EVT_TOGGLEBUTTON, self.edges_event)
         self.plotbar.add(self.edges_button)
         
+        self.add_opacity_1(selection=0) # Opacity: 100%/75%/50%/25%/0%
         #self.scalarrange.mode_set(0) # tiña rango nulo => non actualiza rango
         #self.scalarrange.mode_mutable_set(False) # always local scalar range
 
@@ -135,7 +136,7 @@ class PlotContour(Plot.Plot):
 # Actor
         self.contA = vtk.vtkActor()
         self.contA.SetMapper(self.contM)
-
+        self.add_opacity_2([self.contA,self.wireA2]) # wireframe/surface/surface+edges
         self.rens[0].AddActor(self.contA)
         self.rens[0].AddActor(self.wireA2)
         

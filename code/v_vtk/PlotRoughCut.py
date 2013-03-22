@@ -81,6 +81,7 @@ class PlotRoughCut(Plot.Plot):
         self.add_outline_1()
         self.add_plane_1()
         self.add_sw_1()
+        self.add_opacity_1(selection=0) # Opacity: 100%/75%/50%/25%/0%
 
     
 # vector
@@ -125,6 +126,7 @@ class PlotRoughCut(Plot.Plot):
             self.add_abs_rel_2(self.src, self.clipper)
 
         self.add_sw_2(self.cutA)
+        self.add_opacity_2([self.cutA]) # Opacity: 100%/75%/50%/25%/0%
 
 # mover plano interactivamente
         #self.planeI = vtk.vtkPlaneWidget()

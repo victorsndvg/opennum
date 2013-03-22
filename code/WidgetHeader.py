@@ -29,7 +29,7 @@ class WidgetHeader(wx.BoxSizer):
 	tabular = None
 	plot = None
 	#default button size
-	buttonsize = [45,29]											#añadido
+	buttonsize = [50,29]					#añadido
 	#size of buttons and margins
 	spacesize = 2*(Widget.PIXELS_MARGIN + PanelWidgets.PIXELS_MARGIN)					#añadido
         if show is None:
