@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" "http://www.w3.org/Math/DTD/mathml2/xhtml-math11-f.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US">
   <head>
-    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" /> 
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
     <title>Materials database</title>
     <link rel="stylesheet" type="text/css" href="../sty.css" />
   </head>
@@ -20,22 +20,22 @@
     </ul>  
 
     <h4 id="desc">Description</h4>
-    <p>A package can be distributed with a <a href="../use/mat.xhtml">materials database</a>, common for all the applications. A materials database can store the physical properties of a set of materials. That is useful when working with scientific solvers that simulate a physical phenomenon: the thermal behaviour of a motor, the elastic deformation of a bridge, etc. In those cases, several physical properties must be defined and associated with each part of the domain. The materials database permits to do such associaciation in two steps:</p>
+    <p>A package can be distributed with a <a href="../use/mat.xhtml">materials database</a>, common for all the applications. A materials database can store the physical properties of a set of materials. That is useful when working with scientific solvers that simulate a physical phenomenon: the thermal behavior of a motor, the elastic deformation of a bridge, etc. In those cases, several physical properties must be defined and associated with each part of the domain. The materials database permits to do such association in two steps:</p>
     <ol>
       <li>the physical properties are defined for several materials in the materials database.</li>
       <li>a material is associated with each part of the domain using a specific process designed by the distributor (for example, allowing the user to choose the materials in a menu item).</li>
     </ol> 
     <h4 id="fold">Folder location</h4>
-    <p>The materials database distributed with the package must be located on <code>&lt;<em>installdir</em>&gt;/materialsDB</code>, where <code>&lt;<em>installdir</em>&gt;</code> is the installation folder. As it was comented in the section <a href="ident.xhtml#data">Renaming the materials database</a> the name of the materials database can be  <code>materials.xml</code> or <code>materials.&lt;<em>name</em>&gt;.xml</code> where <code>&lt;<em>name</em>&gt;</code> is every package name.</p>
+    <p>The materials database distributed with the package must be located on <code>&lt;<em>installdir</em>&gt;/materialsDB</code>, where <code>&lt;<em>installdir</em>&gt;</code> is the installation folder. As it was commented in the section <a href="ident.xhtml#data">Renaming the materials database</a> the name of the materials database can be  <code>materials.xml</code> or <code>materials.&lt;<em>name</em>&gt;.xml</code> where <code>&lt;<em>name</em>&gt;</code> is every package name.</p>
     <p>With the first execution of the graphical interface, OpenNum creates a <a href="ident.xhtml#fold">configuration folder</a> in the user's HOME and saves there a modifiable copy of the materials database in the subfolder <code>materialsDB</code>. The user could modify this copy through the graphical interface.</p>
-    <p>Every time an executable file is called from the graphical interface, a copy of the latter materials database is saved in the working folder with the name <code>materials.dat.xml</code>. Thus, the executable file can rely on that a copy of the lastest modified materials database exists in the working folder.</p>
-    <p>Avisar de que se escribe algo en local.mnu.dat sobre la base. Esto tambien facilita la copia de ficheros en el run remote</p>
-    <p>The distributor have freedom to order al the materials, es en el momento de que el solver lea el xml, debe saber como hacerlo. Tambien se recomienda los materiales deben perteneer a la misma altura en la jerarquia para que se puedan listar en otros menus</p>
+    <p>Every time an executable file is called from the graphical interface, a copy of the latter materials database is saved in the working folder with the name <code>materials.dat.xml</code>. Thus, the executable file can rely on that a copy of the latest modified materials database exists in the working folder.</p>
+    <p><scan class="rev">Avisar de que se escribe algo en local.mnu.dat sobre la base. Esto tambien facilita la copia de ficheros en el run remote</scan></p>
     <div class="back"><a href="#top">Back to top</a></div>
 
     <h4 id="menu">The materials database file</h4>    
-    <p>The materials database file is a XML file encoded in utf-8 and constructed in the same way than the <a href="app.xhtml#menu">menu file</a>. The <code>materials.xml</code> file is a  tree composed of <a href="">menu items</a>, <a href="">submenu items</a>, <a href="">structures</a> and <a href="">leafs</a>. It describes the tree shown in the menu item <strong>Materials database</strong> of the graphical interface.</p>
-    <p>The complete list of elements and attributes allowed in the menu's description is in the Section <a href="../xml/xml.xhtml">XML syntaxis</a>.</p>
+    <p>The materials database file is a XML file encoded in utf-8 and constructed in the same way than the <a href="app.xhtml#menu">menu file</a>. The <code>materials.xml</code> file is a  tree composed of <a href="../xml/menu.xhtml#menu">menu items</a>, <a href="../xml/menu.xhtml#submenu">submenu items</a>, <a href="../xml/struct.xhtml">structures</a> and <a href="../xml/leaf.xhtml">leafs</a>. It describes the tree shown in the menu item <strong>Materials database</strong> of the graphical interface.</p>
+    <p>The distributor have freedom to order the materials in the database and to choose which physical properties can be defined for them. We recommend to save all materials at the same level in the hierarchy in order to ease the list of the existing materials in other XML structures of the menu. Solvers, or its associated data converters, must know how to read the materials database. </p>
+    <p>The complete list of elements and attributes allowed in the menu's description is in the Section <a href="../xml/xml.xhtml">XML syntax</a>.</p>
     <p>Some examples are discussed in the sample data attached to OpenNum.</p>
     <div class="back"><a href="#top">Back to top</a></div>
     

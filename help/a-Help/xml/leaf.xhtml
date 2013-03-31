@@ -31,7 +31,7 @@
     <p>An element <code>leaf</code> is designed to contain data. The required attribute <code>name=</code>"<em>value</em>" indicates the ASCII string that identifies the element. The optional attribute <code>title=</code>"<em>value</em>" indicates an UTF-8 string that will be the title of the associated widget; if <code>title</code> is not present, the widget title is taken from attribute <code>name</code>.</p>
 
     <h5 id="elem">Element <code>element</code></h5>
-    <p>Each element <code>element</code> contains a single scalar data (real, integer or string). It must be a children of the element <code>leaf</code>. Its use is ilustrated in the next sections, devoted to the specific data types.</p>
+    <p>Each element <code>element</code> contains a single scalar data (real, integer or string). It must be a children of the element <code>leaf</code>. Its use is illustrated in the next sections, devoted to the specific data types.</p>
     <div class="back"><a href="#top">Back to top</a></div>
         
     <h4 id="float">Introducing integer/real scalars and arrays</h4>
@@ -46,30 +46,30 @@
     <div class="back"><a href="#top">Back to top</a></div>
     
     <h4 id="file">Introducing files</h4>
-    <p>An element <code>leaf</code> with attribute <code>type="file"</code> manages files through <a href="../use/data.xhtml#ff">this widget</a>. This element can be empty. To save an initial value, write the filename in an element <code>element</code>. Two sub-types can be defined:</p>
+    <p>An element <code>leaf</code> with attribute <code>type="file"</code> it manages files through <a href="../use/data.xhtml#ff">this widget</a>. This element can be empty. To save an initial value, write the filename in an element <code>element</code>. <scan class="rev">Optionally,</scan> two sub-types can be defined:</p>
     <ul>
-      <li><strong>Mesh files:</strong> When the element also has the attribute <code>subtype="mesh"</code>, manages finite element mesh files. The previous attribute can indicate the permitted file types and extensions using <code>subtype="mesh: </code><em>desc</em> | <em>extension list</em> | <em>desc</em> | <em>extension list</em> | ...<code>"</code>, where
+      <li><strong>Mesh files:</strong> When the element also has the attribute <code>subtype="mesh"</code>, it manages finite element mesh files. The previous attribute can indicate the allowed file types and extensions using <code>subtype="mesh: </code><em>desc</em> | <em>extension list</em> | <em>desc</em> | <em>extension list</em> | ...<code>"</code>, where
       <ul>
         <li><em>desc</em> is a description of a file type and</li>
         <li><em>extension list</em> is a list of extensions associated to this file type, separated by semicolons; each extension must be preceded by <code>*.</code></li>
       </ul>
-      <p>Files must have one of the <a href="">valid mesh formats</a> in case you want to visualize them with OpenNum .</p>
-      <pre class="xml">&lt;leaf type="file" name="Mesh file" subtype="mesh:All supported (*.mfm;*.unv)|*.mfm;*.unv| 
+      <pre class="xml">&lt;leaf type="file" name="Mesh file" subtype="mesh:All supported (*.mfm;*.unv)|*.mfm;*.unv|
   Modulef Formatted Meshes (*.mfm)|*.mfm| Universal files (*.unv)|*.unv"&gt;
 &lt;/leaf&gt;</pre>
+      <p>Files must have one of the <a href="../form/mesh/mesh.xhtml">valid mesh formats</a> in case you want to visualize them with OpenNum.</p>
       </li>
-      <li><strong>Field files:</strong> When the element also has the attribute <code>subtype="field"</code>, manages finite element field files. The previous attribute can indicate the permitted file types and extensions using <code>subtype="mesh: </code><em>desc</em> | <em>extension list</em> | <em>desc</em> | <em>extension list</em> | ...<code>"</code>, where
+      <li><strong>Field files:</strong> When the element also has the attribute <code>subtype="field"</code>, it manages finite element field files. The previous attribute can indicate the allowed file types and extensions using <code>subtype="mesh: </code><em>desc</em> | <em>extension list</em> | <em>desc</em> | <em>extension list</em> | ...<code>"</code>, where
       <ul>
         <li><em>desc</em> is a description of a file type and</li>
         <li><em>extension list</em> is a list of extensions associated to this file type, separated by semicolons; each extension must be preceded by <code>*.</code></li>
       </ul>
-      <p>Files must have one of the <a href="">valid field formats</a> in case you want to visualize them with OpenNum .</p>
       <pre class="xml">&lt;leaf type="file" name="Field file" subtype="field:All supported (*.vtk;*.vtu)|*.vtk;*.vtu|
 Visualization Toolkit (VTK) (*.vtk)|*.vtk|Visualization Toolkit (VTU) (*.vtu)|*.vtu"&gt;
 &lt;/leaf&gt;</pre>
+      <p>Files must have one of the <a href="../form/field/field.xhtml">valid field formats</a> in case you want to visualize them with OpenNum.</p>
       </li>
     </ul>
-    <p>For both subtypes <code>mesh</code> and <code>field</code>, an optional attribute <code>mesh_name="</code><em>prefix</em><code>:</code><em>value</em><code>"</code> permits to show <em>value</em> as the text label in a visualization, when the button <a href="">Labels</a> is active. Here <em>prefix</em> can be:</p>
+    <p>For both subtypes <code>mesh</code> and <code>field</code>, an optional attribute <code>mesh_name="</code><em>prefix</em><code>:</code><em>value</em><code>"</code> allows us to show <em>value</em> as the text label in a visualization, when the button <a href="../use/visual-parts/parts.xhtml#main">Labels</a> is active. Here <em>prefix</em> can be:</p>
     <ul>
       <li><code><strong>data</strong></code>, and then <em>value</em> is a string scalar;</li>
       <li><code><strong>menu</strong></code>, and then <em>value</em> is a menu path, as it is explained in section <a href="dep.xhtml">Dependencies</a>.</li>
@@ -99,13 +99,13 @@ Visualization Toolkit (VTK) (*.vtk)|*.vtk|Visualization Toolkit (VTU) (*.vtu)|*.
       <li><strong>Single selection:</strong> requires the attribute <code>selection="single"</code> (this is the default value); 
       the string array is shown through <a href="../use/data.xhtml#single">this widget</a>. If one element <code>element</code> has 
       the attribute <code>selected="true"</code>, the string that encloses will appear as pre-selected. The last string selected by 
-      the user will take the atribute <code>selected="true"</code> and it will be saved in the <a href="">XML datafile</a>. 
+      the user will take the attribute <code>selected="true"</code> and it will be saved in the <a href="../conf/app.xhtml#menu">XML datafile</a>.
       <pre class="xml">&lt;leaf type="charlist" name="Boundary type"&gt;
   &lt;element&gt;Isolated&lt;/element&gt;
   &lt;element selected="true"&gt;Conductor&lt;/element&gt;
 &lt;/leaf&gt;</pre>
       </li>
-      <li><strong>Multiple selection:</strong> requires the attribute <code>selection="multiple"</code>; the string array is shown through <a href="../use/data.xhtml#multiple">this widget</a>. If one or several elements <code>element</code> have the attribute <code>selected="true"</code>, the strings that enclose will appear as pre-selected. The last strings selected by the user will take the atribute <code>selected="true"</code>. 
+      <li><strong>Multiple selection:</strong> requires the attribute <code>selection="multiple"</code>; the string array is shown through <a href="../use/data.xhtml#multiple">this widget</a>. If one or several elements <code>element</code> have the attribute <code>selected="true"</code>, the strings that enclose will appear as pre-selected. The last strings selected by the user will take the attribute <code>selected="true"</code> and it will be saved in the <a href="../conf/app.xhtml#menu">XML datafile</a>.
       <pre class="xml">&lt;leaf type="charlist" name="Isolated surfaces" selection="multiple"&gt;
   &lt;element&gt;Up&lt;/element&gt;
   &lt;element selected="true"&gt;Down&lt;/element&gt;

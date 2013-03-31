@@ -22,11 +22,11 @@
 
 <!-- rtes: "Identity" se explica como poner el nombre en code, las imagenes en la carpeta correspondiente y que implicaciones tiene (busqueda del fichero de materials, la carpeta en home, run remote,...); "Applications" -->
 
-    <p>A distributor can use a particular word as <a href="#main">package name</a>, use his own <a href="#imag">background images and logo</a>. This name will also be the name for the <a href="#fold">configuration folder</a> and the <a href="#data">materials data base</a>.</p>
+    <p>A distributor can use a particular word as <a href="#main">package name</a>, use his own <a href="#imag">background images and logo</a>. This name will also be the name for the <a href="#fold">configuration folder</a> and the <a href="#data">materials database</a>.</p>
     
     <h4 id="main">The package name</h4>
-    <p>The main file that opens the graphical interface is the Pyhton script <code>&lt;<em>installdir</em>&gt;/code/opennum.py</code>, where <code>&lt;<em>installdir</em>&gt;</code> is the installation folder. To use your own word as <dfn>package name</dfn>, just rename this file, maintaining the <code>.py</code> extension. The new name will appear in the <a href="../use/parts.xhtml">title bar</a>. In case you want to distribute several packages within the same installation, you can make several copies of <code>opennum.py</code>, a rename every copy with the appropriate name.</p>
-    <p>For example, if you want to distribute a package for solving thermal problems, just rename <code>opennum.py</code> to <code>thermal.py</code> if you want that "thermal" be the package name.</p> 
+    <p>The main file that opens the graphical interface is the Python script <code>&lt;<em>installdir</em>&gt;/code/opennum.py</code>, where <code>&lt;<em>installdir</em>&gt;</code> is the installation folder. To use your own word as <dfn>package name</dfn>, just rename this file, maintaining the <code>.py</code> extension. The new name will appear in the <a href="../use/parts.xhtml">title bar</a>. For example, if you want to distribute a package for solving thermal problems, just rename <code>opennum.py</code> to <code>thermal.py</code> if you want that "thermal" be the package name.</p>
+    <p>In case you want to distribute several packages within the same installation, you can make several copies of <code>opennum.py</code>, a rename every copy with the appropriate name.</p> 
     <div class="back"><a href="#top">Back to top</a></div>    
     
     <h4 id="imag">Changing the associated images.</h4>
@@ -61,9 +61,9 @@
     <div class="back"><a href="#top">Back to top</a></div>
     
     <h4 id="data">Renaming the materials database</h4>
-    <p><span class="rev">OpenNum brings an example of <a href="../use/mat.xhtml">materials database</a> named <code>materials.xml</code></span> in the folder <code>&lt;<em>installdir</em>&gt;/materialsDB</code>, where <code>&lt;<em>installdir</em>&gt;</code> is the installation folder. You can modifiy this file for your own purposes. In case you want to distribute several packages within the same installation, you can make several copies of the materials database  and rename it as <code>materials.&lt;<em>name</em>&gt;.xml</code> where <code>&lt;<em>name</em>&gt;</code> is every package name.</p>    
+    <p><span class="rev">OpenNum brings an example of <a href="../use/mat.xhtml">materials database</a> named <code>materials.xml</code></span> in the folder <code>&lt;<em>installdir</em>&gt;/materialsDB</code>, where <code>&lt;<em>installdir</em>&gt;</code> is the installation folder. You can modify this file for your own purposes. In case you want to distribute several packages within the same installation, you can make several copies of the materials database  and rename it as <code>materials.&lt;<em>name</em>&gt;.xml</code> where <code>&lt;<em>name</em>&gt;</code> is every package name.</p>
     <p>With the first execution of the graphical interface, OpenNum creates a <a href="#fold">configuration folder</a> in the user's HOME and saves there a modifiable copy of the <a href="../use/mat.xhtml">materials database</a> in the subfolder <code>materialsDB</code>. The user could modify this copy through the graphical interface.</p>
-    <p>Every time an executable file is called from the graphical interface, a copy of the latter materials database is saved in the working folder with the name <code>materials.dat.xml</code>. Thus, the executable file can rely on that a copy of the lastest modified materials database exists in the working folder.</p>
+    <p>Every time an executable file is called from the graphical interface, a copy of the latter materials database is saved in the working folder with the name <code>materials.dat.xml</code>. Thus, the executable file can rely on that a copy of the latest modified materials database exists in the working folder.</p>
     <div class="back"><a href="#top">Back to top</a></div>
 
     <hr />

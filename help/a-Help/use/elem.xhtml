@@ -18,11 +18,11 @@
       <li><a href="#sample">Sample data</a></li>
     </ul>  
 
-    <p>The first step to work with OpenNum is to choose a <a href="">working folder</a>. Then, one of the available <a href="">applications</a> must me associated with the working folder. Eventually, a <a href="">sample data</a> can be load. These concepts are explained below.</p>
+    <p>The first step to work with OpenNum is to choose a <a href="#wf">working folder</a>. Then, one of the available <a href="#app">applications</a> must me associated with the working folder. Eventually, a <a href="#sample">sample data</a> can be load. These concepts are explained below.</p>
     
     <h4 id="wf">Working folder</h4>
-    <p>Before running any scientific solver, a <dfn>working folder</dfn> must be selected. A working folder can only manage a single execution of a scientific solver. Thus, it is the natural place to save all the data and results files of the execution. In any case, these files could be saved outside taking into account that their relative path will be taken relative to the working folder.</p>
-    <p>To select a working folder, go to menu <span class="menu">Project</span> - <span class="menu">Select folder...</span> (see <a href="#fig-1">Figure 1</a>) and select a working folder. The last working folder of the previous session will be automatically opened when you start OpenNum.</p>
+    <p>Before running any scientific solver, a <dfn>working folder</dfn> must be selected. A working folder will manage a single execution of a scientific solver. Thus, it is the natural place to save all the data and results files of the execution. Nevertheless, files associated with the working folder could be saved outside and they would be accessed using their path relative to the working folder.</p>
+    <p>To select a working folder, go to menu <span class="menu">Project</span> - <span class="menu">Select folder...</span> (see <a href="#fig-1">Figure 1</a>) and select a working folder. The last working folder used in the previous session will be automatically opened when you start OpenNum.</p>
     <p align="center"> 
       <img width="15%" src="images/wfolder.png" />
       <br clear="all" /> 
@@ -31,7 +31,7 @@
     <div class="back"><a href="#top">Back to top</a></div>    
 
     <h4 id="app">Application</h4>
-    <p>OpenNum can provide an interface to several scientific solvers. When two solvers share the required data and produce the same type of outputs, they can share the same menu configuration. That would be the case, for example, of two solvers that solve the same problem using two different internal algorithms. Thus, we would say that both solvers belong to the same <dfn>application</dfn>. More specifically, an  <dfn>application</dfn> is a solver or set of solvers that share the same menu configuration, together with their common menu.</p> 
+      <p>OpenNum can provide an interface to several scientific solvers. When two solvers require the same data and produce the same type of outputs, they can share the same menu items. That would be the case, for example, of two solvers that solve the same problem but using two different internal algorithms. Thus, we would say that both solvers belong to the same <dfn>application</dfn>; more specifically, an  <dfn>application</dfn> is a solver or set of solvers that share the same menu configuration.</p>
     <p>After selecting a working folder, the user must associate an application to it. To do so, go to menu <span class="menu">Project</span> - <span class="menu">Application</span> (see <a href="#fig-2">Figure 2</a>) and select one of the existing applications. If there is only one application, menu <span class="menu">Application</span> will be disabled and the application will be automatically associated to the working folder when the latter is selected.</p>
     <p align="center"> 
       <img width="40%" src="images/app.png" />
@@ -47,8 +47,8 @@
     <div class="back"><a href="#top">Back to top</a></div>    
     
     <h4 id="sample">Sample data</h4>
-    <p>An application can have several <dfn>sample data</dfn> associated to it. Each sample data can contain a set of data files and outputs that exemplify the use of the application. That would be the case, for example, of the application "Direct current" with two sample data: the first contains the data and the results of a simulation in an electric motor; the second, a simulation of an electric distribution network.</p>
-    <p> If the user want to load a sample data, go to menu <span class="menu">Project</span> - <span class="menu">Sample data</span> (see <a href="#fig-4">Figure 4</a>) and select one of the existing sample data. If there is only one sample data available for the current application, menu <span class="menu">Sample data</span> will be disabled and the sample data will be automatically load when the associated application is selected.</p>
+    <p>An application can have several <dfn>sample data</dfn> associated to it. Each sample data contains a set of data files and outputs that exemplify the use of the application. That would be the case, for example, of an application named "Direct current" with two sample data: the first one containing the simulation of an electric motor, and the second one containing the simulation of an electric distribution network.</p>
+    <p> To load a sample data, go to menu <span class="menu">Project</span> - <span class="menu">Sample data</span> (see <a href="#fig-4">Figure 4</a>) and select one of the existing sample data. If there is only one sample data available for the current application, menu <span class="menu">Sample data</span> will be disabled and the sample data will be automatically load when the associated application is selected.</p>
     <p align="center"> 
       <img width="35%" src="images/sample.png" />
       <br clear="all" /> 
