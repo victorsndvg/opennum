@@ -24,10 +24,10 @@
     <p>The element <code>action</code> defines one or several calls to executable files. The attribute <code>name=</code>"<em>value</em>" identifies which type of action will be taken. The valid values are:</p>
     <ul>
       <li><code><strong>exec</strong></code>, makes a system call to locally run one or several executable files; the system call does not stop the interaction with the graphical interface;</li>
-      <li><code><strong>exec_ssh</strong></code>, makes a system call to <a href="">remotely run</a> one or several executable files using the SSH protocol; the system call does not stop the interaction with the graphical interface;</li>
+      <li><code><strong>exec_ssh</strong></code>, makes a system call to <a href="../run/run.xhtml">remotely run</a> one or several executable files using the SSH protocol; the system call does not stop the interaction with the graphical interface;</li>
       <li><code><strong>kill_exec</strong></code>, close a system call started with <code><strong>exec</strong></code>.</li>
-      <li><code><strong>close_plots</strong></code>, close all the graphic tags in the <a href="">visualization window</a>.</li>
-      <li><code><strong>reset_materials</strong></code>, copy the materials database from folder <code><em>installdir</em>/materialsDB</code> to the folder <code>materialsDB</code> in the <a href="">configuration folder</a> (here <code><em>installdir</em></code> is the installation folder). This action erases all the changes that the user has been done in the materials database.</li>
+      <li><code><strong>close_plots</strong></code>, close all the graphic tags in the <a href="../use/visual-parts/parts.xhtml">visualization window</a>.</li>
+      <li><code><strong>reset_materials</strong></code>, copy the materials database from folder <code><em>installdir</em>/materialsDB</code> to the folder <code>materialsDB</code> in the <a href="../conf/ident.xhtml#data">configuration folder</a> (here <code><em>installdir</em></code> is the installation folder). This action erases all the changes that the user has been done in the materials database.</li>
     </ul>
 
     <pre class="xml">&lt;submenu name="Run"&gt;

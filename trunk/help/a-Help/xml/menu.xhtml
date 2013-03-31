@@ -20,7 +20,7 @@
     </ul>  
 
     <h4 id="menus">Element <code>menus</code></h4>
-    <p>Every <a href="">menu file</a> or <a href="">materials database file</a> must contain a single <code>menus</code> element as a root element. Its children elements define the menu items of the <a href="../use/parts.xhtml">menu bar</a>. The attribute <code>name=</code>"<em>value</em>" indicates that <em>value</em> is the name of the associated application. This will be the name shown in the <a href="../use/parts.xhtml">title bar</a>.</p>
+    <p>Every <a href="../conf/app.xhtml#menu">menu file</a> or <a href="../conf/mat.xhtml#menu">materials database file</a> must contain a single <code>menus</code> element as a root element. Its children elements define the menu items of the <a href="../use/parts.xhtml">menu bar</a>. The attribute <code>name=</code>"<em>value</em>" indicates that <em>value</em> is the name of the associated application. This will be the name shown in the <a href="../use/parts.xhtml">title bar</a>.</p>
 
     <pre class="xml">&lt;menus name="Electrostatics"&gt;
   ...
@@ -28,7 +28,7 @@
     <div class="back"><a href="#top">Back to top</a></div>
 
     <h4 id="menu">Element <code>menu</code></h4>
-    <p>Each element <code>menu</code> defines a menu item of the menu items of the <a href="../use/parts.xhtml">menu bar</a>. It must be a  children of the element <code>menus</code>. The attribute <code>name=</code>"<em>value</em>" indicates the text that will appear in the menu item. The values <em>Project</em>, <em>Help</em> and <em>Materials database</em> are forbidden since they are managed by OpenNum.</p>
+    <p>Each element <code>menu</code> defines a menu item of the menu items of the <a href="../use/parts.xhtml">menu bar</a>. It must be a  children of the element <code>menus</code>. The attribute <code>name=</code>"<em>value</em>" indicates the text that will appear in the menu item. <!--The values <em>Project</em>, <em>Help</em> and <em>Materials database</em> are forbidden since they are managed by OpenNum. --></p>
 
     <pre class="xml">&lt;menus name="Electrostatics"&gt;
   &lt;menu name="Mesh"&gt;

@@ -8,7 +8,7 @@
   </head>
   <body id="top">
     <p>Next: <a href="field.xhtml">Field visualization</a>, Up: <a href="visual.xhtml">Top</a></p>
-    <hr /> 
+    <hr />
 
     <h3>Mesh visualization</h3>
 
@@ -31,7 +31,7 @@
         </ul>
     </ul>
 
-    <p>An element <code>struct</code> or <code>leaf</code> can create a mesh visualization in the <a href="../use/visual-parts/parts.xhtml#scene">Graphic scene</a>. To do so, the element must have the attribute <a href="#mesh"><code>mesh</code></a> to know which mesh will be used and the attribute <a href="#plot"><code>plot</code></a> to know which graphic type will be plotted. Another optional attributes, like <a href="#add"><code>add_mesh</code></a>, <a href="show"><code>show_values</code></a>, <a href="#point"><code>pointdata</code></a> and <a href="#cell"><code>celldata</code></a> can change the final visualization.</p>
+    <p>An element <code>struct</code> or <code>leaf</code> can create a mesh visualization in the <a href="../use/visual-parts/parts.xhtml#scene">Graphic scene</a>. To do so, the element must have the attribute <a href="#mesh"><code>mesh</code></a> to know which mesh will be used and the attribute <a href="#plot"><code>plot</code></a> to know which graphic type will be plotted. Another optional attributes, like <a href="#add"><code>add_mesh</code></a>, <a href="#show"><code>showvalues</code></a>, <a href="#point"><code>pointdata</code></a> and <a href="#cell"><code>celldata</code></a> can change the final visualization.</p>
     
     <h4 id="mesh">The attribute <code>mesh</code></h4>
         <p>An element <code>struct</code> or <code>leaf</code> can refer to a mesh with the attribute <code>mesh="</code><em>prefix:value</em>", where <em>prefix</em> can be</p>
@@ -40,31 +40,31 @@
       <li><code><strong>menu</strong></code> and then <em>value</em> must be a menu path that points to a element <code>leaf</code> with attributes <code>type="file"</code>, <code>subtype="mesh"</code>. <em>value</em> must follow the rules explained in the section <a href="dep.xhtml#menu">Menu dependencies</a>.</li>
     </ul>
 
-    <p>The attribute <code>mesh</code> can refer to several meshes <span class="rev">using <a href="">variables</a></span>. In that case, all the meshes will be shown in the same <a href="../use/visual-parts/parts.xhtml#scene">Graphic scene</a>.</p>
+    <p>The attribute <code>mesh</code> can refer to several meshes <span class="rev">using <a href="dep.xhtml#var">variables</a></span>. In that case, all the meshes will be shown in the same <a href="../use/visual-parts/parts.xhtml#scene">Graphic scene</a>.</p>
     <pre class="xml">&lt;leaf type="charlist" name="Line references" mesh="menu:/Mesh/Open/Mesh file"&gt;
 &lt;/leaf&gt;</pre>
-    <p>You can find a practical example in the section <a href="#filled">... plot</a>.</p>
+    <p><scan class="rev">You can find a practical example in the section <a href="#filled">... plot</a>.</scan></p>
     <div class="back"><a href="#top">Back to top</a></div> 
         
     <h4 id="add">Adding more meshes to the Graphic scene</h4>
-    <p> The optional attribute <code>add_mesh="</code><em>prefix:value</em> permits to add more meshes to the Graphic scene. The rules for <em>prefix</em> and <em>value</em> are the same than those for the attribute <code>mesh</code>. The additional meshes will be shown as <em>wireframe</em>, that is, no field will be shown on them. The attribute <code>add_mesh</code> is useful to show meshes that help to understand the spatial position of the main mesh.</p>
+    <p> The optional attribute <code>add_mesh="</code><em>prefix:value</em> allows us to add more meshes to the Graphic scene. The rules for <em>prefix</em> and <em>value</em> are the same than those for the attribute <code>mesh</code>. The additional meshes will be shown as <em>wireframe</em>, that is, no field will be shown on them. The attribute <code>add_mesh</code> is useful to show meshes that help to understand the spatial position of the main mesh.</p>
     <pre class="xml">&lt;leaf type="charlist" name="Line references" mesh="menu:/Mesh/Open/Mesh file" add_mesh="file:auxiliar-mesh.unv"&gt;
 &lt;/leaf&gt;</pre>
     <div class="back"><a href="#top">Back to top</a></div> 
     
     <h4 id="point">The attribute <code>pointdata</code></h4>
-    <p>When the mesh file has one of the <a href="">mesh formats</a> recognized by OpenNum, the application can show  a field associated with the mesh nodes. An element <code>struct</code> or <code>leaf</code> with attribute <code>mesh</code> can access to one of these associated mesh fields by using the attribute <code>pointdata="data:</code><em>value</em>" where <em>value</em> can be</p>
+    <p>When the mesh file has one of the <a href="../form/mesh/mesh.xhtml">mesh formats</a> recognized by OpenNum, the application can show  a field associated with the mesh nodes. An element <code>struct</code> or <code>leaf</code> with attribute <code>mesh</code> can access to one of these associated mesh fields by using the attribute <code>pointdata="data:</code><em>value</em>" where <em>value</em> can be</p>
     <ul>
       <li><code><strong>vertex_ref</strong></code> for the node reference numbers;</li>
       <li><code><strong>vertex_num</strong></code> for the node global numbering.</li>
     </ul>
     <pre class="xml">&lt;leaf type="charlist" name="Node references" mesh="menu:/Mesh/Open/Mesh file" pointdata="data:vertex_ref"&gt;
 &lt;/leaf&gt;</pre>
-    <p>You can find a practical example in the section <a href="#filled">... plot</a>.</p>
+    <p><scan class="rev">You can find a practical example in the section <a href="#filled">... plot</a>.</scan></p>
     <div class="back"><a href="#top">Back to top</a></div> 
     
     <h4 id="cell">The attribute <code>celldata</code></h4>
-    <p>When the mesh file has one of the <a href="">mesh formats</a> recognized by OpenNum, the application can show  a field associated with the mesh cells. An element <code>struct</code> or <code>leaf</code> with attribute <code>mesh</code> can access to one of these associated mesh fields by using the attribute <code> celldata="data:</code><em>value</em>" where <em>value</em> can be</p>
+    <p>When the mesh file has one of the <a href="../form/mesh/mesh.xhtml">mesh formats</a> recognized by OpenNum, the application can show  a field associated with the mesh cells. An element <code>struct</code> or <code>leaf</code> with attribute <code>mesh</code> can access to one of these associated mesh fields by using the attribute <code> celldata="data:</code><em>value</em>" where <em>value</em> can be</p>
     <ul>
       <li><code><strong>edge_ref</strong></code> for the edge reference numbers;</li>
       <li><code><strong>face_ref</strong></code> for the face reference numbers (only in 3D meshes);</li>
@@ -73,7 +73,7 @@
     </ul>
     <pre class="xml">&lt;leaf type="charlist" name="Line references" mesh="menu:/Mesh/Open/Mesh file" celldata="data:edge_ref"&gt;
 &lt;/leaf&gt;</pre>
-    <p>You can find a practical example in the section <a href="#filled">... plot</a>.</p>
+    <p><scan class="rev">You can find a practical example in the section <a href="#filled">... plot</a>.</scan></p>
     <div class="back"><a href="#top">Back to top</a></div> 
 
     <h4 id="show">Listing the values of an associated mesh field</h4>
@@ -84,17 +84,17 @@ celldata="data:edge_ref" showvalues="true"&gt;
     <div class="back"><a href="#top">Back to top</a></div> 
     
     <h4 id="plot">The attribute <code>plot</code></h4>
-    <p>An element <code>struct</code> or <code>leaf</code> must have the <code>plot="</code><em>value</em>" to select a graphic type for the visualization. The attribute <code>mesh</code> is also mandatory. The posible values for <em>value</em> are detailed in the subsections below.</p>
-    <p>Some graphic type require to show optional paramters in the Data window to change some visualization aspects. For example, slice graphics permit to change the plane position. The XML code needed to show these options is stored in the folder <code><em>installdir</em>/plots</code> where <code><em>installdir</em></code> is the installation folder. OpenNum copies that XML code to the menu configuration file the first time the visualization is demanded. OpenNum also includes the attribute <code>plotted="true"</code> to avoid subsequent copies. In order to allow OpenNum to manage their content, <strong>elements with attribute <code>plot</code> must be empty</strong>.</p>
+    <p>An element <code>struct</code> or <code>leaf</code> must have the <code>plot="</code><em>value</em>" to select a graphic type for the visualization. The attribute <code>mesh</code> is also mandatory. The possible values for <em>value</em> are detailed in the subsections below.</p>
+    <p>Some graphic type require to show optional parameters in the Data window to change some visualization aspects. For example, slice graphics allow us to change the plane position. The XML code needed to show these options is stored in the folder <code><em>installdir</em>/plots</code> where <code><em>installdir</em></code> is the installation folder. OpenNum copies that XML code to the menu configuration file the first time the visualization is demanded. OpenNum also includes the attribute <code>plotted="true"</code> to avoid subsequent copies. In order to allow OpenNum to manage their content, elements with attribute <code>plot</code> must be empty.</p>
     <div class="back"><a href="#top">Back to top</a></div> 
 
     <h5 id="plot-mesh">The value <code><strong>mesh</strong></code></h5>
-    <p>The attribute <code>plot="mesh"</code> permits to an element <code>struct</code> to show a <a href="../use/visual-graphs/mesh.xhtml#triangulation">triangulation graphic</a>. The attribute <a href="#mesh"><code>mesh</code></a> is also required.</p>
+    <p>The attribute <code>plot="mesh"</code> allows an element <code>struct</code> to show a <a href="../use/visual-graphs/mesh.xhtml#triangulation">triangulation graphic</a>. The attribute <a href="#mesh"><code>mesh</code></a> is also required.</p>
     <pre class="xml">&lt;struct name="Triangulation" mesh="menu:/Mesh/Open/Mesh file" plot="mesh"&gt;&lt;/struct&gt;</pre>
     <div class="back"><a href="#top">Back to top</a></div> 
     
     <h5 id="plot-ref">The value <code><strong>references</strong></code></h5>
-    <p>The attribute <code>plot="references"</code> permits to an element <code>struct</code> or <code>leaf</code> to show a referenced graphic. The attribute <a href="#mesh"><code>mesh</code></a> is also required. The rest of attributes depend on the specific mesh associated field that will be displayed.</p>
+    <p>The attribute <code>plot="references"</code> allows an element <code>struct</code> or <code>leaf</code> to show a referenced graphic. The attribute <a href="#mesh"><code>mesh</code></a> is also required. The rest of attributes depend on the specific mesh associated field that will be displayed.</p>
     <ul>
       <li>Adding the attributes <code>pointdata="data:vertex_ref"</code> a <a href="../use/visual-graphs/mesh.xhtml#pref">point references  graphic</a> is shown. When an element <code>leaf</code> with <code>subtype="charlist"</code> is used, a widget to select the vertex reference appears in the <a href="../use/data.xhtml">Data window</a>.</li>
       <pre class="xml">&lt;leaf type="charlist" name="Point references" mesh="menu:/Mesh/Open/Mesh file" pointdata="data:vertex_ref" 
@@ -115,7 +115,7 @@ plot="references" selection="multiple" showvalues="true"&gt;&lt;/leaf&gt;</pre>
     <div class="back"><a href="#top">Back to top</a></div> 
     
     <h5 id="plot-num">The value <code><strong>numbering</strong></code></h5>
-    <p>The attribute <code>plot="numbering"</code> permits to an element <code>struct</code> or <code>leaf</code> to show a numbering graphic. The attribute <a href="#mesh"><code>mesh</code></a> is also required. The rest of attributes depend on the specific mesh associated field that will be displayed.</p>
+    <p>The attribute <code>plot="numbering"</code> allows an element <code>struct</code> or <code>leaf</code> to show a numbering graphic. The attribute <a href="#mesh"><code>mesh</code></a> is also required. The rest of attributes depend on the specific mesh associated field that will be displayed.</p>
     <ul>
       <li>Adding the attributes <code>pointdata="data:vertex_num"</code> a <a href="../use/visual-graphs/mesh.xhtml#pnum">point numbering graphic</a> is shown. When an element <code>leaf</code> with <code>subtype="float"</code> is used, a widget to select the point numbering appears in the <a href="../use/data.xhtml">Data window</a>.</li>
       <pre class="xml">&lt;leaf type="float" name="Point numbering" mesh="menu:/Mesh/Open/Mesh file" pointdata="data:vertex_num" 
@@ -128,22 +128,22 @@ plot="numbering"&gt;&lt;/leaf&gt;</pre>
     <div class="back"><a href="#top">Back to top</a></div> 
 
     <h5 id="slice">The value <code><strong>slice</strong></code></h5>
-    <p>The attribute <code>plot="slice"</code> permits to an element <code>struct</code> to show a <a href="../use/visual-graphs/mesh.xhtml#slice-mesh">slice mesh graphic</a>.</p>
+    <p>The attribute <code>plot="slice"</code> allows an element <code>struct</code> to show a <a href="../use/visual-graphs/mesh.xhtml#slice-mesh">slice mesh graphic</a>.</p>
     <pre class="xml">&lt;struct name="Slice" mesh="file:example.unv"  plot="slice"&gt;&lt;/struct&gt;</pre>
     <div class="back"><a href="#top">Back to top</a></div> 
 
     <h5 id="cut">The value <code><strong>cut</strong></code></h5>
-    <p>The attribute <code>plot="cut"</code> permits to an element <code>struct</code> to show a <a href="../use/visual-graphs/mesh.xhtml#cut-mesh">cut mesh graphic</a>.</p>
+    <p>The attribute <code>plot="cut"</code> allows an element <code>struct</code> to show a <a href="../use/visual-graphs/mesh.xhtml#cut-mesh">cut mesh graphic</a>.</p>
     <pre class="xml">&lt;struct name="Cut" mesh="file:example.unv"  plot="cut"&gt;&lt;/struct&gt;</pre>
     <div class="back"><a href="#top">Back to top</a></div> 
 
     <h5 id="rcut">The value <code><strong>rough_cut</strong></code></h5>
-    <p>The attribute <code>plot="rough_cut"</code> permits to an element <code>struct</code> to show a <a href="../use/visual-graphs/mesh.xhtml#rough-mesh">rough cut mesh graphic</a>.</p>
+    <p>The attribute <code>plot="rough_cut"</code> allows an element <code>struct</code> to show a <a href="../use/visual-graphs/mesh.xhtml#rough-mesh">rough cut mesh graphic</a>.</p>
     <pre class="xml">&lt;struct name="Rough cut" mesh="file:example.unv"  plot="rough_cut"&gt;&lt;/struct&gt;</pre>
     <div class="back"><a href="#top">Back to top</a></div> 
 
     <h5 id="mat">The value <code><strong>materials</strong></code></h5>
-    <p>The attribute <code>plot="materials"</code> permits to an element <code>struct</code> to show a <a href="../use/visual-graphs/mesh.xhtml#mat">materials graphic</a>. This graphic colors the mesh subdomains according to the assigned materials. To know such assignments, the element <code>struct</code> requires to have the attribute <code>materials="menu:</code><em>value</em>" where <em>value</em> points to an element <code>struct</code> in the menu with the following features:</p>
+    <p>The attribute <code>plot="materials"</code> allows an element <code>struct</code> to show a <a href="../use/visual-graphs/mesh.xhtml#mat">materials graphic</a>. This graphic colors the mesh subdomains according to the assigned materials. To know such assignments, the element <code>struct</code> requires to have the attribute <code>materials="menu:</code><em>value</em>" where <em>value</em> points to an element <code>struct</code> in the menu with the following features:</p>
     <ul>
       <li>the element <code>struct</code> has as many children as referenced subdomains has the mesh;</li>
       <li>every children is an element <code>leaf</code> with <code>type="charlist"</code> and <code>selection="single"</code>;</li>
@@ -163,7 +163,7 @@ plot="numbering"&gt;&lt;/leaf&gt;</pre>
 &lt;/struct&gt;</pre>
   
     <p>Then, the element struct to show the materials graphic is:</p>
-    <pre class="xml">&lt;struct name="Show materiales" mesh="file:example.unv" plot="materials" materials="../Data"&gt;
+    <pre class="xml">&lt;struct name="Show materials" mesh="file:example.unv" plot="materials" materials="../Data"&gt;
 &lt;/struct&gt;</pre>
     <div class="back"><a href="#top">Back to top</a></div> 
         

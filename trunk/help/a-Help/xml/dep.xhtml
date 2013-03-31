@@ -26,10 +26,10 @@
     The file path must have a slash or a backslash as folder separator and backslahes must be escaped. For example,
     <code>"file:graphic.gr2"</code>, <code>"file:../afolder/afile.txt"</code> and <code>"file:C:\\Python26\\Lib"</code> are valid values.</p>
     <p>If the path is relative, it starts from the working folder.</p>
-    <p>Hay que comprobar si / sirve en Windows o \ en Linux y entonces recomendar que se use solo una de ellas y siempre 
+    <p><scan class="rev">Hay que comprobar si / sirve en Windows o \ en Linux y entonces recomendar que se use solo una de ellas y siempre
     relativo, para que los ficheros se encuentren. En el futuro, poner un prefijo para ruta relativa a la instalacion y 
-    que solo funcione /. </p>
-    <p>Lista de atributos que lo permiten y sus enlaces.</p>
+    que solo funcione /.</scan></p>
+    <p><scan class="rev">Hay que poner la lista de atributos que lo permiten y sus enlaces.</scan></p>
     <div class="back"><a href="#top">Back to top</a></div>      
 
     <h4 id="menu">Menu dependencies</h4>
@@ -45,7 +45,7 @@
     <p>The menu dependencies can be</p> 
     <ul>
       <li><em>absolute</em>: they start with '/' and the menu dependency starts at the first level in the hierarchical menu tree, i.e., 
-      the <a href="">menu items</a>. For example, "menu:/Mesh/Mesh file/Open File" is valid if <em>Mesh</em> is a menu item, <em>Mesh file</em>
+      the <a href="../xml/menu.xhtml#menu">menu items</a>. For example, "menu:/Mesh/Mesh file/Open File" is valid if <em>Mesh</em> is a menu item, <em>Mesh file</em>
       is one of its submenu items, etc.</li>
       <li><em>relative</em>: they start with '.' or '..' and the menu dependency starts at the element where it appears.
       For example, <code>"menu:../Materials/Properties"</code> is valid if the parent has a child named <em>Materials</em> and this has a child named 
@@ -67,7 +67,7 @@
     <h4 id="var">Variables</h4>
     <p>A <dfn>variable</dfn> is a string ${<em>text</em>}, where <em>text</em> is a menu dependency. A variable 
     can appear in another string defining a file or menu dependency. A variable can contain other variables; these 
-    variables will be resolved before resolving the external one.</p>
+    variables will be resolved before resolving the external one. Variables can be very useful to access to the content of an element when the name of this element cannot be known in advance (for example, when it is a children of a customizable <code>struct</code>).</p>
     <p>The variable result is the value of its menu dependency, as it is explained in the section <a href="#menu">Menu dependency</a>. For example, if 
     the element <code>struct</code> <em>Data</em> has a single child with name <em>a</em>, then the file dependency 
     <code>"file:../${/Data}.txt"</code> is the same than <code>"file:../a.txt"</code>.</p>
@@ -85,7 +85,7 @@
     <div class="back"><a href="#top">Back to top</a></div>      
 
     <h4 id="struc">Dependent structures</h4>
-    <p>It is possible to create children for an element <code>struct</code> sing the information stored in another part of the menu. An element 
+    <p>It is possible to create children for an element <code>struct</code> using the information stored in another part of the menu. An element
     <code>struct</code> can have the attribute <code>source="menu:</code><em>value</em>" where <em>value</em> is a <a href="#menu">menu dependency</a>.
     When the element pointed by <em>value</em></p>
     <ul>
