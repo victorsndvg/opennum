@@ -3,88 +3,73 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US">
   <head>
     <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" /> 
-    <title>Beginner: Leafs</title>
+    <title>Leafs</title>
     <link rel="stylesheet" type="text/css" href="../../sty.css" />
   </head>
   <body id="top">
-    <p>Next: <a href="leafs2.xhtml">Char list leafs</a>, Previous: <a href="menu.xhtml">Menu</a>, Up: <a href="index.xhtml">Top</a></p>
+    <p>Next: <a href="leafs2.xhtml">Leafs with lists</a>, Previous: <a href="menu.xhtml">Menus</a>, Up: <a href="index.xhtml">Top</a></p>
     <hr /> 
 
     <h3>Leafs</h3>
-	<p>
-	The tag <a href="../../xml/leaf.xhtml"><code>leaf</code></a> is the last <code>element</code> in the XML hierarchy for showing grafical components. 
-	This tag is used to display widgets which allow you to enter different types of data, the type of data and widget is selected by the required attibute <code>type</code>.
-	</p>
-	<p>
-	This example shows how to create some widgets to introduce different data types. Show some posible values for the atribute <code>type</code>, mandatory for <code>leaf</code> tag, which defines the look, behavior and data type of the widget.
-	</p>
-    <h4 id="Float">Float box</h4>
+    <p><strong>On this page:</strong></p>
+    <ul>
+       <li><a href="#float">Integer/real data</a></li>
+       <li><a href="#complex">Complex data</a></li>
+       <li><a href="#Text">String data</a></li>
+       <li><a href="#File">Filename data</a></li>
+       <li><a href="#Folder">Folder data</a></li>
+    </ul>
 
-	<p>
-	The tag <a href="../../xml/leaf.xhtml"><code>leaf</code></a> with the attribute <code>type="float"</code> allows to enter a single float or a list floats separated by blanks or commas, you can use parentheses or brackets to delimit the list. The following code creates a float widget.
-	</p>
+    <p>The application <strong>Beginner - leafs</strong> is an example that shows how to create widgets to ask data trough the Data window. The <a href="../../xml/leaf.xhtml"><code>leaf</code></a> element allow us to request data to the user. The data type depends on the <code>type</code> attribute.</p>
+    <p> The XML file of this example can be found at <code>&lt;<em>installdir</em>&gt;/apps/a-Beginner - leafs/a-New/local.mnu.xml</code>, where <code>&lt;<em>installdir</em>&gt;</code> is the installation folder.</p>
 
-	<pre class="xml">&lt;leaf name="float-variable" type="float"&gt;
+    <h4 id="float">Integer/real data</h4>
+    <p>A <a href="../../xml/leaf.xhtml"><code>leaf</code></a> element with <code>type="float"</code> attribute allows us to ask for integer or real scalars and arrays. The array components can be separated by blanks or commas; parentheses and square brackets are valid array delimiters. It also supports a valid MATLAB array using the <a href="http://www.mathworks.es/help/techdoc/math/f1-84864.html#f1-85254">colon operator</a> as it is shown in <a href="#fig-1">Figure 1</a>. The following example creates a widget to ask for integer/real data:
+    </p>
+
+    <pre class="xml">&lt;leaf name="float-variable" type="float"&gt;
+&lt;/leaf&gt;</pre>
+    <p align="center"> 
+        <img width="20%" src="images/matlab-format.png" />
+        <br clear="all" /> 
+        <span id="fig-1" class="caption"> <strong>Figure 1: </strong>Real array in Matlab.</span>
+    </p>
+    <div class="back"><a href="#top">Back to top</a></div>    
+    
+    <h4 id="complex">Complex data</h4>
+    <p>A <a href="../../xml/leaf.xhtml"><code>leaf</code></a> element with <code>type="complex"</code> attribute allows us to ask for complex scalars or arrays. The valid format is <em>(float,float) (float,float) ...</em>, as it is shown in <a href="#fig-2">Figure 2</a>. The string is not processed if it does not meet the previous format. The following code creates widget to ask for complex data:</p>
+    
+    <pre class="xml">&lt;leaf name="complex-variable" type="complex"&gt;
 &lt;/leaf&gt;</pre>
 
-	<p>
-	To write a evenly spaced list of floats you can use the Matlab&#174; format (<code>start:step:end</code>).
-	</p>
-
-	<p align="center"> 
-	    <img width="20%" src="images/matlab-format.png" />
-	    <br clear="all" /> 
-	    <span id="fig-1" class="caption"> <strong>Figure 1:</strong>List of floats in Matlab&#174; format.</span>
-	</p>
-
-
-    <h4 id="Coplex">Complex box</h4>
-
-	<p>
-	The tag <a href="../../xml/leaf.xhtml"><code>leaf</code></a> with the attribute <code>type="complex"</code> allows to enter a single complex or a list complex. The complex supported format is <code>(float,float)</code> where the blanks are not important, otherwise the string is not processed. The following code creates a complex widget.
-	</p>
-
-	<pre class="xml">&lt;leaf name="complex-variable" type="complex"&gt;
+    <p align="center"> 
+        <img width="20%" src="images/complex-format.png" />
+        <br clear="all" /> 
+        <span id="fig-2" class="caption"> <strong>Figure 2:</strong> Introducing a complex array.</span>
+    </p>
+    <div class="back"><a href="#top">Back to top</a></div>    
+    
+    <h4 id="Text">String data</h4>
+    <p>A <a href="../../xml/leaf.xhtml"><code>leaf</code></a> element with <code>type="char"</code> attribute allows us to ask for a single string. The following code creates a widget of this type:</p>
+    <pre class="xml">&lt;leaf name="text-variable" type="char"&gt;
+&lt;/leaf&gt;</pre>
+    <div class="back"><a href="#top">Back to top</a></div>    
+    
+    <h4 id="File">Filename data</h4>
+    <p>A <a href="../../xml/leaf.xhtml"><code>leaf</code></a> element with <code>type="file"</code> attribute allows us to ask for a filename. This widget contains a button to display an <a href="../../use/data.xhtml#ff"><em>Open file</em> dialog</a>:</p>
+    <pre class="xml">&lt;leaf name="file-path" type="file"&gt;
+&lt;/leaf&gt;</pre>
+    <div class="back"><a href="#top">Back to top</a></div>    
+    
+    <h4 id="Folder">Folder data</h4>
+<p>A <a href="../../xml/leaf.xhtml"><code>leaf</code></a> element with <code>type="folder"</code> attribute allows us to ask for a folder. This widget contains a button to display an <a href="../../use/data.xhtml#ff"><em>Open folder</em> dialog</a>:</p>    <pre class="xml">&lt;leaf name="folder-path" type="folder"&gt;
 &lt;/leaf&gt;</pre>
 
-
-	<p align="center"> 
-	    <img width="20%" src="images/complex-format.png" />
-	    <br clear="all" /> 
-	    <span id="fig-2" class="caption"> <strong>Figure 2:</strong> Complex widget with a list of complex.</span>
-	</p>
-
-
-    <h4 id="Text">Text box</h4>
-
-	<p>
-	The tag <a href="../../xml/leaf.xhtml"><code>leaf</code></a> with the attribute <code>type="char"</code> allows to enter a single line string. The following code creates a text widget.
-	</p>
-
-	<pre class="xml">&lt;leaf name="text-variable" type="char"&gt;
-&lt;/leaf&gt;</pre>
-
-    <h4 id="File">File box</h4>
-
-	<p>
-	The tag <a href="../../xml/leaf.xhtml"><code>leaf</code></a> with the attribute <code>type="file"</code> creates a file widget. This widget contains a button to display an open file dialog.
-	</p>
-	<pre class="xml">&lt;leaf name="file-path" type="file"&gt;
-&lt;/leaf&gt;</pre>
-
-    <h4 id="Folder">Folder box</h4>
-
-	<p>
-	The tag <a href="../../xml/leaf.xhtml"><code>leaf</code></a> with the attribute <code>type="folder"</code> creates a folder widget. This widget contains a button to display an open folder dialog.
-	</p>
-    <pre class="xml">&lt;leaf name="folder-path" type="folder"&gt;
-&lt;/leaf&gt;</pre>
-
-	<p align="center"> 
-	    <img width="20%" src="images/folderwidget.png" />
-	    <br clear="all" /> 
-	    <span id="fig-3" class="caption"> <strong>Figure 3:</strong> Folder widget.</span>
-	</p>
+    <p align="center"> 
+        <img width="20%" src="images/folderwidget.png" />
+        <br clear="all" /> 
+        <span id="fig-3" class="caption"> <strong>Figure 3:</strong> Folder widget.</span>
+    </p>
     <div class="back"><a href="#top">Back to top</a></div>
     <hr />
     <p>&copy; 2012 - <a href="http://www.usc.es/ingmat/?lang=en">Ingeniería Matemática</a></p>

@@ -18,7 +18,7 @@
       <li><a href="#interp">The attribute <code>interpolation</code></a></li>
     </ul>
 
-    <p>Given any of the graphics explained in the sections <a href="mesh.xhtml">Mesh visualization</a> and <a href="field.xhtml">Field  visualization</a>, the visualization can be animated by indicating a <a href="">PVD file</a> in the attribute <code>mesh</code>. Besides, we can decide </p>
+    <p>Given any of the graphics explained in the sections <a href="mesh.xhtml">Mesh visualization</a> and <a href="field.xhtml">Field  visualization</a>, the visualization can be animated by indicating a <a href="../form/field/pvd.xhtml">PVD file</a> in the attribute <code>mesh</code>. Besides, we can decide </p>
     <ul>
       <li>the type of interpolation by using the attribute <a href="#interp"><code>interpolation</code></a>;</li>
       <li>the name of the animation parameter by using the attribute <a href="#evol"><code>evolution</code></a>.</li>
@@ -35,7 +35,7 @@
         <pre class="xml">&lt;struct name="Example" mesh="file:heat.pvd" celldata="data:temperature" plot="filled" 
 evolution="Time" interpolation="true"&gt;&lt;/struct&gt;</pre>
       </li>
-      <li><code><strong>false</strong></code>: there is no interpolation in the parameter interval and <span class="rev">the step length will be constant</span>; besides, values indicated in the <strong>Parameter</strong> button of the <a href="../use/visual-parts/parts.xhtml#param">Parameter bar</a> could only be those saved in the PVD file.</li>
+      <li><code><strong>false</strong></code>: there is no interpolation in the parameter interval and <span class="rev">the step length will be constant</span>; besides, values indicated in the <strong>Parameter</strong> button of the <a href="../use/visual-parts/parts.xhtml#param">Parameter bar</a> could only be those saved in the <a href="../form/field/pvd.xhtml">PVD file</a>.</li>
         <pre class="xml">&lt;struct name="Example" mesh="file:fluid.pvd" celldata="data:pressure" plot="threshold" 
 evolution="Frequency" interpolation="false"&gt;&lt;/struct&gt;</pre>
     </ul>
