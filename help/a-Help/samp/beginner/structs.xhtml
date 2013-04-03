@@ -3,89 +3,86 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US">
   <head>
     <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" /> 
-    <title>Beginner: Structs</title>
+    <title>Structs</title>
     <link rel="stylesheet" type="text/css" href="../../sty.css" />
   </head>
   <body id="top">
-    <p>Next: <a href="actions.xhtml">Actions</a>, Previous: <a href="leafs2.xhtml">Char list leafs</a>, Up: <a href="index.xhtml">Top</a></p>
+    <p>Next: <a href="actions.xhtml">Actions</a>, Previous: <a href="leafs2.xhtml">Leafs with lists</a>, Up: <a href="index.xhtml">Top</a></p>
     <hr /> 
 
     <h3>Structs</h3>
-	<p>
-	The tag <a href="../../xml/struct.xhtml"><code>struct</code></a> is used as a container for other <code>elements</code>, it can contain different type of childs like <a href="../../xml/leaf.xhtml"><code>leafs</code></a> or other <a href="../../xml/struct.xhtml"><code>structs</code></a>. Graphically, it allows display a set of widgets keeping the data hierarchy.
-	</p>
-	<p>
-	This example shows how to build a widget hierarchy using the tag <a href="../../xml/struct.xhtml"><code>struct</code></a>. This example describes the attribute <code>selection</code> which displays two different types of widgets as occurs with the tag <a href="../../xml/leaf.xhtml"><code>leaf</code></a>.
-	</p>
-    <h4 id="Single">Single selection</h4>
+    <p><strong>On this page:</strong></p>
+    <ul>
+       <li><a href="#single">Single selection</a></li>
+       <li><a href="#None">No selection</a></li>
+       <li><a href="#multi-level">Multiple level structs</a></li>
+    </ul>
+    
+    <p>The application <strong>Beginner - structs</strong> is an example that shows how to manage <a href="../../xml/struct.xhtml"><code>struct</code></a> elements; these elements can contain other <code>leaf</code> and <code>struct</code> elements, allowing us to keep a tree structure in the data hierarchy. This example also describes the <code>selection</code> attribute to display two different widgets, as occurs in the <a href="../../xml/leaf.xhtml"><code>leaf</code></a> element.</p>
+    <p> The XML file of this example can be found at <code>&lt;<em>installdir</em>&gt;/apps/a-Beginner - structs/a-New/local.mnu.xml</code>, where <code>&lt;<em>installdir</em>&gt;</code> is the installation folder.</p>
 
-	<p>
-	The tag <a href="../../xml/struct.xhtml"><code>struct</code></a> with the attribute <code>selection="single"</code> displays a combo box that allows to keep selected one between several excluding options. The sample code teaches how to build a widget of this type.
-	</p>
+    <h4 id="single">Single selection</h4>
+    <p>A <a href="../../xml/struct.xhtml"><code>struct</code></a> element displays a combo box; every line in the combo box shows the <code>name</code> attribute of a child element. The user can select one of the child elements and this selection is recorded in the <a href="../../conf/app.xhtml#menu">data file</a>. The following example produces a widget of this type, as it is shown in <a href="#fig-1">Figure 1</a>:</p>
 
-	<pre class="xml">&lt;struct name="value" selection="single"&gt;
-	&lt;leaf name="Float 1" type="float"&gt;
-	&lt;/leaf&gt;
-	&lt;leaf name="Float 2" type="float"&gt;
-	&lt;/leaf&gt;
+    <pre class="xml">&lt;struct name="value" selection="single"&gt;
+    &lt;leaf name="Float 1" type="float"&gt;
+    &lt;/leaf&gt;
+    &lt;leaf name="Float 2" type="float"&gt;
+    &lt;/leaf&gt;
 &lt;/struct></pre>
 
-	<p align="center"> 
-	    <img width="20%" src="images/struct-singleselection.png" />
-	    <br clear="all" /> 
-	    <span id="fig-1" class="caption"> <strong>Figure 1:</strong>Single selection widget.</span>
-	</p>
+    <p>Since single selection is the default value, to add the <code>selection="single"</code> attribute does not change the behavior of the widget but it can be useful to remark it.</p>
 
+    <p align="center"> 
+        <img width="20%" src="images/struct-singleselection.png" />
+        <br clear="all" /> 
+        <span id="fig-1" class="caption"> <strong>Figure 1:</strong> Single selection widget.</span>
+    </p>
+    <div class="back"><a href="#top">Back to top</a></div>    
 
-    <h4 id="None">No selection</h4>
+    <h4 id="none">No selection</h4>
+    <p>A <a href="../../xml/struct.xhtml"><code>struct</code></a> with  <code>selection="none"</code> attribute displays a box; every line in the box shows the <code>name</code> attribute of a child element. The user can click on every line in order to browse the data tree hierarchy. The following example produce a widget of this type, as it is shown in <a href="#fig-2">Figure 2</a>:</p>
 
-	<p>
-	The tag <a href="../../xml/struct.xhtml"><code>struct</code></a> with the attribute <code>selection="none"</code> displays a box with several options, this options represents different ways in the data hierarchy. <code>selection="single"</code> is the default behavior of the <a href="../../xml/struct.xhtml"><code>struct</code></a> tag. The sample code teaches how to build a widget of this type.
-	</p>
-
-	<pre class="xml">&lt;struct name="value" selection="none"&gt;
-	&lt;leaf name="Float 1" type="float"&gt;
-	&lt;/leaf&gt;
-	&lt;leaf name="Float 2" type="float"&gt;
-	&lt;/leaf&gt;
+    <pre class="xml">&lt;struct name="value" selection="none"&gt;
+    &lt;leaf name="Float 1" type="float"&gt;
+    &lt;/leaf&gt;
+    &lt;leaf name="Float 2" type="float"&gt;
+    &lt;/leaf&gt;
 &lt;/struct&gt;</pre>
 
+    <p align="center"> 
+        <img width="20%" src="images/struct-noselection.png" />
+        <br clear="all" /> 
+        <span id="fig-2" class="caption"> <strong>Figure 2:</strong> No selection widget.</span>
+    </p>
+    <div class="back"><a href="#top">Back to top</a></div>    
 
+    <h4 id="multi-level">Multiple level structs</h4>
 
-	<p align="center"> 
-	    <img width="20%" src="images/struct-noselection.png" />
-	    <br clear="all" /> 
-	    <span id="fig-2" class="caption"> <strong>Figure 2:</strong>No selection widget.</span>
-	</p>
-
-    <h4 id="Multi-level">Multiple level structs</h4>
-
-	<p>
-	The main objective of the <a href="../../xml/struct.xhtml"><code>struct</code></a> tag is to allow building hierarchys of <a href="../../xml/leaf.xhtml"><code>leaf</code></a> and <a href="../../xml/struct.xhtml"><code>struct</code></a> elements. Every <a href="../../xml/struct.xhtml"><code>struct</code></a> <code>element</code> can contain a set of <a href="../../xml/leaf.xhtml"><code>leaf</code></a> and <a href="../../xml/struct.xhtml"><code>struct</code></a> childs. <a href="../../xml/leaf.xhtml"><code>Leaf</code></a> <code>elements</code> means the end of a way for a branch of the hierarchy, but <a href="../../xml/struct.xhtml"><code>struct</code></a> child <code>elements</code> can contain more <a href="../../xml/leaf.xhtml"><code>leafs</code></a> or <a href="../../xml/struct.xhtml"><code>structs</code></a>. The following example describes a tow branch hierarchy.
-	</p>
-
-	<pre class="xml">&lt;struct name="Struct 1: level 1"&gt;
-	&lt;struct name="Struct 1: level 2"&gt;
-		&lt;leaf name="Float 1" type="float"&gt;
-		&lt;/leaf&gt;
-		&lt;leaf name="Float 2" type="float"&gt;
-		&lt;/leaf&gt;
-	&lt;/struct&gt;
-	&lt;struct name="Struct 2: level 2"&gt;
-		&lt;struct name="Struct 1: level 3"&gt;
-			&lt; name="Text 1" type="char"&gt;
-			&lt;/leaf&gt;
-		&lt;/struct&gt;
-	&lt;/struct&gt;
+    <p>As we explained above, the main goal of the <a href="../../xml/struct.xhtml"><code>struct</code></a> element is to organize data as a tree. Thus, <code>struct</code> element are nodes of the tree whereas <code>leaf</code> elements are terminal symbols. The following example shows a data tree with several hierarchical levels.</p>
+    
+    <pre class="xml">&lt;struct name="Struct 1: level 1"&gt;
+    &lt;struct name="Struct 1: level 2"&gt;
+        &lt;leaf name="Float 1" type="float"&gt;
+        &lt;/leaf&gt;
+        &lt;leaf name="Float 2" type="float"&gt;
+        &lt;/leaf&gt;
+    &lt;/struct&gt;
+    &lt;struct name="Struct 2: level 2"&gt;
+        &lt;struct name="Struct 1: level 3"&gt;
+            &lt; name="Text 1" type="char"&gt;
+            &lt;/leaf&gt;
+        &lt;/struct&gt;
+    &lt;/struct&gt;
 &lt;/struct&gt;</pre>
 
-
-	<p align="center"> 
-	    <img width="20%" src="images/struct-multilevel.png" />
-	    <br clear="all" /> 
-	    <span id="fig-3" class="caption"> <strong>Figure 3:</strong>Multiple level struct.</span>
-	</p>
-
+    <p>As we can see in <a href="#fig-3">Figure 3</a>, every time the user clicks on a child element, its associated widget appears below the parent widget.</p>
+    
+    <p align="center"> 
+        <img width="20%" src="images/struct-multilevel.png" />
+        <br clear="all" /> 
+        <span id="fig-3" class="caption"> <strong>Figure 3:</strong> Multiple level struct.</span>
+    </p>
 
     <div class="back"><a href="#top">Back to top</a></div>
     <hr />

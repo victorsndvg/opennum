@@ -46,14 +46,14 @@
     <h4 id="mesh">The attribute <code>mesh</code></h4>
         <p>An element <code>struct</code> or <code>leaf</code> can refer to a mesh with the attribute <code>mesh="</code><em>prefix:value</em>", where <em>prefix</em> can be</p>
     <ul>
-      <li><code><strong>file</strong></code> and then <em>value</em> must be a file containing a mesh that comply one of the <a href="">valid formats</a>; <em>value</em> must follow the rules explained in the section <a href="dep.xhtml#file">File dependencies</a>;</li>
+      <li><code><strong>file</strong></code> and then <em>value</em> must be a file containing a mesh that comply one of the <a href="../form/mesh/mesh.xhtml">valid formats</a>; <em>value</em> must follow the rules explained in the section <a href="dep.xhtml#file">File dependencies</a>;</li>
       <li><code><strong>menu</strong></code> and then <em>value</em> must be a menu path that points to a element <code>leaf</code> with attributes <code>type="file"</code>, <code>subtype="mesh"</code> or <code>subtype="field"</code>. <em>value</em> must follow the rules explained in the section <a href="dep.xhtml#menu">Menu dependencies</a>.</li>
     </ul>
 
-    <p>The attribute <code>mesh</code> can refer to several meshes <span class="rev">using <a href="">variables</a></span>. In that case, all the meshes will be shown in the same <a href="../use/visual-parts/parts.xhtml#scene">Graphic scene</a>.</p>
+    <p>The attribute <code>mesh</code> can refer to several meshes <span class="rev">using <a href="dep.xhtml#var">variables</a></span>. In that case, all the meshes will be shown in the same <a href="../use/visual-parts/parts.xhtml#scene">Graphic scene</a>.</p>
     <pre class="xml">&lt;leaf type="charlist" name="Line references" mesh="menu:/Mesh/Open/Mesh file"&gt;
 &lt;/leaf&gt;</pre>
-    <p>You can find a practical example in the section <a href="#filled">... plot</a>.</p>
+    <p><scan class="rev">You can find a practical example in the section <a href="#filled">... plot</a>.</scan></p>
     <div class="back"><a href="#top">Back to top</a></div> 
         
     <h4 id="add">Adding more meshes to the Graphic scene</h4>
@@ -63,7 +63,7 @@
     <div class="back"><a href="#top">Back to top</a></div> 
     
     <h4 id="point">The attribute <code>pointdata</code></h4>
-    <p>In order to visualize a field defined on the the nodes of the mesh indicated with the attribute <code>mesh</code>, an element <code>struct</code> or <code>leaf</code> must also have the attribute <code>pointdata="</code><em>prefix:value</em>" where <em>prefix</em> and <em>value</em> depend on the <a href="">field format</a>:</p>
+    <p>In order to visualize a field defined on the the nodes of the mesh indicated with the attribute <code>mesh</code>, an element <code>struct</code> or <code>leaf</code> must also have the attribute <code>pointdata="</code><em>prefix:value</em>" where <em>prefix</em> and <em>value</em> depend on the <a href="../form/field/field.xhtml">field format</a>:</p>
     <ul>
       <li><strong>VTK format:</strong> the mesh and the field are given in the same file and the field has a name to identify it; the file is indicated in the attribute <code>mesh</code> and the field name is indicated in the attribute <code>pointdata</code> with prefix <code>data:</code></li>
       <pre class="xml">&lt;struct name="Scalar field" mesh="file:example.vtu" pointdata="data:Temperature"&gt;
@@ -81,11 +81,11 @@
         </ul>
       </li>
     </ul>
-    <p>You can find a practical example in the section <a href="#filled">... plot</a>.</p>
+    <p><scan class="rev">You can find a practical example in the section <a href="#filled">... plot</a>.</scan></p>
     <div class="back"><a href="#top">Back to top</a></div> 
     
     <h4 id="cell">The attribute <code>celldata</code></h4>
-    <p>In order to visualize a field defined on the the elements (or cells) of the mesh indicated with the attribute <code>mesh</code>, an element <code>struct</code> or <code>leaf</code> must also have the attribute <code>celldata="</code><em>prefix:value</em>" where <em>prefix</em> and <em>value</em> depend on the <a href="">field format</a>:</p>
+    <p>In order to visualize a field defined on the the elements (i.e., cells) of the mesh indicated with the attribute <code>mesh</code>, an element <code>struct</code> or <code>leaf</code> must also have the attribute <code>celldata="</code><em>prefix:value</em>" where <em>prefix</em> and <em>value</em> depend on the <a href="../form/field/field.xhtml">field format</a>:</p>
     <ul>
       <li><strong>VTK format:</strong> the mesh and the field are given in the same file and the field has a name to identify it; the file is indicated in the attribute <code>mesh</code> and the field name is indicated in the attribute <code>celldata</code> with prefix <code>data:</code></li>
       <pre class="xml">&lt;struct name="Scalar field" mesh="file:example.vtu" celldata="data:Temperature"&gt;
@@ -103,12 +103,12 @@
         </ul>
       </li>
     </ul>
-    <p>You can find a practical example in the section <a href="#filled">... plot</a>.</p>
+    <p><scan class="rev">You can find a practical example in the section <a href="#filled">... plot</a>.</scan></p>
     <div class="back"><a href="#top">Back to top</a></div> 
 
     <h4 id="plot">The attribute <code>plot</code></h4>
     <p>An element <code>struct</code> or <code>leaf</code> must have the <code>plot="</code><em>value</em>" to select a graphic type for the visualization. The attribute <code>mesh</code> and one of the attributes <code>pointdata</code> and <code>celldata</code> are also mandatory. The posible values for <em>value</em> are detailed in the subsections below.</p>
-    <p>Some graphic type require to show optional paramters in the Data window to change some visualization aspects. For example, slice graphics permit to change the plane position. The XML code needed to show these options is stored in the folder <code><em>installdir</em>/plots</code> where <code><em>installdir</em></code> is the installation folder. OpenNum copies that XML code to the menu configuration file the first time the visualization is demanded. OpenNum also includes the attribute <code>plotted="true"</code> to avoid subsequent copies. In order to allow OpenNum to manage their content, <strong>elements with attribute <code>plot</code> must be empty</strong>.</p>
+    <p>Some graphic type require to show optional paramters in the Data window to change some visualization aspects. For example, slice graphics permit to change the plane position. The XML code needed to show these options is stored in the folder <code><em>installdir</em>/plots</code> where <code><em>installdir</em></code> is the installation folder. OpenNum copies that XML code to the menu configuration file the first time the visualization is demanded. OpenNum also includes the attribute <code>plotted="true"</code> to avoid subsequent copies. In order to allow OpenNum to manage their content, elements with attribute <code>plot</code> must be empty.</p>
     <div class="back"><a href="#top">Back to top</a></div> 
 
     <h5 id="filled">The value <code><strong>filled</strong></code></h5>

@@ -3,78 +3,83 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US">
   <head>
     <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" /> 
-    <title>Beginner: menu</title>
+    <title>Menus</title>
     <link rel="stylesheet" type="text/css" href="../../sty.css" />
   </head>
   <body id="top">
     <p>Next: <a href="leafs1.xhtml">Leafs</a>, Up: <a href="index.xhtml">Top</a></p>
     <hr /> 
 
-    <h3>Menu</h3>
-	<p>
-	As a starting point of a series of tutorials, we begin with an example that shows the creation of the menu bar and the definition of the elements it contains.
-	</p>
-	<p>
-	This example shows the basis for creating the structure of the menu bar. Discuss the attribute <code>name</code>, mandatory for most tags, which defines the name and title of each item, and the attributes <code>hidden</code> and <code>separator</code>.
-	</p>
+    <h3>Menus</h3>
+    <p><strong>On this page:</strong></p>
+    <ul>
+       <li><a href="#menus">The application name</a></li>
+       <li><a href="#menubar">Menu items</a></li>
+       <li><a href="#submenus">Submenu items</a></li>
+       <li><a href="#attributes">Some common attributes</a></li>
+    </ul>
 
-    <h4 id="menus">Application name</h4>
-	<p>
-	It's mandatory to use <a href="../../xml/menu.xhtml#menus"><code>menus</code></a> tag as the root of the XML hierarchy. The <code>name</code> attribute sets the application name displayed in the title bar. This example creates a menu of an application called <em>Beginner: menu</em>.
-	</p>
+    <p>The application <strong>Beginner - menus</strong> is an example that shows how to create a simple menu bar with menu and submenu items. It also introduces the <code>name</code>, <code>hidden</code> and <code>separator</code> attributes.</p>
+    <p> The XML file of this example can be found at <code>&lt;<em>installdir</em>&gt;/apps/a-Beginner - menus/a-New/local.mnu.xml</code>, where <code>&lt;<em>installdir</em>&gt;</code> is the installation folder.</p>
 
-    <pre class="xml">&lt;menus name="Beginner: menu"&gt;
+    <h4 id="menus">The application name</h4>
+    <p>Every XML menu file must contain a single <a href="../../xml/menu.xhtml#menus"><code>menus</code></a> element as the root of the XML hierarchy. The  <code>name</code> attribute sets the application name, displayed in the title bar. The following example creates a menu for an application called <em>Beginner: menus</em>.</p>
+
+    <pre class="xml">&lt;menus name="Beginner: menus"&gt;
     ...
 &lt;/menus&gt;</pre>
+    <div class="back"><a href="#top">Back to top</a></div>    
+    
+    <h4 id="menubar">Menu items</h4>
+    <p>The <a href="../../xml/menu.xhtml#menu"><code>menu</code></a> element must always appear as child of the element <a href="../../xml/menu.xhtml#menus"><code>menus</code></a>. This element allows us to create items in the menu bar. The following lines create a menu called <em>Menu 1</em>.</p>
 
-    <h4 id="menubar">Menu bar</h4>
-	<p> 
-	The tag <a href="../../xml/menu.xhtml#menu"><code>menu</code></a> allways appears as child of the tag <a href="../../xml/menu.xhtml#menus"><code>menus</code></a>. This tag allows to create items in the menu bar. This example creates a menu called <em>Menu 1</em>.
-	</p>
-
-    <pre class="xml">&lt;menu name="Menu 1"&gt;
-    ...
-&lt;/menu&gt;</pre>
-
-    <h4 id="submenus">Submenus</h4>
-	<p>
-	The tag <a href="../../xml/menu.xhtml#submenu"><code>submenu</code></a> sets the subitems shown when clicking on an menu bar item . This examples create a submenu called <em>Submenu 1</em>.
-	</p>
-	<pre class="xml">&lt;submenu name="Submenu 1"&gt;
-&lt;/submenu&gt;</pre>
-	<p align="center"> 
-	    <img width="15%" src="images/beginnermenu1.png" />
-	    <br clear="all" /> 
-	    <span id="fig-1" class="caption"> <strong>Figure 1:</strong> Submenu.</span>
-	</p>
-	<p>
-	The element submenu can contain other submenu elements and build a second level of submenus. The following code shows how to build a two level submenu.
-	</p>
-	<pre class="xml">&lt;menu name="Menu 2"&gt;
+    <pre class="xml">&lt;menus name="Beginner: menus"&gt;
+    &lt;menu name="Menu 1"&gt;
+        ...
+    &lt;/menu&gt;
+&lt;/menus&gt;</pre>
+    <div class="back"><a href="#top">Back to top</a></div>    
+    
+    <h4 id="submenus">Submenu items</h4>
+    <p>The <a href="../../xml/menu.xhtml#submenu"><code>submenu</code></a> element defines a submenu of a menu item. The following example creates a submenu called <em>Submenu 1</em> as it is shown in <a href="#fig-1">Figure 1</a>.</p>
+    
+    <pre class="xml">&lt;menus name="Beginner: menus"&gt;
+    &lt;menu name="Menu 1"&gt;
+        &lt;submenu name="Submenu 1"&gt;
+        &lt;/submenu&gt;
+            ...
+    &lt;/menu&gt;
+&lt;/menus&gt;</pre>
+    <p align="center"> 
+        <img width="20%" src="images/beginnermenu1.png" />
+        <br clear="all" /> 
+        <span id="fig-1" class="caption"> <strong>Figure 1:</strong> Submenu.</span>
+    </p>
+    <p>
+    The <code>submenu</code> element can contain other <code>submenu</code> elements in order to form a second level of submenus. The following example shows how to build a two level submenu as it is shown in <a href="#fig-2">Figure 2</a>.
+    </p>
+    <pre class="xml">...
+&lt;menu name="Menu 2"&gt;
     &lt;submenu name="Submenu 1: Level 1"&gt;
         &lt;submenu name="Submenu 1: Level 2"&gt;
         &lt;/submenu&gt;
     &lt;/submenu&gt;
 &lt;/menu&gt;</pre>
 
-	<p align="center"> 
-	    <img width="30%" src="images/beginnermenu2.png" />
-	    <br clear="all" /> 
-	    <span id="fig-2" class="caption"> <strong>Figure 2:</strong> Two level submenu.</span>
-	</p>
+    <p align="center"> 
+        <img width="40%" src="images/beginnermenu2.png" />
+        <br clear="all" /> 
+        <span id="fig-2" class="caption"> <strong>Figure 2:</strong> Two level submenu.</span>
+    </p>
+    <div class="back"><a href="#top">Back to top</a></div>    
+    
+    <h4 id="attributes">Some common attributes</h4>
+    <p>The <code>title</code> admits a UTF-8 string as a value; when it appears replace the <code>name</code> as the title of the associated widget. This attribute can be useful when we want to show non ASCII characters in the graphical interface. <scan class="rev">Hay que poner un caracter no ascii en el ejemplo.</scan></p>
+    <p>The <code>hidden="true"</code> attribute creates a submenu item that will not be shown. This can be usefull to define parameters managed by the interface, but hidden to the users.</p>
+    <p>To classify the menu and submenu items in groups, the attribute <code>separator=true</code> will show a line between them.</p> 
+    <p>The following example, shown in <a href="#fig-2">Figure 3</a>, creates a menu separator and a submenu separator, and shows the use of <code>title</code> and <code>hidden</code> attributes.</p>
 
-    <h4 id="Attributes">Some common attributes</h4>
-	<p>
-	With the <code>title</code> attribute you can force to show a different title to the value asigned to the <em>name</em> attribute, this can be usefull to write titles in unicode.
-	</p>
-	<p>
-	With the <code>hidden="true"</code> attribute you can create item in the hierarchy that will not be shown, this can be usefull to define hide options to the final users.
-	</p>
-	<p> 
-	If you want to separate some elements in different groups of <a href="../../xml/menu.xhtml#menu"><code>menu</code></a> or <a href="../../xml/menu.xhtml#submenu"><code>submenu</code></a> you can use the attribute <code>separator=true</code>.  This example creates a menu separator and a submenu separator, and uses the <code>title</code> and <code>hidden</code> attributes.
-	</p>
-
-	<pre class="xml">&lt;menu name="Menu 1"&gt;
+    <pre class="xml">&lt;menu name="Menu 1"&gt;
     &lt;submenu name="Submenu 1"&gt;
     &lt;/submenu&gt;
     &lt;submenu separator="true"&gt;
@@ -90,11 +95,11 @@
 &lt;menu name="Menu 2"&gt;
 &lt;/menu&gt;</pre>
 
-	<p align="center"> 
-	    <img width="13%" src="images/beginnermenu3.png" />
-	    <br clear="all" /> 
-	    <span id="fig-3" class="caption"> <strong>Figure 3:</strong> Menu and submenu separators.</span>
-	</p>
+    <p align="center"> 
+        <img width="16%" src="images/beginnermenu3.png" />
+        <br clear="all" /> 
+        <span id="fig-3" class="caption"> <strong>Figure 3:</strong> Menu and submenu separators.</span>
+    </p>
 
     <div class="back"><a href="#top">Back to top</a></div>
     <hr />

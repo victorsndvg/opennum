@@ -3,86 +3,70 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US">
   <head>
     <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" /> 
-    <title>Beginner: Char list leafs</title>
+    <title>Leafs with lists</title>
     <link rel="stylesheet" type="text/css" href="../../sty.css" />
   </head>
   <body id="top">
     <p>Next: <a href="structs.xhtml">Structs</a>, Previous: <a href="leafs1.xhtml">Leafs</a>, Up: <a href="index.xhtml">Top</a></p>
     <hr /> 
 
-    <h3>Char list leafs</h3>
-	<p>
-	The tag <a href="../../xml/leaf.xhtml"><code>leaf</code></a> is not only used for data input, may also be used to allow for single or multiple selections from a list of options.
-	</p>
-	<p>
-	This example shows the use and behavior of the new attributes <code>selection</code> and <code>showfile</code> along with the attribute <code>type="charlist"</code>. 
-	</p>
-	<p>The <code>selection</code> attribute allows to select one or several option from a list displayed in a box or combo box. To create this list you can use the new tag <a href="../../xml/leaf.xhtml"><code>element</code></a> as a child of a <a href="../../xml/leaf.xhtml"><code>leaf</code></a>.
-	</p>
-	<p>
-	The <code>showfile</code> attribute shows the content of a plain text file in a text box.
-	</p>
-    <h4 id="Single">Single selection</h4>
+    <h3>Leafs with lists</h3>
+    <p><strong>On this page:</strong></p>
+    <ul>
+       <li><a href="#single">Single selection</a></li>
+       <li><a href="#multiple">Multiple selection</a></li>
+       <li><a href="#showfile">Show file</a></li>
+    </ul>
+    
+    <p>The application <strong>Beginner - char list leafs</strong> is an example that shows how to manage widgets with string lists.  These widgets can be used, not only for data input, but also to choose single or multiple selections from a list of options. This example also shows the use of <code>selection</code>,  <code>showfile</code> and <code>type="charlist"</code> attributes.</p> 
+    <p> The XML file of this example can be found at <code>&lt;<em>installdir</em>&gt;/apps/a-Beginner - char list leafs/a-New/local.mnu.xml</code>, where <code>&lt;<em>installdir</em>&gt;</code> is the installation folder.</p>
 
-	<p>
-	The tag <a href="../../xml/leaf.xhtml"><code>leaf</code></a> with the attributes <code>type="charlist"</code> and <code>selection="single"</code> display a combo box that allows to keep selected one between several options. <code>selection="single"</code> is the default behavior of the <a href="../../xml/leaf.xhtml"><code>leaf</code></a> of <code>type="charlist"</code>. The sample code teaches how to build a widget of this type.
-	</p>
+    <h4 id="single">Single selection</h4>
 
-	<pre class="xml">&lt;leaf name="Charlist" type="charlist" selection="single"&gt;
-	&lt;element&gt;Element 1&lt;/element&gt;
-	&lt;element&gt;Element 2&lt;/element&gt;
-	&lt;element&gt;Element 3&lt;/element&gt;
+    <p>A <a href="../../xml/leaf.xhtml"><code>leaf</code></a> element with <code>type="charlist"</code> attribute displays a combo box to select one option from a list. This example shows how to build a widget of this type, as it is shown in <a href="#fig-1">Figure 1</a>.</p>
+
+    <pre class="xml">&lt;leaf name="Charlist" type="charlist" selection="single"&gt;
+    &lt;element&gt;Element 1&lt;/element&gt;
+    &lt;element&gt;Element 2&lt;/element&gt;
+    &lt;element&gt;Element 3&lt;/element&gt;
+&lt;/leaf&gt;</pre>
+    <p>Since single selection is the default value, to add the <code>selection="single"</code> attribute does not change the behavior of the widget but it can be useful to remark it.</p>
+    
+    <p align="center"> 
+        <img width="20%" src="images/leaf-singleselection.png" />
+        <br clear="all" /> 
+        <span id="fig-1" class="caption"> <strong>Figure 1:</strong> Single selection widget.</span>
+    </p>
+    <div class="back"><a href="#top">Back to top</a></div>    
+    
+    <h4 id="multiple">Multiple selection</h4>
+
+    <p>A <a href="../../xml/leaf.xhtml"><code>leaf</code></a> element with <code>type="charlist"</code> and and <code>selection="multiple"</code> attributes  displays a box to select several options from a list. This example shows how to build a widget of this type, as it is shown in <a href="#fig-2">Figure 2</a>.</p>
+
+    <pre class="xml">&lt;leaf name="Charlist" type="charlist" selection="multiple"&gt;
+    &lt;element&gt;Element 1&lt;/element&gt;
+    &lt;element&gt;Element 2&lt;/element&gt;
+    &lt;element&gt;Element 3&lt;/element&gt;
 &lt;/leaf&gt;</pre>
 
-	<p>
-	To write a evenly spaced list of floats you can use the Matlab&#174; format (<code>start:step:end</code>).
-	</p>
+    <p align="center"> 
+        <img width="20%" src="images/leaf-multipleselection.png" />
+        <br clear="all" /> 
+        <span id="fig-2" class="caption"> <strong>Figure 2:</strong> Multiple selection widget.</span>
+    </p>
+    <div class="back"><a href="#top">Back to top</a></div>    
+    
+    <h4 id="showfile">Show file</h4>
+    <p>A <a href="../../xml/leaf.xhtml"><code>leaf</code></a> element with <code>type="charlist"</code> and <code>showfile="</code><em>prefix:filename</em><code>"</code> shows the content of the plain-text file <em>filename</em>, as explained in the <a href="../../xml/leaf.xhtml#out">XML syntax of leafs</a>.  The following example shows this behavior, as it is shown in <a href="#fig-3">Figure 3</a>.</p>
 
-	<p align="center"> 
-	    <img width="20%" src="images/leaf-singleselection.png" />
-	    <br clear="all" /> 
-	    <span id="fig-1" class="caption"> <strong>Figure 1:</strong>Single selection widget.</span>
-	</p>
-
-
-    <h4 id="Multiple">Multiple selection</h4>
-
-	<p>
-	The tag <a href="../../xml/leaf.xhtml"><code>leaf</code></a> with the attributes <code>type="charlist"</code> and <code>selection="multiple"</code> display a box that allows to keep selected some options from a list. The sample code teaches how to build a multiple selection widget.
-	</p>
-
-	<pre class="xml">&lt;leaf name="Charlist" type="charlist" selection="multiple"&gt;
-	&lt;element&gt;Element 1&lt;/element&gt;
-	&lt;element&gt;Element 2&lt;/element&gt;
-	&lt;element&gt;Element 3&lt;/element&gt;
+    <pre class="xml">&lt;leaf name="plain text file" type="charlist" showfile="file:file.txt"&gt;
 &lt;/leaf&gt;</pre>
 
-
-
-	<p align="center"> 
-	    <img width="20%" src="images/leaf-multipleselection.png" />
-	    <br clear="all" /> 
-	    <span id="fig-2" class="caption"> <strong>Figure 2:</strong>Multiple selection widget.</span>
-	</p>
-
-
-    <h4 id="Showfile">Show file</h4>
-
-	<p>
-	The tag <a href="../../xml/leaf.xhtml"><code>leaf</code></a> with the attributes <code>type="charlist"</code> and <code>showfile="file:filename.txt"</code> shows the content of a plain text file. This sample code teaches the use of the attribute <code>showfile="file:filename.txt"</code>
-	</p>
-
-	<pre class="xml">&lt;leaf name="plain text file" type="charlist" showfile="file:file.txt"&gt;
-&lt;/leaf&gt;</pre>
-
-
-
-	<p align="center"> 
-	    <img width="20%" src="images/leaf-showfile.png" />
-	    <br clear="all" /> 
-	    <span id="fig-3" class="caption"> <strong>Figure 2:</strong>Plain text widget.</span>
-	</p>
-
+    <p align="center"> 
+        <img width="20%" src="images/leaf-showfile.png" />
+        <br clear="all" /> 
+        <span id="fig-3" class="caption"> <strong>Figure 3:</strong> Plain text widget.</span>
+    </p>
 
     <div class="back"><a href="#top">Back to top</a></div>
     <hr />
