@@ -77,7 +77,7 @@
     <div class="back"><a href="#top">Back to top</a></div> 
 
     <h4 id="show">Listing the values of an associated mesh field</h4>
-    <p>The values achieved by an associated mesh file can be shown, not only in the <a href="../use/visual-parts/parts.xhtml#scene">Graphic scene</a>, but also as a list in the the <a href="../use/data.xhtml">Data window</a>. An element <code>struct</code> or an element <code>leaf</code> with attribute <code>type="charlist"</code> can show those values by adding the attribute <code>showvalues="true"</code>.</p>
+    <p>The values achieved by an associated mesh file can be shown, not only in the <a href="../use/visual-parts/parts.xhtml#scene">Graphic scene</a>, but also as a list in the the <a href="../use/data.xhtml">Data window</a>. An element <code>struct</code> or an element <code>leaf</code> with attribute <code>type="charlist"</code> can show those values by adding the attribute <code>showvalues="true"</code>. You should use an element <code>leaf</code> with attribute <code>type="charlist"</code> when you just want to show a list with the values of the field; use an element <code>struct</code> when some properties must be chosen for each value.</p>
     <pre class="xml">&lt;leaf type="charlist" selection="multiple" name="Line references" mesh="menu:/Mesh/Open/Mesh file"
 celldata="data:edge_ref" showvalues="true"&gt;
 &lt;/leaf&gt;</pre>
