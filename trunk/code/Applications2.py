@@ -153,12 +153,21 @@ class Applications2():
 			submenu2.tag = u'submenu'
 			submenu2.set_name(app[1])
 			
+			if submenu2.get_name().lower() == u'separator' and app[1] != app[2] and app[0] != u'':
+			    submenu2.get_attribs()['separator'] = config.VALUE_TRUE			
+			    submenu.add_child(submenu2)
+			    continue
+
 			for example in app[3]:
-				str = SubMenu.SubMenu()							#añadido
-				str.tag = u'submenu'							#añadido
-				str.set_name(example[1])						#añadido
-				str.get_attribs()[config.AT_COPY] = os.path.join(app[2], example[2])	#añadido
-				submenu2.add_child(str)							#añadido
+			    submenu3 = SubMenu.SubMenu()							#añadido
+			    submenu3.tag = u'submenu'							#añadido
+			    submenu3.set_name(example[1])							#añadido
+			    if submenu3.get_name().lower() == u'separator' and example[1] != example[2] and example[0] != u'':
+				submenu3.get_attribs()['separator'] = config.VALUE_TRUE			
+				submenu2.add_child(submenu3)
+				continue
+			    submenu3.get_attribs()[config.AT_COPY] = os.path.join(app[2], example[2])	#añadido
+			    submenu2.add_child(submenu3)							#añadido
 
 			if title is not None and title == app[1]:
 				return submenu2
