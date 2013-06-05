@@ -21,7 +21,7 @@
 
     <p>The <a href="http://www.vtk.org/">Visualization Toolkit</a> (VTK) is an open-source, freely available software system for 3D computer graphics, image processing and visualization, distributed by <a href="http://www.kitware.com/">Kitware, Inc.</a> VTK  also provides some of its <a href="http://www.vtk.org/VTK/img/file-formats.pdf">own file formats</a>.</p>
     
-    <p>The Visualization Toolkit supports five different dataset formats: structured points, structured grid, rectilinear grid, unstructured grid, and polygonal data. <span class="rev"><strong>OpenNum only admits unstructured grid</strong></span> since it is the most useful dataset to store finite element meshes. In this regard, VTK only permit Lagrange P1 and P2 finite elements.</p>
+    <p>The Visualization Toolkit supports five different dataset formats: structured points, structured grid, rectilinear grid, unstructured grid, and polygonal data. <span class="rev"><strong>OpenNum only admits unstructured grid FALSO:ADMITE TODOS LOS CAMPOS QUE SOPORTA VTK</strong></span> since it is the most useful dataset to store finite element meshes. In this regard, VTK only permit Lagrange P1 and P2 finite elements.</p>
     
     <h4 id="leg">VTK legacy format</h4>
     <p>The <a href="http://www.vtk.org/VTK/img/file-formats.pdf"><em>VTK legacy</em></a> is the simplest VTK format. The file extension is <em>.vtk</em>.</p>
@@ -37,7 +37,7 @@
       <li>Given an edge or face with a non-zero reference number, include the edge or face as a finite element in the mesh;</li>
       <li>Define the following integer fields:
         <ul>
-          <li>the pointdata field <span class="rev"><em>node_ref</em></span> takes the node reference number in every node of the mesh;</li>
+          <li>the pointdata field <span class="rev"><em>vertex_ref</em></span> takes the node reference number in every node of the mesh;</li>
           <li>the celldata field <span class="rev"><em>edge_ref</em></span> takes the edge reference number in every edge incorporated to the mesh and zero otherwise;</li>
           <li>the celldata field <span class="rev"><em>face_ref</em></span> takes the face reference number in every face incorporated to the mesh and zero otherwise;</li>
           <li>the celldata field <span class="rev"><em>element_ref</em></span> takes the element reference number in every mesh element and zero otherwise;</li>

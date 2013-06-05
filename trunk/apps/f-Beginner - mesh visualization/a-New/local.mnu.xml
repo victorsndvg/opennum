@@ -2,17 +2,17 @@
 	<menu name="2D Mesh">
 		<submenu name="Visualization">
 			<struct name="representation">
-				<struct name="Triangulation" plot="mesh" mesh="file:2Dmesh.mfm">
+				<struct name="Triangulation" plot="mesh" mesh="file:mesh2D.mfm">
 				</struct>
-				<leaf name="Surface references" type="charlist" plot="references" mesh="file:2Dmesh.mfm" celldata="data:element_ref" showvalues="true">
+				<leaf name="Surface references" type="charlist" plot="references" mesh="file:mesh2D.mfm" celldata="data:element_ref" showvalues="true">
 				</leaf>
-				<leaf name="Line references" type="charlist" plot="references" mesh="file:2Dmesh.mfm" celldata="data:edge_ref" showvalues="true">
+				<leaf name="Line references" type="charlist" plot="references" mesh="file:mesh2D.mfm" celldata="data:edge_ref" showvalues="true">
 				</leaf>
-				<leaf name="Point references" type="charlist"  plot="references" mesh="file:2Dmesh.mfm" pointdata="data:vertex_ref" showvalues="true">
+				<leaf name="Point references" type="charlist"  plot="references" mesh="file:mesh2D.mfm" pointdata="data:vertex_ref" showvalues="true">
 				</leaf>
-				<leaf name="Element numbering" type="float"  plot="numbering" mesh="file:2Dmesh.mfm" celldata="data:element_num">
+				<leaf name="Element numbering" type="float"  plot="numbering" mesh="file:mesh2D.mfm" celldata="data:element_num">
 				</leaf>
-				<leaf name="Vertex numbering" type="float"  plot="numbering" mesh="file:2Dmesh.mfm" pointdata="data:vertex_num">
+				<leaf name="Vertex numbering" type="float"  plot="numbering" mesh="file:mesh2D.mfm" pointdata="data:vertex_num">
 				</leaf>
         		</struct>
     		</submenu>
@@ -23,23 +23,25 @@
 	<menu name="3D Mesh">
 		<submenu name="Visualization">
 			<struct name="representation" >
-				<struct name="Triangulation" plot="mesh" mesh="file:3Dmesh.unv">
+				<struct name="Triangulation" plot="mesh" mesh="file:mesh3D.unv">
 				</struct>
-				<leaf name="Surface references" type="charlist" plot="references" mesh="file:3Dmesh.unv" celldata="data:element_ref" showvalues="true">
+				<leaf name="Domain references" type="charlist" plot="references" mesh="file:mesh3D.unv" celldata="data:element_ref" showvalues="true">
 				</leaf>
-				<leaf name="Line references" type="charlist" plot="references" mesh="file:3Dmesh.unv" celldata="data:edge_ref" showvalues="true">
+				<leaf name="Surface references" type="charlist" plot="references" mesh="file:mesh3D.unv" celldata="data:face_ref" showvalues="true">
 				</leaf>
-				<leaf name="Point references" type="charlist"  plot="references" mesh="file:3Dmesh.unv" pointdata="data:vertex_ref" showvalues="true">
+				<leaf name="Line references" type="charlist" plot="references" mesh="file:mesh3D.unv" celldata="data:edge_ref" showvalues="true">
 				</leaf>
-				<leaf name="Element numbering" type="float"  plot="numbering" mesh="file:3Dmesh.unv" celldata="data:element_num">
+				<leaf name="Point references" type="charlist"  plot="references" mesh="file:mesh3D.unv" pointdata="data:vertex_ref" showvalues="true">
 				</leaf>
-				<leaf name="Vertex numbering" type="float"  plot="numbering" mesh="file:3Dmesh.unv" pointdata="data:vertex_num">
+				<leaf name="Element numbering" type="float"  plot="numbering" mesh="file:mesh3D.unv" celldata="data:element_num">
 				</leaf>
-				<struct name="Slice" plot="slice" mesh="file:3Dmesh.unv">
+				<leaf name="Vertex numbering" type="float"  plot="numbering" mesh="file:mesh3D.unv" pointdata="data:vertex_num">
+				</leaf>
+				<struct name="Slice" plot="slice" mesh="file:mesh3D.unv">
 				</struct>
-				<struct name="Cut" plot="cut" mesh="file:3Dmesh.unv">
+				<struct name="Cut" plot="cut" mesh="file:mesh3D.unv">
 				</struct>
-				<struct name="Rough cut" plot="rough_cut" mesh="file:3Dmesh.unv">
+				<struct name="Rough cut" plot="rough_cut" mesh="file:mesh3D.unv">
 				</struct>
         		</struct>
     		</submenu>
