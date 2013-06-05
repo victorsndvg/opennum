@@ -430,6 +430,9 @@ class Window(wx.Frame):
                     subattribs = subsubmenu.get_attribs()               #añadido
                     if (subattribs.get(u'selected') == u'true'):        #añadido
                         (selected,kind) = True,wx.ITEM_CHECK            #añadido
+		    if (subattribs.get(u'separator') == u'true'):	#añadido
+			item_sample_temp.AppendSeparator()		#añadido
+			continue					#añadido
 		#Permite a los submenus mostrar como text el tag title
                     if (subattribs.get(u'title') == None):             	#añadido
                     	subitem_name = subattribs.get(u'name')          #añadido
