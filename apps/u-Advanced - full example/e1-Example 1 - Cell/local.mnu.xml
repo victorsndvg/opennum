@@ -1,4 +1,4 @@
-<menus name="Advanced: full example">
+<menus name="Advanced - full example">
 	<menu name="Mesh">
 		<submenu name="Open">
 			<leaf name="Mesh file" subtype="mesh:All supported (*.mfm;*.unv)|*.mfm;*.unv| Modulef Formatted Meshes (*.mfm)|*.mfm| Universal files (*.unv)|*.unv" title="Choose mesh file:" tooltip="Select the 3D mesh file that will be used" type="file">

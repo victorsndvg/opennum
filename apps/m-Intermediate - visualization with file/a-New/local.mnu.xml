@@ -1,4 +1,4 @@
-<menus name="Intermediate: visualization with file">
+<menus name="Intermediate - visualization with file">
 	<menu name="Visualization">
 		<submenu name="Plot types">
 			<struct name="Represent" title="Choose plot:">

@@ -1,5 +1,5 @@
+<menus name="Advanced - formulas">
 <!--http://docs.python.org/2/library/math.html-->
-<menus name="Advanced: formulas">
 	<menu name="Input data">
 		<submenu name="Real number">
 			<leaf name="Input" title="type a real scalar (x):" type="float">

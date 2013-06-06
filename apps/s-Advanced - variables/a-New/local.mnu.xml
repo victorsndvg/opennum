@@ -1,4 +1,4 @@
-<menus name="Advanced: variables">
+<menus name="Advanced - variables">
 	<menu name="Data">
 		<submenu name="Input strings">
 			<struct name="Strings">

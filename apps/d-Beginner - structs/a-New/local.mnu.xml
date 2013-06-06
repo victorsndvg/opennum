@@ -1,4 +1,4 @@
-<menus name="Beginner: structs">
+<menus name="Beginner - structs">
 	<menu name="Structs">
 		<submenu name="Selection none">
 			<struct name="value">

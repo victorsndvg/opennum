@@ -1,4 +1,4 @@
-<menus name="Beginner: mesh visualization">
+<menus name="Beginner - mesh visualization">
 	<menu name="2D Mesh">
 		<submenu name="Visualization">
 			<struct name="representation">

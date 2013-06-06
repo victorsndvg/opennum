@@ -1,4 +1,4 @@
-<menus name="Beginner: field visualization">
+<menus name="Beginner - field visualization">
 	<menu name="2D field">
 		<submenu name="Scalar field">
 			<struct name="Representation">
