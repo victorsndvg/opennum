@@ -1,4 +1,4 @@
-<menus name="Intermediate: visualization with menu">
+<menus name="Intermediate - visualization with menu">
 	<menu name="Visualization">
 		<submenu name="Open mesh">
 			<leaf name="mesh" type="file" subtype="mesh">
@@ -54,7 +54,7 @@
 		</submenu>
 		<submenu name="Choose content">
 			<struct name="option">
-				<leaf name="Selection single" type="charlist" source="menu:/Materials database/Open/List">
+				<leaf name="Selection single" type="charlist" source="menu:/Materials database/Open/List/Material 1/...">
 				</leaf>
 				<leaf name="Selection multiple" type="charlist" source="menu:/Materials database/Open/List" selection="multiple">
 				</leaf>

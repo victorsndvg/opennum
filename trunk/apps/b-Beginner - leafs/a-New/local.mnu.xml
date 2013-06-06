@@ -1,4 +1,4 @@
-<menus name="Beginner: leafs">
+<menus name="Beginner - leafs">
 	<menu name="Leafs">
 		<submenu name="Float">
 			<leaf name="float variable" type="float" >

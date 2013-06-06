@@ -1,4 +1,4 @@
-<menus name="Intermediate: visualization with data">
+<menus name="Intermediate - visualization with data">
 	<menu name="Visualization">
 		<submenu name="Plot">
 			<struct name="Field" mesh="file:field3D.vtu" plot="filled"  pointdata="data:Active power density (W/m^3)" >
