@@ -29,7 +29,7 @@
     <p>The materials database distributed with the package must be located on <code>&lt;<em>installdir</em>&gt;/materialsDB</code>, where <code>&lt;<em>installdir</em>&gt;</code> is the installation folder. As it was commented in the section <a href="ident.xhtml#data">Renaming the materials database</a> the name of the materials database can be  <code>materials.xml</code> or <code>materials.&lt;<em>name</em>&gt;.xml</code> where <code>&lt;<em>name</em>&gt;</code> is every package name.</p>
     <p>With the first execution of the graphical interface, OpenNum creates a <a href="ident.xhtml#fold">configuration folder</a> in the user's HOME and saves there a modifiable copy of the materials database in the subfolder <code>materialsDB</code>. The user could modify this copy through the graphical interface.</p>
     <p>Every time an executable file is called from the graphical interface, a copy of the latter materials database is saved in the working folder with the name <code>materials.dat.xml</code>. Thus, the executable file can rely on that a copy of the latest modified materials database exists in the working folder.</p>
-    <p><span class="rev">Avisar de que se escribe algo en local.mnu.dat sobre la base. Esto tambien facilita la copia de ficheros en el run remote</span></p>
+    <p><span class="rev">A copy of the structure and content of the materials database is made inside the <a href="../xml/data.xhtml#mat">Data file</a> in every working folder for joining all the problem information in one file.</span></p>
     <div class="back"><a href="#top">Back to top</a></div>
 
     <h4 id="menu">The materials database file</h4>    

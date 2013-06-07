@@ -43,13 +43,14 @@
     <p>The attribute <code>mesh</code> can refer to several meshes <span class="rev">using <a href="dep.xhtml#var">variables</a></span>. In that case, all the meshes will be shown in the same <a href="../use/visual-parts/parts.xhtml#scene">Graphic scene</a>.</p>
     <pre class="xml">&lt;leaf type="charlist" name="Line references" mesh="menu:/Mesh/Open/Mesh file"&gt;
 &lt;/leaf&gt;</pre>
-    <p><span class="rev">You can find a practical example in the section <a href="#filled">... plot</a>.</span></p>
+    <p><span class="rev">You can find a practical example in the section <a href="../samp/beginner/visualization1.xhtml">/Samples/Beginner/Mesh visualization</a>.</span></p>
     <div class="back"><a href="#top">Back to top</a></div> 
         
     <h4 id="add">Adding more meshes to the Graphic scene</h4>
     <p> The optional attribute <code>add_mesh="</code><em>prefix:value</em> allows us to add more meshes to the Graphic scene. The rules for <em>prefix</em> and <em>value</em> are the same than those for the attribute <code>mesh</code>. The additional meshes will be shown as <em>wireframe</em>, that is, no field will be shown on them. The attribute <code>add_mesh</code> is useful to show meshes that help to understand the spatial position of the main mesh.</p>
     <pre class="xml">&lt;leaf type="charlist" name="Line references" mesh="menu:/Mesh/Open/Mesh file" add_mesh="file:auxiliar-mesh.unv"&gt;
 &lt;/leaf&gt;</pre>
+    <p><span class="rev">You can find a practical example in the section <a href="../samp/intermediate/visualizationwithfile.xhtml#addmesh">/Samples/Intermediate/Visualization with file</a>.</span></p>
     <div class="back"><a href="#top">Back to top</a></div> 
     
     <h4 id="point">The attribute <code>pointdata</code></h4>
@@ -60,7 +61,7 @@
     </ul>
     <pre class="xml">&lt;leaf type="charlist" name="Node references" mesh="menu:/Mesh/Open/Mesh file" pointdata="data:vertex_ref"&gt;
 &lt;/leaf&gt;</pre>
-    <p><span class="rev">You can find a practical example in the section <a href="#filled">... plot</a>.</span></p>
+    <p><span class="rev">You can find a practical example in the section <a href="../samp/beginner/visualization1.xhtml#point-refs">/Samples/Beginner/Mesh visualization</a>.</span></p>
     <div class="back"><a href="#top">Back to top</a></div> 
     
     <h4 id="cell">The attribute <code>celldata</code></h4>
@@ -73,7 +74,7 @@
     </ul>
     <pre class="xml">&lt;leaf type="charlist" name="Line references" mesh="menu:/Mesh/Open/Mesh file" celldata="data:edge_ref"&gt;
 &lt;/leaf&gt;</pre>
-    <p><span class="rev">You can find a practical example in the section <a href="#filled">... plot</a>.</span></p>
+    <p><span class="rev">You can find a practical example in the section <a href="../samp/beginner/visualization1.xhtml#domain-refs">/Samples/Beginner/Mesh visualization</a>.</span></p>
     <div class="back"><a href="#top">Back to top</a></div> 
 
     <h4 id="show">Listing the values of an associated mesh field</h4>
