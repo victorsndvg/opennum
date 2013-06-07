@@ -11,19 +11,22 @@
     <hr /> 
 
     <h3>Visualization with data</h3>
-	<p>
-	In this example you can see the modifier <code>data</code> and how to use it. It can be used in <code>pointdata</code> and <code>celldata</code> attributes. Both  <code>pointdata</code> and <code>celldata</code> attributes always goes along <code>plot</code> attribute.
-	</p>
-	<p>
-	With <code>data</code> modifier you specify directly a field name to visualize it. This tutorial review some basic concepts from the <a href="../beginner/visualization2.xhtml"> Field visualization</a> tutorial.
-	</p>
+    <p><strong>On this page:</strong></p>
+    <ul>
+       <li><a href="#pointdataandcelldata">Pointdata and celldata</a></li>
+    </ul>
 
-    <h4 id="mesh">Pointdata and celldata</h4>
-	<p>
-	Below is shown an example of the use of the <code>pointdata="data:[...]"</code> atribute, being analog the use of <code>celldata</code> attribute.
-	</p>
+    <p>The application <strong>Intermediate - visualization with data</strong> shows the modifier <code>data</code> and how to use it in <code>pointdata</code> and <code>celldata</code> attributes.
+    With <code>data</code> modifier you specify directly a field name to visualize it. This tutorial review some basic concepts from the <a href="../beginner/visualization2.xhtml"> Field visualization</a> tutorial. </p>
 
-	<pre class="xml">&lt;struct name="Field" mesh="file:field3D.vtu" plot="filled"  pointdata="data:Active power density (W/m^3)"&gt;
+    <p> The XML file of this example can be found at <code>&lt;<em>installdir</em>&gt;/apps/n-Intermediate - visualization with data/a-New/local.mnu.xml</code>, where <code>&lt;<em>installdir</em>&gt;</code> is the installation folder.</p>
+
+    <h4 id="pointdataandcelldata">Pointdata and celldata</h4>
+    <p>
+    Below is shown an example of the use of the <code>pointdata="data:[...]"</code> atribute, being analog the use of <code>celldata</code> attribute.
+    </p>
+
+    <pre class="xml">&lt;struct name="Field" mesh="file:field3D.vtu" plot="filled"  pointdata="data:Active power density (W/m^3)"&gt;
 &lt;/struct&gt;</pre>
 
 
