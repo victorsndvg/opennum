@@ -17,6 +17,9 @@ hr {background-color: gray; }
 /* Text to be revised */
 .rev { color: red; }
 
+/* Text already revised */
+.ok { color: black; }
+
 /* Horizontal array of images */
 img.hoz {vertical-align: middle; margin-right: 20px;}
 
