@@ -50,17 +50,17 @@
       <li><code><strong>menu</strong></code> and then <em>value</em> must be a menu path that points to a element <code>leaf</code> with attributes <code>type="file"</code>, <code>subtype="mesh"</code> or <code>subtype="field"</code>. <em>value</em> must follow the rules explained in the section <a href="dep.xhtml#menu">Menu dependencies</a>.</li>
     </ul>
 
-    <p>The attribute <code>mesh</code> can refer to several meshes <span class="rev">using <a href="dep.xhtml#var">variables</a></span>. In that case, all the meshes will be shown in the same <a href="../use/visual-parts/parts.xhtml#scene">Graphic scene</a>.</p>
+    <p>The attribute <code>mesh</code> can refer to several meshes <span class="ok">using <a href="dep.xhtml#var">variables</a></span>. In that case, all the meshes will be shown in the same <a href="../use/visual-parts/parts.xhtml#scene">Graphic scene</a>.</p>
     <pre class="xml">&lt;leaf type="charlist" name="Line references" mesh="menu:/Mesh/Open/Mesh file"&gt;
 &lt;/leaf&gt;</pre>
-    <p><span class="rev">You can find a practical example in the section <a href="../samp/beginner/visualization2.xhtml">/Samples/Beginner/Field visualization</a>.</span></p>
+    <p><span class="ok">You can find a practical example in the beginner's sample <a href="../samp/beginner/visualization2.xhtml">Field visualization</a>.</span></p>
     <div class="back"><a href="#top">Back to top</a></div> 
         
     <h4 id="add">Adding more meshes to the Graphic scene</h4>
     <p> The optional attribute <code>add_mesh="</code><em>prefix:value</em> permits to add more meshes to the Graphic scene. The rules for <em>prefix</em> and <em>value</em> are the same than those for the attribute <code>mesh</code>. The additional meshes will be shown as <em>wireframe</em>, that is, no field will be shown on them. The attribute <code>add_mesh</code> is useful to show meshes that help to understand the spatial position of the main mesh.</p>
     <pre class="xml">&lt;leaf type="charlist" name="Line references" mesh="menu:/Mesh/Open/Mesh file" add_mesh="file:auxiliar-mesh.unv"&gt;
 &lt;/leaf&gt;</pre>
-    <p><span class="rev">You can find a practical example in the section <a href="../samp/intermediate/visualizationwithfile.xhtml#addmesh">/Samples/Intermediate/Visualization with file</a>.</span></p>
+    <p><span class="ok">You can find a practical example in the intermediate sample <a href="../samp/intermediate/visualizationwithfile.xhtml#addmesh">Visualization with file</a>.</span></p>
     <div class="back"><a href="#top">Back to top</a></div> 
     
     <h4 id="point">The attribute <code>pointdata</code></h4>
@@ -82,7 +82,7 @@
         </ul>
       </li>
     </ul>
-    <p><span class="rev">You can find a practical example in the section <a href="../samp/beginner/visualization2.xhtml">/Samples/Beginner/Field visualization</a>.</span></p>
+    <p><span class="ok">You can find a practical example in the section beginner's sample <a href="../samp/beginner/visualization2.xhtml">Field visualization</a>.</span></p>
     <div class="back"><a href="#top">Back to top</a></div> 
     
     <h4 id="cell">The attribute <code>celldata</code></h4>
