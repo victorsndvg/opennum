@@ -31,11 +31,11 @@
     <h4 id="interp">The attribute <code>interpolation</code></h4>
     <p>The attribute <code>interpolation=</code>"<em>value</em>" determines how the interpolation must be performed in the animation. <em>value</em> can be</p>
     <ul>
-      <li><code><strong>true</strong></code>: (this is the default value) a linear interpolation will be performed in the parameter interval and <span class="rev">the step length will be proportional to the length of the parameter interval</span>; besides, values indicated in the <strong>Parameter</strong> button of the <a href="../use/visual-parts/parts.xhtml#param">Parameter bar</a> could be anyone;
+      <li><code><strong>true</strong></code>: (this is the default value) a linear interpolation is allowed in the parameter interval <span class="rev">(EL PASO DE TIEMPO DEPENDE SIEMPRE DE LO ALMACENADO EN EL PVD)</span>; besides, values indicated in the <strong>Parameter</strong> button of the <a href="../use/visual-parts/parts.xhtml#param">Parameter bar</a> could be anyone;
         <pre class="xml">&lt;struct name="Example" mesh="file:heat.pvd" celldata="data:temperature" plot="filled" 
 evolution="Time" interpolation="true"&gt;&lt;/struct&gt;</pre>
       </li>
-      <li><code><strong>false</strong></code>: there is no interpolation in the parameter interval and <span class="rev">the step length will be constant</span>; besides, values indicated in the <strong>Parameter</strong> button of the <a href="../use/visual-parts/parts.xhtml#param">Parameter bar</a> could only be those saved in the <a href="../form/field/pvd.xhtml">PVD file</a>.</li>
+      <li><code><strong>false</strong></code>: there is no interpolation in the parameter interval<span class="rev">(EL PASO DE TIEMPO DEPENDE SIEMPRE DE LO ALMACENADO EN EL PVD)</span>; besides, values indicated in the <strong>Parameter</strong> button of the <a href="../use/visual-parts/parts.xhtml#param">Parameter bar</a> could only be those saved in the <a href="../form/field/pvd.xhtml">PVD file</a>.</li>
         <pre class="xml">&lt;struct name="Example" mesh="file:fluid.pvd" celldata="data:pressure" plot="threshold" 
 evolution="Frequency" interpolation="false"&gt;&lt;/struct&gt;</pre>
     </ul>
