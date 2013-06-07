@@ -11,90 +11,103 @@
     <hr /> 
 
     <h3>Embedded help</h3>
-	<p>
-	This example teaches how to create embedded help buttons in any graphical widget and how to create help messages printed in labels. It shows the use of the new attributes <code>helpdata</code>, <code>helpconfig</code> and <code>tooltip</code>.
-	</p>
-	<p>
-	This attributes, <code>helpdata</code>, <code>helpconfig</code> and <code>tooltip</code>, can be used either on <a href="../../xml/struct.xhtml"><code>struct</code></a> or <a href="../../xml/leaf.xhtml"><code>leaf</code></a> tags. The value of <code>helpconfig</code> attribute has three components, and are assigned as follows: <code>helpconfig="modifier,width,height"</code>, being pixels the units of <em>height</em> and <em>width</em>.
-	</p>
+    <p><strong>On this page:</strong></p>
+    <ul>
+       <li><a href="#externalurl">External url</a></li>
+       <li><a href="#localurl">Local url</a></li>
+       <li><a href="#htmldata">HTML data</a></li>
+       <li><a href="#linksindefaultbrowser">HTML data with links in default browser</a></li>
+       <li><a href="#tooltip">Tooltip</a></li>
+    </ul>
 
-	<p align="center"> 
-	    <img width="15%" src="images/embeddedhelp-button.png" />
-	    <br clear="all" /> 
-	    <span id="fig-1" class="caption"> <strong>Figure 1:</strong> Help button.</span>
-	</p>
+    <p>The application <strong>Intermediate - embedded help</strong> shows how tocreate embedded help buttons in any graphical widget and how to create help messages printed in labels. It also explains the use of <code>helpdata</code>, <code>helpconfig</code> and <code>tooltip</code> attributes.  </p>
+    <p>
+    This attributes, <code>helpdata</code>, <code>helpconfig</code> and <code>tooltip</code>, can be used either on <a href="../../xml/struct.xhtml"><code>struct</code></a> or <a href="../../xml/leaf.xhtml"><code>leaf</code></a> tags. The value of <code>helpconfig</code> attribute has three components, and are assigned as follows: <code>helpconfig="modifier,width,height"</code>, being pixels the units of <em>height</em> and <em>width</em>.
+    </p>
 
-    <h4 id="externurl">External url</h4>
-	<p>
-	With the <code>url</code> modifier assigned to the attribute <code>helpconfig</code>, <strong>OpenNum</strong> open a HTML window that shows an internet URL. In this case the value of the attribute <code>helpdata</code> must be a valid URL with the HTTP protocol.
-	</p>
+    <p> The XML file of this example can be found at <code>&lt;<em>installdir</em>&gt;/apps/k-Intermediate - embedded help/a-New/local.mnu.xml</code>, where <code>&lt;<em>installdir</em>&gt;</code> is the installation folder.</p>
 
-	<pre class="xml">&lt;struct name="External url" helpconfig="url,800,640" helpdata="http://www.usc.es"&gt;
+    <p align="center"> 
+        <img width="15%" src="images/embeddedhelp-button.png" />
+        <br clear="all" /> 
+        <span id="fig-1" class="caption"> <strong>Figure 1:</strong> Help button.</span>
+    </p>
+
+    <h4 id="externalurl">External url</h4>
+    <p>
+    With the <code>url</code> modifier assigned to the attribute <code>helpconfig</code>, <strong>OpenNum</strong> open a HTML window that shows an internet URL. In this case the value of the attribute <code>helpdata</code> must be a valid URL with the HTTP protocol.
+    </p>
+
+    <pre class="xml">&lt;struct name="External url" helpconfig="url,800,640" helpdata="http://www.usc.es"&gt;
     ...
 &lt;/struct&gt;</pre>
+    <div class="back"><a href="#top">Back to top</a></div>
 
 
     <h4 id="localurl">Local url</h4>
-	<p>
-	With the <code>urlinst</code> modifier assigned to the attribute <code>helpconfig</code>, the HTML window instances a local URL. In this case the value of the attribute <code>helpdata</code> must be a path to an existing HTML file in the file system.
-	</p>
+    <p>
+    With the <code>urlinst</code> modifier assigned to the attribute <code>helpconfig</code>, the HTML window instances a local URL. In this case the value of the attribute <code>helpdata</code> must be a path to an existing HTML file in the file system.
+    </p>
 
-	<pre class="xml">&lt;struct name="Local url" helpconfig="urlinst,800,640" helpdata="existing/path/to/a/html/file/index.html"&gt;
+    <pre class="xml">&lt;struct name="Local url" helpconfig="urlinst,800,640" helpdata="existing/path/to/a/html/file/index.html"&gt;
     ...
 &lt;/struct&gt;</pre>
 
-	<p align="center"> 
-	    <img width="20%" src="images/embeddedhelp-window.png" />
-	    <br clear="all" /> 
-	    <span id="fig-2" class="caption"> <strong>Figure 2:</strong> HTML help window.</span>
-	</p>
+    <p align="center"> 
+        <img width="20%" src="images/embeddedhelp-window.png" />
+        <br clear="all" /> 
+        <span id="fig-2" class="caption"> <strong>Figure 2:</strong> HTML help window.</span>
+    </p>
+    <div class="back"><a href="#top">Back to top</a></div>
 
 
     <h4 id="htmldata">HTML data</h4>
-	<p>
-	If you want to show your own message in the HTML window, you have to use the attribute <code>helpconfig</code> with the modifier <code>code</code> and assign a valid HTML code to the attribute <code>helpdata</code>. 
-	</p>
+    <p>
+    If you want to show your own message in the HTML window, you have to use the attribute <code>helpconfig</code> with the modifier <code>code</code> and assign a valid HTML code to the attribute <code>helpdata</code>. 
+    </p>
 
 
-	<pre class="xml">&lt;struct name="Html data" helpconfig="code,400,100" helpdata="Help message"&gt;
+    <pre class="xml">&lt;struct name="Html data" helpconfig="code,400,100" helpdata="Help message"&gt;
     ...
 &lt;/struct&gt;</pre>
 
-	<p align="center"> 
-	    <img width="20%" src="images/embeddedhelp-message.png" />
-	    <br clear="all" /> 
-	    <span id="fig-3" class="caption"> <strong>Figure 3:</strong> HTML help message.</span>
-	</p>
+    <p align="center"> 
+        <img width="20%" src="images/embeddedhelp-message.png" />
+        <br clear="all" /> 
+        <span id="fig-3" class="caption"> <strong>Figure 3:</strong> HTML help message.</span>
+    </p>
+    <div class="back"><a href="#top">Back to top</a></div>
 
 
-    <h4 id="htmldatalinks">HTML data with links in default browser</h4>
-	<p>
-	This case works like the previous with the only exception that the links appeared in the HTML message will be shown in the default browser. To do that you have to use the attribute <code>helpconfig</code> with the <code>frontcode</code> modifier. Note that the special characters must be written with the HTML codification.
-	</p>
+    <h4 id="linksindefaultbrowser">HTML data with links in default browser</h4>
+    <p>
+    This case works like the previous with the only exception that the links appeared in the HTML message will be shown in the default browser. To do that you have to use the attribute <code>helpconfig</code> with the <code>frontcode</code> modifier. Note that the special characters must be written with the HTML codification.
+    </p>
 
-	<pre class="xml">&lt;struct name="Html data with link" helpconfig="frontcode,400,100" helpdata="&amp;lt;a href=http://www.usc.es/&amp;gt;USC web page&amp;lt;/a&amp;gt;"&gt;
+    <pre class="xml">&lt;struct name="Html data with link" helpconfig="frontcode,400,100" helpdata="&amp;lt;a href=http://www.usc.es/&amp;gt;USC web page&amp;lt;/a&amp;gt;"&gt;
     ...
 &lt;/struct&gt;</pre>
 
-	<p align="center"> 
-	    <img width="20%" src="images/embeddedhelp-link.png" />
-	    <br clear="all" /> 
-	    <span id="fig-4" class="caption"> <strong>Figure 3:</strong> Link in default browser.</span>
-	</p>
+    <p align="center"> 
+        <img width="20%" src="images/embeddedhelp-link.png" />
+        <br clear="all" /> 
+        <span id="fig-4" class="caption"> <strong>Figure 3:</strong> Link in default browser.</span>
+    </p>
+    <div class="back"><a href="#top">Back to top</a></div>
 
     <h4 id="tooltip">Tooltip</h4>
-	<p>
-	Other way to display on-site help is showing tooltips. The tooltips are messages that appear if you keep the cursor a few seconds over the widget header. This is possible with the attribute <code>tooltip="message"</code> where <code>message</code> is the help text you want to show.
-	</p>
+    <p>
+    Other way to display on-site help is showing tooltips. The tooltips are messages that appear if you keep the cursor a few seconds over the widget header. This is possible with the attribute <code>tooltip="message"</code> where <code>message</code> is the help text you want to show.
+    </p>
 
-	<pre class="xml">&lt;leaf name="Tooltip" type="char" tooltip="This is a tooltip message"&gt;
+    <pre class="xml">&lt;leaf name="Tooltip" type="char" tooltip="This is a tooltip message"&gt;
 &lt;/leaf&gt;</pre>
 
-	<p align="center"> 
-	    <img width="15%" src="images/embeddedhelp-tooltip.png" />
-	    <br clear="all" /> 
-	    <span id="fig-5" class="caption"> <strong>Figure 5:</strong> Tooltip.</span>
-	</p>
+    <p align="center"> 
+        <img width="15%" src="images/embeddedhelp-tooltip.png" />
+        <br clear="all" /> 
+        <span id="fig-5" class="caption"> <strong>Figure 5:</strong> Tooltip.</span>
+    </p>
 
     <div class="back"><a href="#top">Back to top</a></div>
     <hr />
