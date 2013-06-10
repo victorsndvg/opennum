@@ -68,16 +68,16 @@
     <ul>
       <li><strong>VTK format:</strong> the mesh and the field are given in the same file and the field has a name to identify it; the file is indicated in the attribute <code>mesh</code> and the field name is indicated in the attribute <code>pointdata</code> with prefix <code>data:</code></li>
       <pre class="xml">&lt;struct name="Scalar field" mesh="file:example.vtu" pointdata="data:Temperature"&gt;
-&lt;/leaf&gt;</pre>
+&lt;/struct&gt;</pre>
       <li><strong>MFF format:</strong> the mesh is given by a file with MFM format and the field is given in another file with MFF format; the mesh file is indicated in the attribute <code>mesh</code> and the field file name is indicated in the attribute <code>pointdata="</code><em>prefix:value</em>" where <em>prefix</em> can be
         <ul>
           <li><code><strong>file</strong></code> and then <em>value</em> must be a MFF file containing the field; <em>value</em> must follow the rules explained in the section <a href="dep.xhtml#file">File dependencies</a>;
             <pre class="xml">&lt;struct name="Scalar field" mesh="file:example.mfm" pointdata="file:example-field.mff"&gt;
-&lt;/leaf&gt;</pre>
+&lt;/struct&gt;</pre>
           </li>
           <li><code><strong>menu</strong></code> and then <em>value</em> must be a menu path that points to a element <code>leaf</code> with attributes <code>type="file"</code>, <code>subtype="field"</code>. <em>value</em> must follow the rules explained in the section <a href="dep.xhtml#menu">Menu dependencies</a>.
             <pre class="xml">&lt;struct name="Scalar field" mesh="file:example.mfm" pointdata="menu:/Fields/Temperature"&gt;
-&lt;/leaf&gt;</pre>
+&lt;/struct&gt;</pre>
           </li>
         </ul>
       </li>
@@ -90,21 +90,21 @@
     <ul>
       <li><strong>VTK format:</strong> the mesh and the field are given in the same file and the field has a name to identify it; the file is indicated in the attribute <code>mesh</code> and the field name is indicated in the attribute <code>celldata</code> with prefix <code>data:</code></li>
       <pre class="xml">&lt;struct name="Scalar field" mesh="file:example.vtu" celldata="data:Temperature"&gt;
-&lt;/leaf&gt;</pre>
+&lt;/struct&gt;</pre>
       <li><strong>MFF format:</strong> the mesh is given by a file with MFM format and the field is given in another file with MFF format; the mesh file is indicated in the attribute <code>mesh</code> and the field file name is indicated in the attribute <code>celldata="</code><em>prefix:value</em>" where <em>prefix</em> can be
         <ul>
           <li><code><strong>file</strong></code> and then <em>value</em> must be a MFF file containing the field; <em>value</em> must follow the rules explained in the section <a href="dep.xhtml#file">File dependencies</a>;
             <pre class="xml">&lt;struct name="Scalar field" mesh="file:example.mfm" celldata="file:example-field.mff"&gt;
-&lt;/leaf&gt;</pre>
+&lt;/struct&gt;</pre>
           </li>
           <li><code><strong>menu</strong></code> and then <em>value</em> must be a menu path that points to a element <code>leaf</code> with attributes <code>type="file"</code>, <code>subtype="field"</code>. <em>value</em> must follow the rules explained in the section <a href="dep.xhtml#menu">Menu dependencies</a>.
             <pre class="xml">&lt;struct name="Scalar field" mesh="file:example.mfm" celldata="menu:/Fields/Temperature"&gt;
-&lt;/leaf&gt;</pre>
+&lt;/struct&gt;</pre>
           </li>
         </ul>
       </li>
     </ul>
-    <p><span class="rev">You can find a practical example in the section <a href="#filled">... plot</a>.</span></p>
+    <p><span class="ok">You can find a practical example in the section beginner's sample <a href="../samp/beginner/visualization1.xhtml">Mesh visualization</a>.</span></p>
     <div class="back"><a href="#top">Back to top</a></div> 
 
     <h4 id="plot">The attribute <code>plot</code></h4>
