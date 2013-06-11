@@ -19,6 +19,7 @@
         <li><a href="#elem">Element <code>element</code></a></li>
       </ul>  
       <li><a href="#float">Introducing integer/real scalars and arrays</a></li>
+      <li><a href="#complex">Introducing complex scalars and arrays</a></li>
       <li><a href="#file">Introducing files</a></li>
       <li><a href="#fold">Introducing folders</a></li>
       <li><a href="#char">Selecting string scalars</a></li>
@@ -43,6 +44,15 @@
 
     <pre class="xml">&lt;leaf name="Permittivity" type="float" title="Permittivity (&epsilon;)"&gt;
 &lt;/leaf&gt;</pre>
+    <div class="back"><a href="#top">Back to top</a></div>
+
+    <h4 id="complex">Introducing complex scalars and arrays</h4>
+    <p>An element <code>leaf</code> with attribute <code>type="complex"</code> manages complex scalars and arrays through <a href="../use/data.xhtml#real">this widget</a>. This element can be empty. To save an initial value, write every single complex in an element <code>element</code>, to introduce complex you have to type their real and imaginary parts using parentheses; for example, type (a,b) to give the scalar a+bi..</p>
+    <pre class="xml">&lt;leaf type="complex" name="Array"&gt;
+    &lt;element&gt;(1,2)&lt;/element&gt;
+    &lt;element&gt;(5.e+05,0.1)&lt;/element&gt;
+&lt;/leaf&gt;</pre>
+
     <div class="back"><a href="#top">Back to top</a></div>
     
     <h4 id="file">Introducing files</h4>
