@@ -10,9 +10,72 @@
     <p>Next: <a href="../form/form.xhtml">File formats</a>, Previous: <a href="../samp/samp.xhtml">Sample apps</a>, Up: <a href="../index.xhtml">Top</a></p>
     <hr /> 
 
-    <h2>Remote run</h2>
-
     <p><span class="rev">Explicar remote run a los users, como deben configurar la llamada, lo que hay que poner en el lado del servidor,...)</span></p>
+
+    <h2>Remote run</h2>
+    <p><strong>On this page:</strong></p>
+    <ul>
+       <li><a href="#requirements">Requirements</a></li>
+       <li><a href="#solverslocation">Solvers location</a></li>
+       <li><a href="#authentication">Authentication</a></li>
+       <li><a href="#remoterundialog">Remote run dialog</a></li>
+       <li><a href="#remoterunstepbystep">Remote run step by step</a></li>
+    </ul>
+
+    <p>This section describes how to run any executable file in a remote computer or cluster from <b>Opennum</b>.</p>
+
+    <h3 id="requirements">Requirements</h3>
+
+        <p> To be able to perform a remote execution is necessary to have an account on the remote server with <i>SSH</i> access. Optionally, the server may have a SGE queuing system. </p>
+        <p> In the local side, your computer, you need to install <i>Paramiko</i>, a <i>SSH2</i> protocol for Python. More information is explained in <a href="../inst/inst.xhtml">Installation</a> for <i>Paramiko</i> downloading and installing.</p>
+        <div class="back"><a href="#top">Back to top</a></div>    
+
+    <h3 id="solverslocation">Solvers location</h3>
+
+        <p> Executables must be installed on the remote server and probably need to compile it for that specific platform. This instructions asumes that the server runs under any Linux operating system</p>
+        <p> In the server side, the solvers must be located in <i>$HOME/.&lt;name&gt;/solvers</i>, where <i>&lt;name&gt;</i> is the name of yout package. Alternatively, the solvers can be located in any existing path in the <i>$PATH</i> environment variable of the server, but considering that instructions of <i>~/.bashrc</i> neither of <i>~/.bash_profile</i> are not executed.</p>
+        <div class="back"><a href="#top">Back to top</a></div>    
+
+    <h3 id="authentication">Authentication</h3>
+
+        <p> The authentication process can be performed in two ways, using a key file or typing a password. Both ways can be performed from the remote run dialog. </p>
+        <p> First of all, <b>Opennum</b> try to use the given key or, in otherwise, look for a key in the <i>SSH</i> default folder (<i>$HOME/.ssh/</i>). If any key file is found, the password of the dialog is used for authentication. </p>
+        <div class="back"><a href="#top">Back to top</a></div>
+
+    <h3 id="remoterundialog">Remote run dialog</h3>
+
+	<p> The remote run dialog, see <a href="#fig-1">Figure 1</a>, is an easy way to introduce the remote execution parameters. It allows users to enter some data like <i>host</i>, <i>user</i>, <i>password</i>, <i>key file</i> or <i>queuing command</i> in a simple way. This data are explained below.</p>
+        <ul>
+            <li><b>Host:</b> name or IP of the server. <i>Required</i>.</li>
+            <li><b>User:</b> account username on the server side. <i>Required</i>.</li>
+            <li><b>Password:</b> user password for the specified user account. <i>Optional</i>.</li>
+            <li><b>Key file:</b> path to a private key file, you can type the path or choose the file graphically with the button below. <i>Optional</i>.</li>
+            <li><b>Queuing command:</b> command used to send a job to a queue, the server may have a SGE queuing system. <i>Optional</i>.</li>
+        </ul>
+        <p> Some explanation about how to display the dialog can be found in <a href="../xml/action.xhtml"> action</a> section of the xml help. </p>
+        <p align="center"> 
+            <img width="20%" src="images/remoterundialog.png" />
+            <br clear="all" /> 
+            <span id="fig-1" class="caption"> <strong>Figure 1:</strong> Remote run dialog.</span>
+        </p>
+        <div class="back"><a href="#top">Back to top</a></div>
+
+    <h3 id="remoterunstepbystep">Remote run step by step</h3>
+    
+	<p> In order to understand better how remote run works, then is explained the steps that <b>Opennum</b> takes.</p>
+        <ul>
+            <li><b>Opennum</b> saves a modified copy of the local.dat.xml in local.dat.xml.temp-remote.xml, where the paths to the files referenced are modified to point to the correct relative path on the server. To avoid any problem with the file name encoding all filenames are changed following a numeric sequence.</li>
+            <li>An <i>SSH/SFTP</i> connection to the server is opened with the data specified in the remote run dialog.</li>
+            <li>It creates a temporary folder on the <i>$HOME</i> of the server, following the pattern <i>&lt;name&gt;.XXXXXXXXXX</i>, where <i>'XXXXXXXXXX'</i> is replaced by a pseudorandom string</li>
+            <li>Within the above folder, create two subfolders: <i>input</i> and <i>output</i>. The <i>input</i> folder will be used for storing de input data needed for the solver, and the <i>output</i> folder will store the ouput results.</li>
+            <li><b>Opennum</b> generated files and referenced files are copied, using <i>SFTP</i> protocol, to the <i>input</i> folder on the server in order to rebuild the working folder only with the required data.</li>
+            <li>The command to run the solver is executed. This command is the result of concatening the queuing command with the name of every executable file. If multiple executables exist, they are executed sequentially in order of appearance.</li>
+            <li>When all the executables ends, all the output files created in the <i>ouput</i> folder are copied back to your working folder in the local computer using SFTP.</li>
+            <li>It deletes the temporary folder on the remote server, <i>&lt;name&gt;.XXXXXXXXXX</i>, with all its content.</li>
+            <li>The <i>SSH/SFTP</i> connection is closed.</li>
+        </ul>
+        <div class="back"><a href="#top">Back to top</a></div>
+
     <hr />
     <p>&copy; 2012 - <a href="http://www.usc.es/ingmat/?lang=en">Ingeniería Matemática</a></p>
   </body>

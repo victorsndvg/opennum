@@ -14,7 +14,7 @@
 
     <p><strong>On this page:</strong></p>
     <ul>
-      <li><a href="#real">Introducing real data</a></li>
+      <li><a href="#real">Introducing real or complex data</a></li>
       <li><a href="#str">Introducing string data</a></li>
       <li><a href="#ff">File or folder data</a></li>
       <li><a href="#single">Selecting a single string from a list</a></li>
@@ -26,14 +26,15 @@
 
     <p>The Data window is the part of the interface where data is introduced by the user. In this window, a particular widget is presented for each data type.</p>
     
-    <h4 id="real">Introducing real data</h4>
-    <p>When the user must introduce real data, the widget shown in <a href="#fig-1">Figure 1</a> is used.</p>
+    <h4 id="real">Introducing real or complex data</h4>
+    <p>When the user must introduce real or complex data, the widget shown in <a href="#fig-1">Figure 1</a> is used.</p>
     <p align="center"> 
       <img width="15%" src="images/real.png" />
       <br clear="all" /> 
       <span id="fig-1" class="caption"> <strong>Figure 1:</strong> Widget for real data.</span>
     </p>
     <p>When a real array is expected, the input can be <span class="ok">enclosed in parentheses or square brackets</span> and the elements can be <span class="ok">separated by commas or blank spaces</span>. It also supports a <span class="ok">valid MATLAB array</span> using the <a href="http://www.mathworks.es/help/techdoc/math/f1-84864.html#f1-85254">colon operator</a>.</p>
+    <p>To introduce complex scalars in the graphical interface, you have to type their real and imaginary parts using parentheses; for example, type (a,b) to give the scalar a+bi. To introduce complex arrays, type several complex scalars; for example, type (a,b) (c,d) to give the array [a+bi, c+di]. </p>
     <p>The input is recorded when the user either press <em>Enter</em> or visits another menu or widget.</p>
     <div class="back"><a href="#top">Back to top</a></div>    
 
