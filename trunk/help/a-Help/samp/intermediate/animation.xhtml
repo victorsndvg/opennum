@@ -13,11 +13,12 @@
     <h3>Animation</h3>
     <p><strong>On this page:</strong></p>
     <ul>
-       <li><a href="#timeanimation">Time animation</a></li>
-       <li><a href="#freqanimation">Frequency animation</a></li>
+       <li><a href="#timeanimation">Time dependant animation</a></li>
+       <li><a href="#freqanimation">Variable dependant animation</a></li>
+       <li><a href="#interpolation">Interpolation</a></li>
     </ul>
 
-    <p>The application <strong>Intermediate - animation</strong> shows how to visualize the parameter depending evolution of a field. This means that you can view animations with <strong>OpenNum</strong>. It also explains the use of <code>evolution</code> attribute to assign the name of the evolving parameter.</p>
+    <p>The application <strong>Intermediate - animation</strong> shows how to visualize the parameter depending evolution of a field. This means that you can view animations with <strong>OpenNum</strong>. It also explains the use of <code>evolution</code> attribute to assign the name of the evolving parameter and the <code>interpolation</code> attribute to do linear interpolation between two adjacent existing results.</p>
 
     <p>
     To display an animation you must use <em>PVD (Paraview Data)</em> files in the <code>mesh</code> attribute, this is the default file format for <a href="http://www.paraview.org">ParaView</a> visualizer. The field file set pointed by the PVD file must contain any <a href="../../form/field/vtk.xhtml"> <em>VTK</em> file type supported by <strong>OpenNum</strong></a> (polygonal, uniform rectilinear, nonuniform rectilinear, curvilinear, or unstructured).
@@ -26,24 +27,24 @@
     <p> The XML file of this example can be found at <code>&lt;<em>installdir</em>&gt;/apps/l-Intermediate - animation/a-New/local.mnu.xml</code>, where <code>&lt;<em>installdir</em>&gt;</code> is the installation folder.</p>
 
 
-    <h4 id="timeanimation">Time animation</h4>
+    <h4 id="timeanimation">Time dependant animation</h4>
     <p>
     The default behavior of <strong>OpenNum</strong> while working with <em>PVD</em> files is to show a time animation bar. This behavior can be forced using the attribute <code>evolution="time"</code>.
     </p>
 
-    <pre class="xml">&lt;struct name="Time animation"  evolution="time" plot="vector_field" mesh="file:animation/animation.pvd" pointdata="data:Magnetic field"&gt;
+    <pre class="xml">&lt;struct name="Time animation" plot="vector_field" mesh="file:animation/animation.pvd" pointdata="data:Magnetic field"&gt;
 &lt;/struct&gt;</pre>
 
     <p align="center"> 
         <img width="50%" src="images/animation-time.png" />
         <br clear="all" /> 
-        <span id="fig-1" class="caption"> <strong>Figure 1:</strong> Time animation bar.</span>
+        <span id="fig-1" class="caption"> <strong>Figure 1:</strong> Animation bar.</span>
     </p>
     <div class="back"><a href="#top">Back to top</a></div>
 
-    <h4 id="freqanimation">Frequency animation</h4>
+    <h4 id="freqanimation">Variable dependant animation</h4>
     <p>
-    To visualize frequency animations you have to use the attribute <code>evolution="frequency"</code>. The difference with the time animations is that frequency animation do not allow to do data interpolation in the middle of two given timesteps.
+    To visualize variable dependant animations you have to use the attribute <code>evolution="variable_name"</code>.
     </p>
 
     <pre class="xml">&lt;struct name="Frequency animation"  evolution="frequency" plot="vector_field" mesh="file:animation/animation.pvd" pointdata="data:Frequency field"&gt;
@@ -52,10 +53,23 @@
     <p align="center"> 
         <img width="55%" src="images/animation-frequency.png" />
         <br clear="all" /> 
-        <span id="fig-2" class="caption"> <strong>Figure 2:</strong> Frequency animation bar.</span>
+        <span id="fig-2" class="caption"> <strong>Figure 2:</strong> Animation bar.</span>
     </p>
 
     <div class="back"><a href="#top">Back to top</a></div>
+
+    <h4 id="interpolation">Interpolation</h4>
+    <p>
+    With the attribute <code>interpolation="true"</code>, the default behavior, you can visualize results by interpolating two adjacent fields in the same PVD file. Use the animation bar to introduce the value in the first text box. 
+    </p>
+    <p>
+    To block this behaviour you can use the attribute <code>interpolation="false"</code>.
+    </p>
+
+    <pre class="xml">&lt;struct name="Frequency animation"  evolution="frequency" interpolation="false" plot="vector_field" mesh="file:animation/animation.pvd" pointdata="data:Frequency field"&gt;
+&lt;/struct&gt;</pre>
+    <div class="back"><a href="#top">Back to top</a></div>
+
     <hr />
     <p>&copy; 2012 - <a href="http://www.usc.es/ingmat/?lang=en">Ingeniería Matemática</a></p>
   </body>
