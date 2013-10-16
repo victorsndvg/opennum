@@ -16,7 +16,7 @@
     <ul>
       <li><a href="#struct">Element <code>struct</code></a></li>
       <li><a href="#custom">Customizable structures</a></li>
-      <li><a href="#table">Tables</a></li>
+      <li><a href="#table">Tables and charts</a></li>
     </ul>
 
     <h4 id="struct">Element <code>struct</code></h4>
@@ -57,9 +57,12 @@
 &lt;/struct&gt;</pre>
     <div class="back"><a href="#top">Back to top</a></div>      
 
-    <h4 id="table">Tables</h4>
-   <p>An element <code>struct</code> the attribute <code>tabular="true"</code> add a <em>Show</em> button in the widget. This button shows the content of the structure as a table. This attribute was designed for structures that have several child elements <code>leaf</code> with attribute <code>type="float"</code>. In this case, the table similar to <a href="#fig-1">Figure 1</a> appears.</p>
-    <pre class="xml">&lt;struct name="Table" tabular="true"&gt;
+    <h4 id="table">Tables and charts</h4>
+	<span class="rev">Revisar</span>
+   <p>An element <code>struct</code> with the attribute <code>show</code> add a <em>Show</em> button in the widget. <code>show</code> attribute has several behaviors and with the value <code>show="tabular"</code> this button shows the content of the structure as a table, with the value <code>show="plot"</code> this button shows the content of the structure as a 2D chart. Both, table and chart, are showed with the value <code>show="all"</code> . 
+   </p>
+   <p>This attribute was designed for structures that have several child elements <code>leaf</code> with attribute <code>type="float"</code>. In this case, the table similar to <a href="#fig-1">Figure 1</a> appears.</p>
+    <pre class="xml">&lt;struct name="Table" show="tabular"&gt;
   &lt;leaf type="float" name="X"&gt;
     &lt;element&gt;3 4 5 6&lt;/element&gt;
   &lt;/leaf&gt;
@@ -70,8 +73,13 @@
     <p align="center"> 
       <img width="25%" src="images/table.png" />
       <br clear="all" /> 
-      <span id="fig-1" class="caption"> <strong>Figure 1:</strong> Table obtained with attribute <code>tabular="true"</code>.</span>
+      <span id="fig-1" class="caption"> <strong>Figure 1:</strong> Table obtained with attribute <code>show="tabular"</code>.</span>
     </p>
+
+   <p> It exists an exception for the use of the <code>show="matrix"</code> attribute that does not show a button at the top right of the widget, it directly shows a new window with the table.</p>
+   <p> An element <code>struct</code> with the attribute <code>show="matrix"</code> also allows to represent a matrix file in a table. </p>
+   <p>The matrix file must be specified by using <code>data</code> attribute with <code>"file:..."</code> or <code>"menu:..."</code> prefixes and  the file must be right formated in the OpenNum <a href="../form/matrix/matrix.xhtml">MTX matrix file format</a>.
+   </p>
 
     <div class="back"><a href="#top">Back to top</a></div>
 

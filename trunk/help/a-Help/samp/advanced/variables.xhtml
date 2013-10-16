@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" "http://www.w3.org/Math/DTD/mathml2/xhtml-math11-f.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US">
+  <head>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" /> 
+    <title>Variables</title>
+    <link rel="stylesheet" type="text/css" href="../../sty.css" />
+  </head>
+  <body id="top">
+    <p>Next: <a href="formulas.xhtml">Formulas</a>, Up: <a href="index.xhtml">Top</a></p>
+    <hr /> 
+
+    <h3>Variables</h3>
+    <p><strong>On this page:</strong></p>
+    <ul>
+       <li><a href="#single">Single level variables</a></li>
+       <li><a href="#multiple">Multiple level variables</a></li>
+       <li><a href="#files">Variables and files</a></li>
+    </ul>
+
+    <span class="rev">Revisar</span>
+
+    <p>The application <strong>Advanced - variables</strong> is an example that shows how to use dependencies in order to reference existing values along the menu. It may be usefull to recall some sintax concepts collected in section <a href="../../xml/dep.xhtml">dependencies</a>. Variables can be used with the attributes that contain <em>menu:</em> and <em>file:</em> prefixes.</p>
+
+    <p> The XML file of this example can be found at <code>&lt;<em>installdir</em>&gt;/apps/s-Advanced - variables/a-New/local.mnu.xml</code>, where <code>&lt;<em>installdir</em>&gt;</code> is the installation folder.</p>
+
+    <h4 id="single">Single level variables</h4>
+    <p>You can use variables to reference one or more values specified in the XML hierarchy. If a variable returns several strings the result will be evaluated one time for every returned value.</p>
+
+    <p>The following sample code shows how to list some content placed in the menu structure. It allows to access to stored values at the same level hierarchy after a brach.</p>
+
+    <pre class="xml">&lt;leaf name="String list" type="charlist" source="menu:/List/${/List}"&gt;
+&lt;/leaf&gt;</pre>
+
+    <p>In this case we assume the existence of two leafs placed in the paths <em>/List/Leaf 1</em> and <em>/List/Leaf 2</em>, after applying the variable will get a list of both contents.</p>
+
+    <div class="back"><a href="#top">Back to top</a></div>    
+    
+    <h4 id="multiple">Multiple level variables</h4>
+    <p>You can use multiple levels of variables, these will be solved recursively from the innermost level to the outermost.</p>
+
+    <p>The following sample code shows how to retrieve information from two branches on three hierarchy levels straight.</p>
+
+    <pre class="xml">&lt;leaf name="List all descriptions" title="Descriptions list:" type="charlist" source="menu:/Data/${/Data/${/Data}}"&gt;
+&lt;/leaf&gt;</pre>
+
+    <div class="back"><a href="#top">Back to top</a></div>    
+    
+    <h4 id="files">Variables and files</h4>
+    <p>Variables can be used to reference files along with the prefix <em>file:</em>. This can be very useful to reference output files generated from data entered in the menu.</p>
+
+    <p>The following sample uses a variable with a relative path to build the correct name of a mesh file.</p>
+
+    <pre class="xml">&lt;struct name="Plot" type="charlist" mesh="file:${../Select media}.vtu" plot="mesh"&gt;
+&lt;/struct&gt;</pre>
+    
+    <div class="back"><a href="#top">Back to top</a></div>
+    <hr />
+    <p>&copy; 2012 - <a href="http://www.usc.es/ingmat/?lang=en">Ingeniería Matemática</a></p>
+  </body>
+</html>
+

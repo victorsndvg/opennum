@@ -18,6 +18,7 @@
       <ul>
         <li><a href="#param">Element <code>param</code></a></li>
       </ul>  
+      <li><a href="#exec_custom">Sintax of <code>exec_custom</code> action</a></li>
     </ul>
 
     <h4 id="action">Element <code>action</code></h4>
@@ -25,9 +26,11 @@
     <ul>
       <li><code><strong>exec</strong></code>, makes a system call to locally run one or several executable files; the system call does not stop the interaction with the graphical interface;</li>
       <li><code><strong>exec_ssh</strong></code>, makes a system call to <a href="../run/run.xhtml">remotely run</a> one or several executable files using the SSH protocol; the system call does not stop the interaction with the graphical interface;</li>
+      <li><code><strong>exec_custom</strong></code>, allows user to customize the command of a system call to locally run one or several executable files; the system call does not stop the interaction with the graphical interface;</li>
       <li><code><strong>kill_exec</strong></code>, close a system call started with <code><strong>exec</strong></code>.</li>
       <li><code><strong>close_plots</strong></code>, close all the graphic tags in the <a href="../use/visual-parts/parts.xhtml">visualization window</a>.</li>
       <li><code><strong>reset_materials</strong></code>, copy the materials database from folder <code><em>installdir</em>/materialsDB</code> to the folder <code>materialsDB</code> in the <a href="../conf/ident.xhtml#data">configuration folder</a> (here <code><em>installdir</em></code> is the installation folder). This action erases all the changes that the user has been done in the materials database.</li>
+      <li><code><strong>reset_config</strong></code>, copy the configuration file from folder <code><em>installdir</em></code> to the <a href="../conf/ident.xhtml#data">configuration folder</a> (here <code><em>installdir</em></code> is the installation folder). This action erases all the user configuration preferences.</li>
     </ul>
 
     <pre class="xml">&lt;submenu name="Run"&gt;
@@ -37,13 +40,47 @@
 &lt;/submenu&gt;</pre>
 
     <h5 id="param">Element <code>param</code></h5>
-    <p>The content of the element <code>param</code> is the executable file to call. The optional attribute <code>args=</code>"<em>value</em>" indicates the command line arguments that will be passed to the executable file.</p>
+    <p>The content of the element <code>param</code> is the executable file to call. </p>
+    <p>The tag <code>action</code> can contain two optional attributes, <code>args=</code>"<em>value</em>" and <code>reload=</code>"<em>true</em>". The attribute <code>args=</code>"<em>value</em>" indicates the command line arguments that will be passed to the executable file and the attribute <code>reload=</code>"<em>true</em>" forces to reload the menu when solvers execution ends.</p>
     
-    <p>The element <code>param</code> is a required children of every element <code>action</code> with <code>name="<strong>exec</strong></code> or <code>name="<strong>exec_ssh</strong></code>. If one element <code>action</code> contains several elements <code>param</code>, the executable files will be called in their order of appearance. The executable file is searched following the rules indicated in the section <a href="../conf/exec.xhtml">Executable files</a>.</p> 
+    <p>The element <code>param</code> is a required children of every element <code>action</code> with <code>name="<strong>exec</strong>"</code>, <code>name="<strong>exec_ssh</strong>"</code> or  <code>name="<strong>exec_custom</strong>"</code>. If one element <code>action</code> contains several elements <code>param</code>, the executable files will be called in their order of appearance. The executable file is searched following the rules indicated in the section <a href="../conf/exec.xhtml">Executable files</a>.</p> 
     
     <pre class="xml">&lt;action name="exec"&gt;
   &lt;param args="-i 12 mesh.unv">electrostatics.exe&lt;/param&gt;
 &lt;/action&gt;</pre>
+    <div class="back"><a href="#top">Back to top</a></div>
+
+    <h4 id="exec_custom">Sintax of <code>exec_custom</code> action</h4>
+	<p class="rev">Revisar</p>
+    <p> The use of tag <code>action</code> with <code>name="<strong>exec_custom</strong>"</code> introduces two new attributes, <code>data="<strong>value</strong>"</code> and <code>showvalues="<strong>true</strong>"</code>.
+    </p>
+    <p> The attribute <code>data="<strong>value</strong>"</code> may appear when the tag <code>action</code> and <code>param</code>, being dominant in the case of appearing in the tag <code>action</code>. The property <code><strong>value</strong></code> indicates a command that is concatenated from the left with the name of the executable file and its arguments. The following code shows how to run the comand <code> mpirun -np 4 electrostatics.exe -i file.dat</code> and <a href="#fig-1">Figure 1</a> his respective widget.
+    </p>
+
+    <pre class="xml">&lt;action name="exec_custom" data="mpirun -np 4" title="Parallel run"&gt;
+  &lt;param args="-i file.dat">electrostatics.exe&lt;/param&gt;
+&lt;/action&gt;</pre>
+
+    <p align="center"> 
+      <img width="20%" src="images/exec_custom1.png" />
+      <br clear="all" /> 
+      <span id="fig-1" class="caption"> <strong>Figure 1:</strong> Custom exec widget with <code>data</code>.</span>
+    </p>
+
+    <p> When <code>data</code> is used with the tag <code>param</code> it allows the use of the attribute <code>showvalues="<strong>true</strong></code>. In this case you can control the prefix used with each executable and whether allow edditing executable name and arguments. In the following code and in <a href="#fig-2">Figure 2</a> you can see an example of use.
+    </p>
+
+    <pre class="xml">&lt;action name="exec_custom" title="Parallel run"&gt;
+  &lt;param data="mpirun -np 2" args="-i file.dat -o output.dat">readdata.exe&lt;/param&gt;
+  &lt;param showvalues="true" data="mpirun -np 4" args="-i output.dat">electrostatics.exe&lt;/param&gt;
+&lt;/action&gt;</pre>
+
+    <p align="center"> 
+      <img width="40%" src="images/exec_custom2.png" />
+      <br clear="all" /> 
+      <span id="fig-2" class="caption"> <strong>Figure 1:</strong> Custom exec widget with <code>data</code> and <code>showvalues</code>.</span>
+    </p>
+
     <div class="back"><a href="#top">Back to top</a></div>
 
     <hr />

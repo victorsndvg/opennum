@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" "http://www.w3.org/Math/DTD/mathml2/xhtml-math11-f.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US">
+  <head>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" /> 
+    <title>Formulas</title>
+    <link rel="stylesheet" type="text/css" href="../../sty.css" />
+  </head>
+  <body id="top">
+    <p>Previous: <a href="variables.xhtml">Variables</a>, Next: <a href="fullexample.xhtml">Full example</a>, Up: <a href="index.xhtml">Top</a></p>
+    <hr /> 
+
+    <h3>Formulas</h3>
+    <p><strong>On this page:</strong></p>
+    <ul>
+       <li><a href="#scalar">Scalar fields</a></li>
+       <li><a href="#vector">Vector fields</a></li>
+       <li><a href="#functions">Functions</a></li>
+    </ul>
+
+    <span class="rev">Revisar</span>
+
+    <p>The application <strong>Advanced - formulas</strong> is an example that shows how to use formulas for operating with fields. It may be usefull to recall some sintax concepts collected in section <a href="../../xml/form.xhtml">formulas</a>.</p>
+
+    <p>The formulas are a feature only applicable to fields and for using it is mandatory at least a field reference.</p>
+
+    <p> The XML file of this example can be found at <code>&lt;<em>installdir</em>&gt;/apps/t-Advanced - formulas/a-New/local.mnu.xml</code>, where <code>&lt;<em>installdir</em>&gt;</code> is the installation folder.</p>
+
+    <h4 id="scalar">Scalar fields</h4>
+    <p>The following sample code shows how to calculate and visualize the mean between two fields, we assume the existence of the <em>/Fields/F1</em> and <em>/Fields/F2</em> paths, where <em>F1</em> and <em>F2</em> are <a href="../../xml/struct.xhtml">structs</a> or <a href="../../xml/leaf.xhtml">leafs</a> containing the attribute <a href="../../xml/field.xhtml#mesh">mesh</a> and one of the two attributes <a href="../../xml/field.xhtml#point">pointdata</a> or <a href="../../xml/field.xhtml#cell">celldata</a>.</p>
+
+    <p>The formula attribute must have at least the first argument containing an operation or function and the second argument containing a field. You can add more arguments separated by semicolons referencing other fields that appear on the menu. Summarizing the syntax, the attribute formula looks like this, <em>formula="variable1+variable2 ; variable1=menu:/Fields/F1 ; variable2=menu:/Fields/F2</em>.</p>
+
+    <pre class="xml">&lt;struct name="Mean" plot="filled" formula="(t+u)/2.0;t=menu:/Fields/F1;u=menu:/Fields/F2"&gt;
+&lt;/struct&gt;</pre>
+    <div class="back"><a href="#top">Back to top</a></div>    
+    
+    <h4 id="vector">Vector Fields</h4>
+    <p>You can also use the <em>formula</em> attribute with vector fields in order to operate with them or to access to each component.</p>
+
+    <p>The following sample code shows how to visualize the first component of a three-dimensional field, we assume that this field is referenced in <em>/Fields/F3</em> path, note that the number of the component is specified between square brackets.</p>
+
+    <pre class="xml">&lt;struct name="First component" plot="filled" formula="v[0];v=menu:/Fields/F3"&gt;
+&lt;/struct&gt;</pre>
+    <div class="back"><a href="#top">Back to top</a></div>    
+    
+    <h4 id="functions">functions</h4>
+
+    <p>The first argument of the formula attribute supports the use of a wide variety of mathematical functions. These functions corresponds to the functions implemented in the <a href="http://docs.python.org/2/library/math.html">math</a> module of the Python programming language.</p>
+
+    <p>The following sample code shows how to visualize the module of a three-dimensional field, To do this we need to use the <em>sqrt()</em> function.</p>
+    
+    <pre class="xml">&lt;struct name="Modulus" plot="filled" formula="sqrt(v[0]*v[0]+v[1]*v[1]+v[2]*v[2]);v=menu:/Fields/F3"&gt;
+&lt;/struct&gt;</pre>
+ 
+    <div class="back"><a href="#top">Back to top</a></div>
+    <hr />
+    <p>&copy; 2012 - <a href="http://www.usc.es/ingmat/?lang=en">Ingeniería Matemática</a></p>
+  </body>
+</html>
+

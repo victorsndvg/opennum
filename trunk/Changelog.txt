@@ -30,3 +30,7 @@ Apps: a full set of examples to learn how to use Opennum.
 2013-02-28
 
 Run remote: Error launching remote executions. Fixed.
+
+2013-10-16
+
+Help: updated!
