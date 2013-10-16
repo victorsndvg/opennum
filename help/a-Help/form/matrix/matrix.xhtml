@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" "http://www.w3.org/Math/DTD/mathml2/xhtml-math11-f.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US">
+  <head>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" /> 
+    <title>MTX format</title>
+    <link rel="stylesheet" type="text/css" href="../../sty.css" />
+  </head>
+  <body id="top">
+    <p>Previous: <a href="../graph/graph.xhtml">Graph formats</a>, Up: <a href="../form.xhtml">Top</a></p>
+    <hr /> 
+
+    <h3>MTX format</h3>
+    <span class="rev">Revisar</span>
+
+    <p><strong>On this page:</strong></p>
+    <ul>
+      <li><a href="#desc">Description</a></li>
+      <li><a href="#var">Variables</a></li>
+      <li><a href="#file">Writing a <em>.mtx</em> file</a></li>
+    </ul>
+
+    <h4 id="desc">Description</h4>
+    <p>The file extension for the format MTX is also <em>.mtx</em>.</p>
+
+    <p>The main features of this format are:</p>
+    <ul>
+      <li>The file can store two dimensional arrays with any data length.</li>
+      <li>The file also stores strings defining row and colum labels.</li>
+    </ul>
+    <div class="back"><a href="#top">Back to top</a></div>
+    
+    <h4 id="var">Variables</h4>
+    <p>The variables needed to define a <em>.mtx</em> file are:</p>
+    <ul>
+      <li><var>rownum</var> is an integer with the number of rows;</li>
+      <li><var>colnum</var> is an integer with the number of columns;</li>
+      <li><var>x<sub>i</sub></var> is a numeric or string array of length <var>colnum</var> containing a row;</li>
+      <li><var>rowlabel<sub>i</sub></var> is a string containing the label of the <var>i</var>-th row;</li>
+      <li><var>collabel<sub>j</sub></var> is a string containing the label of the <var>j</var>-th col;</li>
+    </ul>
+    <div class="back"><a href="#top">Back to top</a></div>
+            
+    <h4 id="file">Writing a <em>.mtx</em> file</h4>
+    <p>Every <em>.gr2</em> file must be written in ASCII and be composed of the following records:</p>
+    <ol>
+      <li>A first record containing <var>rownum</var></li>
+      <li>A record containing <var>colnum</var></li>
+      <li>a record containing <var>x<sub>i</sub></var> with its components separated by blank spaces;</li>
+      <li>A record, for each <var>i</var> in {1, ..., <var>rownum</var>}, row containing <var>rowlabel</var>;</li>
+      <li>Finally, a record, for each <var>i</var> in {1, ..., <var>colnum</var>}, column containing <var>rowlabel</var>;</li>
+      </ol>           
+      <p>We present an example of a <em>.mtx</em> file that define a 3x4 complex matrix.</p>
+      <pre class="xml">3
+4
+(0.01,0.00) (2.00,0.00)  (0.00,3.00) (4.50,0.00)
+(0.00,0.00) (11.2,-1.1)  (0.00,0.00) (1.29,7.18)
+(0.00,0.00) (0.00,0.00)  (0.00,0.00) (0.00,0.00)  
+Row 1
+Row 2
+Row 3
+Column 1
+Column 2
+Column 3
+Column 4
+</pre>   
+    <div class="back"><a href="#top">Back to top</a></div>
+    
+    <hr />
+    <p>&copy; 2012 - <a href="http://www.usc.es/ingmat/?lang=en">Ingeniería Matemática</a></p>
+  </body>
+</html>
+
