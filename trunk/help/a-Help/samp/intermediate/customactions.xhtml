@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" "http://www.w3.org/Math/DTD/mathml2/xhtml-math11-f.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US">
+  <head>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" /> 
+    <title>Intermediate: actions</title>
+    <link rel="stylesheet" type="text/css" href="../../sty.css" />
+  </head>
+  <body id="top">
+    <p>Next: <a href="animation.xhtml">Animation</a>, Previous: <a href="embeddedhelp.xhtml">Embedded help</a>, Up: <a href="index.xhtml">Top</a></p>
+    <hr /> 
+
+    <h3>Actions</h3>
+    <p><strong>On this page:</strong></p>
+    <ul>
+       <li><a href="#simple">Simple custom run</a></li>
+       <li><a href="#data">Predefined command</a></li>
+       <li><a href="#showvalues">Completely editable</a></li>
+       <li><a href="#reload">Menu reload after executable ends</a></li>
+    </ul>
+
+    <span class="rev">Revisar</span>
+
+    <p>The application <strong>Intermediate - actions</strong> teachs how to allow to users to customize the running of solvers, it may be useful in parallel or distributed systems or for profiling. It explains the use of a new type of <a href="../../xml/action.xhtml#exec_custom"><code>action</code></a> tag with <code>name="exec_custom"</code> attribute. It also explains the use of <code>data</code>, <code>showvalues</code> and <code>reload</code> attributes with this kind of <code>action</code>.</p>
+
+    <p> The XML file of this example can be found at <code>&lt;<em>installdir</em>&gt;/apps/l-Intermediate - actions/a-New/local.mnu.xml</code>, where <code>&lt;<em>installdir</em>&gt;</code> in the installation folder.</p>
+
+    <p>
+    The attribute <code>data</code>, in this context, can be used for predefine the previous command to apply to the solver, <code>showvalues</code> attribute allows to users the full customization launching executables and <code>reload</code> attribute reloads the menu after solver execution.
+    </p>
+
+    <h4 id="simple">Simple custom run</h4>
+    <p> The <code>action</code> tag with <code>name="exec_custom"</code> attribute works like <code>name="exec"</code> attribute explained in <a href="../beginner/actions.xhtml">Beginner - actions</a> but with a different and more flexible window.</p>
+
+    <p> With this kind of <code>action</code> users can set a prefix command to apply to the executable file especified in <a href="../../xml/action.xhtml#param"><code>param</code></a> tag. You can see the simplest example in the following code and the displayed window in <a href="#fig1">Figure 1</a>.
+    </p>
+
+    <pre class="xml">&lt;action name="exec_custom"&gt;
+    &lt;param&gt;electrostatics.exe&lt;/param&gt;
+&lt;/action&gt;</pre>
+    <div class="back"><a href="#top">Back to top</a></div>
+
+    <p align="center"> 
+        <img width="45%" src="images/simplecustomexec.png" />
+        <br clear="all" /> 
+        <span id="fig-1" class="caption"> <strong>Figure 1:</strong> Custom run window.</span>
+    </p>
+
+
+    <h4 id="data">Predefined command</h4>
+
+    <div class="back"><a href="#top">Back to top</a></div>
+
+
+    <h4 id="showvalues">Completely editable</h4>
+
+    <div class="back"><a href="#top">Back to top</a></div>
+
+
+    <h4 id="reload">Menu reload after executable ends</h4>
+
+    <div class="back"><a href="#top">Back to top</a></div>
+
+    <h4 id="tooltip">Tooltip</h4>
+
+    <div class="back"><a href="#top">Back to top</a></div>
+    <hr />
+    <p>&copy; 2012 - <a href="http://www.usc.es/ingmat/?lang=en">Ingeniería Matemática</a></p>
+  </body>
+</html>
+
