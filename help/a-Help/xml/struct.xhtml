@@ -71,15 +71,23 @@
   &lt;/leaf&gt;
 &lt;/struct&gt;</pre>
     <p align="center"> 
-      <img width="25%" src="images/table.png" />
+      <img width="20%" src="images/table.png" />
       <br clear="all" /> 
       <span id="fig-1" class="caption"> <strong>Figure 1:</strong> Table obtained with attribute <code>show="tabular"</code>.</span>
     </p>
 
-   <p> It exists an exception for the use of the <code>show="matrix"</code> attribute that does not show a button at the top right of the widget, it directly shows a new window with the table.</p>
-   <p> An element <code>struct</code> with the attribute <code>show="matrix"</code> also allows to represent a matrix file in a table. </p>
+   <p> An element <code>struct</code> with the attribute <code>show="matrix"</code> also allows to represent a matrix file in a table. The use of the <code>show="matrix"</code> attribute that does not show a button at the top right of the widget, it directly shows a new window with the table, you can see the table at <a href="#fig-2">Figure 2</a>.</p>
    <p>The matrix file must be specified by using <code>data</code> attribute with <code>"file:..."</code> or <code>"menu:..."</code> prefixes and  the file must be right formated in the OpenNum <a href="../form/matrix/matrix.xhtml">MTX matrix file format</a>.
    </p>
+
+   <pre class="xml">&lt;struct name="Matrix" show="matrix" data="file:matrix.mtx"&gt;
+&lt;/struct&gt;</pre>
+
+    <p align="center"> 
+      <img width="25%" src="images/matrix.png" />
+      <br clear="all" /> 
+      <span id="fig-2" class="caption"> <strong>Figure 2:</strong> Table obtained with attribute <code>show="matrix"</code>.</span>
+    </p>
 
     <div class="back"><a href="#top">Back to top</a></div>
 
