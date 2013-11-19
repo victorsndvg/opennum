@@ -1,0 +1,45 @@
+<menus name="Advanced - actions">
+	<menu name="Basic">
+		<submenu name="Custom run">
+			<action name="exec_custom" title="Simple custom run">
+				<param args="Solver 1">echo</param>
+			</action>
+		</submenu>
+	</menu>
+	<menu name="Data">
+		<submenu name="In action tag">
+			<action name="exec_custom" data="mpirun -np 2" title="Data in action tag">
+				<param args="Solver 1">echo</param>
+				<param args="Solver 2">echo</param>
+			</action>
+		</submenu>
+		<submenu name="In param tag">
+			<action name="exec_custom" title="Data in param tag">
+				<param data="mpirun -np 2 " args="Solver 1">echo</param>
+				<param data="mpirun -np 3 " args="Solver 2">echo</param>
+			</action>
+		</submenu>
+	</menu>
+	<menu name="Showvalues">
+		<submenu name="In param tag">
+			<action name="exec_custom" title="Showvalues attribute">
+				<param showvalues="true" data="mpirun -np 2" args="Solver 1">echo</param>
+				<param data="mpirun -np 3 " args="Solver 2">echo</param>
+				<param>echo</param>
+			</action>
+		</submenu>
+	</menu>
+	<menu name="Reload">
+		<submenu name="Reload menu">
+			<action name="exec_custom" data="mpirun -np 3" title="Reload menu when solver ends" reload="true">
+				<param args="Solver 1">echo</param>
+			</action>
+		</submenu>
+
+		<submenu name="Stop">
+			<action name="kill_exec">
+			</action>
+		</submenu>
+	</menu>
+</menus>
+
