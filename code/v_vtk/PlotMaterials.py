@@ -153,7 +153,7 @@ class PlotMaterials(Plot.Plot):
         num = len(self.names)
         lt = vtk.vtkLookupTable()
         lt.SetNumberOfColors(num)
-        lt.SetHueRange(Plot.hue_1, Plot.hue_2)
+        lt.SetHueRange(self.sb_hue)
         if num < 1:
             lt.SetTableRange(1, 1)
         else:
