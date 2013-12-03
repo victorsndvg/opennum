@@ -34,3 +34,7 @@ Run remote: Error launching remote executions. Fixed.
 2013-10-16
 
 Help: updated!
+
+2013-12-103
+
+PlotMaterials: Hue range bug. Fixed.
