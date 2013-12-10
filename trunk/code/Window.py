@@ -1139,8 +1139,7 @@ class Window(wx.Frame):
                 subdir_to = os.path.join(dir_to, dir)
 		if os.path.isdir(subdir_to):
 		    shutil.rmtree(subdir_to)
-                affected = os.path.join(dir_to, file)
-                if not self.remove_file_folder(affected):
+                elif not self.remove_file_folder(subdir_to):
                     ok = False
                     return ok
                 shutil.copytree( subdir_from , subdir_to )
