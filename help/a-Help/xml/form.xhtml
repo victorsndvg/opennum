@@ -12,7 +12,190 @@
 
     <h3>Formulas</h3>
 
-    <p><span class="rev">Under construction.</span></p>
+    <p><strong>On this page:</strong></p>
+    <ul>
+      <li><a href="#formula">The attribute <code>formula</code></a></li>
+      <ul>
+          <li><a href="#operator">Operators</a></li>
+          <li><a href="#constants">Constants</a></li>
+          <li><a href="#variables">Variables</a></li>
+          <li><a href="#vectors">Vectors</a></li>
+          <li><a href="#functions">Functions</a></li>
+      </ul>
+    </ul>
+
+    <p><span class="rev">Revisar.</span></p>
+
+    <h4 id="formula">The attribute <code>formula</code></h4>
+
+    <p>The attribute <code>formula</code> is used with <a href="field.xhtml#plot">plot</a> attribute for field visualization.The attribute <code>formula</code> is a string containing an <em>operation</em> and one or more assignements of <em>variables</em> using semicolons as separators as follows, <code>formula="operations;variable_1[;...;variable_N]"</code>.</p>
+
+    <p>The <em>operation</em> can contain several different <a href="#operator">operators</a>, <a href="#constants">constants</a>, <em>variables</em> and <a  href="functions">functions</a>. For example, to calculate the magnitude of a vector <code>U</code>, you can use the following expression <code>sqrt(pow(U[0],2)+pow(U[1],2)+pow(U[2],2))</code>. All the allowed characters and functions will be explained in each section of this page.</p>
+
+    <p><em>Variables</em> can be used to identify scalar or vector fields and constants referenced by <a href="dep.xhtml#menu">menu dependencies</a>, to define <em>variables</em> you use a string as follows, <code>variable_name=menu:...</code>. There may be as many variables as needed in the <em>operation</em> separated by semicolons.</p> 
+
+    <p>The following sample code shows how to display a filled field as a result of adding <em>(operation)</em> two different fields <em>(variables)</em>. We suppose that in the menu there are two referenced fields in <em>/Visualization/Field1</em> and <em>/Visualization/Field2</em> paths.</p>
+
+    <p>First of all, you can see how the fields are assigned to the variables <code>u</code> and <code>v</code> for operating with them.</p>
+
+    <pre class="xml">&lt;struct name="Field1+Field2" pointdata="data:Field1+Field2" formula="t+u;t=menu:/Visualization/Field1;u=menu:/Visualization/Field2" plot="filled"&gt;
+&lt;/struct&gt;</pre>
+
+    <div class="back"><a href="#top">Back to top</a></div>
+
+    <h5 id="variables">Variables</h5>
+
+    <p>The variables allways references menu dependencies, this is why variable definition only allows the <code>menu</code> modifier. You can define as many variables as you want, always separated by semicolons, and this variables can reference to fields or constant values.</p>
+
+    <p><strong>OpenNum</strong> uses strings for defining variables. The syntax for variable definition uses a variable name followed by the equal character, <code>=</code>, and a menu path with the <code>menu</code> modifier.</p>
+
+    <p>The following sample code shows the definition of the variable <code>u</code> that references a field in the menu hierarchy.</p>
+
+    <pre class="xml">u=menu:/Visualization/Field1</pre>
+
+    <div class="back"><a href="#top">Back to top</a></div>    
+
+    <h5 id="operators">Operators</h5>
+
+    <p>In order to take advantage of the powerful capabilities of the <a href="http://www.python.org">Python programming language</a>, <strong>OpenNum</strong> formulas are based on Python arithmetic operators. You can also group operations to specify the order of application, for this purpose you can use parentheses, <code>( )</code>. Below is a table that shows the allowed operators.</p>
+
+    <p></p>
+
+
+    <table class="table">
+        <thead>
+            <tr> <th>Operation</th> <th>Operator</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>Addition</td> <td>+</td></tr>
+            <tr><td>Substraction</td> <td>-</td></tr>
+            <tr><td>Product</td> <td>*</td></tr>
+            <tr><td>Division</td> <td>/</td></tr>
+            <tr><td>Exponentiation</td> <td>**</td></tr>
+            <tr><td>Modulus</td> <td>%</td></tr>
+        </tbody>
+    </table>
+
+    <p>The following sample code shows how to display a filled squared field. We suppose that in the menu there is a referenced field in <em>/Visualization/Field1</em> path.</p>
+
+    <pre class="xml">&lt;struct name="Field1**2" pointdata="data:Field1**2" formula="t**2;t=menu:/Visualization/Field1" plot="filled"&gt;
+&lt;/struct&gt;</pre>
+
+    <div class="back"><a href="#top">Back to top</a></div>
+
+    <h5 id="constants">Constants</h5>
+
+    <p>Constants can be used both to assign a value to the variables from the menu hierarchy and to apply it to an operation. It also exits two reserved keywords, <code>pi</code> and <code>e</code>, that contains the values of the <em>pi</em> and <em>e</em> numbers.</p>
+
+    <p>The following sample code shows how to display a constant field by adding two constants, one of them defined as a variable and the other, the <em>pi</em> number, directly applied in the operation. We suppose that in the menu there is a referenced field in <em>/Visualization/Field1</em> path and a constant in <em>/Real/Constant</em> path.</p>
+
+    <pre class="xml">&lt;struct name="pi*const" pointdata="data:pi*const" formula="pi*const;t=menu:/Visualization/Field1;const=menu:/Real/Constant" plot="filled"&gt;
+&lt;/struct&gt;</pre>
+
+    <div class="back"><a href="#top">Back to top</a></div>
+
+    <h5 id="vectors">Vectors</h5>
+
+    <p>You can refer vector fields by using variables. To access each of its components you can use squarebrackets, <code>[ ]</code>, and the index of each component. You should know that in <strong>OpenNum</strong> the indices of the components of a vector start at 0.</p>
+
+    <p>The following sample code shows how to display the first component of a vector field. We suppose that in the menu there is a referenced to a vector field in <em>/Visualization/VectorField1</em> path.</p>
+
+    <pre class="xml">&lt;struct name="1st component" pointdata="data:VectorField1[0]" formula="t[0];t=menu:/Visualization/VectorField1" plot="filled"&gt;
+&lt;/struct&gt;</pre>
+
+    <div class="back"><a href="#top">Back to top</a></div>
+
+    <h5 id="functions">Functions</h5>
+
+    <p><em>Operations</em> can contain a large set of functions, this set of functions are defined in the <a href="http://docs.python.org/2/library/math.html">Numerical and mathematical modules</a> of the <a href="http://www.python.org">Python programming language</a>.</p>
+
+    <p>Below are listed the allowed functions:</p>
+
+    <ul>
+
+    <li><strong>Number-theoretic and representation functions</strong></li>
+    <table class="table">
+        <thead>
+            <tr> <th>Function</th> <th>Meaning</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>ceil(<em>x</em>)</td> <td>Return the ceiling of <em>x</em> as a float, the smallest integer value less than or equal to <em>x</em>.</td></tr>
+            <tr><td>floor(<em>x</em>)</td> <td>Return the floor of <em>x</em> as a float, the largest integer value less than or equal to <em>x</em>.</td></tr>
+	    <tr><td>abs(<em>x</em>)</td> <td>Return the absolute value of <em>x</em>. If the argument is a complex number, its magnitude is returned.</td></tr>
+	    <tr><td>fabs(<em>x</em>)</td> <td>Return the absolute value of <em>x</em>.</td></tr>
+	    <tr><td>fmod(<em>x</em>, <em>y</em>)</td> <td>Return the remainder of division of <em>x</em> by <em>y</em>.</td></tr>
+	    <tr><td>frexp(<em>x</em>)</td> <td>Return the mantissa and exponent of <em>x</em>.</td></tr>
+	    <tr><td>ldexpt(<em>x</em>, <em>i</em>)</td> <td>Return <em>x * (2**i)</em>. This is essentially the inverse of function <em>frexp()</em>.</td></tr>
+	    <tr><td>modf(<em>x</em>)</td> <td>Return the fractional and integer parts of <em>x</em>.</td></tr>
+        </tbody>
+    </table>
+
+    <p></p>
+    <li><strong>Power and logaritmic</strong></li>
+    <table class="table">
+        <thead>
+            <tr> <th>Function</th> <th>Meaning</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>sqrt(<em>x</em>)</td> <td>Return the square root of <em>x</em>.</td></tr>
+            <tr><td>pow(<em>x</em>, <em>y</em>)</td> <td>Return <em>x</em> raised to the power <em>y</em>. </td></tr>
+	    <tr><td>exp(<em>x</em>)</td> <td>Return <em>e**x</em>.</td></tr>
+	    <tr><td>log(<em>x[, base]</em>)</td> <td>Return the logarithm of <em>x</em> to the given <em>base</em>.</td></tr>
+	    <tr><td>log10(<em>x</em>)</td> <td>Return the base-10 logarithm of <em>x</em>.</td></tr>
+        </tbody>
+    </table>
+
+    <p></p>
+    <li><strong>Trigonometric functions</strong></li>
+    <table class="table">
+        <thead>
+            <tr> <th>Function</th> <th>Meaning</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>sin(<em>x</em>)</td> <td>Return the sine of <em>x</em> radians.</td></tr>
+            <tr><td>cos(<em>x</em>)</td> <td>Return the cosine of <em>x</em> radians.</td></tr>
+	    <tr><td>tan(<em>x</em>)</td> <td>Return the tangent of <em>x</em> radians.</td></tr>
+	    <tr><td>asin(<em>x</em>)</td> <td>Return the arc sine of <em>x</em>, in radians.</td></tr>
+	    <tr><td>acos(<em>x</em>)</td> <td>Return the arc cosine of <em>x</em>, in radians.</td></tr>
+	    <tr><td>atan(<em>x</em>)</td> <td>Return the arc tangent of <em>x</em>, in radians.</td></tr>
+	    <tr><td>atan2(<em>y, x</em>)</td> <td>Return <em>atan(y / x)</em>, in radians. The result is between <em>-pi</em> and <em>pi</em>.</td></tr>
+	    <tr><td>hypot(<em>x, y</em>)</td> <td>Return the Euclidean norm, <em>sqrt(x*x + y*y)</em>.</td></tr>
+        </tbody>
+    </table>
+
+    <p></p>
+    <li><strong>Angular conversion</strong></li>
+    <table class="table">
+        <thead>
+            <tr> <th>Function</th> <th>Meaning</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>degrees(<em>x</em>)</td> <td>Converts angle <em>x</em> from radians to degrees.</td></tr>
+            <tr><td>radians(<em>x</em>)</td> <td>Converts angle <em>x</em> from degrees to radians.</td></tr>
+        </tbody>
+    </table>
+
+    <p></p>
+    <li><strong>Hyperbolic functions</strong></li>
+    <table class="table">
+        <thead>
+            <tr> <th>Function</th> <th>Meaning</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>sinh(<em>x</em>)</td> <td>Return the hyperbolic sine of <em>x</em>.</td></tr>
+            <tr><td>cosh(<em>x</em>)</td> <td>Return the hyperbolic cosine of <em>x</em>.</td></tr>
+            <tr><td>tanh(<em>x</em>)</td> <td>Return the hyperbolic tangent of <em>x</em>.</td></tr>
+        </tbody>
+    </table>
+
+    </ul>
+
+    <p>The following sample code shows how to display the modulus of a 3D vector field. We suppose that in the menu there is a reference to a vector field in <em>/Visualization/VectorField1</em> path.</p>
+
+    <pre class="xml">&lt;struct name="Modulus" pointdata="data:sqrt(t[0]**2+t[1]**2+t[2]**2)" formula="sqrt(t[0]**2+t[1]**2+t[2]**2);t=menu:/Visualization/VectorField1" plot="filled"&gt;
+&lt;/struct&gt;</pre>
+
+    <div class="back"><a href="#top">Back to top</a></div>
     
     <hr />
     <p>&copy; 2012 - <a href="http://www.usc.es/ingmat/?lang=en">Ingeniería Matemática</a></p>

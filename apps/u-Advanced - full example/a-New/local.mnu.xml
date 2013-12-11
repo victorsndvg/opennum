@@ -12,7 +12,7 @@
     <menu name="Properties">
         <submenu name="Materials">
             <struct name="Materials" title="Choose domain references:" mesh="menu:/Mesh/Open/Mesh file" celldata="data:element_ref" showvalues="true" plot="references" tooltip="Select a domain reference for assigning a material to it">
-                <leaf default="true" title="Choose material:" selection="single" source="menu:/Materials database/Open/Materials" type="charlist" tooltip="Choose a material for the selected domain reference">
+                <leaf default="true" title="Choose material:" selection="single" source="menu:/Materials database/Open/List" type="charlist" tooltip="Choose a material for the selected domain reference">
                 </leaf>
             </struct>
         </submenu>
@@ -136,7 +136,7 @@
 
             <leaf name="Vertex numbering" type="float"  plot="numbering" title="Clicked point:" mesh="menu:/Mesh/Open/Mesh file" pointdata="data:vertex_num"></leaf>
 
-            <struct name="Materials" mesh="menu:/Mesh/Open/Mesh file" materials="menu:/Properties/Materials/Materials" plot="materials"></struct>
+            <struct name="Materials" mesh="menu:/Mesh/Open/Mesh file" materials="menu:/Properties/Materials/List" plot="materials"></struct>
 
             <struct name="Slice" mesh="menu:/Mesh/Open/Mesh file" plot="slice"></struct>
             

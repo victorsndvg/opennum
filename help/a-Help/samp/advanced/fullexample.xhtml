@@ -13,19 +13,116 @@
     <h3>Full example</h3>
     <p><strong>On this page:</strong></p>
     <ul>
-       <li><a href="#section1">Section 1</a></li>
-       <li><a href="#section2">Section 2</a></li>
-       <li><a href="#section3">Section 3</a></li>
+       <li><a href="#folders">Folder hierarchy</a></li>
+       <li><a href="#menus">Menu hierarchy</a></li>
+       <ul>
+           <li><a href="#files">Files</a></li>
+           <li><a href="#properties">Properties</a></li>
+           <li><a href="#actions">Actions</a></li>
+           <li><a href="#visualization">Visualization</a></li>
+       </ul>
+       <li><a href="#variables">Variables</a></li>
+       <li><a href="#formulas">Formulas</a></li>
     </ul>
 
     <span class="rev">Revisar</span>
 
-    <p>The application <strong>Advanced - full example</strong> is a full example from MaxFEM software that shows the final appearance of an application with <b>Opennum</b>.</p>
+    <p>The application <strong>Advanced - full example</strong> is a full example from <strong>MaxFEM</strong> software that shows the final appearance of an application with <strong>Opennum</strong>. This example represents a 3D direct current simulation application.</p>
+
+    <p>The creation of a full application includes several phases: the load of the mesh, data entry, solver execution and visualization of results. For creating a full simulation application you need to complete all this steps in a coherent way with <strong>OpenNum</strong> file formats. You can see file formats help in section <a href="../../form/form.xhtml">File formats</a>.</p>
+
     <p> The folders containing XML files of this example can be found at <code>&lt;<em>installdir</em>&gt;/apps/u-Advanced - full example/</code>, where <code>&lt;<em>installdir</em>&gt;</code> is the installation folder.</p>
 
-    <h4 id="section">Section 1</h4>
+    <h4 id="folders">Folder hierarchy</h4>
+
+    <p></p>
+    <p></p>
+    <p>From the point of view of <strong>OpenNum</strong>, an application is one or several sample datasets that must be placed at <code>&lt;<em>installdir</em>&gt;/apps</code> folder. You can remember how to create a folder hierarchy for creating and distributing complete applications with <strong>OpenNum</strong> GUI in section <a href="../../conf/app.xhtml">Configuration: Applications</a>.</p>
+
+    <p>The subfolders hierarchy from this path will be shown in <strong>OpenNum</strong> menu. When the user choose an application in the <code>Application</code> menu, <strong>OpenNum</strong> loads the data contained at the first subfolder in alphabetical order (in this case <code>a-New</code>). It may be usefull to recall some basic concepts collected in section <a href="../../use/elem.xhtml#app">Fundamental elements of OpenNum: applications</a>. </p> 
+
+    <p>Once the user has selected an application, user can access all its sample data subsets. All the subfolders of each application will be shown in <code>Sample data</code> submenu. You can remember some related content in section <a href="../../use/elem.xhtml#sample">Fundamental elements of OpenNum: sample data</a>. </p>
+
+    <p>This example has the following folders hierarchy:</p>
+    <p><strong>Empty dataset:</strong> <code>&lt;<em>installdir</em>&gt;/apps/u-Advanced - full example/a-New</code></p>
+    <p><strong>Sample dataset:</strong> <code>&lt;<em>installdir</em>&gt;/apps/u-Advanced - full example/e1-Example 1 - Cell</code></p>
 
     <div class="back"><a href="#top">Back to top</a></div>
+
+    <h4 id="menus">Menu hierarchy</h4>
+
+    <p>Each subfolder must have a <a href="http://www.w3.org/XML/">XML</a> file called <em>local.mnu.xml</em> . This file defines the appearance of graphical interface and the data hierarchy.</p>
+
+    <p>In order to collect structured datasets, in this example, we disagregate the data in the following groups: <code>Mesh</code>, <code>Properties</code>, <code>Boundary conditions</code>, and <code>Data</code>. The rest of the menus represents the solver execution (<code>Solver</code>) and the results representation (<code>Visualization</code>). This menus are the root for the data hierarchy. </p>
+
+    <p>For the <code>menu</code> and <code>submenu</code> definition of the graphical interface, you can find some information about the syntax and examples in sections <a href="../../xml/menu.xhtml">XML syntax: menu</a> and <a href="../beginner/menu.xhtml">Beginner sample data: menu</a> that may help to understand the <em>local.mnu.xml</em> file. </p>
+
+    <p>The entire data hierarchy is built from the menu structure. Once the menu has been built, it is necessary to organize the data into containers, this containers are called <code>struct</code>. You can find information about the syntax and examples in sections <a href="../../xml/struct.xhtml">XML syntax: struct</a> and <a href="../beginner/structs.xhtml">Beginner sample data: struct</a>.</p>
+
+    <p>The data are contained in the final level of the hierarchy using <code>leaf</code> tags. This level may be shown as different graphical components like textboxes or lists that allow to collect scalar or vector data. In order to recall the syntax you can go to <a href="../../xml/leaf.xhtml">XML syntax: leaf</a> section. You can find some basic examples in <a href="../beginner/leafs1.xhtml">Beginner sample data: leaf</a> and <a href="../beginner/leafs2.xhtml">Beginner sample data: leafs with lists</a>.</p>
+
+    <div class="back"><a href="#top">Back to top</a></div>
+
+    <h5 id="files">Files</h5>
+
+    <p>The <code>Mesh</code> menu lets you select a mesh from the file system, this is done by a <code>leaf</code> tag of type <code>file</code>. Some information about the syntax can be found in <a href="../../xml/leaf.xhtml#file">XML syntax: leaf/file</a>.</p>
+
+    <p>The <em>Choose file</em> dialog allows user to select a specific file type, the file type is determined by its extension. <strong>OpenNum</strong> allows developers manage file extensions using some <code>leaf</code> tag attributes. You can find examples of these feature in <a href="../intermediate/fileextensions.xhtml">Intermediate sample data: file extensions</a>.</p>
+
+    <div class="back"><a href="#top">Back to top</a></div>
+
+    <h5 id="properties">Properties</h5>
+
+    <p><strong>OpenNum</strong> allows interacting with a centralized materials database. From the <code>Properties</code> menu, users must apply different material properties to every mesh subdomain before solver execution.</p>
+
+    <p>Information about creation and configuration of the <code>Material database</code> can be found in <a href="../../conf/mat.xhtml">Configuration: material database</a>.</p>
+
+    <p>The way to apply materials to subdomains using <strong>OpenNum</strong> is explained in <a href="../intermediate/materialsandproperties.xhtml">Intermediate sample data: materials and properties</a>. This example shows how to create the needed XML structure for this purpose.</p>
+
+    <div class="back"><a href="#top">Back to top</a></div>
+
+    <h5 id="actions">Actions</h5>
+
+    <p>From the <code>Solver</code> menu, users can launch an executable file for local or remote execution and kill launched processes. The file <em>local.mnu.xml</em> defines the executable filename and its arguments.</p>
+
+    <p>You can see some information about actions syntax in <a href="../../xml/action.xhtml">XML syntax: action</a> section. To access the corresponding tutorial yo can go to <a href="../beginner/actions.xhtml">Beginner sample data: actions</a> section.</p>
+
+    <p>For understanding how <strong>OpenNum</strong> works and the needs when launching remote executions, you can visit <a href="../../run/run.xhtml">Remote run</a> section.</p>
+
+    <div class="back"><a href="#top">Back to top</a></div>
+
+    <h5 id="visualization">Visualization</h5>
+
+    <p>The visualization in <strong>OpenNum</strong> is one of its major strengths. This sample is a great tutorial of visualization capabilities, it allows mesh, properties and field visualization. It may be usefull to recall some visualization sintax concepts in <a href="../../xml/visual.xhtml">XML syntax: visualization</a> section.</p>
+
+    <p>Mesh visualization allows to display mesh triangulation, references, numbering and some cuts. For referencing selected meshes from file system, is common the use of the <code>menu</code> modificator in <code>mesh</code> attribute, the use of this structure is well explained in <a href="../intermediate/visualizationwithmenu.xhtml">Intermediate sample data: visualization with menu</a> tutorial.</p>
+
+    <p>Field visualization allows to display scalar and vector fields, apply formulas and the use of variables. Fields are tipically an output of the solver with a known filename containing a known field name.</p>
+
+    <p>For field visualization is common the use of <code>file</code> modificator in <code>mesh</code> attribute for referencing the file. You can see a tutorial of this feature in <a href="../intermediate/visualizationwithfile.xhtml">Intermediate sample data: visualization with file</a>.</p>
+
+    <p>Field visualization also needs to specify the field name, you can do that using the <code>data</code> modifier in the <code>pointdata</code> or <code>celldata</code> attributes. An existing tutorial, <a href="../intermediate/visualizationwithdata.xhtml">Intermediate sample data: visualization with data</a>, will help you to understand the use of those marks.</p>
+
+    <p>A complete sample about how to visualize properties of materials applied to existing references in the mesh can be found in <a href="../intermediate/materialsandproperties.xhtml"> Intermediate sample data: materials and properties</a>.</p>
+
+    <div class="back"><a href="#top">Back to top</a></div>
+
+    <h4 id="variables">Variables</h4>
+
+    <p>Variables are used to reference some data contained somewhere in the menu. In order to understand the syntax and meaning of variables in <strong>OpenNum</strong> context, you can visit <a href="../../xml/dep.xhtml#var">XML syntax: dependencies/variables</a> section</p>
+
+    <p>In this example we only use variables to build the name of output files depending on the number of subdomain for displaying. A complete example of use of variables can be found in <a href="../advanced/variables.xhtml">Advanced sample data: variables</a> section.</p>
+
+    <div class="back"><a href="#top">Back to top</a></div>
+
+    <h4 id="formulas">Formulas</h4>
+
+    <p> Formulas in <strong>OpenNum</strong> are an extended feature for field visualization, it allows to operate with fields to get other fields arising from the original data stored in a file. You can found a complete syntax explanation in <a href="../../xml/form.xhtml">XML syntax: formulas</a> section.</p>
+
+    <p>In this examples formulas are used to display every single component or the modulus of vector fields. A wide explanation of all the capabilities of formula features are located in the <a href="../advanced/formulas.xhtml">Advanced sample data: formulas</a> tutorial.</p>
+
+    <div class="back"><a href="#top">Back to top</a></div>
+
     <hr />
     <p>&copy; 2012 - <a href="http://www.usc.es/ingmat/?lang=en">Ingeniería Matemática</a></p>
   </body>
