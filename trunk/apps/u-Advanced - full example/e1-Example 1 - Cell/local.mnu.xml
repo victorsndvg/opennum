@@ -9,21 +9,21 @@
 	<menu name="Properties">
 		<submenu name="Materials">
 			<struct celldata="data:element_ref" mesh="menu:/Mesh/Open/Mesh file" name="Materials" plot="references" plotted="true" showvalues="true" title="Choose domain references:" tooltip="Select a domain reference for assigning a material to it">
-				<leaf default="true" selection="single" source="menu:/Materials database/Open/Materials" title="Choose material:" tooltip="Choose a material for the selected domain reference" type="charlist">
+				<leaf default="true" selection="single" source="menu:/Materials database/Open/List" title="Choose material:" tooltip="Choose a material for the selected domain reference" type="charlist">
 				</leaf>
-				<leaf name="5" selected="true" selection="single" source="menu:/Materials database/Open/Materials" title="Choose material:" tooltip="Choose a material for the selected domain reference" type="charlist">
+				<leaf name="5" selected="true" selection="single" source="menu:/Materials database/Open/List" title="Choose material:" tooltip="Choose a material for the selected domain reference" type="charlist">
 					<element selected="true">Collector bar</element>
 				</leaf>
-				<leaf name="7" selection="single" source="menu:/Materials database/Open/Materials" title="Choose material:" tooltip="Choose a material for the selected domain reference" type="charlist">
+				<leaf name="7" selection="single" source="menu:/Materials database/Open/List" title="Choose material:" tooltip="Choose a material for the selected domain reference" type="charlist">
 					<element selected="true">Cathodic block</element>
 				</leaf>
-				<leaf name="8" selection="single" source="menu:/Materials database/Open/Materials" title="Choose material:" tooltip="Choose a material for the selected domain reference" type="charlist">
+				<leaf name="8" selection="single" source="menu:/Materials database/Open/List" title="Choose material:" tooltip="Choose a material for the selected domain reference" type="charlist">
 					<element selected="true">Rammed paste</element>
 				</leaf>
-				<leaf name="27" selection="single" source="menu:/Materials database/Open/Materials" title="Choose material:" tooltip="Choose a material for the selected domain reference" type="charlist">
+				<leaf name="27" selection="single" source="menu:/Materials database/Open/List" title="Choose material:" tooltip="Choose a material for the selected domain reference" type="charlist">
 					<element selected="true">Cast iron</element>
 				</leaf>
-				<leaf name="28" selection="single" source="menu:/Materials database/Open/Materials" title="Choose material:" tooltip="Choose a material for the selected domain reference" type="charlist">
+				<leaf name="28" selection="single" source="menu:/Materials database/Open/List" title="Choose material:" tooltip="Choose a material for the selected domain reference" type="charlist">
 					<element selected="true">Cast iron</element>
 				</leaf>
 			</struct>
@@ -177,7 +177,7 @@
 
             <leaf name="Vertex numbering" type="float"  plot="numbering" title="Clicked point:" mesh="menu:/Mesh/Open/Mesh file" pointdata="data:vertex_num"></leaf>
 
-            <struct name="Materials" mesh="menu:/Mesh/Open/Mesh file" materials="menu:/Properties/Materials/Materials" plot="materials"></struct>
+            <struct name="Materials" mesh="menu:/Mesh/Open/Mesh file" materials="menu:/Properties/Materials/List" plot="materials"></struct>
 
             <struct name="Slice" mesh="menu:/Mesh/Open/Mesh file" plot="slice"></struct>
             

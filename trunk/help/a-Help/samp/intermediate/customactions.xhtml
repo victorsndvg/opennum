@@ -14,7 +14,7 @@
     <p><strong>On this page:</strong></p>
     <ul>
        <li><a href="#simple">Simple custom run</a></li>
-       <li><a href="#data">Predefined command</a></li>
+       <li><a href="#data">Predefined prefix</a></li>
        <li><a href="#showvalues">Completely editable</a></li>
        <li><a href="#reload">Menu reload after executable ends</a></li>
     </ul>
@@ -26,13 +26,13 @@
     <p> The XML file of this example can be found at <code>&lt;<em>installdir</em>&gt;/apps/l-Intermediate - actions/a-New/local.mnu.xml</code>, where <code>&lt;<em>installdir</em>&gt;</code> in the installation folder.</p>
 
     <p>
-    The attribute <code>data</code>, in this context, can be used for predefine the previous command to apply to the solver, <code>showvalues</code> attribute allows to users the full customization launching executables and <code>reload</code> attribute reloads the menu after solver execution.
+    The attribute <code>data</code>, in this context, can be used for predefine the prefix command to apply to the solver, <code>showvalues</code> attribute allows to users the full customization launching executables and <code>reload</code> attribute reloads the menu after solver execution.
     </p>
 
     <h4 id="simple">Simple custom run</h4>
     <p> The <code>action</code> tag with <code>name="exec_custom"</code> attribute works like <code>name="exec"</code> attribute explained in <a href="../beginner/actions.xhtml">Beginner - actions</a> but with a different and more flexible window.</p>
 
-    <p> With this kind of <code>action</code> users can set a prefix command to apply to the executable file especified in <a href="../../xml/action.xhtml#param"><code>param</code></a> tag. You can see the simplest example in the following code and the displayed window in <a href="#fig1">Figure 1</a>.
+    <p> With this kind of <code>action</code> users can set a prefix command to apply to the executable file especified in <a href="../../xml/action.xhtml#param"><code>param</code></a> tag. You can see the simplest example in the following code and the displayed window in <a href="#fig-1">Figure 1</a>.
     </p>
 
     <pre class="xml">&lt;action name="exec_custom"&gt;
@@ -47,23 +47,64 @@
     </p>
 
 
-    <h4 id="data">Predefined command</h4>
+    <h4 id="data">Predefined prefix</h4>
+
+    <p> The custom executable window allows to the developer to fill the prefix command with a default string. This can be done by using the <code>data="prefix"</code> atribute with the <code>action</code> or <code>param</code> tags, where <code>prefix</code> is a string containing the prefix command.</p>
+
+    <p> If you use the <code>data</code> attribute with the <code>action</code> tag, the prefix command will be applied to all solvers contained in the action and the custom executable window will only shows an editable text box with the prefix command as you can see in <a href="#fig-2">Figure 2</a>.  </p>
+
+    <p> If you use the <code>data</code> attribute with the <code>param</code> tag, the prefix command will be applied individually to each solver and the custom executable window will show an filled and editable prefix command, the executable file and the executable arguments.  </p>
+
+    <p> The following sample code teaches the use of the <code>data</code> attribute with the <code>action</code> tag in order of launch a parallel execution with <em>mpirun</em>.  </p>
+
+    <pre class="xml">&lt;action name="exec_custom" data="mpirun -np 2" title="Data in action tag"&gt;
+    &lt;param args="Solver 1"&gt;echo&lt;/param&gt;
+    &lt;param args="Solver 2"&gt;echo&lt;/param&gt;
+&lt;/action&gt;</pre>
+
+    <p align="center"> 
+        <img width="25%" src="images/exec_custom_data_action.png" />
+        <br clear="all" /> 
+        <span id="fig-2" class="caption"> <strong>Figure 2:</strong> <code>data</code> attribute with <code>action</code> tag.</span>
+    </p>
 
     <div class="back"><a href="#top">Back to top</a></div>
 
 
     <h4 id="showvalues">Completely editable</h4>
 
-    <div class="back"><a href="#top">Back to top</a></div>
+    <p> The GUI developer can allow to users to change or modify the executable file and arguments by using the <code>showvalues="true"</code> attribute with the <code>param</code> tag.</p>
 
+    <p> The <code>showvalues="true"</code> attribute shows editable textboxes in the custom executable window to enable the user to change the run options as you can see in <a href="#fig-3">Figure 3</a>. The following sample code creates a custom executable window that allows user to modify all options of the first executable. </p>
+
+    <pre class="xml">&lt;action name="exec_custom" title="Showvalues attribute"&gt;
+    &lt;param showvalues="true" data="mpirun -np 2" args="Solver 1"&gt;echo&lt;/param&gt;
+    &lt;param data="mpirun -np 3 " args="Solver 2"&gt;echo&lt;/param&gt;
+    &lt;param&gt;echo&lt;/param&gt;
+&lt;/action&gt;</pre>
+
+    <p align="center"> 
+        <img width="45%" src="images/exec_custom_showvalues.png" />
+        <br clear="all" /> 
+        <span id="fig-3" class="caption"> <strong>Figure 3:</strong> <code>showvaleus</code> attribute with <code>param</code> tag.</span>
+    </p>
+
+    <div class="back"><a href="#top">Back to top</a></div>
 
     <h4 id="reload">Menu reload after executable ends</h4>
 
+    <p> Sometimes it may be interesting for the developer to allow solvers to change or modify some data in the GUI. <strong>OpenNum</strong> needs to reload the <em>local.mnu.xml</em> file in order to show external changes in this file. </p>
+
+    <p> The <code>reload="true"</code> attribute along with <code>action</code> tag reloads the menu after the solvers execution. This modifier can be used with both <code>name="exec"</code> and <code>name="exec_custom"</code> attributes of the action tag. </p>
+
+    <p> In the following sample code you can see the use of the <code>reload="true"</code> attribute.</p>
+
+    <pre class="xml">&lt;action name="exec_custom" data="mpirun -np 3" title="Reload menu when solver ends" reload="true"&gt;
+    &lt;param args="Solver 1"&gt;echo&lt;/param&gt;
+&lt;/action&gt;</pre>
+
     <div class="back"><a href="#top">Back to top</a></div>
 
-    <h4 id="tooltip">Tooltip</h4>
-
-    <div class="back"><a href="#top">Back to top</a></div>
     <hr />
     <p>&copy; 2012 - <a href="http://www.usc.es/ingmat/?lang=en">Ingeniería Matemática</a></p>
   </body>
