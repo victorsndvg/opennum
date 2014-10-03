@@ -27,7 +27,7 @@
     <p> The XML file of this example can be found at <code>&lt;<em>installdir</em>&gt;/apps/t-Advanced - formulas/a-New/local.mnu.xml</code>, where <code>&lt;<em>installdir</em>&gt;</code> is the installation folder.</p>
 
     <h4 id="scalar">Scalar fields</h4>
-    <p>The following sample code shows how to calculate and visualize the mean between two fields, we assume the existence of the <em>/Fields/F1</em> and <em>/Fields/F2</em> paths, where <em>F1</em> and <em>F2</em> are <a href="../../xml/struct.xhtml">structs</a> or <a href="../../xml/leaf.xhtml">leafs</a> containing the attribute <a href="../../xml/field.xhtml#mesh">mesh</a> and one of the two attributes <a href="../../xml/field.xhtml#point">pointdata</a> or <a href="../../xml/field.xhtml#cell">celldata</a>.</p>
+    <p>The following sample code shows how to calculate and visualize the mean between two fields, we assume the existence of the <em>/Fields/F1</em> and <em>/Fields/F2</em> paths, where <em>F1</em> and <em>F2</em> are <a href="../../xml/struct.xhtml">structs</a> or <a href="../../xml/leaf.xhtml">leaves</a> containing the attribute <a href="../../xml/field.xhtml#mesh">mesh</a> and one of the two attributes <a href="../../xml/field.xhtml#point">pointdata</a> or <a href="../../xml/field.xhtml#cell">celldata</a>.</p>
 
     <p>The formula attribute must have at least the first argument containing an operation or function and the second argument containing a field. You can add more arguments separated by semicolons referencing other fields that appear on the menu. Summarizing the syntax, the attribute formula looks like this, <em>formula="variable1+variable2 ; variable1=menu:/Fields/F1 ; variable2=menu:/Fields/F2</em>.</p>
 
