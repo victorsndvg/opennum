@@ -6,6 +6,8 @@
 import sys
 import FilePVD
 
+vtkimagefileformats = ('.png','.jpg','.jpeg','.bmp','.tif')
+
     
 def get_clon(o):
 
@@ -76,6 +78,10 @@ def get_source(filename):
             type = 'vtu'
             src = vtk.vtkXMLUnstructuredGridReader()
             src.SetFileName(filenameencoded)
+	elif filename.lower().endswith(vtkimagefileformats):
+	    createReader = vtk.vtkImageReader2Factory()
+	    src = createReader.CreateImageReader2(filename)
+	    src.SetFileName(filename)
 	else:
             return 'sourceVTK2: file extension of \''+filename+'\' not recognized'
 

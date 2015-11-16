@@ -25,7 +25,7 @@ class PanelWidgets(wx.ScrolledWindow): #Panel):
 #        self.SetSizerAndFit(self.box)
         self.SetSizer(self.box)
 
-        self.SetScrollRate(0,1)
+        self.SetScrollRate(1,1)
 	#contador de widgets en panelWidgets
 	self.widgetcounter = 0					#añadido
 

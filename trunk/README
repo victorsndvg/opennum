@@ -3,12 +3,17 @@ OPENNUM
 -------------------------------------------
 OpenNum lets you distribute solvers with a nice graphical interface 
 
-Typically, to program a GUI is time consuming and requires experience with graphic libraries. OpenNum lets you create a graphical interface adapted to your solvers by simply editing an XML configuration file. More specifically, OpenNum lets you
+Typically, to program a GUI is time consuming and requires experience with 
+graphic libraries. OpenNum lets you create a graphical interface adapted to 
+your solvers by simply editing an XML configuration file. More specifically, 
+OpenNum lets you
  · to collect a hierarchical dataset,
  · to call any executable file and
- · to visualize scalar and vector fields, plot graphs or show simple plain text files.
+ · to visualize scalar and vector fields, plot graphs or show simple plain 
+ text files.
 
-It also has other useful utilities specifically designed for numerical simulation packages:
+It also has other useful utilities specifically designed for numerical 
+simulation packages:
  · it permits to manage a centralized materials dataset;
  · it can read several finite element mesh formats and several field formats.
 
@@ -18,11 +23,14 @@ Installation
 
 Decompress opennum_src_<date>.tar.gz
 
-OpenNum is programmed in Python. These are some prerrequisites to properly use the application (v means "version"):
- * Python: Programming language, 2.5 &le; v &lt; 3.0; recommended, v2.7.2.
- * wxPython: WxWidget bindings for Python, v2.8.
- * Python-VTK: VTK bindings for Python, v &ge; 5.4; recommended, v5.8.
- * Paramiko: SSH2 protocol for Python, only necessary for remote connections.
+OpenNum is programmed in Python. These are some prerequisites to properly 
+use the application (v means "version"):
+  - Python: Programming language, 2.5 <= v < 3.0; recommended, v2.7.9.
+  - wxPython: wxWidgets bindings for Python, v2.8.
+  - Python-VTK: VTK bindings for Python, 5.4 <= v < 6.0; recommended, v5.10.
+  - Paramiko: SSH2 protocol for Python.
+Note that Paramiko is only necessary for remote connections. If you don't 
+use it, you don't need it.
 
 Please open help/a-Help/index.xhtml for more information. 
 
@@ -30,7 +38,7 @@ Please open help/a-Help/index.xhtml for more information.
 Usage
 ===========================================
 
-There are some examples in the menu item 'Aplications'.
+There are some examples in the menu item 'Applications'.
 
 Please open help/a-Help/index.xhtml for more information. 
 

@@ -573,9 +573,12 @@ class Node():
                 return u'Error parsing "data" source string'
             if tupm[0] != 1 and tupm[0] != 2:
                 return u'"data" attribute only allows "file:" and "menu:" prefixes'
+	    #Graph2d permite menu:
+	    graph2d_filenames = self.parse_path_varx(tupm[1],False,False,objects)	#añadido
+            result['filesdata'] = graph2d_filenames					#añadido
+	    for f in graph2d_filenames:							#añadido
+		result['filenames'].append(f)						#añadido
 
-            result['filesdata'] = [tupm[1]]
-            result['filenames'].append(tupm[1])
 
 #        print 'DEBUG: get_data5.filenames: ', result['filenames']
 
@@ -639,8 +642,14 @@ class Node():
         if datafilenames is not None:
             if len(datafilenames) == 1:
                 return filemanager.get_tracker_file(datafilenames[0]) # data
-            elif len(datafilenames) > 1:
-                return u'Only one data file allowed'
+            elif len(datafilenames) > 1:							#añadido multiples trackers gr2
+		# Modificado. Se crean TrackerNodeFiles a partir de multiples TrackerFiles. Ej. multiples Plot2DGraph
+		#return u'Only one data file allowed'
+                trackers =  [filemanager.get_tracker_file(dfn) for dfn in datafilenames] 	# data
+		tracker = filemanager.get_tracker_node_files(self, is_nodepvd)			#añadido            
+		tracker.set_trackers(trackers, len(datafilenames)) # lonxitude do grupo 1 / grupo 2
+		return tracker
+
 
 
         fieldfilename = None

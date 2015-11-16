@@ -19,17 +19,19 @@
          <li><a href="#bin-win">Binaries for Windows XP/Vista/7</a></li>
          <li><a href="#bin-mac">Binaries for Mac OS</a></li>
          <li><a href="#source">Installation from source</a></li>
+         <li><a href="#issues">Known issues</a></li>
       </ul></li>
     </ul>  
 
     <h3 id="req">Requirements</h3>
     <p>OpenNum is programmed in Python. These are the prerequisites to properly use the application (<var>v</var> means "version"): </p>
     <ul>
-      <li><strong>Python</strong>: Programming language, 2.5 &le; <var>v</var> &lt; 3.0; recommended, <var>v</var>2.7.2.</li>
-      <li><strong>wxPython</strong>: WxWidget bindings for Python, <var>v</var>2.8.</li>
-      <li><strong>Python-VTK</strong>: VTK bindings for Python, <var>v</var> &ge; 5.4; recommended, <var>v</var>5.8.</li>
-      <li><strong>Paramiko</strong>: SSH2 protocol for Python, only necessary for remote connections.</li>
+      <li><strong>Python</strong>: Programming language, 2.5 &le; <var>v</var> &lt; 3.0; recommended, <var>v</var>2.7.9.</li>
+      <li><strong>wxPython</strong>: wxWidgets bindings for Python, <var>v</var>2.8.</li>
+      <li><strong>Python-VTK</strong>: VTK bindings for Python, 5.4 &le; <var>v</var> &lt; 6.0; recommended, <var>v</var>5.10.</li>
+      <li><strong>Paramiko</strong>: SSH2 protocol for Python.</li>
     </ul>
+    <p>Note that Paramiko is only necessary for remote connections. If you don't use it, you don't need it.</p>
     <p>The installation of these prerequisites can be done using binaries or from source.</p>
 
     <h4 id="bin-lin">Binaries for Debian-based Linux distributions</h4>
@@ -41,14 +43,15 @@
         sudo apt-get install python-paramiko</pre>
 
     <h4 id="bin-win">Binaries for Windows XP/Vista/7</h4>
-    <p>We recommended to install <a href="http://code.google.com/p/pythonxy/">pythonxy</a>, a scientific-oriented Python distribution. 
-    It contains all of the required packages by OpenNum, except Paramiko.</p> 
+    <p>We recommend a full installation of <a href="https://python-xy.github.io/">Python(x,y)</a>, a scientific-oriented Python distribution.</p>
+    <p>Python(x,y) contains all the packages required for the graphical interface. If you install it, you don't need to install Python, wxPython, Python-VTK and Paramiko separately. Be careful choosing a version of Python(x,y) containing valid versions of the packages mentioned above. We recommend Python(x,y)-2.7.9.0.</p>
+    <p>For installation in Windows XP, please read <a href="#issues">Known issues</a> below.</p>
     <p>If you prefer to install them separately, these are the websites to download them:</p>
     <ul>
-	<li><strong>Python</strong>: <a href="http://python.org/download/">http://python.org/download/</a></li>
-        <li><strong>wxPython</strong>: <a href="http://www.wxpython.org/download.php">http://www.wxpython.org/download.php</a></li>
-        <li><strong>Python-VTK</strong>: <a href ="http://www.vtk.org/VTK/resources/software.html">http://www.vtk.org/VTK/resources/software.html</a></li>
-	<li><strong>Paramiko</strong>: <a href="http://bialix.com/python/">http://bialix.com/python/</a></li>
+      <li><strong>Python</strong>: <a href="https://www.python.org/downloads/">https://www.python.org/downloads/</a></li>
+      <li><strong>wxPython</strong>: <a href="http://www.wxpython.org/download.php">http://www.wxpython.org/download.php</a></li>
+      <li><strong>Python-VTK</strong>: <a href ="http://www.vtk.org/download/">http://www.vtk.org/download/</a></li>
+      <li><strong>Paramiko</strong>: <a href="http://www.paramiko.org/installing.html">http://www.paramiko.org/installing.html</a></li>
     </ul>
 
     <h4 id="bin-mac">Binaries for Mac OS</h4>
@@ -57,14 +60,20 @@
     <h4 id="source">Installation from source</h4>
     <p>If you prefer to build the prerequisites from source, these are the websites to download them:</p>
     <ul>
-      <li><strong>Python</strong>: <a href ="http://www.python.org/download/releases/">http://www.python.org/download/releases/</a></li>
-      <li><strong>wxPython</strong>: <a href ="http://wxpython.org/download.php">http://wxpython.org/download.php</a></li>
-      <li><strong>Python-VTK</strong>: <a href ="http://www.vtk.org/VTK/resources/software.html">http://www.vtk.org/VTK/resources/software.html</a></li>
-      <li><strong>Paramiko</strong>: <a href ="http://www.lag.net/paramiko/">http://www.lag.net/paramiko/</a></li>
+      <li><strong>Python</strong>: <a href ="https://www.python.org/downloads/source/">https://www.python.org/downloads/source/</a></li>
+      <li><strong>wxPython</strong>: <a href ="http://wxpython.org/download.php#source">http://wxpython.org/download.php#source</a></li>
+      <li><strong>Python-VTK</strong>: <a href ="https://gitlab.kitware.com/vtk/vtk">https://gitlab.kitware.com/vtk/vtk</a></li>
+      <li><strong>Paramiko</strong>: <a href ="https://github.com/paramiko/paramiko">https://github.com/paramiko/paramiko</a></li>
+    </ul>
+
+    <h4 id="issues">Known issues</h4>
+	<ul>
+      <li><p>Installation of Python(x,y), version 2.7.5.1, appears to fail in Windows XP. For more information see <a href="https://groups.google.com/forum/#!topic/pythonxy/9iyaKStOsqw">here</a>.</p></li>
+      <li><p>If you have problems with graphics, for example, if you can't visualize some graphics or you can't visualize them well, it may be due to the version of Python-VTK. Please, make sure that the version of Python-VTK is greater than or equal to 5.4 and <b>strictly less</b> than 6.0.</p></li>
     </ul>
     <div class="back"><a href="#top">Back to top</a></div>    
 
     <hr />
-    <p>&copy; 2012 - <a href="http://www.usc.es/ingmat/?lang=en">Ingeniería Matemática</a></p>
+    <p>&copy; 2015 <a href="http://www.usc.es/">Universidade de Santiago de Compostela</a></p>
   </body>
 </html>

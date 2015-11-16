@@ -7,6 +7,7 @@ import wx_version
 import wx
 import wx.grid
 import config
+import FileParse
 
 
 
@@ -22,19 +23,23 @@ class WindowTabular(wx.Frame):
         self.onclose = onclose
         
         wx.Frame.__init__(self, parent, wx.ID_ANY, u'Tabular data', style=wx.DEFAULT_FRAME_STYLE|wx.FRAME_FLOAT_ON_PARENT, size=(400,400))
-        
+
+	self.Centre(wx.BOTH)        
         self.struct = None
         
         self.panel = wx.Panel(self)
         
         self.ncols = None
+        self.nrows = None
+        self.colssize = 0
+        self.rowssize = 0
         self.grid = None
         self.box = wx.BoxSizer(wx.HORIZONTAL)
         self.panel.SetSizer(self.box)
         
         self.Bind(wx.EVT_CLOSE, self.close_event)
         # agora faise bind ao grid
-        #self.panel.Bind(wx.EVT_SIZE, self.size_event)
+        self.panel.Bind(wx.EVT_SIZE, self.size_event)
 
         self.SetMinSize((100,100))
         
@@ -44,17 +49,17 @@ class WindowTabular(wx.Frame):
 
 
 
-    def add_grid(self):
+    def add_grid(self,rowlabels = False):
         if self.grid is not None:
             self.grid.Destroy()
         self.grid = wx.grid.Grid( self.panel, wx.ID_ANY )
 	self.grid.EnableEditing(False)
-        self.grid.Bind(wx.EVT_SIZE, self.size_event)
 	#Controla el evento de pulsar enter, crea una nueva fila
 	self.grid.Bind(wx.EVT_KEY_DOWN, self.on_key_down)			#añadido
 	self.grid.Bind(wx.grid.EVT_GRID_CELL_CHANGE, self.on_grid_cell_change)	#añadido
-
-        self.grid.SetRowLabelSize(0) # cambio: que non mostre os numeros de fila
+        if not rowlabels: 
+	    self.grid.Bind(wx.EVT_SIZE, self.size_event)
+	    self.grid.SetRowLabelSize(0) # cambio: que non mostre os numeros de fila
         self.box.Add( self.grid, 1, wx.EXPAND )
         self.box.Layout()
         
@@ -96,18 +101,32 @@ class WindowTabular(wx.Frame):
 
         
     def size_event(self, event):
-        #print 'sze', event.GetSize()
-        if self.grid is not None and self.ncols is not None and self.ncols > 0:
+#	Controla el comportamiento y el tamaño minimo de las celdas
+        if self.grid is not None:
             # clientsize: para obter o tamaño quitadas as scrollbars...
-            size = self.grid.GetClientSize() # non sei se actualizado
-            #print '->', size
-            free = size[0] - self.grid.GetRowLabelSize()
-            free -= 15 # truco para que non apareza a barra de desprazamento
-            if free < 1:
-                free = 1
-            self.grid.SetDefaultColSize( free // self.ncols, True)
-        event.Skip()
+            size = self.GetClientSize() # non sei se actualizado
+            if self.grid.GetRowLabelSize() > 0: 
+                wfree = size[0] - self.colssize - 20
+            else:
+                wfree = size[0] - 20
+            hfree = size[1] - self.rowssize - 20
+            if wfree < 1: wfree = 1
+            if hfree < 1: hfree = 1
 
+	    if  self.ncols is not None and self.ncols > 0 and (wfree / self.ncols) > self.colssize:
+                self.grid.SetDefaultColSize( wfree / self.ncols, True)
+	    else:
+		self.grid.AutoSizeColumns()
+
+	    if  self.nrows is not None and self.nrows > 0 and (hfree / self.nrows) > self.rowssize:
+                self.grid.SetDefaultRowSize( hfree / self.nrows, True)
+	    else:
+		self.grid.AutoSizeRows()
+
+	    self.Update()
+	    self.grid.Update()
+
+        event.Skip()
 
 
     def close_event(self, event):
@@ -143,18 +162,19 @@ class WindowTabular(wx.Frame):
 
 
 
-    def display(self, struct):
+    def display(self, struct, fromfile=False):
         self.struct = struct
         self.set_title()
-        self.build(True)
+        if fromfile: self.build_from_file(True)
+	else:  self.build(True)
 
 
 
-    def update(self, struct):
+    def update(self, struct, fromfile=False):
         if self.struct is not struct:
             return
-        self.set_title()
-        self.build(False)
+        if fromfile: self.build_from_file(True)
+	else:  self.build(True)
         
         
     def build(self, new):
@@ -173,6 +193,7 @@ class WindowTabular(wx.Frame):
         #self.grid.ClearGrid()
 
         self.ncols = ncols = len(cols)
+        self.nrows = max
 
         self.grid.CreateGrid(max, ncols)
 
@@ -206,26 +227,168 @@ class WindowTabular(wx.Frame):
 	if lendata==0:						#añadido
 	    self.grid.InsertRows(0, 1, True)			#añadido
             
-        # establece aliñado
-        col = 0
-        while col < ncols:
-            row = 0
-            while row < max:
-                self.grid.SetCellAlignment(row, col, wx.ALIGN_RIGHT, wx.ALIGN_CENTRE)
-                row += 1
-            col += 1
+	self.grid.SetDefaultCellAlignment(wx.ALIGN_CENTRE, wx.ALIGN_CENTRE)
 
-        print 'maxlen', maxlen,
-        # inclúe no tamaño máximo os títulos das columnas
-        for l in labels:
-            if len(l) > maxlen:
-                maxlen = len(l)
-        print '->', maxlen,
-        if maxlen < 1:
-            maxlen = 1
-        print '->', maxlen
+	if new:
+	    self.grid.AutoSizeRows()
+	    self.grid.AutoSizeColumns()
+	    self.colssize = self.grid.GetColSize(0)
+            self.rowssize = self.grid.GetRowSize(0)
+	    self.SetSize(self.grid.GetBestSize())
+	    self.Centre(wx.BOTH)       
+#	self.grid.SetColMinimalAcceptableWidth(self.grid.GetColSize(0))
+#	self.grid.SetRowMinimalAcceptableHeigth(self.grid.GetRowSize(0))
 
-        if new:
-            sizex = self.grid.GetRowLabelSize() + 8 * maxlen * ncols
-            self.SetSize( (sizex, -1) ) # xa levará este a size_event
+
+    def build_from_file(self,new):
+
+	#Parseo de atributo data. solo admite la propiedad file:
+	parsed = self.struct.parse_source_string_1(self.struct.get_attribs().get(u'data'))
+	#data="file:..."
+	if parsed[0] == 1: 
+	    sourcemenu = self.struct.parse_path_varx(parsed[1],False,False)
+	    if len(sourcemenu) > 0:
+		self.filename = sourcemenu[0]
+	    else:
+                self.parent.errormsg( u'Can not parse "file:" string value or path does not exist')
+	        self.Close()
+	        return False
+	#data="menu:..."
+	elif parsed[0] == 2: 
+	    sourcemenu = self.struct.parse_path_varx(parsed[1],True,True)
+	    if len(sourcemenu) > 0:
+		self.filename = sourcemenu[0]
+	    else:
+                self.parent.errormsg( u'Can not parse "menu:" string value or path does not exist')
+	        self.Close()
+	        return False
+	else: 
+            self.parent.errormsg( u'Can not parse "data" string value: only allows "menu:" and "file:" prefix')
+	    self.Close()
+	    return False
+
+	matrix = self.read_matrix(self.filename)
+	if not matrix: return False
+
+        self.add_grid(rowlabels=True)
+
+        self.ncols = matrix.get(u'col_num')
+        self.nrows = matrix.get(u'row_num')
+
+        self.grid.CreateGrid(self.nrows, self.ncols)
+	self.grid.SetDefaultCellAlignment(wx.ALIGN_CENTRE, wx.ALIGN_CENTRE)
+
+	col_labels = matrix.get(u'col_labels')
+	row_labels = matrix.get(u'row_labels')
+
+        for col_index in range(self.ncols):
+            self.grid.SetColLabelValue(col_index,col_labels[col_index])
+        for row_index in range(self.nrows):
+            self.grid.SetRowLabelValue(row_index,row_labels[row_index])
+
+
+	row_list = matrix.get(u'row_list')
+	for row_index in range(self.nrows):
+	    for col_index in range(self.ncols):
+                self.grid.SetCellValue(row_index,col_index,row_list[row_index][col_index])
+	if new:
+	    self.grid.AutoSizeRows()
+	    self.grid.AutoSizeColumns()
+	    self.colssize = self.grid.GetColSize(0)
+	    self.rowssize = self.grid.GetRowSize(0)
+	    self.SetSize(self.grid.GetBestSize())
+	    self.Centre(wx.BOTH)        
+
+#	self.grid.SetColMinimalAcceptableWidth(self.grid.GetColSize(0))
+#	self.grid.SetRowMinimalAcceptableHeigth(self.grid.GetRowSize(0))
+
+
+    def read_matrix(self,filename):
+	matrix = {}
+
+	#Apertura y comprobacion de existencia del fichero
+        f = FileParse.FileParse()
+        err = f.open(filename)
+        if err is not True:
+            self.parent.errormsg (u'Error opening file: ' + unicode(err))
+	    self.Close()
+            return False
+
+	#Lectura del numero de filas
+        temp = f.getword()
+        if temp is None:
+            self.parent.errormsg (u'Premature EOF')
+            return False
+        if temp is False:
+            self.parent.errormsg (u'I/O Error: ' + f.get_error())
+            return False
+
+        matrix[u'row_num'] = FileParse.FileParse.to_int(temp)
+        if matrix.get(u'row_num') is False:
+            self.parent.errormsg (u'Error converting \'' + unicode(temp) + '\' to integer 1')
+            return False
+
+	#Lectura del numero de columnas
+        temp = f.getword()
+        if temp is None:
+            self.parent.errormsg (u'Premature EOF')
+            return False
+        if temp is False:
+            self.window.errormsg (u'I/O Error: ' + f.get_error())
+            return False
+
+        matrix[u'col_num'] = FileParse.FileParse.to_int(temp)
+        if matrix.get(u'col_num') is False:
+            self.parent.errormsg (u'Error converting \'' + unicode(temp) + '\' to integer')
+            return False
+	matrix['row_list'] = []
+
+	#Lectura de datos por filas
+        for s in range(matrix.get(u'row_num')):
+
+	    row=[]
+            for r in range(matrix.get(u'col_num')):
+                temp = f.getword()
+                if temp is None:
+                    self.parent.errormsg (u'Premature EOF')
+                    return False
+                if temp is False:
+                    self.parent.errormsg (u'I/O Error: ' + f.get_error())
+                    return False
+		row.append(temp)
+	    matrix.get(u'row_list').append(row)
+
+	#Lectura de las etiquetas de las filas
+        matrix[u'row_labels'] = [] # string o None
+        for t in range(matrix.get(u'row_num')):
+            temp = f.getline()
+            if temp is False:
+                self.window.errormsg (u'I/O Error: ' + f.get_error())
+                return False
+            elif temp is None:
+                temp = str(t)
+            else:
+                temp = temp.rstrip() # quita \n e espazos
+            matrix.get(u'row_labels').append(temp)
+
+	#Lectura de las etiquetas de las columnas
+        matrix[u'col_labels'] = [] # string o None
+        for t in range(matrix.get(u'col_num')):
+            temp = f.getline()
+            if temp is False:
+                self.window.errormsg (u'I/O Error: ' + f.get_error())
+                return False
+            elif temp is None:
+                temp = str(t)
+            else:
+                temp = temp.rstrip() # quita \n e espazos
+            matrix.get(u'col_labels').append(temp)
+
+        err = f.close()
+        if err is not True:
+            self.window.errormsg (u'Error closing file: ' + unicode(err))
+            return False
+        f = None
+
+	return matrix
 

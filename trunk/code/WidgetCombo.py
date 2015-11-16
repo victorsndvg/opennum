@@ -41,6 +41,8 @@ class WidgetCombo(Widget.Widget):
 		    self.names += float_range[0].split()			#añadido
 		else:								#añadido
 		    self.names.append(elements[0][0])				#añadido
+		    if elements[0][1]:						#añadido
+			self.selected = 0					#añadido
 	    else:
 		for element in elements:
 		    if element[1]:

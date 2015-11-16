@@ -593,11 +593,11 @@ class UNV(FileMrw.FileMrw):
 	    a2 = self.coord_diff(coord1,coord0)
 	    a3 = self.coord_diff(coord2,coord1)
 	    if (a2[0]*a3[1]-a2[1]*a3[0])<0:
-		aux = nodelist[2]
-		auxnodelist[2] = nodelist[1]
+		aux = auxnodelist[2]
+		auxnodelist[2] = auxnodelist[1]
 		auxnodelist[1] = aux
-		aux = nodelist[3]
-		auxnodelist[3] = nodelist[5]
+		aux = auxnodelist[3]
+		auxnodelist[3] = auxnodelist[5]
 		auxnodelist[5] = aux
 	    for i in range(lennodelist):
 		for j in range(lennodelist):
@@ -611,11 +611,11 @@ class UNV(FileMrw.FileMrw):
 	    a4 = self.coord_diff(coord3,coord0)
 	    if (a2[0]*a3[1]*a4[2]+a2[2]*a3[0]*a4[1]+a2[1]*a3[2]*a4[0]- \
 		a2[2]*a3[1]*a4[0]-a2[1]*a3[0]*a4[2]-a2[0]*a3[2]*a4[1])<0:
-		aux = nodelist[4]
-		auxnodelist[4] = nodelist[6]
+		aux = auxnodelist[4]
+		auxnodelist[4] = auxnodelist[6]
 		auxnodelist[6] = aux
-		aux = nodelist[8]
-		auxnodelist[8] = nodelist[9]
+		aux = auxnodelist[8]
+		auxnodelist[8] = auxnodelist[9]
 		auxnodelist[9] = aux
 	    for i in range(lennodelist):
 		for j in range(lennodelist):

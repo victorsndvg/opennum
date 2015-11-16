@@ -24,7 +24,7 @@ class Tracker:
         self.cb = fm.get_callback()
         self.num = -1
         self.needs_vtkfiles = True
-        self.vtkfile = ''
+        self.vtkfile = None	#Tracker MFM y UNV no recalcula
         self.filetracks = []
         self.dim = None
         self.revision = 0
@@ -102,7 +102,7 @@ class Tracker:
 # Devielve una lista de trackers a partir de una lista de mallas individuales
     def get_additional_trackers(self,filesmesh):				#añadido
 	trackerlist = []							#añadido
-	for fn in filesmesh:							#añadido	
+	for fn in filesmesh:							#añadido
 	    trackerlist.append(self.fm.get_tracker_mesh_file(fn))		#añadido
 	return trackerlist
 
@@ -287,7 +287,7 @@ class TrackerFile(Tracker):
         Tracker.__init__(self, fm)
         self.needs_vtkfiles = False
         self.filetracks.append(FileTrack2.FileTrack2(filename))
-#        self.set_name(os.path.basename(filename))
+        self.set_name(os.path.basename(filename))
 
 
 
@@ -331,68 +331,69 @@ class TrackerMFMFile(Tracker):
 
 # private
     def recalculate(self):
-        the_file = self.filetracks[0].get_name()
-        rr = R.FileMrwReconvxx(self.cb)
-        res = rr.read(the_file, {'dim':self.dim})
+	if self.vtkfile is not None:	#Si no existe VTK no se recalcula
+	    the_file = self.filetracks[0].get_name()
+            rr = R.FileMrwReconvxx(self.cb)
+            res = rr.read(the_file, {'dim':self.dim})
         
-        if res is not True:
-            self.cbc(u'Error loading file \''+the_file+'\': '+ unicode(res) +'\n')
-            return False
-        else:
-            self.dim = rr.get_dim()
-
-            # some file may not have every reference
-                     
-            # nsd nrc nra nrv -> element_ref face_ref edge_ref vertex_ref
-            self.refs = {}
-            for k, v in rr.get_refs().items():
-                if v is not None:
-                    temps = v.copy()
-                    temps.discard(0)
-                    templ = list(temps)
-                    templ.sort()
-                    self.refs[k] = map(str, templ)
-
-            self.cbc(u'Calculating submesh ... ')
-
-            res = rr.calculate_submesh()
-
-            if not res:
-                self.cbc(u'Error calculating submesh: \''+the_file+'\'\n')
-                return False
-
-            self.cbc('\n')
-
-            self.cbc(u'Converting to .vtk ... ')
-    
-            k = rr.to_vtk()
-
-            self.cbc('\n')
-
-            # o: meter dentro de to_vtk, controlado por un bool, o recuperar numero de subceldas
-            
-            # array de puntos .. id [0..n-1] -> [1..n]
-            # para ter os números dispoñibles para as etiquetas
-            k.add_point_data_sequential()
-            array = range(1, rr.nel + 1) # elementos originales numerados
-            array.extend([0] * rr.nsm) # la submalla no se numera
-            k.add_cell_data_sequential(array)
-
-            # optional
-            res = k.check()
             if res is not True:
-                self.cbc(u'Error checking .vtk: k.check(): ' + res + u'\n')
+		self.cbc(u'Error loading file \''+the_file+'\': '+ unicode(res) +'\n')
                 return False
+	    else:
+		self.dim = rr.get_dim()
 
-            self.cbc(u'Saving \'' + self.vtkfile + '\' ... ')
+		# some file may not have every reference
+                     
+		# nsd nrc nra nrv -> element_ref face_ref edge_ref vertex_ref
+		self.refs = {}
+		for k, v in rr.get_refs().items():
+		    if v is not None:
+			temps = v.copy()
+			temps.discard(0)
+			templ = list(temps)
+			templ.sort()
+			self.refs[k] = map(str, templ)
 
-            res = k.save(self.vtkfile)
+			self.cbc(u'Calculating submesh ... ')
 
-            if not res:
-                self.cbc(u'Error saving file: \''+the_file+'\'\n')
-                return False
+			res = rr.calculate_submesh()
+
+		if not res:
+		    self.cbc(u'Error calculating submesh: \''+the_file+'\'\n')
+                    return False
+
+		self.cbc('\n')
+
+		self.cbc(u'Converting to .vtk ... ')
+    
+		k = rr.to_vtk()
+
+		self.cbc('\n')
+
+		# o: meter dentro de to_vtk, controlado por un bool, o recuperar numero de subceldas
+            
+		# array de puntos .. id [0..n-1] -> [1..n]
+		# para ter os números dispoñibles para as etiquetas
+		k.add_point_data_sequential()
+		array = range(1, rr.nel + 1) # elementos originales numerados
+		array.extend([0] * rr.nsm) # la submalla no se numera
+		k.add_cell_data_sequential(array)
+
+		# optional
+		res = k.check()
+		if res is not True:
+		    self.cbc(u'Error checking .vtk: k.check(): ' + res + u'\n')
+                    return False
+
+		self.cbc(u'Saving \'' + self.vtkfile + '\' ... ')
+
+		res = k.save(self.vtkfile)
+
+		if not res:
+		    self.cbc(u'Error saving file: \''+the_file+'\'\n')
+                    return False
                 
-            self.cbc('saved!\n')
+		self.cbc('saved!\n')
                 
             return True
 
@@ -533,40 +534,41 @@ class TrackerUNVFile(Tracker):
 
     # private
     def recalculate(self):
-        the_file = self.filetracks[0].get_name()
-        unv = U.UNV()
-        error = unv.read(the_file)
-        if error is not None:
-            self.cbc(u'Error loading file: \''+the_file+':'+error+u'\n')
-            return False
+	if self.vtkfile is not None and self.is_changed():	# si no existe VTK no se recalcula
+            the_file = self.filetracks[0].get_name()
+            unv = U.UNV()
+            error = unv.read(the_file)
+            if error is not None:
+		self.cbc(u'Error loading file: \''+the_file+':'+error+u'\n')
+		return False
         
-        vtk = unv.to_vtk()
+            vtk = unv.to_vtk()
         
-        if not isinstance(vtk, FileMrwVTK.FileMrwVTK):
-            self.cbc("Error converting to .vtk: " + vtk + u'\n')
-            return False
+            if not isinstance(vtk, FileMrwVTK.FileMrwVTK):
+		self.cbc("Error converting to .vtk: " + vtk + u'\n')
+		return False
         
-        # optional
-        res = vtk.check()
-        if res is not True:
-            self.cbc(u'Error checking .vtk: vtk.check(): ' + res + u'\n')
-            return False
+            # optional
+            res = vtk.check()
+            if res is not True:
+		self.cbc(u'Error checking .vtk: vtk.check(): ' + res + u'\n')
+		return False
 
-        # nsd nrc nra nrv -> element_ref face_ref edge_ref vertex_ref
-        self.refs = {}
-        for k, v in unv.get_refs().items():
-            if v is not None:
-                self.refs[k] = map(str, v)
+            # nsd nrc nra nrv -> element_ref face_ref edge_ref vertex_ref
+            self.refs = {}
+            for k, v in unv.get_refs().items():
+		if v is not None:
+		    self.refs[k] = map(str, v)
     
-        self.cbc(u'Saving \'' + self.vtkfile + '\' ... ')
+	    self.cbc(u'Saving \'' + self.vtkfile + '\' ... ')
 
-        result = vtk.save(self.vtkfile)
+            result = vtk.save(self.vtkfile)
     
-        if result is not True:
-            self.cbc("Error saving .vtk file\n")
-            return False
+            if result is not True:
+		self.cbc("Error saving .vtk file\n")
+		return False
 
-        self.cbc('saved!\n')
+	    self.cbc('saved!\n')
         
         return True
 

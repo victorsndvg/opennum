@@ -31,6 +31,14 @@ class ScaleBar(wx.PyPanel):
         b.Bind(wx.EVT_TOGGLEBUTTON, self.scale_event)
         b.SetToolTip(wx.ToolTip(u'Toogle visibility of scale'))
         self.buttons.append(b)
+
+        self.color_pos = 0
+        self.color_choices = [u'Blue to red', u'Red to Blue',u'Cool',u'Warm']
+        self.color_widget = wx.Choice(self.parent, wx.ID_ANY, choices = self.color_choices)
+        self.color_widget.SetSelection(self.color_pos) # in windows appears without selection
+        self.color_widget.Bind(wx.EVT_CHOICE, self.color_event)
+        self.color_widget.SetToolTip(wx.ToolTip(u'Change scalarbar color range'))
+        self.buttons.append(self.color_widget)
         
         self.abs_rel_pos = 0
         self.abs_rel_choices = [u'Absolute scale', u'Relative scale']
@@ -158,6 +166,19 @@ class ScaleBar(wx.PyPanel):
         self.plot.adjust_abs_rel()
         self.plot.do_render()
         # render must be called here because it is the proper place reached by control flow
+
+    def color_event(self, event):   
+        self.color_pos = self.color_widget.GetCurrentSelection()
+        self.color_widget.SetLabel(self.color_choices[self.color_pos])
+	if self.color_pos == 0: # blue->red
+	    self.plot.scalarbar_change_color((0.66667, 0.0), (1.0, 1.0), (1.0, 1.0), u'Curve')
+	elif self.color_pos == 1: # red->blue
+	    self.plot.scalarbar_change_color((0.0, 0.66667), (1.0, 1.0), (1.0, 1.0), u'Curve')
+	elif self.color_pos == 2: # cool
+	    self.plot.scalarbar_change_color((0.66667, 0.5), (1.0, 0.0), (0.7, 1.0), u'Sqrt')
+	elif self.color_pos == 3: # warm
+	    self.plot.scalarbar_change_color((0.16667, 0.0), (0.0, 1.0), (1.0, 0.7), u'Sqrt')
+#        self.plot.do_render()
 
 
 

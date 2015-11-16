@@ -41,7 +41,8 @@ plotfile = {
     u'2d_graph': True,
     u'vector_components': True,
     u'pathline': True,
-    u'streamline': True
+    u'streamline': True,
+    u'image': False
     }
 
 

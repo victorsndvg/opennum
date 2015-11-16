@@ -1,25 +1,33 @@
-2012-05-21
+===========================================
+CHANGELOG / RELEASE NOTES
+===========================================
 
-SourceForge: Initial commit
+2015-11-16
+-------------------------------------------
+Actions: New exec_custom action added (only available on Linux systems).
+Plots: Some changes made and new features added.
+Help: Some information updated.
+Bugs: Some bugs fixed.
+Other changes: Some changes, requested by users, made.
 
-2012-05-23
+2013-12-03
+-------------------------------------------
+PlotMaterials: Hue range bug. Fixed.
 
-Apps: Begginer examples added.
-Sourceforge: File opennum_src_20120523 added.
+2013-10-16
+-------------------------------------------
+Help: updated!
 
-2012-07-31
-
-Apps: Begginer and Intermediate examples added.
-Help: Some corrections.
-PlotMaterials.py: bug found with the new version of vtk. Fixed!
-GUI: autoload applications with only one example. New mode 'frontcode' in WindowHelp. Plot source allows 'menu' prefix.
+2013-02-28
+-------------------------------------------
+Run remote: Error launching remote executions. Fixed.
 
 2012-12-14
-
+-------------------------------------------
 Additional meshes: allows additional meshes with animation and field visualization.
 Complex: complex datatype added.
 Formulas: int(), float(), complex(), imag() and real() functions added.
-File subtype: new beahaviour for the xml file subtype tag and subtype=data added.
+File subtype: new behavior for the xml file subtype tag and subtype=data added.
 Widget header: multiline widget header added.
 Scalar deformed plot: modification of the best scale algorithm.
 Streamline plot: modification of the default number of streamlines.
@@ -27,14 +35,18 @@ Help: Automatic menu building added and new dirs distribution.
 Separator: menu separators from xml and dirs added.
 Apps: a full set of examples to learn how to use Opennum.
 
-2013-02-28
+2012-07-31
+-------------------------------------------
+Apps: Beginner and Intermediate examples added.
+Help: Some corrections.
+PlotMaterials.py: bug found with the new version of vtk. Fixed!
+GUI: autoload applications with only one example. New mode 'frontcode' in WindowHelp. Plot source allows 'menu' prefix.
 
-Run remote: Error launching remote executions. Fixed.
+2012-05-23
+-------------------------------------------
+Apps: Beginner examples added.
+SourceForge: File opennum_src_20120523 added.
 
-2013-10-16
-
-Help: updated!
-
-2013-12-103
-
-PlotMaterials: Hue range bug. Fixed.
+2012-05-21
+-------------------------------------------
+SourceForge: Initial commit

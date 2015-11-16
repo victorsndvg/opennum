@@ -328,7 +328,7 @@ class PanelVisual(wx.Panel):
                 self.window.errormsg(u'Error creating plot: Undefined plot files')
 	    # si añadimos un nuevo tracker vacio
             elif tracker.is_void:								#añadido
-                self.window.errormsg(u'Error creating plot: No mesh has been selected')		#añadido
+                self.window.errormsg(u'Error creating plot: No mesh or chart has been selected')		#añadido
             else:
                 if tracker.is_changed() is not None:
                     if tracker.update() is not None:
