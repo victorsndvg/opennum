@@ -11,12 +11,38 @@ import vtk
 #import FileMrw
 import FileParse
 
+palette = [ \
+                    (1.0,0.0,0.0), \
+                    (0.0,1.0,0.0), \
+                    (0.0,0.0,1.0), \
+
+                    (1.0,1.0,0.0), \
+                    (1.0,0.0,1.0), \
+                    (0.0,1.0,1.0), \
+
+                    (0.5,0.0,0.0), \
+                    (0.0,0.5,0.0), \
+                    (0.0,0.0,0.5), \
+
+                    (0.5,0.5,0.0), \
+                    (0.5,0.0,0.5), \
+                    (0.0,0.5,0.5), \
+
+                    (0.5,1.0,0.0), \
+                    (0.5,0.0,1.0), \
+                    (0.0,0.5,1.0), \
+                    
+                    (1.0,0.5,0.0), \
+                    (1.0,0.0,0.5), \
+                    (0.0,1.0,0.5), \
+                    ]
 
 
 class Plot2DGraph(Plot.Plot):
 
     def __init__(self, parent):
         Plot.Plot.__init__(self, parent)
+	self.parent = parent
 
         self.label_tbutton = wx.ToggleButton(self.plotbar, wx.ID_ANY, 'Labels', style=wx.BU_EXACTFIT)
         self.label_tbutton.SetValue(False)
@@ -72,27 +98,13 @@ class Plot2DGraph(Plot.Plot):
 
     # responde a la pregunta: se puede actualizar a partir del tracker o de uno nuevo ?
     # si retorna False, no se actualiza el grafico, se crea nuevo ante cualquier cambio
-    def updatable_tracker(self):
-        return False
+#    def updatable_tracker(self):
+#        return False
 
-
-
-    def plot(self, struct):
-
-        # creates self. data1, legend, filename, fieldname, dim, has_field, tracker, revision
-        if not self.call_config(struct):
-            return
-        
-        # creates self.src
-        #if not self.call_src():
-        #    return
-
-        self.rens[0].SetBackground((1.0,1.0,1.0))
-        
-        self.dataname = self.tracker.get_vtkfile()
+    def Gr2_File_to_Polydata(self,dataname):
 
         f = FileParse.FileParse()
-        err = f.open(self.dataname)
+        err = f.open(dataname)
         if err is not True:
             self.window.errormsg (u'Error opening file: ' + unicode(err))
             return False
@@ -108,8 +120,8 @@ class Plot2DGraph(Plot.Plot):
         if series_num is False:
             self.window.errormsg (u'Error converting \'' + unicode(temp) + '\' to integer')
             return False
-            
-        self.xyplot = vtk.vtkXYPlotActor()
+
+	polydata = []
 
         for s in range(series_num):
             temp = f.getword()
@@ -160,8 +172,7 @@ class Plot2DGraph(Plot.Plot):
                 sca.InsertNextValue( y )
                 
             pd.SetScalars(sca)
-            self.xyplot.AddInput(ds)
-
+	    polydata.append(ds)
 
         labels = [] # string o None
         for t in range(3+series_num):
@@ -181,33 +192,54 @@ class Plot2DGraph(Plot.Plot):
             self.window.errormsg (u'Error closing file: ' + unicode(err))
             return False
         f = None
-######
 
-        palette = [ \
-                    (1.0,0.0,0.0), \
-                    (0.0,1.0,0.0), \
-                    (0.0,0.0,1.0), \
+	return {'labels':labels, 'polydata':polydata, 'series_num':series_num}
 
-                    (1.0,1.0,0.0), \
-                    (1.0,0.0,1.0), \
-                    (0.0,1.0,1.0), \
 
-                    (0.5,0.0,0.0), \
-                    (0.0,0.5,0.0), \
-                    (0.0,0.0,0.5), \
+    def plot(self, struct):
 
-                    (0.5,0.5,0.0), \
-                    (0.5,0.0,0.5), \
-                    (0.0,0.5,0.5), \
+        # creates self. data1, legend, filename, fieldname, dim, has_field, tracker, revision
+        if not self.call_config(struct):
+            return
+        
+        # creates self.src
+        #if not self.call_src():
+        #    return
 
-                    (0.5,1.0,0.0), \
-                    (0.5,0.0,1.0), \
-                    (0.0,0.5,1.0), \
-                    
-                    (1.0,0.5,0.0), \
-                    (1.0,0.0,0.5), \
-                    (0.0,1.0,0.5), \
-                    ]
+        self.rens[0].SetBackground((1.0,1.0,1.0))
+        self.xyplot = vtk.vtkXYPlotActor()
+
+	if self.tracker.is_void:
+	    return False
+	elif self.tracker.type == "node_files":
+            series_num = 0
+	    labels = []
+
+	    trackers = self.tracker.trackers
+	    self.dataname = []
+	    for tracker in trackers:
+		self.dataname.append(tracker.get_vtkfile())
+
+	    for name in self.dataname:
+	        res = self.Gr2_File_to_Polydata(name)
+		polydata = res.get('polydata')
+		labels.extend(res.get('labels')[min(len(labels),3):])
+		series_num = series_num + res.get('series_num')
+		
+		for pd in polydata:
+        	    self.xyplot.AddInput(pd)
+#	    return False
+	else:
+            self.dataname = self.tracker.get_vtkfile()
+	    #returns 'labels', 'series_num' and 'polydata' keys
+	    res = self.Gr2_File_to_Polydata(self.dataname)
+
+	    polydata = res.get('polydata')
+	    labels = res.get('labels')
+	    series_num = res.get('series_num')
+
+	    for pd in polydata:
+        	self.xyplot.AddInput(pd)
 
 
         self.xyplot.GetPositionCoordinate().SetValue(self.pospi0)
@@ -215,7 +247,6 @@ class Plot2DGraph(Plot.Plot):
         # relative to the ones avobe
         self.xyplot.SetLegendPosition(self.posli0)
         self.xyplot.SetLegendPosition2(self.poslt0) # rel
-
 
 #        self.xyplot.SetXValuesToArcLength()
         self.xyplot.SetXValuesToValue()
@@ -272,11 +303,127 @@ class Plot2DGraph(Plot.Plot):
         self.done = True
 
 
+    def old_update(self, struct):
+
+        self.copy_params(struct)
+        self.widget.Render()
 
     def update(self, struct):
         self.copy_params(struct)
         self.widget.Render()
+	self.update_from_dependency(struct)
 
+
+
+    def update_from_dependency(self, struct):
+
+        self.rens[0].RemoveActor(self.xyplot)
+        self.xyplot.RemoveAllInputs()
+        # creates self. data1, legend, filename, fieldname, dim, has_field, tracker, revision
+        if not self.call_config(struct):
+            return
+        
+        # creates self.src
+        #if not self.call_src():
+        #    return
+
+        self.rens[0].SetBackground((1.0,1.0,1.0))
+
+	if self.tracker.is_void:
+	    return False
+	elif self.tracker.type == "node_files":
+            series_num = 0
+	    labels = []
+
+	    trackers = self.tracker.trackers
+	    self.dataname = []
+	    for tracker in trackers:
+		self.dataname.append(tracker.get_vtkfile())
+
+	    for name in self.dataname:
+	        res = self.Gr2_File_to_Polydata(name)
+		polydata = res.get('polydata')
+		labels.extend(res.get('labels')[min(len(labels),3):])
+		series_num = series_num + res.get('series_num')
+
+		for pd in polydata:
+        	    self.xyplot.AddInput(pd)
+
+#	    return False
+	else:
+            self.dataname = self.tracker.get_vtkfile()
+	    #returns 'labels', 'series_num' and 'polydata' keys
+	    res = self.Gr2_File_to_Polydata(self.dataname)
+
+	    polydata = res.get('polydata')
+	    labels = res.get('labels')
+	    series_num = res.get('series_num')
+
+	    for pd in polydata:
+        	self.xyplot.AddInput(pd)
+
+
+        temp = labels[0]
+        if temp is None:
+            temp = '2D graph'
+        self.xyplot.SetTitle(temp)
+        temp = labels[1]
+        if temp is None:
+            temp = 'X axis'
+        self.xyplot.SetXTitle(temp)
+        temp = labels[2]
+        if temp is None:
+            temp = 'Y axis'
+        self.xyplot.SetYTitle(temp)
+        
+        for t in range(series_num):
+            temp = labels[3+t]
+            if temp is None:
+                temp = 'Series ' + unicode(t)
+            self.xyplot.SetPlotLabel(t,temp)
+            self.xyplot.SetPlotColor(t,palette[t%len(palette)])
+
+
+######
+
+        self.xyplot.GetPositionCoordinate().SetValue(self.pospi0)
+        self.xyplot.GetPosition2Coordinate().SetValue(self.pospt0) # rel
+        # relative to the ones avobe
+        self.xyplot.SetLegendPosition(self.posli0)
+        self.xyplot.SetLegendPosition2(self.poslt0) # rel
+
+
+#        self.xyplot.SetXValuesToArcLength()
+        self.xyplot.SetXValuesToValue()
+
+
+        self.xyplot.LegendOn()
+        
+        self.xyplot.PlotPointsOn()
+
+        self.xyplot.GetProperty().SetColor(0.0, 0.0, 0.0)
+        self.xyplot.GetProperty().SetPointSize(3)
+        # Set text prop color (same color for backward compat with test)
+        # Assign same object to all text props
+        tprop = self.xyplot.GetTitleTextProperty()
+        tprop.SetColor(self.xyplot.GetProperty().GetColor())
+        self.xyplot.SetAxisTitleTextProperty(tprop)
+        self.xyplot.SetAxisLabelTextProperty(tprop)
+        
+
+
+        self.rens[0].AddActor(self.xyplot)
+
+        self.last = None
+        self.inter.AddObserver("SelectionChangedEvent", self.selection)
+        # meanwhile not enough with the above:
+        self.inter.AddObserver("StartInteractionEvent", self.selectioni)
+        self.inter.AddObserver("EndInteractionEvent", self.selectionf)
+
+        self.done = True
+
+        if self.label_tbutton.GetValue():
+	    self.label_event(None)
 
 
     def copy_params(self, struct):

@@ -8,11 +8,13 @@ import wx
 
 
 
-class MainBar(wx.Panel):
+class MainBar(wx.ScrolledWindow):
 
     def __init__(self, parent, plot):
     
-        wx.Panel.__init__(self, parent)
+        #wx.Panel.__init__(self, parent, style=wx.HSCROLL)
+	wx.ScrolledWindow.__init__(self, parent)
+        self.SetScrollRate(1,0)
 
         self.myparent = parent
         self.plot = plot
@@ -34,6 +36,7 @@ class MainBar(wx.Panel):
         """ add current queue and erase queue to allow multiple invocations """
         for w in self.widgets:
             self.sizer.Add(w, 0, wx.ALIGN_CENTER_VERTICAL)
+	self.SetSize(self.GetBestSize())
         del self.widgets[:]
 
 

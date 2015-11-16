@@ -60,9 +60,6 @@ points_color = (1, 0, 0) # points for labels
 #background_color = (0.8, 0.8, 0.8) # background
 #legend_color = (0, 0, 0) # legend
 
-# for scale bar
-hue_1 = 0.66667 # blue
-hue_2 = 0.0 # red
 
 # para marxe de legend e appname (0..1)
 legendmargin = 0.01
@@ -81,6 +78,10 @@ class Plot(wx.Panel):
         #print 'plotc', self.GetBackgroundColour()
         # se non poño esto, pinta o fondo dela e dos subpaneles gris, non do color por defecto.
         self.SetBackgroundColour(self.GetBackgroundColour())
+	# for scale bar
+        self.sb_hue = (0.66667,0.0) # blue->red
+	self.sv_saturation = (1.0,1.0)
+	self.sv_values = (1.0,1.0)
         #print 'plotc', self.GetBackgroundColour()
         
 
@@ -97,6 +98,7 @@ class Plot(wx.Panel):
 	self.additionalAlist = []	#lista de mallas adicionales
         # datos para comprobar se unha fonte ten un campo
         self.fielddata = None
+	self.sbA = None
 
         self.window = parents[1] # to call some methods on it
         self.struct = parents[2] # to use it in constructor. FIX
@@ -924,11 +926,14 @@ class Plot(wx.Panel):
     # corrects scale [blue->red]
     def add_scalarbar_2(self, look):
         # reverse rainbow [red->blue] -> [blue->red]
-        look.SetHueRange(hue_1, hue_2)
+        look.SetHueRange(self.sb_hue)
+	look.SetSaturationRange(self.sv_saturation)
+	look.SetValueRange(self.sv_values)
         
         self.sbA = vtk.vtkScalarBarActor()
         self.sbA.SetLookupTable(look)
         self.sbA.SetNumberOfLabels(7)
+        self.sbA.SetTitle('')
         #print 'sbA.Pos1', self.sbA.GetPositionCoordinate()
         #print 'sbA.Pos2', self.sbA.GetPosition2Coordinate()
         #print 'sbA.GetWidth', self.sbA.GetWidth()
@@ -945,6 +950,29 @@ class Plot(wx.Panel):
         self.sbA.SetVisibility(value)
         self.do_render()
 # </scalarbar>
+
+    def scalarbar_change_color(self, hue=None, sat=None, val=None, style=None):
+        if not self.done:
+            return
+	look = self.sbA.GetLookupTable()
+	if style is not None:
+	    if style == u'Linear':
+		look.SetRampToLinear()
+	    elif style == u'Curve':
+		look.SetRampToSCurve()
+	    elif style == u'Sqrt':
+		look.SetRampToSQRT()
+	if hue is not None:
+	    self.sb_hue = hue
+	    look.SetHueRange(self.sb_hue)
+	if sat is not None:
+	    self.sb_saturation = sat
+	    look.SetSaturationRange(self.sb_saturation)
+	if val is not None:
+	    self.sb_values = val
+	    look.SetValueRange(self.sb_values)
+	look.Build()
+	self.do_render()
 
 
 
@@ -1015,6 +1043,7 @@ class Plot(wx.Panel):
         
         
     def add_outline_2(self, src):
+
         self.outF = vtk.vtkOutlineFilter()
         self.outF.SetInputConnection(src.GetOutputPort())
         
@@ -1032,6 +1061,7 @@ class Plot(wx.Panel):
         self.cubeA.SetCamera(self.rens[0].GetActiveCamera())
         self.cubeA.SetFlyModeToOuterEdges()
         self.cubeA.GetProperty().SetColor(axes_color)
+
 #void     SetFlyModeToOuterEdges ()
 #void     SetFlyModeToClosestTriad ()
 #void     SetFlyModeToFurthestTriad ()
@@ -1041,7 +1071,9 @@ class Plot(wx.Panel):
         for ren in self.rens: # WORKAROUND (aparecia non centrada)
             ren.ResetCamera()
 #        print 'resetearia'
+
         self.rens[0].AddActor(self.cubeA)
+
 
 	#Añadido: por defecto outline oculto
         state = self.button_outline.GetValue()		#añadido
@@ -1559,6 +1591,8 @@ u'Opacity: 60%', u'Opacity: 50%', u'Opacity: 40%', u'Opacity: 30%', u'Opacity: 2
 
 
     def adjust_opacity(self):										#añadido
+	#Se añade el actor de la barra de escala
+	self.opacity_data.append(self.sbA)								#añadido
 	for actor in self.opacity_data:									#añadido
             if self.opacity_pos == 0:									#añadido
 		actor.GetProperty().SetOpacity(1.)							#añadido
@@ -2124,6 +2158,8 @@ u'Opacity: 60%', u'Opacity: 50%', u'Opacity: 40%', u'Opacity: 30%', u'Opacity: 2
             return PlotVectorComponents.PlotVectorComponents
         elif typename == u'streamline':
         	return PlotStreamline.PlotStreamline 
+        elif typename == u'image':
+        	return PlotPicture.PlotPicture
         else:
             return None
 
@@ -2146,3 +2182,4 @@ import PlotVectorField
 import Plot2DGraph
 import PlotVectorComponents
 import PlotStreamline
+import PlotPicture

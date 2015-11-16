@@ -22,6 +22,7 @@ import Parametrize
 import WindowTabular
 import ThreadRemote
 import WindowRemote
+import WindowCustom
 import WindowHtml
 
 import os
@@ -83,6 +84,8 @@ class Window(wx.Frame):
 	self.ConfigFile_exists = False					#añadido
 	# flag para la aplicacion de cambios de configuracion. Solo dentro del menu de configuracion.
 	self.apply_config_flag = True					#añadido
+	# flag para recargar el menu al acabar la ejecucion de un solver
+	self.reload_menu = False						#añadido
 
         if self.configdir is None:
             self.errormsg(u'Error: Could not create config dir. Some funcionality may be affected')
@@ -341,7 +344,7 @@ class Window(wx.Frame):
 	    self.menusampledata = self.build_menu(self.sample_data)
 
 	    if apps.has_app(self.menus.get_name()):
-	    	self.menu_folder.AppendSubMenu(self.menusampledata, self.sample_data_name + u'('+self.menus.get_name()+')')
+	    	self.menu_folder.AppendSubMenu(self.menusampledata, self.sample_data_name + u' ('+self.menus.get_name()+')')
 	    else:
 	    	self.menu_folder.AppendSubMenu(self.menusampledata, self.sample_data_name)
 	self.menu_folder.AppendSeparator()
@@ -963,13 +966,14 @@ class Window(wx.Frame):
             #self.errormsg(u'Error loading menu file')
             ok = False
         else:
-            self.logger.end()
             if changed is True:
+		self.logger.end()
                 self.logger.change()
                 name = newmenu.get_name()
+		self.logger.start(name)
             else:
+                self.logger.add_text(u'Menu updated!' + u'\n')
                 name = None
-            self.logger.start(name)
             self.menus = newmenu
             self.menu_postload()
         return ok
@@ -1139,7 +1143,8 @@ class Window(wx.Frame):
                 subdir_to = os.path.join(dir_to, dir)
 		if os.path.isdir(subdir_to):
 		    shutil.rmtree(subdir_to)
-                elif not self.remove_file_folder(subdir_to):
+                affected = os.path.join(dir_to, file)
+                if not self.remove_file_folder(affected):
                     ok = False
                     return ok
                 shutil.copytree( subdir_from , subdir_to )
@@ -1373,11 +1378,14 @@ class Window(wx.Frame):
                 actions = submenu.get_actions()
                 for action in actions:
                     name = action.get(u'name')
+                    self.reload_menu = action.get(u'reload') == config.VALUE_TRUE
                     #params = action.get('params')
 #                    if action[0] == u'copymnu' and len(action)>=2:
 #                        result = self.copy_mnu(action[1])
                     if name == u'exec':
                         self.menu_exec2(action)
+                    elif name == u'exec_custom':
+                        self.menu_exec_custom(action)
                     elif name == u'exec_ssh':
                         self.menu_exec_ssh(action)
                     elif name == u'kill_exec':
@@ -1454,11 +1462,11 @@ class Window(wx.Frame):
 
 
     # shows a window with tabular data of the children of struct
-    def tabular_show(self, struct):
+    def tabular_show(self, struct, fromfile=False):
         print 'tabular_show', struct
         if self.tabular is None:
             self.tabular = WindowTabular.WindowTabular(self, self.tabular_onclose)
-        self.tabular.display(struct)
+        self.tabular.display(struct, fromfile)
 	#self.write_gr2_from_struct(struct)
 
 
@@ -1689,11 +1697,11 @@ class Window(wx.Frame):
 
 
     def event_end_process(self, event):
-        self.end_process(event.m_exitcode)
+        self.end_process(event.m_exitcode,custom_command=True)
 
 
 
-    def end_process(self, exitcode, stopped=False):
+    def end_process(self, exitcode, stopped=False, custom_command=False):
         print u'end', exitcode, stopped
         if not stopped:
             self.timer.Stop()
@@ -1722,7 +1730,7 @@ class Window(wx.Frame):
                 if name is None:
                     name = self.taskssave[self.taskscurrent].get('text')
         else:
-            res = self.next_task2()
+            res = self.next_task2(custom_command)
 
         # True -> started another one
         if res is None: # finished series
@@ -1732,6 +1740,8 @@ class Window(wx.Frame):
                 elapsed = ' elapsed: ' + elapsed
             self.logger.add_text(u'SOLVERS STOP: ' + txt + elapsed + u'\n')
             self.taskscurrent = -2
+	    if self.reload_menu:				#reload menu at solvers stop
+		self.menu_load(False)				#reload menu at solvers stop
         if res is False: # error in last command
             txt = self.panelC.time()
             elapsed = self.panelC.endall()
@@ -1762,9 +1772,33 @@ class Window(wx.Frame):
     def event_timer2(self):
         self.logger.add_text(self.process.read())
 
+    def menu_exec_custom(self, action):
+
+        params = action.get('params')
+
+        if params is None or len(params)<1:
+            self.errormsg(u'Error in menu: missing executable name')
+            return        
+
+        # <dialog>
+        dialog = WindowCustom.WindowCustom(self,action)
+        r = dialog.ShowModal()
+        if r == wx.ID_OK:
+	    salida = dialog.get_custom_command()
+	    if salida is not None and isinstance(salida,basestring):
+		action['data'] = salida
+	    elif salida is not None:
+		action[u'params'] = salida
+	    #Recoger los datos
+        dialog.Destroy()
+        dialog = None
+        if r != wx.ID_OK:
+            return
+        # </dialog>
+	self.menu_exec2(action, True)
 
 
-    def menu_exec2(self, action):
+    def menu_exec2(self, action, custom_command=False):
         if self.process.is_running():
             self.errormsg('There is a process running. Will not start another one')
             return
@@ -1805,7 +1839,11 @@ class Window(wx.Frame):
                     #return False
                     pass
                 else:
-                    param['path'] = executable # anhade elementos en estructura usada fuera ?
+		    param['path'] = executable # anhade elementos en estructura usada fuera ?
+
+		if custom_command and action.get('data') is not None:
+		    param.get('attrib')['data'] = action.get('data')
+	#Permite el comando del sistema [+ ejecutable (opcional)]
 
         self.taskssave = params
         self.taskscurrent = -1
@@ -1813,28 +1851,28 @@ class Window(wx.Frame):
         txt = self.panelC.start()
         self.logger.add_text(u'SOLVERS START: ' + txt + u'\n')
         
-        self.next_task2()
+        self.next_task2(custom_command)
 
 
 
-    def next_task2(self):
+    def next_task2(self,custom_command=False):
         if self.taskscurrent < -1:
             return None
 
         self.taskscurrent += 1
 
-        ret = self.exec2()
+        ret = self.exec2(custom_command)
         
         # novo codigo: irregular ? non respeta fluxo ?
         if ret is False: # error iniciando ejecucion
-            self.end_process(None, True) # continua con otros. Ya finalizado
+            self.end_process(None, True, custom_command) # continua con otros. Ya finalizado
 
         # distinto caso: non executado por erro de non executado por fin
         return ret
 
 
 
-    def exec2(self):
+    def exec2(self,custom_command=False):
         if self.taskscurrent < 0 or self.taskscurrent >= len(self.taskssave):
             return None
 
@@ -1848,6 +1886,9 @@ class Window(wx.Frame):
         args = param.get('attrib').get('args')
         if args is not None and args != u'':
             command += u' ' + args
+
+	if custom_command and param.get('attrib').get('data') is not None:
+	    command = param.get('attrib').get('data') + u' ' + command
 
 #        if param.get('attrib').get('type') == 'solver':
 #            result = self.process.start(command, self.menus.get_datafile()+u'\n')

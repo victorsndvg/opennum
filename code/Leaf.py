@@ -179,23 +179,30 @@ class Leaf(Element.Element):
 #si numerodeelementos == -1 no es un rango al estilo matlab
     def float_range(self,string):						#añadido
 	string2=u' '								#añadido
-	num = 0
+	num = 0									#añadido
         try:									#añadido
 	    array_range = [float(s) for s in string.split(u':')] 		#añadido
             if len(array_range)==3:          					#añadido
-                low = array_range[0]						#añadido
+		if (array_range[0]>array_range[2] and array_range[1]>0) or\
+                   (array_range[2]>array_range[0] and array_range[1]<0):	#añadido
+                    print u'ERROR: wrong step in Range('+string+u')'            #añadido		    
+		    return[string2, num]					#añadido
+		low = array_range[0]						#añadido
                 step = array_range[1]						#añadido
                 high = array_range[2]						#añadido
-                while low<=high:						#añadido
+                while abs(high)-abs(low)>=0:					#añadido
                 	string2 += str(low)+ u'  '				#añadido
                 	low+=step						#añadido
 			num = num + 1						#añadido
                 print u'Range('+string+u')'					#añadido
             elif len(array_range)==2:						#añadido
+		if (array_range[0]>array_range[1]):			 	#añadido
+                    print u'ERROR: wrong step in Range('+string+u')'            #añadido		    
+		    return[string2, num]					#añadido
                 low = array_range[0]						#añadido
                 step = 1							#añadido
                 high = array_range[1]						#añadido
-                while low<=high:						#añadido
+                while high-low>=0:						#añadido
                 	string2 += str(low)+ u'  '				#añadido
                 	low+=step						#añadido
 			num = num + 1						#añadido

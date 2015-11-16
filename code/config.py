@@ -92,6 +92,7 @@ AT_TABULAR = u'tabular'
 AT_SHOW = u'show'
 AT_PLOT = u'plot'
 AT_ALL = u'all'
+AT_MATRIX = u'matrix'
 
 AT_HELPWINDOWDATA = u'helpdata'
 AT_HELPWINDOWCONFIG = u'helpconfig'

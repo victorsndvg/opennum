@@ -48,6 +48,9 @@ class SubMenu(Node.Node):
                 action = {}
                 action[u'source'] = item.attrib.get(u'source') # unused
                 action[u'name'] = item.get(u'name')
+                action[u'title'] = item.get(u'title')		#añadido
+                action[u'data'] = item.get(u'data')		#añadido
+                action[u'reload'] = item.get(u'reload')		#añadido
                 
                 params = [] # one action: [param0, param1, ...]
                 subitems = item.getchildren()
@@ -133,11 +136,25 @@ class SubMenu(Node.Node):
     def save_menu(self, parent):
         e = trees.ET.Element(self.get_tag())
         e.attrib = self.get_attribs().copy()
+
         for action in self.actions:
             a = trees.ET.Element(u'action')
             name = action.get('name')
             if name is not None:
                 a.set(u'name',name)
+####################################################################
+# Atributos de custom exec. title:titulo de la ventana, data:comando
+####################################################################
+            title = action.get('title')			#añadido
+            if title is not None:			#añadido
+                a.set(u'title',title)			#añadido
+            data = action.get('data')			#añadido
+            if data is not None:			#añadido
+                a.set(u'data',data)			#añadido
+            reload_menu = action.get('reload')		#añadido
+            if reload_menu is not None:			#añadido
+                a.set(u'reload',reload_menu)		#añadido
+
             source = action.get('source') # unused
             if source is not None:
                 a.set(u'source',source)

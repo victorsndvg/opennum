@@ -37,6 +37,9 @@ class WidgetList(Widget.Widget):
 		    index += float_range[1]					#añadido
 		else:								#añadido
 		    self.names.append(elements[0][0])				#añadido
+		    if elements[0][1]:						#añadido
+			selected.append(0)					#añadido
+			self.selectedset.add(0)					#añadido
 		    index += 1							#añadido
 		
 	    else:
