@@ -3,7 +3,7 @@ LICENSE AGREEMENT
 ===========================================
 
 OpenNum. Lets you distribute solvers with a nice graphical interface.
-Copyright (C) 2012-2015 Universidade de Santiago de Compostela
+Copyright (C) 2012-2016 Universidade de Santiago de Compostela
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

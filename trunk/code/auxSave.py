@@ -70,7 +70,7 @@ def save_movie_renderwindow(parent, renderwindow, title=None):			#añadido
         u"|FFMPEG (HQ) (*.avi)|*.avi" + \
         u"|FFMPEG (LQ) (*.avi)|*.avi" + \
         u"|OGGTHEORA (*.ogv)|*.ogv" + \
-	u"|MPEG2 (*.mpg)\*.mpg"
+        u"|MPEG2 (*.mpg)|*.mpg"
     file = None									#añadido
     ext_index = None								#añadido
     [file,ext_index] = dialogs.get_file_save(parent,u".",u"",formats,title)	#añadido
@@ -93,7 +93,7 @@ def save_image(renderwindow, base, extension):
     
     w2i = vtk.vtkWindowToImageFilter()
     w2i.SetInput(renderwindow)
-    w2i.Modified()
+    w2i.Update()
     if extension == '.jpg':
         image = vtk.vtkJPEGWriter()
         image.SetQuality(100)
@@ -107,8 +107,9 @@ def save_image(renderwindow, base, extension):
     else:
         return "Image exporter: unknown file extension: " + extension
     
-    image.SetInput(w2i.GetOutput())
+    image.SetInputConnection(w2i.GetOutputPort())
     image.SetFileName(file)
+    renderwindow.Render()
     image.Write()
     
     return None

@@ -84,7 +84,10 @@ class PlotVectorField(Plot.Plot):
         if changes.get('changed'):
             self.esta = None # obliga a recalcular ahora que cambian los datos
             self.ugrid = self.construct_data(self.src)
-            self.src_vc.SetInput(self.ugrid)
+            if vtk.vtkVersion.GetVTKMajorVersion() < 6:
+                self.src_vc.SetInput(self.ugrid)
+            else:
+                self.src_vc.SetInputData(self.ugrid)
         return self.src_update1b(changes)
 
 
@@ -107,6 +110,7 @@ class PlotVectorField(Plot.Plot):
 		self.vectors = self.src.GetOutput().GetCellData().GetVectors()	#añadido
 	    elif self.data1.get('fielddomain') == 'point':			#añadido
 		self.vectors = self.src.GetOutput().GetPointData().GetVectors()	#añadido
+        if self.vectors is not None:
             sr = self.vectors.GetRange(-1)					#añadido
 	    self.scalarrange.local_set(sr)					#añadido
             #self.wireM2.SetScalarRange(sr)
@@ -142,7 +146,10 @@ class PlotVectorField(Plot.Plot):
         self.ugrid = self.construct_data(self.src)
         self.src_vc = vtk.vtkAssignAttribute()
         #self.src_vc.Assign(aname, 0, pc) # 0 scalar 1 vector ; 0 point 1 cell
-        self.src_vc.SetInput(self.ugrid)
+        if vtk.vtkVersion.GetVTKMajorVersion() < 6:
+            self.src_vc.SetInput(self.ugrid)
+        else:
+            self.src_vc.SetInputData(self.ugrid)
         res = self.apply_data(self.lastmode) # necesario, se non da erro vtk
 
 #        self.wireM = vtk.vtkDataSetMapper()
@@ -205,10 +212,16 @@ class PlotVectorField(Plot.Plot):
 
         self.lin = vtk.vtkGlyph3D()
         if self.data1.get('fielddomain') == 'cell': # vtk does not seem to support cell vectors
-            self.lin.SetInput(self.cellcenters.GetOutput())#amañar cambio new
+            if vtk.vtkVersion.GetVTKMajorVersion() < 6:
+                self.lin.SetInput(self.cellcenters.GetOutput())#amañar cambio new
+            else:
+                self.lin.SetInputConnection(self.cellcenters.GetOutputPort())#amañar cambio new
             #lutrange = self.src_vc.GetOutput().GetCellData().GetVectors().GetRange(-1)	#añadido
         else:
-            self.lin.SetInput(self.src_vc.GetOutput())
+            if vtk.vtkVersion.GetVTKMajorVersion() < 6:
+                self.lin.SetInput(self.src_vc.GetOutput())
+            else:
+                self.lin.SetInputConnection(self.src_vc.GetOutputPort())
             #lutrange = self.src_vc.GetOutput().GetPointData().GetVectors().GetRange(-1)#añadido
 
 

@@ -13,22 +13,24 @@
     <h2>Installation</h2>
     <p><strong>On this page:</strong></p>
     <ul>
-       <li><a href="#req">Requirements</a>
-       <ul>
-         <li><a href="#bin-lin">Binaries for Debian-based Linux distributions</a></li>
-         <li><a href="#bin-win">Binaries for Windows XP/Vista/7</a></li>
-         <li><a href="#bin-mac">Binaries for Mac OS</a></li>
-         <li><a href="#source">Installation from source</a></li>
-         <li><a href="#issues">Known issues</a></li>
-      </ul></li>
+      <li><a href="#req">Requirements</a>
+        <ul>
+          <li><a href="#bin-lin">Binaries for Debian-based Linux distributions</a></li>
+          <li><a href="#bin-win">Binaries for Windows</a></li>
+          <li><a href="#bin-mac">Binaries for Mac OS</a></li>
+          <li><a href="#source">Installation from source</a></li>
+        </ul>
+      </li>
+      <li><a href="#issues">Known issues</a></li>
+      <li><a href="#codecs">Build VTK from source with video codecs</a></li>
     </ul>  
 
     <h3 id="req">Requirements</h3>
     <p>OpenNum is programmed in Python. These are the prerequisites to properly use the application (<var>v</var> means "version"): </p>
     <ul>
-      <li><strong>Python</strong>: Programming language, 2.5 &le; <var>v</var> &lt; 3.0; recommended, <var>v</var>2.7.9.</li>
-      <li><strong>wxPython</strong>: wxWidgets bindings for Python, <var>v</var>2.8.</li>
-      <li><strong>Python-VTK</strong>: VTK bindings for Python, 5.4 &le; <var>v</var> &lt; 6.0; recommended, <var>v</var>5.10.</li>
+      <li><strong>Python</strong>: Programming language, 2.5 &le; <var>v</var> &lt; 3.0.</li>
+      <li><strong>wxPython</strong>: wxWidgets bindings for Python, <var>v</var> 2.8.</li>
+      <li><strong>Python-VTK</strong>: VTK bindings for Python, <var>v</var> &ge; 5.4.</li>
       <li><strong>Paramiko</strong>: SSH2 protocol for Python.</li>
     </ul>
     <p>Note that Paramiko is only necessary for remote connections. If you don't use it, you don't need it.</p>
@@ -36,17 +38,16 @@
 
     <h4 id="bin-lin">Binaries for Debian-based Linux distributions</h4>
     <p>The previous prerequisites can be downloaded from the official repositories. As an example, here we present how to install them
-    using <code>apt-get</code> in Ubuntu 11.10:</p>
+    using <code>apt-get</code> in Ubuntu 14.04:</p>
     <pre>        sudo apt-get install python
         sudo apt-get install python-wxgtk2.8
         sudo apt-get install python-vtk
         sudo apt-get install python-paramiko</pre>
 
-    <h4 id="bin-win">Binaries for Windows XP/Vista/7</h4>
-    <p>We recommend a full installation of <a href="https://python-xy.github.io/">Python(x,y)</a>, a scientific-oriented Python distribution.</p>
-    <p>Python(x,y) contains all the packages required for the graphical interface. If you install it, you don't need to install Python, wxPython, Python-VTK and Paramiko separately. Be careful choosing a version of Python(x,y) containing valid versions of the packages mentioned above. We recommend Python(x,y)-2.7.9.0.</p>
-    <p>For installation in Windows XP, please read <a href="#issues">Known issues</a> below.</p>
-    <p>If you prefer to install them separately, these are the websites to download them:</p>
+    <h4 id="bin-win">Binaries for Windows</h4>
+    <p>We recommend a full installation of the scientific-oriented Python distribution <a href="https://python-xy.github.io/">Python(x,y)</a>, containing all the packages required for the graphical interface. Be careful choosing a version of Python(x,y) containing valid versions of the packages mentioned above.</p>
+    <p>For problems with graphics or the installation in Windows XP, see  <a href="#issues">Known issues</a> below.</p>
+    <p>If you prefer to install the packages separately, these are the websites to download them:</p>
     <ul>
       <li><strong>Python</strong>: <a href="https://www.python.org/downloads/">https://www.python.org/downloads/</a></li>
       <li><strong>wxPython</strong>: <a href="http://www.wxpython.org/download.php">http://www.wxpython.org/download.php</a></li>
@@ -55,7 +56,7 @@
     </ul>
 
     <h4 id="bin-mac">Binaries for Mac OS</h4>
-    <p>The only method we have been tested is to use the <a href="http://www.enthought.com/products/epd.php">Enthought Python Distribution</a>.</p>
+    <p>The only method we have been tested is to use the <a href="https://www.enthought.com/products/epd/">Enthought Python Distribution</a>.</p>
 
     <h4 id="source">Installation from source</h4>
     <p>If you prefer to build the prerequisites from source, these are the websites to download them:</p>
@@ -65,15 +66,98 @@
       <li><strong>Python-VTK</strong>: <a href ="https://gitlab.kitware.com/vtk/vtk">https://gitlab.kitware.com/vtk/vtk</a></li>
       <li><strong>Paramiko</strong>: <a href ="https://github.com/paramiko/paramiko">https://github.com/paramiko/paramiko</a></li>
     </ul>
+    <div class="back"><a href="#top">Back to top</a></div>
 
-    <h4 id="issues">Known issues</h4>
+    <h3 id="issues">Known issues</h3>
 	<ul>
       <li><p>Installation of Python(x,y), version 2.7.5.1, appears to fail in Windows XP. For more information see <a href="https://groups.google.com/forum/#!topic/pythonxy/9iyaKStOsqw">here</a>.</p></li>
-      <li><p>If you have problems with graphics, for example, if you can't visualize some graphics or you can't visualize them well, it may be due to the version of Python-VTK. Please, make sure that the version of Python-VTK is greater than or equal to 5.4 and <b>strictly less</b> than 6.0.</p></li>
+      <li><p>If you have problems with graphics, for example, if you can't visualize some graphics or you can't visualize them well, it may be due to the version of Python-VTK. Please, make sure that the version of Python-VTK is greater than or equal to 5.4.</p>
+      <p>If you are using a version of VTK greater than or equal to 6.0, please try with the version 5. The latest version of Python(x,y) including VTK version 5 seems to be 2.7.9.0. You can find it in some external mirrors in the <a href="https://python-xy.github.io/downloads.html">Python(x,y) download page</a>.</p></li>
+      <li><p>If you have problems with codecs, for example, if the application returns a message like <em>ERROR: AVI codec not found</em> when you are trying to save an animation, it could be because the required codecs are not included in the VTK distribution used.</p>
+      <p>In this case, you have to install a VTK version that has the codecs included or build VTK from source including them. For more information see <a href="#codecs">Build VTK from source with video codecs</a>.</p></li>
     </ul>
+    <div class="back"><a href="#top">Back to top</a></div>
+
+    <h3 id="codecs">Build VTK from source with video codecs</h3>
+    <p>Be aware that some VTK versions don't include video codecs. We have tested VTK versions 5 and 6 with Ubuntu 14.04 and Windows 7. For the latter we choose a <em>clean</em> installation (with few installed programs) and a <em>dirty</em> one (with a large number of installed programs). We have found the following behavior:</p>
+    <ul>
+      <li><b>Ubuntu 14.04 and VTK version 5 included in package <code>python-vtk</code>:</b>
+       <ul>
+         <li>Codec is found for <em>FFMPEG</em>.</li>
+         <li>Prints error <code>codec not found</code> for <em>AVI</em>, <em>OGGTHEORA</em> and <em>MPEG2</em>.</li>
+       </ul>
+      </li>
+      <li><b>Ubuntu 14.04 and VTK version 6 included in package <code>libvtk6-dev</code>:</b>
+        <ul>
+          <li>Prints error <code>codec not found</code> in all cases.</li>
+        </ul>
+      </li>
+      <li><b>Windows 7 and VTK version 5 included in <code>Python(x,y)</code> version 2.7.9.0:</b>
+        <ul>
+          <li>Codec is found for <em>AVI</em>, <em>OGGTHEORA</em> and <em>MPEG2</em>.</li>
+          <li>Codec is found only in the <em>clean</em> installation for <em>FFMPEG</em>.</li>
+        </ul>
+      </li>
+      <li><b>Windows 7 and VTK version 6 included in <code>Python(x,y)</code> version 2.7.10.0:</b>
+        <ul>
+          <li>Prints error <code>codec not found</code> in all cases.</li>
+        </ul>
+      </li>
+    </ul>
+    <p>If you want to use the codecs with VTK in the cases where an error is found, you must download the codecs and build VTK from source including them. To do this, please follow the instructions shown in the <a href="http://www.vtk.org/download/">VTK download page</a>.</p>
+    <p>Here we will show as an example the steps we followed to build VTK from source with codecs. Please, be aware that these steps could be outdated.</p>
+    <ol>
+      <li>CMake 2.8.5 or higher needed. You can install it from:
+        <ul>
+          <li><strong>Debian-based Linux distributions</strong>: type <code>sudo apt-get install cmake-qt-gui</code> in the command window.</li>
+          <li><strong>Windows</strong>: you can download a binary installer from <a href="https://cmake.org/download/">https://cmake.org/download/</a>.</li>
+        </ul>
+      </li>
+      <li>Download the VTK sources from <a href ="http://www.vtk.org/download/">http://www.vtk.org/download/</a>.</li>
+      <li>Run CMake GUI and locate the <code>Where is source code</code> and <code>Where to build the binaries</code> folders.</li>
+      <li>Click on the <code>Configure</code> button (you will need to click this button every time you change any option to update the CMake cache).</li> 
+      <li> 
+        Some configuration variables will appear near the top of the screen. To build the VTK Python wrapper set the following variables and then click the <code>Configure</code> button:
+        <table class="tb">
+          <thead>
+            <tr> <th>Option</th> <th>Checked</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>BUILD_SHARED_LIBS</td> <td>True</td></tr>
+            <tr><td>VTK_USE_TK</td> <td>False</td></tr>
+            <tr><td>VTK_WRAP_PYTHON</td> <td>True</td></tr>
+          </tbody>
+        </table>
+      </li>
+      <p></p>
+      <li>To build VTK with additional image or video codecs you need to have this codecs builded on your system. Check the right options and click the <code>Configure</code> button. Some of this options are listed below:
+        <table class="tb">
+          <thead>
+            <tr> <th>Option</th> <th>Type</th> <th>Comments</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>VTK_USE_FFMPEG_ENCODER</td> <td>Video</td> <td>Download from <a href ="http://www.vtk.org/download/">http://www.vtk.org/download/</a></td></tr>
+            <tr><td>VTK_USE_MPEG2_ENCODER</td> <td>Video</td> <td>Download from <a href ="http://www.vtk.org/download/">http://www.vtk.org/download/</a></td></tr>
+            <tr><td>VTK_USE_OGGTHEORA_ENCODER</td> <td>Video</td> <td>Download from <a href ="http://www.theora.org/downloads/">http://www.theora.org/downloads/</a></td></tr>
+            <tr><td>VTK_USE_SYSTEM_JPEG</td> <td>Image</td> <td>Use the system's JPEG library</td></tr>
+            <tr><td>VTK_USE_SYSTEM_OGGTHEORA</td> <td>Video</td> <td>Use the system's OGGTHEORA library</td></tr>
+            <tr><td>VTK_USE_SYSTEM_PNG</td> <td>Image</td> <td>Use the system's PNG library</td></tr>
+            <tr><td>VTK_USE_SYSTEM_TIFF</td> <td>Image</td> <td>Use the system's TIFF library</td></tr>
+          </tbody>
+        </table>
+      </li>
+      <p></p>
+      <li>Click on the <code>Generate</code> button. The build folder will contain the project file (Makefile or Visual Studio solution (VTK.sln)).
+         <ul>
+            <li>If you use a Makefile generator, you have to type <code>make</code> an then <code>make install</code> in the build folder.</li>
+            <li>If you use a Visual Studio generator, you have to build and install the project from Visual Studio.</li>
+         </ul>
+      </li>
+      <li>Finally, you have to add the install folder to the <code>LD_LIBRARY_PATH</code> and <code>PYTHON_PATH</code> environment variables.</li>
+    </ol>
     <div class="back"><a href="#top">Back to top</a></div>    
 
     <hr />
-    <p>&copy; 2015 <a href="http://www.usc.es/">Universidade de Santiago de Compostela</a></p>
+    <p>&copy; 2016 <a href="http://www.usc.es/">Universidade de Santiago de Compostela</a></p>
   </body>
 </html>

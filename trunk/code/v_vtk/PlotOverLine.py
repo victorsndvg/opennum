@@ -36,9 +36,15 @@ class PlotOverLine(Plot.Plot):
     def src_update1(self, changes):
         if changes.get('changed'):
             if self.data1.get('fielddomain') == 'cell':
-                probe.SetSource(self.cdtpd.GetOutput())
+                if vtk.vtkVersion.GetVTKMajorVersion() < 6:
+                    self.probe.SetSource(self.cdtpd.GetOutput())
+                else:
+                    self.probe.SetSourceConnection(self.cdtpd.GetOutputPort())
             else:
-                self.probe.SetSource(self.src.GetOutput())
+                if vtk.vtkVersion.GetVTKMajorVersion() < 6:
+                    self.probe.SetSource(self.src.GetOutput())
+                else:
+                    self.probe.SetSourceConnection(self.src.GetOutputPort())
         if changes.get('new'):
             self.wireM.SetInputConnection(self.src.GetOutputPort())
         if changes.get('changed'):
@@ -49,7 +55,10 @@ class PlotOverLine(Plot.Plot):
             #self.sbA.SetLookupTable(self.wireM.GetLookupTable()) # no actualiza
 
         if changes.get('changed'):
-            self.lineI.SetInput(self.src.GetOutput())
+            if vtk.vtkVersion.GetVTKMajorVersion() < 6:
+                self.lineI.SetInput(self.src.GetOutput())
+            else:
+                self.lineI.SetInputConnection(self.src.GetOutputPort())
 #        if changes.get('changed'):
 #            self.copy_params(self.struct) # not neccesary ?
         return True
@@ -98,9 +107,15 @@ class PlotOverLine(Plot.Plot):
         if self.data1.get('fielddomain') == 'cell':
             self.cdtpd = vtk.vtkCellDataToPointData()
             self.cdtpd.SetInputConnection(self.src.GetOutputPort())
-            probe.SetSource(self.cdtpd.GetOutput())
+            if vtk.vtkVersion.GetVTKMajorVersion() < 6:
+                probe.SetSource(self.cdtpd.GetOutput())
+            else:
+                probe.SetSourceConnection(self.cdtpd.GetOutputPort())
         else:
-            probe.SetSource(self.src.GetOutput())
+            if vtk.vtkVersion.GetVTKMajorVersion() < 6:
+                probe.SetSource(self.src.GetOutput())
+            else:
+                probe.SetSourceConnection(self.src.GetOutputPort())
 
 #        lineMapper = vtk.vtkPolyDataMapper()
 #        lineMapper.SetInputConnection(probe.GetOutputPort())
@@ -134,7 +149,10 @@ class PlotOverLine(Plot.Plot):
         self.lineI = vtk.vtkLineWidget()
         self.lineI.GetLineProperty().SetColor(Plot.probe_line_color)
         seeds = vtk.vtkPolyData()
-        self.lineI.SetInput(self.src.GetOutput())
+        if vtk.vtkVersion.GetVTKMajorVersion() < 6:
+            self.lineI.SetInput(self.src.GetOutput())
+        else:
+            self.lineI.SetInputConnection(self.src.GetOutputPort())
         self.lineI.PlaceWidget()
         self.lineI.GetPolyData(seeds)
 
@@ -165,7 +183,10 @@ class PlotOverLine(Plot.Plot):
 
         # The x-values we are plotting are the underlying point data values.
         self.xyplot3 = xyplot3 = vtk.vtkXYPlotActor()
-        xyplot3.AddInput(probe.GetOutput())
+        if vtk.vtkVersion.GetVTKMajorVersion() < 6:
+            xyplot3.AddInput(probe.GetOutput())
+        else:
+            xyplot3.AddDataSetInputConnection(probe.GetOutputPort())
         xyplot3.GetPositionCoordinate().SetValue(0.0, 0.0, 0)
         xyplot3.GetPosition2Coordinate().SetValue(1.0, 0.95, 0) #relative to Position
 #        xyplot3.SetXValuesToIndex()

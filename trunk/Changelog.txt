@@ -2,6 +2,15 @@
 CHANGELOG / RELEASE NOTES
 ===========================================
 
+2016-05-03
+-------------------------------------------
+Code: Migration to VTK 6 done, keeping compatibility with VTK 5.
+Code: Problem with format list in Save animation option solved.
+Code: Problem when all subdomains were deselected after plotting solved.
+Code: Problem with Opacity when there is no Scale bar solved.
+Code: Problem with empty title in Scale bar solved.
+Help: Some information updated.
+
 2015-11-16
 -------------------------------------------
 Actions: New exec_custom action added (only available on Linux systems).

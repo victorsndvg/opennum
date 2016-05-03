@@ -37,7 +37,10 @@ def get_wrap(o):
     import vtk
 
     src = vtk.vtkPassThrough()
-    src.SetInput(o)
+    if vtk.vtkVersion.GetVTKMajorVersion() < 6:
+        src.SetInput(o)
+    else:
+        src.SetInputData(o)
     return src    
 
 
@@ -153,7 +156,10 @@ def get_void():
 
     u = vtk.vtkUnstructuredGrid()
     src = vtk.vtkPassThrough()
-    src.SetInput(u)
+    if vtk.vtkVersion.GetVTKMajorVersion() < 6:
+        src.SetInput(u)
+    else:
+        src.SetInputData(u)
 
 #    print 'void bounds', src.GetOutput().GetBounds() # 1 -1 1 -1 1 -1
 

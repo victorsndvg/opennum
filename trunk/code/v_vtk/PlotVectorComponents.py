@@ -78,7 +78,10 @@ class PlotVectorComponents(Plot.Plot):
         if changes.get('changed'):
             self.esta = [False, False, False, False] # obliga a recalcular ahora que cambian los datos
             self.ugrid = self.construct_data(self.src)
-            self.src_vc.SetInput(self.ugrid)
+            if vtk.vtkVersion.GetVTKMajorVersion() < 6:
+                self.src_vc.SetInput(self.ugrid)
+            else:
+                self.src_vc.SetInputData(self.ugrid)
         return self.src_update1b(changes)
 
 
@@ -126,7 +129,10 @@ class PlotVectorComponents(Plot.Plot):
         
         self.src_vc = vtk.vtkAssignAttribute()
         #self.src_vc.Assign(aname, 0, pc) # 0 scalar 1 vector ; 0 point 1 cell
-        self.src_vc.SetInput(self.ugrid)
+        if vtk.vtkVersion.GetVTKMajorVersion() < 6:
+            self.src_vc.SetInput(self.ugrid)
+        else:
+            self.src_vc.SetInputData(self.ugrid)
         
         self.lastmode = self.get_selected(struct)
         self.apply_data(self.lastmode)
