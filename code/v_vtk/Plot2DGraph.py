@@ -227,7 +227,10 @@ class Plot2DGraph(Plot.Plot):
 		series_num = series_num + res.get('series_num')
 		
 		for pd in polydata:
-        	    self.xyplot.AddInput(pd)
+		    if vtk.vtkVersion.GetVTKMajorVersion() < 6:
+		        self.xyplot.AddInput(pd)
+		    else:
+		        self.xyplot.AddDataSetInput(pd)
 #	    return False
 	else:
             self.dataname = self.tracker.get_vtkfile()
@@ -239,7 +242,10 @@ class Plot2DGraph(Plot.Plot):
 	    series_num = res.get('series_num')
 
 	    for pd in polydata:
-        	self.xyplot.AddInput(pd)
+	        if vtk.vtkVersion.GetVTKMajorVersion() < 6:
+	            self.xyplot.AddInput(pd)
+	        else:
+	            self.xyplot.AddDataSetInput(pd)
 
 
         self.xyplot.GetPositionCoordinate().SetValue(self.pospi0)
@@ -318,7 +324,10 @@ class Plot2DGraph(Plot.Plot):
     def update_from_dependency(self, struct):
 
         self.rens[0].RemoveActor(self.xyplot)
-        self.xyplot.RemoveAllInputs()
+        if vtk.vtkVersion.GetVTKMajorVersion() < 6:
+            self.xyplot.RemoveAllInputs()
+        else:
+            self.xyplot.RemoveAllDataSetInputConnections()
         # creates self. data1, legend, filename, fieldname, dim, has_field, tracker, revision
         if not self.call_config(struct):
             return
@@ -347,7 +356,10 @@ class Plot2DGraph(Plot.Plot):
 		series_num = series_num + res.get('series_num')
 
 		for pd in polydata:
-        	    self.xyplot.AddInput(pd)
+		    if vtk.vtkVersion.GetVTKMajorVersion() < 6:
+		        self.xyplot.AddInput(pd)
+		    else:
+		        self.xyplot.AddDataSetInput(pd)
 
 #	    return False
 	else:
@@ -360,7 +372,10 @@ class Plot2DGraph(Plot.Plot):
 	    series_num = res.get('series_num')
 
 	    for pd in polydata:
-        	self.xyplot.AddInput(pd)
+	        if vtk.vtkVersion.GetVTKMajorVersion() < 6:
+	            self.xyplot.AddInput(pd)
+	        else:
+	            self.xyplot.AddDataSetInput(pd)
 
 
         temp = labels[0]

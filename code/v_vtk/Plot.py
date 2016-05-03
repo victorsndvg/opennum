@@ -933,7 +933,7 @@ class Plot(wx.Panel):
         self.sbA = vtk.vtkScalarBarActor()
         self.sbA.SetLookupTable(look)
         self.sbA.SetNumberOfLabels(7)
-        self.sbA.SetTitle('')
+        self.sbA.SetTitle(' ')
         #print 'sbA.Pos1', self.sbA.GetPositionCoordinate()
         #print 'sbA.Pos2', self.sbA.GetPosition2Coordinate()
         #print 'sbA.GetWidth', self.sbA.GetWidth()
@@ -1592,7 +1592,8 @@ u'Opacity: 60%', u'Opacity: 50%', u'Opacity: 40%', u'Opacity: 30%', u'Opacity: 2
 
     def adjust_opacity(self):										#añadido
 	#Se añade el actor de la barra de escala
-	self.opacity_data.append(self.sbA)								#añadido
+	if self.sbA is not None:
+	    self.opacity_data.append(self.sbA)								#añadido
 	for actor in self.opacity_data:									#añadido
             if self.opacity_pos == 0:									#añadido
 		actor.GetProperty().SetOpacity(1.)							#añadido
@@ -1998,8 +1999,12 @@ u'Opacity: 60%', u'Opacity: 50%', u'Opacity: 40%', u'Opacity: 30%', u'Opacity: 2
 	    self.imageappend = vtk.vtkImageAppend()				#añadido
 	    self.imageappend.PreserveExtentsOff()				#añadido
 	    self.imageappend.SetAppendAxis(0)					#añadido	
-	    self.imageappend.SetInput(0,self.window2image.GetOutput())		#añadido
-	    self.imageappend.SetInput(1,self.window2image2.GetOutput())		#añadido
+	    if vtk.vtkVersion.GetVTKMajorVersion() < 6:
+	        self.imageappend.SetInput(0,self.window2image.GetOutput())		#añadido
+	        self.imageappend.SetInput(1,self.window2image2.GetOutput())		#añadido
+	    else:
+	        self.imageappend.SetInputData(0,self.window2image.GetOutput())		#añadido
+	        self.imageappend.SetInputData(1,self.window2image2.GetOutput())		#añadido
 	    self.imageappend.Update()						#añadido
 	    moviewriter.SetInputConnection(self.imageappend.GetOutputPort())#añadido
 	else:									#añadido

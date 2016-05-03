@@ -48,9 +48,12 @@ class PlotPicture(Plot.Plot):
 #        if changes.get('changed'):
 #            self.update_outline(self.src)
         if changes.get('new'):
-	    self.src.Update()
-            self.imageActor.SetInput(self.src.GetOutput())
-	    self.src.SetDataScalarTypeToDouble()
+            self.src.Update()
+            if vtk.vtkVersion.GetVTKMajorVersion() < 6:
+                self.imageActor.SetInput(self.src.GetOutput())
+            else:
+                self.imageActor.SetInputData(self.src.GetOutput())
+            self.src.SetDataScalarTypeToDouble()
 #        self.src_update_clicker(self.clicker, self.src, changes)
         return True
 
@@ -101,7 +104,10 @@ class PlotPicture(Plot.Plot):
 	color.SetInputConnection(self.src.GetOutputPort())
 
 	self.imageActor = vtk.vtkImageActor()
-	self.imageActor.SetInput(self.src.GetOutput())
+	if vtk.vtkVersion.GetVTKMajorVersion() < 6:
+	    self.imageActor.SetInput(self.src.GetOutput())
+	else:
+	    self.imageActor.SetInputData(self.src.GetOutput())
 #	self.imageActor.GetMapper().SetInputData(self.src.GetOutput());
 
 #	self.imageActor.PickableOn();

@@ -52,7 +52,10 @@ class PlotSlice(Plot.Plot):
             if changes.get('changed'):
                 self.adjust_abs_rel()
         if changes.get('changed'):
-            self.planeI.SetInput(self.src.GetOutput())
+            if vtk.vtkVersion.GetVTKMajorVersion() < 6:
+                self.planeI.SetInput(self.src.GetOutput())
+            else:
+                self.planeI.SetInputConnection(self.src.GetOutputPort())
             self.planeI.PlaceWidget() # actualiza caixa do plano
         self.src_update_clicker(self.clicker, self.src, changes)
         return True
@@ -128,7 +131,10 @@ class PlotSlice(Plot.Plot):
         #self.planeI = vtk.vtkPlaneWidget()
         self.planeI = vtk.vtkImplicitPlaneWidget()
         seeds = vtk.vtkPolyData()
-        self.planeI.SetInput(self.src.GetOutput())
+        if vtk.vtkVersion.GetVTKMajorVersion() < 6:
+            self.planeI.SetInput(self.src.GetOutput())
+        else:
+            self.planeI.SetInputConnection(self.src.GetOutputPort())
 
         self.add_plane_2(self.planeI)
         

@@ -87,7 +87,10 @@ class PlotPathline(Plot.Plot):
     def src_update1(self, changes):
     	if changes.get('changed'):
             self.ugrid = self.construct_data(self.src)
-            self.src_vc.SetInput(self.ugrid)
+            if vtk.vtkVersion.GetVTKMajorVersion() < 6:
+                self.src_vc.SetInput(self.ugrid)
+            else:
+                self.src_vc.SetInputData(self.ugrid)
         return self.src_update1b(changes)
 
 
@@ -141,7 +144,10 @@ class PlotPathline(Plot.Plot):
         # Obtenemos los vectores
         self.ugrid = self.construct_data(self.src)
         self.src_vc = vtk.vtkAssignAttribute()
-        self.src_vc.SetInput(self.ugrid)
+        if vtk.vtkVersion.GetVTKMajorVersion() < 6:
+            self.src_vc.SetInput(self.ugrid)
+        else:
+            self.src_vc.SetInputData(self.ugrid)
         
         # Segunda parte para incluir el visor
         # Pinta los elementos
@@ -166,7 +172,10 @@ class PlotPathline(Plot.Plot):
 
         self.lin = vtk.vtkStreamTracer()
         self.lin.SetInputConnection(self.src.GetOutputPort())
-        self.lin.SetSource(self.seeds.GetOutput())  
+        if vtk.vtkVersion.GetVTKMajorVersion() < 6:
+            self.lin.SetSource(self.seeds.GetOutput())
+        else:
+            self.lin.SetSourceConnection(self.seeds.GetOutputPort())
         
 ####### Configuramos el dibujante ##############################################
         self.lin.SetStartPosition(self.lastcenter)

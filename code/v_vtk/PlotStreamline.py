@@ -91,7 +91,10 @@ class PlotStreamline(Plot.Plot):
     def src_update1(self, changes):
     	if changes.get('changed'):
     		self.ugrid = self.construct_data(self.src)
-    		self.src_vc.SetInput(self.ugrid)
+    		if vtk.vtkVersion.GetVTKMajorVersion() < 6:
+    		    self.src_vc.SetInput(self.ugrid)
+    		else:
+    		    self.src_vc.SetInputData(self.ugrid)
     	return self.src_update1b(changes)
         
 
@@ -139,7 +142,10 @@ class PlotStreamline(Plot.Plot):
         	self.obten_nombres()
         self.ugrid = self.construct_data(self.src)
         self.src_vc = vtk.vtkAssignAttribute()
-        self.src_vc.SetInput(self.ugrid)
+        if vtk.vtkVersion.GetVTKMajorVersion() < 6:
+            self.src_vc.SetInput(self.ugrid)
+        else:
+            self.src_vc.SetInputData(self.ugrid)
   
         # Obtiene los centros de las celdas si se usa dicho tipo de elemento
         if self.data1.get('fielddomain') == 'cell': # vtk does not seem to support cell vectors
@@ -160,7 +166,10 @@ class PlotStreamline(Plot.Plot):
 
         self.lin = vtk.vtkStreamTracer()
         self.lin.SetInputConnection(self.src.GetOutputPort())
-        self.lin.SetSource(self.seeds.GetOutput())  
+        if vtk.vtkVersion.GetVTKMajorVersion() < 6:
+            self.lin.SetSource(self.seeds.GetOutput())  
+        else:
+            self.lin.SetSourceConnection(self.seeds.GetOutputPort())  
         
 ####### Configuramos el dibujante ##############################################
         self.lin.SetStartPosition(self.lastcenter)
