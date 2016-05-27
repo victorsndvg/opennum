@@ -175,7 +175,7 @@ class PlotVectorDeformed(Plot.Plot):
     def range_update3(self,range):
         #self.warpT.SetScaleFactor(self.scale)
 	self.wireM2.SetScalarRange(range)		#añadido
-
+	self.wireM2.GetLookupTable().SetTableRange(range)
 
     def copy_params(self, struct):
 

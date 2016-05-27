@@ -64,6 +64,7 @@ class PlotCut(Plot.Plot):
 
     def range_update3(self, range):
         self.pdM.SetScalarRange(range)
+        self.pdM.GetLookupTable().SetTableRange(range)
 
 
 

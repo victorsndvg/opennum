@@ -64,6 +64,7 @@ class PlotThreshold(Plot.Plot):
 
     def range_update3(self, range):
         self.wireM.SetScalarRange(range)
+        self.wireM.GetLookupTable().SetTableRange(range)
         #self.rango = range # optional (posto => posibles rangos externos. quitado => so rangos locais para
         if not self.is_done():
             return

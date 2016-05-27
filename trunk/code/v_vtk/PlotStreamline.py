@@ -280,6 +280,7 @@ class PlotStreamline(Plot.Plot):
 # Motodo sobrecargado
     def range_update3(self, range_): # to overwrite in subclasses
     	self.pdM.SetScalarRange(range_)   
+    	self.pdM.GetLookupTable().SetTableRange(range_)
         
 
 

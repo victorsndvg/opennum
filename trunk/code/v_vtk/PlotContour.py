@@ -74,7 +74,7 @@ class PlotContour(Plot.Plot):
         self.wireM2.SetScalarRange(range)
         self.contM.SetScalarRange(range)
         #self.wireM3.SetScalarRange(range)
-
+        self.contM.GetLookupTable().SetTableRange(range)
 
 
     def plot(self, struct):
