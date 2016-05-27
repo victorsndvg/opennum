@@ -108,6 +108,7 @@ class PlotVectorComponents(Plot.Plot):
 
     def range_update3(self, range_):
         self.wireM.SetScalarRange(range_)
+        self.wireM.GetLookupTable().SetTableRange(range_)
 
 
 

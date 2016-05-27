@@ -58,6 +58,7 @@ class PlotFilled(Plot.Plot):
 
     def range_update3(self, range):
         self.wireM.SetScalarRange(range)
+        self.wireM.GetLookupTable().SetTableRange(range)
 
 
 
