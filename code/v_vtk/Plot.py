@@ -2015,11 +2015,11 @@ u'Opacity: 60%', u'Opacity: 50%', u'Opacity: 40%', u'Opacity: 30%', u'Opacity: 2
     def start_movie_saving(self, movie_opt=None):
         if movie_opt is not None:							#añadido
 	    #Calculo de frames por segundo
-	    num_times = len(self.tracker.times)						#añadido
+	    num_times = len(self.tracker.get_times())						#añadido
 	    ini_time_index = self.tracker.search_time_pos(movie_opt.get(u'start_time'))	#añadido
 	    end_time_index = self.tracker.search_time_pos(movie_opt.get(u'end_time'))	#añadido
 	    movie_opt[u'num_times'] = end_time_index - ini_time_index			#añadido
-	    rate = movie_opt.get(u'num_times')//movie_opt.get('duration')		#añadido
+	    rate = movie_opt.get(u'num_times')//movie_opt.get(u'duration')		#añadido
 	    if rate == 0:								#añadido
 		rate = 1								#añadido
 	    #Creamos movie writer e image filter
