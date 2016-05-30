@@ -26,7 +26,7 @@ Decompress opennum_src_<date>.tar.gz
 OpenNum is programmed in Python. These are some prerequisites to properly 
 use the application (v means "version"):
   - Python: Programming language, 2.5 <= v < 3.0.
-  - wxPython: wxWidgets bindings for Python, v 2.8.
+  - wxPython: wxWidgets bindings for Python, v >= 2.8.
   - Python-VTK: VTK bindings for Python, v >= 5.4.
   - Paramiko: SSH2 protocol for Python.
 Note that Paramiko is only necessary for remote connections. If you don't 
