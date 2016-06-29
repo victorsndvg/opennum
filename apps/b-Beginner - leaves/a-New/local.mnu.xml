@@ -1,5 +1,5 @@
-<menus name="Beginner - leafs">
-	<menu name="Leafs">
+<menus name="Beginner - leaves">
+	<menu name="leaves">
 		<submenu name="Float">
 			<leaf name="float variable" type="float" >
 			</leaf>
