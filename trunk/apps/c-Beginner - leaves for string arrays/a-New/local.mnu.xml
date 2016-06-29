@@ -1,5 +1,5 @@
-<menus name="Beginner - leafs for string arrays">
-	<menu name="Char list leafs">
+<menus name="Beginner - leaves for string arrays">
+	<menu name="Char list leaves">
 		<submenu name="Selection single">
 			<leaf name="option" type="charlist">
 				<element>Element 1</element>
