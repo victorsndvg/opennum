@@ -933,7 +933,10 @@ class Plot(wx.Panel):
         self.sbA = vtk.vtkScalarBarActor()
         self.sbA.SetLookupTable(look)
         self.sbA.SetNumberOfLabels(7)
-        self.sbA.SetTitle(' ')
+        if vtk.vtkVersion.GetVTKMajorVersion() == 6:
+            self.sbA.SetTitle(' ')
+        else:
+            self.sbA.SetTitle('')
         #print 'sbA.Pos1', self.sbA.GetPositionCoordinate()
         #print 'sbA.Pos2', self.sbA.GetPosition2Coordinate()
         #print 'sbA.GetWidth', self.sbA.GetWidth()
