@@ -5,7 +5,7 @@
 
 import datetime
 import shutil
-
+import logging
 
 
 class Log():
@@ -78,7 +78,8 @@ class Log():
         txte = txt.encode('utf-8')
         
         if len(txte)>0: # creo que evita bug de imprimir espazos
-            print txte,
+            #print txte, #code prior version 0.0.1
+            logging.debug(txte)
         if self.file is not None:
             self.file.write(txt.encode('utf-8')) # ?
             self.file.flush()

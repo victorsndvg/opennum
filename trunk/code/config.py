@@ -42,6 +42,7 @@ CONFIG_STRUCT_NAME = u'Options'
 
 CONFIG_MAXIMIZE_OPTION = u'Maximize at start'
 CONFIG_WARNONLOAD_OPTION = u'Show warning on load'
+CONFIG_VERBOSE_OPTION = u'Run GUI in verbose mode'
 CONFIG_WIDGETS_PANEL_SIZE = u'Default widgets panel width'
 CONFIG_WINDOW_SIZE = u'Default window size'
 CONFIG_WINDOW_WIDTH = u'Window width'
