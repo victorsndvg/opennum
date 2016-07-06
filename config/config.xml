@@ -10,6 +10,10 @@
 					<element selected="true">Yes</element>
 					<element>No</element>
 				</leaf>
+				<leaf name="Run GUI in verbose mode" title="Choose option:" type="charlist" selection="single">
+					<element>Yes</element>
+					<element selected="true">No</element>
+				</leaf>
 				<leaf name="Default widgets panel width" title="Give width (pixels):" type="float">
 					<element>240</element>
 				</leaf>

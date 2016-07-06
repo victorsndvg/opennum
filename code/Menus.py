@@ -11,7 +11,7 @@ import Menu
 import SubMenu     #añadido subsubmenus
 import Leaf
 import config
-
+import logging
 
 
 class Menus(Node.Node):
@@ -43,7 +43,8 @@ class Menus(Node.Node):
 
 # load menu
     def load_file(self, filename=None):
-	print filename
+	    #print filename #code prior version 0.0.1
+        logging.debug(filename)
         if filename is None:
             filename = config.FILE_MENULOCAL
         try:
@@ -134,7 +135,8 @@ class Menus(Node.Node):
 
         if filename is not None:
             # cp file file.bak
-            print 'save_data', filename
+            #print 'save_data', filename #code prior version 0.0.1
+            logging.debug('save_data'+filename)
             tree.write(filename,"iso-8859-15") # utf-8
 
 
@@ -204,7 +206,8 @@ class Menus(Node.Node):
 
         #filename = filename + u'._.xml'
         # cp file file.bak
-        print 'save_menu', filename
+        #print 'save_menu', filename #code prior version 0.0.1
+        logging.debug('save_menu'+filename)
         try:
             shutil.copy2( filename , filename+'~' )
         except IOError:

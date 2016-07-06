@@ -30,7 +30,7 @@ import sys
 import shutil
 import subprocess
 import codecs # para file.read utf-8
-
+import logging
 
 
 class Window(wx.Frame):
@@ -199,20 +199,22 @@ class Window(wx.Frame):
 
 
     def errormsg(self, txt):
-        print 'errormsg:', txt
+        #print 'errormsg:', txt #code prior version 0.0.1
+        logging.error(txt)
         dialogs.show_error(self, txt)
 
 
 
     def askmsg(self, txt, mode):
-        print 'askmsg:', txt, ':',
+        #print 'askmsg:', txt, ':', #code prior version 0.0.1
         if mode == 'yesno':
             res = dialogs.ask_yes_no(self, txt)
         elif mode == 'okcancel':
             res = dialogs.ask_ok_cancel(self, txt)
         else:
             res = False
-        print res
+        #print res #code prior version 0.0.1
+        logging.warning('askmsg:'+txt+': '+res)
         return res
 
 
@@ -634,7 +636,8 @@ class Window(wx.Frame):
             self.errormsg(u'Error changing current working directory')
             return False
         self.path_local = newpath
-        print u'path_local', self.path_local
+        #print u'path_local', self.path_local #code prior version 0.0.1
+        logging.debug(u'path_local'+self.path_local)
         self.retitle()
 
         # para almacenalo para a proxima execución
@@ -663,7 +666,8 @@ class Window(wx.Frame):
             except IOError:
                 print 'PATH_READ_FAILED'
                 pass
-            print 'PATH_READ', path
+            #print 'PATH_READ', path #code prior version 0.0.1
+            logging.debug('PATH_READ'+path)
         return path
 
 
@@ -671,7 +675,8 @@ class Window(wx.Frame):
 
     def path_local_write(self, path):
         if self.path_local_save_filename is not None:
-            print 'PATH_WRITE', path
+            #print 'PATH_WRITE', path #code prior version 0.0.1
+            logging.debug('PATH_WRITE'+path)
             try:
                 file1 = open(self.path_local_save_filename,"w")
                 file1.write(path.encode('utf-8'))
@@ -691,7 +696,8 @@ class Window(wx.Frame):
         try:
             if self.path_local_config is not None:
                 if force or not os.path.exists(self.path_local_config):
-                    print u'Copying configuration file to:', self.path_local_config, '...'
+                    #print u'Copying configuration file to:', self.path_local_config, '...' #code prior version 0.0.1
+                    logging.debug(u'Copying configuration file to:'+self.path_local_config+'...')
                     if not os.path.exists(self.path_local_config_dir):
                         try:
                             os.mkdir(self.path_local_config_dir)
@@ -709,8 +715,9 @@ class Window(wx.Frame):
                         else:
                             #self.errormsg(u'Error copying materials database to local folder. '+\
                 #'File not found. Some funcionality may be affected.')
-			    print u'Error copying configuration file to local folder. '+\
-                'File not found. Some funcionality may be affected.'
+			    #print u'Error copying configuration file to local folder. '+\
+                #'File not found. Some funcionality may be affected.' #code prior version 0.0.1
+                            logging.warning(u'Error copying configuration file to local folder. File not found. Some funcionality may be affected.')
                             return
 
                     shutil.copy2( from_file, self.path_local_config )
@@ -722,7 +729,8 @@ class Window(wx.Frame):
 
     def load_config(self):
         ok = True
-	print self.path_local_config
+	    #print self.path_local_config #code prior version 0.0.1
+        logging.debug(self.path_local_config)
         if self.path_local_config is not None:
             menuconfig = Menus.Menus(self)
             ok &= menuconfig.load_file(self.path_local_config)
@@ -793,6 +801,18 @@ class Window(wx.Frame):
 					elif ch.get_name() == config.CONFIG_WARNONLOAD_OPTION:
 					    prop = ch.get_elements_selected()[0]
 					    self.warning_on_load = (prop.lower() == config.VALUE_NO)
+					#Run GUI in verbose mode: yes/no
+					elif ch.get_name() == config.CONFIG_VERBOSE_OPTION:
+					    prop = ch.get_elements_selected()[0]
+					    if prop.lower() == config.VALUE_YES:
+					        #Both logging.info and logging.debug will be printed
+					        logging.getLogger().setLevel(logging.DEBUG)
+					    else:
+					        #Only logging.info will be printed
+					        logging.getLogger().setLevel(logging.INFO)
+					    #sh = logging.StreamHandler()
+					    #sh.setFormatter(logging.Formatter("%(levelname)s: %(message)s"))
+					    #logging.getLogger().addHandler(sh)
 					#Set PanelWidgets size
 					elif ch.get_name() == config.CONFIG_WIDGETS_PANEL_SIZE:
 					    self.splitterA_size = int(ch.get_elements()[0])
@@ -854,7 +874,8 @@ class Window(wx.Frame):
         try:
             if self.path_local_materials is not None:
                 if force or not os.path.exists(self.path_local_materials):
-                    print u'Copying materials to:', self.path_local_materials, '...'
+                    #print u'Copying materials to:', self.path_local_materials, '...' #code prior version 0.0.1
+                    logging.debug(u'Copying materials to:'+self.path_local_materials+'...')
                     if not os.path.exists(self.path_local_materials_dir):
                         try:
                             os.mkdir(self.path_local_materials_dir)
@@ -871,9 +892,10 @@ class Window(wx.Frame):
                             from_file = from_file2
                         else:
                             #self.errormsg(u'Error copying materials database to local folder. '+\
-                #'File not found. Some funcionality may be affected.')
-			    print u'Error copying materials database to local folder. '+\
-                'File not found. Some funcionality may be affected.'
+                            #'File not found. Some funcionality may be affected.')
+                            #print u'Error copying materials database to local folder. '+\
+                            #'File not found. Some funcionality may be affected.' #code prior version 0.0.1
+                            logging.warning(u'Error copying materials database to local folder. File not found. Some funcionality may be affected.')
                             return
 
                     shutil.copy2( from_file, self.path_local_materials )
@@ -957,7 +979,8 @@ class Window(wx.Frame):
         self.panelB.forget()
         
         file_to = config.FILE_MENULOCAL
-        print 'load', file_to
+        print 'load', file_to #code prior version 0.0.1
+        logging.debug('load'+file_to)
         ok = True
         newmenu = Menus.Menus(self)
         result = newmenu.load_file(file_to)
@@ -1018,8 +1041,10 @@ class Window(wx.Frame):
             self.interface_all()
             self.retitle()
 
-            print "datafile", self.menus.get_datafile()
-            print "to_save", self.menus.to_save()
+            #print "datafile", self.menus.get_datafile() #code prior version 0.0.1
+            logging.debug("datafile"+self.menus.get_datafile())
+            #print "to_save", self.menus.to_save() #code prior version 0.0.1
+            logging.debug("to_save"+str(self.menus.to_save()))
 
             if hard:
                 # test existence of files and folders
@@ -1039,7 +1064,8 @@ class Window(wx.Frame):
     # chamado desde panelWidgets.add_widget en caso de copymenu
     # return value: True: copyed ; False: not copyed ; None: error
     def menu_copy_load(self, dirs):
-        print 'menu_copy_load', dirs
+        #print 'menu_copy_load', dirs #code prior version 0.0.1
+        logging.debug('menu_copy_load'+dirs)
         ret = None
         if self.warning_on_load or dialogs.ask_ok_cancel(self, 'If you continue, some files in the current working folder may be overwritten'):
             # cerra log
@@ -1109,7 +1135,8 @@ class Window(wx.Frame):
         dir_from = os.path.join(self.appsdir, dirs)
         dir_to = u'.'
 
-        print 'copy', dir_from, "->", dir_to
+        #print 'copy', dir_from, "->", dir_to #code prior version 0.0.1
+        logging.debug('copy', dir_from, "->", dir_to)
 
         try:
 
@@ -1126,8 +1153,10 @@ class Window(wx.Frame):
                     else:
                         files2.append(file)
 
-            print 'copiando files', files2
-            print 'copiando dirs', dirs2
+            #print 'copiando files', files2 #code prior version 0.0.1
+            logging.debug('copiando files', files2)
+            #print 'copiando dirs', dirs2 #code prior version 0.0.1
+            logging.debug('copiando dirs', dirs2)
         
             for file in files2:
                 file_from = os.path.join(dir_from, file)
@@ -1236,7 +1265,8 @@ class Window(wx.Frame):
 	    file1 = codecs.open(self.path_local_save_filename, encoding='utf-8')#añadido
             path_new = file1.read()						#añadido
             file1.close()							#añadido
-	    print path_new							#añadido
+            #print path_new							#añadido #code prior version 0.0.1
+            logging.debug(path_new)
             if path_new is not None and os.path.exists(path_new):		#añadido
         	if self.path_local_set(path_new):  				#añadido
 		    self.has_folder = True					#añadido
@@ -1262,7 +1292,8 @@ class Window(wx.Frame):
 
 
     def event_close(self, event):
-        print u"closing [x]"
+        #print u"closing [x]" #code prior version 0.0.1
+        logging.debug(u"closing [x]")
         self.panelA.display_set(None) # save mem
         self.logger.end()
         self.save_all() # menu data materials
@@ -1364,9 +1395,11 @@ class Window(wx.Frame):
 			submenu = self.config.get_index( index )
 			self.apply_config_flag = True
             if (submenu is None):
-                print index, id
+                #print index, id #code prior version 0.0.1
+                logging.debug(index, id)
             else:
-                print index, id, submenu.get_name()
+                #print index, id, submenu.get_name() #code prior version 0.0.1
+                logging.debug(str(index)+str(id)+submenu.get_name())
 		#Carga de las aplicaciones
 		copyvalue = submenu.get_attribs().get(config.AT_COPY)		#añadido
             	if copyvalue is not None:					#añadido
@@ -1433,7 +1466,8 @@ class Window(wx.Frame):
 
 
     def launch(self, url, opt=None):
-        print 'launching', url
+        #print 'launching', url #code prior version 0.0.1
+        logging.debug('launching'+url)
         wx.LaunchDefaultBrowser(url.replace(' ', '%20')) # wx.BROWSER_NEW_WINDOW) # falla esta constante
 
 
@@ -1445,14 +1479,16 @@ class Window(wx.Frame):
 
     # closes tabular data window
     def tabular_onclose(self):
-        print 'tabular_onclose'
+        #print 'tabular_onclose' url #code prior version 0.0.1
+        logging.debug('tabular_onclose'+url)
         self.tabular = None
 
 
 
     # closes tabular data window
     def tabular_close(self):
-        print 'tabular_close'
+        #print 'tabular_close' url #code prior version 0.0.1
+        logging.debug('tabular_close'+url)
         # así ?
         if self.tabular is not None:
             self.tabular.Close()
@@ -1463,7 +1499,8 @@ class Window(wx.Frame):
 
     # shows a window with tabular data of the children of struct
     def tabular_show(self, struct, fromfile=False):
-        print 'tabular_show', struct
+        #print 'tabular_show', struct url #code prior version 0.0.1
+        logging.debug('tabular_show'+struct+url)
         if self.tabular is None:
             self.tabular = WindowTabular.WindowTabular(self, self.tabular_onclose)
         self.tabular.display(struct, fromfile)
@@ -1481,7 +1518,8 @@ class Window(wx.Frame):
 	    filename = fn[i+1:]								#añadido
 	else:										#añadido
 	    struct.get_attribs()[u'data'] = os.path.join(self.configdir,u'2d_graph.gr2')
-	print len(child)								#añadido
+            #print len(child)								#añadido #code prior version 0.0.1
+            logging.debug(len(child))
 	if len(child) >= 2:								#añadido
 	    sigs = []									#añadido
 	    xlegend = child[0].get_name()						#añadido
@@ -1532,7 +1570,8 @@ class Window(wx.Frame):
 		    filegr2.write(sig.get(u'yaxis').get(u'legend') + u'\n')		#añadido
 		filegr2.close()								#añadido
             except IOError:								#añadido
-		print u'Error writing data to temporary file: ' + filegr2		#añadido
+		#print u'Error writing data to temporary file: ' + filegr2		#añadido #code prior version 0.0.1
+                logging.warning(u'Problem writing data to temporary file: '+filegr2)
 		return None								#añadido
 	return signals.get(u'filename')							#añadido
 
@@ -1551,7 +1590,8 @@ class Window(wx.Frame):
     # updates a window with tabular data of the children of struct.
     # if the window has children of other struct, does nothing.
     def tabular_update(self, struct):
-        print 'tabular_update', struct
+        #print 'tabular_update', struct #code prior version 0.0.1
+        logging.debug('tabular_update'+struct)
         if self.tabular is not None:
             self.tabular.update(struct) # does nothing if it is displaying other struct
 
@@ -1584,14 +1624,11 @@ class Window(wx.Frame):
         try:
             file = open(self.path_local_remotedata,'rb')
         except Exception, why:
-            # valor por defecto aquí: 
+            # default value
             if not 'queuing' in self.remotedata:
                 self.remotedata['queuing'] = 'qrsh -q general -j y -V -cwd'
-            # non tan grave como para mostrar erro.
-            # pasa a primeira vez que se executa
-            string = 'Error loading remote data: ' + repr(why)
-            # self.errormsg(string)
-            print string
+            # Not really an error, occours always the first time is executed
+            logging.debug('Problem loading remotedata.txt: ' + repr(why))
             return
 
         for line in file:
@@ -1702,7 +1739,8 @@ class Window(wx.Frame):
 
 
     def end_process(self, exitcode, stopped=False, custom_command=False):
-        print u'end', exitcode, stopped
+        #print u'end', exitcode, stopped #code prior version 0.0.1
+        logging.debug(u'end'+exitcode+stopped)
         if not stopped:
             self.timer.Stop()
             self.event_timer2()
@@ -1932,13 +1970,15 @@ class Window(wx.Frame):
  
  
     def add_thread(self, thread):
-        print 'window: thread added:', thread
+        #print 'window: thread added:', thread #code prior version 0.0.1
+        logging.debug('window: thread added:'+thread)
         self.threads.append(thread)
 
 
 
     def finished_thread(self, thread):
-        print 'window: thread ended:', thread
+        #print 'window: thread ended:', thread #code prior version 0.0.1
+        logging.debug('window: thread ended:'+thread)
         self.threads.remove(thread)
 
 

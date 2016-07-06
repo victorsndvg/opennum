@@ -10,7 +10,7 @@ import os.path
 import errno
 import sys
 import Window
-
+import logging
 
 
 def create_dir(dirname):
@@ -18,14 +18,16 @@ def create_dir(dirname):
         os.makedirs(dirname) # devolve excepción se xa existía o directorio
     except OSError, e:
         if e.errno != errno.EEXIST:
-            print e
+            #print e #code prior version 0.0.1
+            logging.warning(e)
     return os.path.isdir(dirname)
 
 
 
 def run():
 
-    print 'MF pid', os.getpid()
+    #print 'MF pid', os.getpid() #code prior version 0.0.1
+    logging.debug('MF pid'+str(os.getpid()))
     
     exe_path = sys.argv[0]
     exe_path_real = os.path.realpath(exe_path)
@@ -39,13 +41,19 @@ def run():
     else:
         appname = exe_path_name
 
-    print "pathexe", exe_path
-    print "pathreal", exe_path_real
-    print "pathname", exe_path_name
-    print "pathdir", exe_path_dir
-    print "pathabs", exe_path_abs
-    print 'appname', appname
-
+    #print "pathexe", exe_path #code prior version 0.0.1
+    #print "pathreal", exe_path_real #code prior version 0.0.1
+    #print "pathname", exe_path_name #code prior version 0.0.1
+    #print "pathdir", exe_path_dir #code prior version 0.0.1
+    #print "pathabs", exe_path_abs #code prior version 0.0.1
+    #print 'appname', appname #code prior version 0.0.1
+    logging.debug("pathexe"+exe_path)
+    logging.debug("pathreal"+exe_path_real)
+    logging.debug("pathname"+exe_path_name)
+    logging.debug("pathdir"+exe_path_dir)
+    logging.debug("pathabs"+exe_path_abs)
+    logging.debug('appname'+appname)
+    
 
     app = wx.App(0)
     app.SetAppName(appname)
@@ -57,7 +65,8 @@ def run():
     result = create_dir(configdir)
     if not result:
         configdir = None
-    print 'configdir', configdir
+    #print 'configdir', configdir #code prior version 0.0.1
+    logging.debug('configdir'+configdir)
     
     frame = Window.Window(appname, exe_path_abs, configdir)
     frame.Center()
