@@ -8,6 +8,7 @@ import wx
 import wx.lib.newevent
 import config
 import dialogs
+import logging
 
 
 
@@ -75,8 +76,8 @@ class Widget(wx.Panel):
 
     def end(self):
         self.save_mem()
-        self.save_log()
-
+        #self.save_log() #code prior version 0.0.1
+        logging.debug('Saving '+self.struct.get_path())
 
 
     def save_mem(self):
