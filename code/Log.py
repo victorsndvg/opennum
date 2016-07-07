@@ -84,7 +84,7 @@ class Log():
             self.file.write(txt.encode('utf-8')) # ?
             self.file.flush()
         for logger in self.loggers:
-            logger.add_text(txt)
+            logger.add_text('ll'+txt)
 
 
 

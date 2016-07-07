@@ -1473,7 +1473,10 @@ class Window(wx.Frame):
 
 
     def add_text(self, txt):
-        self.logger.add_text(txt)
+        #if txt[0]=='Y':
+        #    raise NameError('Yes')
+        #else:
+        self.logger.add_text('ww'+txt)
 
 
 
@@ -1808,7 +1811,7 @@ class Window(wx.Frame):
 
     
     def event_timer2(self):
-        self.logger.add_text(self.process.read())
+        self.logger.add_text('aa'+self.process.read())
 
     def menu_exec_custom(self, action):
 
