@@ -5,6 +5,7 @@
 
 import sys
 import FilePVD
+import logging
 
 vtkimagefileformats = ('.png','.jpg','.jpeg','.bmp','.tif')
 
@@ -47,7 +48,8 @@ def get_wrap(o):
 
 def get_source(filename):
 
-    print 'sourceVTK2: creating Reader for ', filename
+    #print 'sourceVTK2: creating Reader for ', filename #code prior version 0.0.1
+    logging.debug('sourceVTK2: creating Reader for '+filename)
 
     # aqui para no importarlo siempre
     import vtk
@@ -210,14 +212,18 @@ def get_values(src, cell_point, name, discard=[]):
 
 def printn(ds):
     pdp = ds.GetPointData()
-    print 'point na', pdp.GetNumberOfArrays()
+    #print 'point na', pdp.GetNumberOfArrays() #code prior version 0.0.1
+    logging.debug(pdp.GetNumberOfArrays())
     for i in range(pdp.GetNumberOfArrays()):
-        print 'name', i, pdp.GetArrayName(i), pdp.GetAbstractArray(i).GetNumberOfComponents()
+        #print 'name', i, pdp.GetArrayName(i), pdp.GetAbstractArray(i).GetNumberOfComponents() #code prior version 0.0.1
+        logging.debug('name'+str(i)+pdp.GetArrayName(i)+str(pdp.GetAbstractArray(i).GetNumberOfComponents()))
     #print 'point nc', pdp.GetNumberOfComponents()
     pdc = ds.GetCellData()
-    print 'cell na', pdc.GetNumberOfArrays()
+    #print 'cell na', pdc.GetNumberOfArrays() #code prior version 0.0.1
+    logging.debug(pdc.GetNumberOfArrays())
     for i in range(pdc.GetNumberOfArrays()):
-        print 'name', i,  pdc.GetArrayName(i), pdc.GetAbstractArray(i).GetNumberOfComponents()
+        #print 'name', i,  pdc.GetArrayName(i), pdc.GetAbstractArray(i).GetNumberOfComponents() #code prior version 0.0.1
+        logging.debug('name'+str(i)+pdc.GetArrayName(i)+str(pdc.GetAbstractArray(i).GetNumberOfComponents()))
     #print 'cell nc', pdc.GetNumberOfComponents()
 
 
@@ -230,7 +236,8 @@ def prints(src):
 # non permitidos nomes duplicados dentro de celldata (ou pointdata) de cada source
 # non permitidos campos co mesmo nome e distinto numero de componentes en celldata (ou pointdata) do conxunto dos sources
 def complement_missing_fields(sources):
-    print 'Complementing'
+    #print 'Complementing' #code prior version 0.0.1
+    logging.debug('Complementing')
     namesp = {}
     namesc = {}
 
@@ -290,7 +297,8 @@ def add_missing_field(index, domain, data, number, name, components):
     # aqui para no importarlo siempre
     import vtk
     
-    print 'Adding', index, domain, type(data), name, components
+    #print 'Adding', index, domain, type(data), name, components #code prior version 0.0.1
+    logging.debug('Adding'+str(index)+str(domain)+str(type(data))+str(name)+str(components))
     #a = vtk.vtkBitArray()
     a = vtk.vtkDoubleArray()
     a.SetNumberOfComponents(components)

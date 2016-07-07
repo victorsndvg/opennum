@@ -8,7 +8,7 @@ import Plot
 import wx_version
 import wx
 import vtk
-
+import logging
 
 
 # si las referencias no son consecutivas, rellena
@@ -77,12 +77,14 @@ class PlotMaterials(Plot.Plot):
         self.add_outline_2(self.src)
         
         scalarrange = self.src.GetOutput().GetScalarRange()
-        print 'src scalarrange', scalarrange
+        #print 'src scalarrange', scalarrange #code prior version 0.0.1
+        logging.debug(scalarrange)    
 
         self.get_materials()
         
         scalarrange = [0.0, float(self.max) + 1] # +1 por si hay otros valores ponerlos a negro
-        print 'src scalarrange ->', scalarrange
+        #print 'src scalarrange ->', scalarrange #code prior version 0.0.1
+        logging.debug(scalarrange)
         
         self.set_colors()
         
@@ -132,7 +134,8 @@ class PlotMaterials(Plot.Plot):
         
         scalarrange = [0.0, float(self.max) + 1] # +1 por si hay otros valores ponerlos a negro
 
-        print 'src scalarrange ->', scalarrange
+        #print 'src scalarrange ->', scalarrange #code prior version 0.0.1
+        logging.debug(scalarrange)
         
         self.set_colors()
         
@@ -165,11 +168,14 @@ class PlotMaterials(Plot.Plot):
         while c <= num:
             col = [0,0,0]
             lt.GetColor(c, col)
-            print 'gc', c, col
+            #print 'gc', c, col #code prior version 0.0.1
+            logging.debug('gc'+str(c)+str(col))
             self.cols.append(col)
             self.namecol[self.names[c-1]] = col #
             c += 1
-        print 'namecol', self.namecol
+        #print 'namecol', self.namecol #code prior version 0.0.1
+        logging.debug(self.namecol)            
+        
 
 
 

@@ -1115,7 +1115,8 @@ class Node():
         if isinstance(data, basestring):
             return data
         
-        print 'data', data
+        #print 'data', data #code prior version 0.0.1
+        logging.debug(data)
         
         field = data.get('fieldname')
         
@@ -1133,7 +1134,8 @@ class Node():
 
         tracker = self.get_tracker5(filemanager, data)
 
-        print 'tracker.node', tracker
+        #print 'tracker.node', tracker #code prior version 0.0.1
+        logging.debug(tracker)
         
         if isinstance(tracker, basestring):
             return tracker

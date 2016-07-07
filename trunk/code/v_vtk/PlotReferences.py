@@ -12,7 +12,7 @@ import Plot
 import wx_version
 import wx
 import vtk
-
+import logging
 
 
 epsilon = 1e-6
@@ -132,10 +132,12 @@ class PlotReferences(Plot.Plot):
 
     def change_range(self, src):
         range = src.GetOutput().GetScalarRange()
-        print 'range', range, u'->',
+        #print 'range', range, u'->', #code prior version 0.0.1
+        logging.debug(range)    
         # no less than 1
         range = (1.0,range[1])
-        print range
+        #print range #code prior version 0.0.1
+        logging.debug(range)
         return range
 
 

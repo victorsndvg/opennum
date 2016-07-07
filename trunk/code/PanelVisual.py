@@ -342,9 +342,10 @@ class PanelVisual(wx.Panel):
             
         if update:
         
-            print u'Updating visualization start ...'
+            #print u'Updating visualization start ...' #code prior version 0.0.1
+            logging.debug(u'Updating visualization start ...')
 
-            tracker = struct.get_tracker5( filemanager, data )
+            tracker = struct.get_tracker5( filemanager, data ) 
 
             if isinstance(tracker, basestring):
                 self.window.errormsg(u'Error updating plot: ' + tracker)
@@ -395,16 +396,19 @@ class PanelVisual(wx.Panel):
                 # considerar eliminar os Render de update_top
                 view.do_render() # pode estar duplicado
 
-            print u'Updating visualization end ...'
+            #print u'Updating visualization end ...' #code prior version 0.0.1
+            logging.debug(u'Updating visualization end ...')
 
         if was is not None and not add and mode != 6:
         
-            print u'Selecting visualization start ...'
+            #print u'Selecting visualization start ...' #code prior version 0.0.1
+            logging.debug(u'Selecting visualization start ...')
             next = self.book.GetPageIndex(view)
             previous = self.book.GetSelection()
             if next != previous:
                 self.book.SetSelection(next)
-            print u'Selecting visualization end ...'
+            #print u'Selecting visualization end ...'#code prior version 0.0.1
+            logging.debug(u'Selecting visualization end ...')
 
         return ( add and add_ok ) or update or select
 
