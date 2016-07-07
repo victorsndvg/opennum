@@ -27,7 +27,7 @@ import math # sqrt
 import sourceVTK2
 import WindowSearch
 import os # para name
-
+import logging
 
 
 # antes (5.2) imprimia en una ventana, ahora (5.4) imprime en la terminal
@@ -675,18 +675,20 @@ class Plot(wx.Panel):
 
 # <range>
     def range_update2(self, range):
-        print 'updating range to', range, '...',
+        #print 'updating range to', range, '...', #code prior version 0.0.1
+        logging.debug('updating range to'+str(range)+'...')
         #if not self.is_done(): # mal porque pode ser chamado ben desde o plot()
         #    return
         if range is None:
-            print
+            #print #code prior version 0.0.1
             return
 
         self.scalebar.update_range(range)
 
         self.range_update3(range)
 
-        print 'updated'
+        #print 'updated' #code prior version 0.0.1
+        logging.debug('updated')
 
 
 
@@ -714,10 +716,12 @@ class Plot(wx.Panel):
             self.iren = vtk.vtkRenderWindowInteractor()
             self.widget.GetRenderWindow().SetInteractor(self.iren)
             #self.iren.SetRenderWindow(self.widget.GetRenderWindow())
-            print 'interactor changing' #, last, '->', self.iren
+            #print 'interactor changing' #, last, '->', self.iren #code prior version 0.0.1
+            logging.debug('interactor changing')
         else:
             self.iren = last
-            print 'interactor keeping' #, self.iren
+            #print 'interactor keeping' #, self.iren  #code prior version 0.0.1
+            logging.debug('interactor keeping')
 
 
 
@@ -1563,7 +1567,8 @@ class Plot(wx.Panel):
 
         txt2 = unicodedata.normalize('NFKD', txt).encode('ascii','ignore') # cuestionable º -> o
         if txt != txt2:
-            print u'Warning: unicode to ascii has changed some chars : \'' + txt + '\' -> \'' + txt2 + '\''
+            #print u'Warning: unicode to ascii has changed some chars : \'' + txt + '\' -> \'' + txt2 + '\'' #code prior version 0.0.1
+            logging.warning(u'Warning: unicode to ascii has changed some chars : \'' + txt + '\' -> \'' + txt2 + '\'')
         self.textActor.SetInput(txt2)
 
     def show_legend(self, tf):
@@ -1624,9 +1629,9 @@ u'Opacity: 60%', u'Opacity: 50%', u'Opacity: 40%', u'Opacity: 30%', u'Opacity: 2
     def add_axes_2(self):
         #return
 
-	print 'AXES2AXES2AXES2AXES2AXES2AXES2AXES2AXES2AXES2'
-	print 'AXES2AXES2AXES2AXES2AXES2AXES2AXES2AXES2AXES2'
-	print 'AXES2AXES2AXES2AXES2AXES2AXES2AXES2AXES2AXES2'
+	#print 'AXES2AXES2AXES2AXES2AXES2AXES2AXES2AXES2AXES2'
+	#print 'AXES2AXES2AXES2AXES2AXES2AXES2AXES2AXES2AXES2'
+	#print 'AXES2AXES2AXES2AXES2AXES2AXES2AXES2AXES2AXES2'
 
         renai = self.add_ren() 
 	renai.InteractiveOff()
@@ -1698,7 +1703,8 @@ u'Opacity: 60%', u'Opacity: 50%', u'Opacity: 40%', u'Opacity: 30%', u'Opacity: 2
             self.timer.Stop()
             self.timer = None
             
-        print 'Plot closed' # non entra ao cerrar a aplicación ! xa entra
+        #print 'Plot closed' # non entra ao cerrar a aplicación ! xa entra #code prior version 0.0.1
+        logging.debug('Plot closed')
 
 
 
@@ -1718,12 +1724,14 @@ u'Opacity: 60%', u'Opacity: 50%', u'Opacity: 40%', u'Opacity: 30%', u'Opacity: 2
 
     #debug
     def printcam(self):
-        print 'printcam'
-        print 'gfp', ren.GetActiveCamera().GetFocalPoint()
-        print 'gp', ren.GetActiveCamera().GetPosition()
-        print 'gvu', ren.GetActiveCamera().GetViewUp()
-
-
+        #print 'printcam'
+        #print 'gfp', ren.GetActiveCamera().GetFocalPoint()
+        #print 'gp', ren.GetActiveCamera().GetPosition()
+        #print 'gvu', ren.GetActiveCamera().GetViewUp()  #code prior version 0.0.1
+        logging.debug('printcam')
+        logging.debug(ren.GetActiveCamera().GetFocalPoint())  
+        logging.debug(ren.GetActiveCamera().GetPosition())
+        logging.debug(ren.GetActiveCamera().GetViewUp())
 
     #debug
     def savecam(self):
@@ -1734,7 +1742,9 @@ u'Opacity: 60%', u'Opacity: 50%', u'Opacity: 40%', u'Opacity: 30%', u'Opacity: 2
             cam.append(ren.GetActiveCamera().GetPosition())
             cam.append(ren.GetActiveCamera().GetViewUp())
             cams.append(cam)
-        print 'cam:', cams
+        #print 'cam:', cams #code prior version 0.0.1
+        logging.debug('cams')
+        logging.debug(cams)
         self.cams = cams
 
 
@@ -1951,7 +1961,8 @@ u'Opacity: 60%', u'Opacity: 50%', u'Opacity: 40%', u'Opacity: 30%', u'Opacity: 2
 
 	self.moviewriter = None							#añadido
         codecs = [u'AVI',u'FFMPEGHQ',u'FFMPEGLQ',u'OGGTHEORA',u'MPEG2']		#añadido
-	print codec
+	#print codec  #code prior version 0.0.1
+        logging.debug(codec)
 	index = codecs.index(codec)						#añadido
         if codec in codecs:							#añadido
 	    try:								#añadido
@@ -2118,10 +2129,11 @@ u'Opacity: 60%', u'Opacity: 50%', u'Opacity: 40%', u'Opacity: 30%', u'Opacity: 2
         
         alias = configPlot.get_alias(typename)
         if alias != typename:
-            print 'building plot:', typename, '->', alias
+            #print 'building plot:', typename, '->', alias  #code prior version 0.0.1
+            logging.debug('building plot:'+str(typename)+'->'+str(alias))
         else:
-            print 'building plot:', typename
-            
+            print 'building plot:', typename #code prior version 0.0.1
+            logging.debug('building plot:'+str(typename))
         typeobj = Plot.get_type_type(alias)
         if typeobj is not None:
             return typeobj(parent) # constructor

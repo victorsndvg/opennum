@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
+import logging
 
 
 class FileMrw():
@@ -22,7 +22,8 @@ class FileMrw():
 
     def cc(self, txt):
         if self.callback is not None:
-            self.callback(txt)
+            #self.callback(txt) #code prior version 0.0.1
+            logging.debug(txt)
 
 
 

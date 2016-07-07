@@ -13,7 +13,7 @@ import os.path
 from v_vtk import GraphList2
 from v_vtk import configPlot
 import Menus
-
+import logging
 
 
 class PanelVisual(wx.Panel):
@@ -317,31 +317,28 @@ class PanelVisual(wx.Panel):
         add_ok = False
 
         if add:
-        
-            self.window.add_text(u'Adding visualization start ...\n')
-            
+            #self.window.add_text(u'Adding visualization start ...\n') #code prior version 0.0.1
+            logging.debug(u'Adding visualization start ...')
             tracker = struct.get_tracker5( filemanager, data )
-
             if isinstance(tracker, basestring):
                 self.window.errormsg(u'Error creating plot: ' + tracker)
             elif tracker is None:
                 self.window.errormsg(u'Error creating plot: Undefined plot files')
 	    # si añadimos un nuevo tracker vacio
-            elif tracker.is_void:								#añadido
-                self.window.errormsg(u'Error creating plot: No mesh or chart has been selected')		#añadido
+            elif tracker.is_void:		#añadido
+                self.window.errormsg(u'Error creating plot: No mesh or chart has been selected') #añadido
             else:
                 if tracker.is_changed() is not None:
                     if tracker.update() is not None:
-
                         ok = self.add(filenames, fieldname, typename, extra, struct, tracker, data)
-                            
                     else: # tracker.update() is None
                         self.window.errormsg(u'Error converting mesh to vtk. Not creating plot')
                 else: # tracker.is_changed() is Non
 #		    print filenames, fieldname, typename, extra, struct, tracker, data
                     self.window.errormsg(u'Unable to access file(s) to create plot')
 
-            self.window.add_text(u'Adding visualization end ...\n')
+            #self.window.add_text(u'Adding visualization end ...\n') #code prior version 0.0.1
+            logging.debug(u'Adding visualization end ...')
             
         if update:
         

@@ -118,15 +118,19 @@ class WidgetChoice(Widget.Widget):
         if offset != self.selected:
             if self.has_source:
                 if offset >= 0 and offset < len(self.names):
-                    self.log(self.names[offset])
+                    self.log(self.names[offset]) #code prior version 0.0.1
+                    logging.debug(self.names[offset])
                 else:
-                    self.log(u'')
+                    self.log(u'') #code prior version 0.0.1
+                    logging.debug(u'')
             else:
                 children = self.struct.get_children()
                 if offset >= 0 and offset < len(children):
-                    self.log(children[offset].get_name())
+                    self.log(children[offset].get_name()) #code prior version 0.0.1
+                    logging.debug(children[offset].get_name())
                 else:
-                    self.log(u'')
+                    self.log(u'') #code prior version 0.0.1
+                    logging.debug(u'')
 
 
 

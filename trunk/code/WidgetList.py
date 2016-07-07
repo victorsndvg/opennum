@@ -10,7 +10,7 @@ import config
 import Widget
 import WidgetCustomize
 import WidgetHeader
-
+import logging
 
 
 class WidgetList(Widget.Widget):
@@ -248,7 +248,8 @@ class WidgetList(Widget.Widget):
             last = None
             for offset in offsets:
                 if (offset != wx.NOT_FOUND and offset>=0 and offset<len(children)):
-                    self.log(u'- '+children[offset].get_name())
+                    #self.log(u'- '+children[offset].get_name()) #code prior version 0.0.1
+                    logging.debug(u'- '+children[offset].get_name())
                     self.listbox.Delete(offset)
                     self.struct.del_child(offset)
                     last = offset
@@ -277,7 +278,8 @@ class WidgetList(Widget.Widget):
                     self.struct.add_child(default)
                 if len(defaults)>0:
                 
-                    self.log(u'+ '+name)
+                    #self.log(u'+ '+name) #code prior version 0.0.1
+                    logging.debug(u'+ '+name)
     
                     self.listbox.Layout()
                     self.box.Layout()
