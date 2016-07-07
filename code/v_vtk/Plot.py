@@ -2132,7 +2132,7 @@ u'Opacity: 60%', u'Opacity: 50%', u'Opacity: 40%', u'Opacity: 30%', u'Opacity: 2
             #print 'building plot:', typename, '->', alias  #code prior version 0.0.1
             logging.debug('building plot:'+str(typename)+'->'+str(alias))
         else:
-            print 'building plot:', typename #code prior version 0.0.1
+            #print 'building plot:', typename #code prior version 0.0.1
             logging.debug('building plot:'+str(typename))
         typeobj = Plot.get_type_type(alias)
         if typeobj is not None:
