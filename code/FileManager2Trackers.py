@@ -12,6 +12,7 @@ import FileMrwVTK
 import FilePVD
 import Formulas as psps # para postproceso
 from v_vtk import sourceVTK2
+import logging
 
 Debug = False
 
@@ -44,7 +45,8 @@ class Tracker:
     # to avoid tests
     def cbc(self, str):
         if self.cb is not None:
-            self.cb(str)
+            #self.cb(str) #code prior version 0.0.1
+            logging.debug(str)
 
 
 

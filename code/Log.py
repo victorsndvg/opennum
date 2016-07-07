@@ -36,7 +36,8 @@ class Log():
         if isinstance(problem, basestring):
             text += u' ' + problem
         text += u'\n'
-        self.add_text(text)
+        #self.add_text(text) #code prior version 0.0.1
+        logging.debug(text)
         return self.file is not None
 
 

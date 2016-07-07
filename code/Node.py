@@ -9,6 +9,7 @@ import NoDeep
 import os.path
 import Source # para procesar cadenas fuente mesh=...
 import Formulas as psps # para postproceso
+import logging
 
 Debug = False
 
@@ -1298,5 +1299,6 @@ class AuxCall():
 
     def calls(self, text):
         if self.window is not None:
-            self.window.add_text(text)
+            #self.window.add_text(text) #code prior version 0.0.1
+            logging.debug(text)
 

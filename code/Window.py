@@ -979,7 +979,7 @@ class Window(wx.Frame):
         self.panelB.forget()
         
         file_to = config.FILE_MENULOCAL
-        print 'load', file_to #code prior version 0.0.1
+        #print 'load', file_to #code prior version 0.0.1
         logging.debug('load'+file_to)
         ok = True
         newmenu = Menus.Menus(self)
@@ -1136,7 +1136,7 @@ class Window(wx.Frame):
         dir_to = u'.'
 
         #print 'copy', dir_from, "->", dir_to #code prior version 0.0.1
-        logging.debug('copy', dir_from, "->", dir_to)
+        logging.debug('copy'+dir_from+"->"+dir_to)
 
         try:
 
@@ -1154,9 +1154,9 @@ class Window(wx.Frame):
                         files2.append(file)
 
             #print 'copiando files', files2 #code prior version 0.0.1
-            logging.debug('copiando files', files2)
+            logging.debug('copiando files'+''.join(files2))
             #print 'copiando dirs', dirs2 #code prior version 0.0.1
-            logging.debug('copiando dirs', dirs2)
+            logging.debug('copiando dirs'+''.join(dirs2))
         
             for file in files2:
                 file_from = os.path.join(dir_from, file)
@@ -1396,7 +1396,7 @@ class Window(wx.Frame):
 			self.apply_config_flag = True
             if (submenu is None):
                 #print index, id #code prior version 0.0.1
-                logging.debug(index, id)
+                logging.debug(index+str(id))
             else:
                 #print index, id, submenu.get_name() #code prior version 0.0.1
                 logging.debug(str(index)+str(id)+submenu.get_name())
@@ -1743,7 +1743,7 @@ class Window(wx.Frame):
 
     def end_process(self, exitcode, stopped=False, custom_command=False):
         #print u'end', exitcode, stopped #code prior version 0.0.1
-        logging.debug(u'end'+exitcode+stopped)
+        logging.debug(u'end'+str(exitcode)+str(stopped))
         if not stopped:
             self.timer.Stop()
             self.event_timer2()
@@ -1974,14 +1974,14 @@ class Window(wx.Frame):
  
     def add_thread(self, thread):
         #print 'window: thread added:', thread #code prior version 0.0.1
-        logging.debug('window: thread added:'+thread)
+        logging.debug('window: thread added:'+str(thread))
         self.threads.append(thread)
 
 
 
     def finished_thread(self, thread):
         #print 'window: thread ended:', thread #code prior version 0.0.1
-        logging.debug('window: thread ended:'+thread)
+        logging.debug('window: thread ended:'+str(thread))
         self.threads.remove(thread)
 
 
