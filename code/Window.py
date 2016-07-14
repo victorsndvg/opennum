@@ -1739,6 +1739,7 @@ class Window(wx.Frame):
 
 
     def end_process(self, exitcode, stopped=False, custom_command=False):
+        errortxt = self.process.read().lstrip()
         #print u'end', exitcode, stopped #code prior version 0.0.1
         logging.debug(u'end'+u' '+unicode(exitcode)+u' '+unicode(stopped))
         if not stopped:
@@ -1789,16 +1790,8 @@ class Window(wx.Frame):
             self.taskscurrent = -2
 
         if error:
-            if exitcode is None:
-                if name is None:
-                    self.errormsg('A solver failed to start. Cancelling execution. See execution window')
-                else:
-                    self.errormsg('Solver \''+name+'\' failed to start. Cancelling execution. See execution window')
-            else:
-                if name is None:
-                    self.errormsg('A solver returned exit code '+unicode(exitcode)+'. Cancelling execution. See execution window')
-                else:
-                    self.errormsg('Solver \''+name+'\' returned exit code '+unicode(exitcode)+'. Cancelling execution. See execution window')
+            self.logger.add_text(u'\''+unicode(name)+u'\' returned exit code '+unicode(exitcode)+u'.\n\nERROR MESSAGE:\n====================\n'+unicode(errortxt))
+            self.errormsg(u'\''+unicode(name)+u'\' returned exit code '+unicode(exitcode)+u'.\n\nERROR MESSAGE:\n====================\n'+unicode(errortxt))
 
 
 
