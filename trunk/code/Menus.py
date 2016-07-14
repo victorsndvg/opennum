@@ -136,7 +136,7 @@ class Menus(Node.Node):
         if filename is not None:
             # cp file file.bak
             #print 'save_data', filename #code prior version 0.0.1
-            logging.debug('save_data'+filename)
+            logging.debug(u'save_data'+u' '+unicode(filename))
             tree.write(filename,"iso-8859-15") # utf-8
 
 
@@ -207,7 +207,7 @@ class Menus(Node.Node):
         #filename = filename + u'._.xml'
         # cp file file.bak
         #print 'save_menu', filename #code prior version 0.0.1
-        logging.debug('save_menu'+filename)
+        logging.debug(u'save_menu'+u' '+unicode(filename))
         try:
             shutil.copy2( filename , filename+'~' )
         except IOError:

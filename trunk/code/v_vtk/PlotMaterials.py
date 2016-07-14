@@ -169,7 +169,7 @@ class PlotMaterials(Plot.Plot):
             col = [0,0,0]
             lt.GetColor(c, col)
             #print 'gc', c, col #code prior version 0.0.1
-            logging.debug('gc'+str(c)+str(col))
+            logging.debug(u'gc'+u' '+unicode(c)+u' '+unicode(col))
             self.cols.append(col)
             self.namecol[self.names[c-1]] = col #
             c += 1

@@ -249,7 +249,7 @@ class WidgetList(Widget.Widget):
             for offset in offsets:
                 if (offset != wx.NOT_FOUND and offset>=0 and offset<len(children)):
                     #self.log(u'- '+children[offset].get_name()) #code prior version 0.0.1
-                    logging.debug(u'- '+children[offset].get_name())
+                    logging.debug(u'- '+unicode(children[offset].get_name()))
                     self.listbox.Delete(offset)
                     self.struct.del_child(offset)
                     last = offset
@@ -279,7 +279,7 @@ class WidgetList(Widget.Widget):
                 if len(defaults)>0:
                 
                     #self.log(u'+ '+name) #code prior version 0.0.1
-                    logging.debug(u'+ '+name)
+                    logging.debug(u'+ '+unicode(name))
     
                     self.listbox.Layout()
                     self.box.Layout()

@@ -27,7 +27,6 @@ def create_dir(dirname):
 def run():
 
     #print 'MF pid', os.getpid() #code prior version 0.0.1
-    logging.debug('MF pid'+str(os.getpid()))
     
     exe_path = sys.argv[0]
     exe_path_real = os.path.realpath(exe_path)
@@ -47,13 +46,7 @@ def run():
     #print "pathdir", exe_path_dir #code prior version 0.0.1
     #print "pathabs", exe_path_abs #code prior version 0.0.1
     #print 'appname', appname #code prior version 0.0.1
-    logging.debug("pathexe"+exe_path)
-    logging.debug("pathreal"+exe_path_real)
-    logging.debug("pathname"+exe_path_name)
-    logging.debug("pathdir"+exe_path_dir)
-    logging.debug("pathabs"+exe_path_abs)
-    logging.debug('appname'+appname)
-    
+
 
     app = wx.App(0)
     app.SetAppName(appname)
@@ -66,7 +59,6 @@ def run():
     if not result:
         configdir = None
     #print 'configdir', configdir #code prior version 0.0.1
-    logging.debug('configdir'+configdir)
     
     frame = Window.Window(appname, exe_path_abs, configdir)
     frame.Center()
