@@ -664,7 +664,8 @@ class Window(wx.Frame):
                 path = file1.read()
                 file1.close()
             except IOError:
-                print 'PATH_READ_FAILED'
+                #print 'PATH_READ_FAILED' #code prior version 0.0.1
+                logging.debug(u'PATH_READ_FAILED')
                 pass
             #print 'PATH_READ', path #code prior version 0.0.1
             logging.debug(u'PATH_READ'+u' '+unicode(path))
@@ -682,7 +683,8 @@ class Window(wx.Frame):
                 file1.write(path.encode('utf-8'))
                 file1.close()
             except IOError:
-                print 'PATH_WRITE_FAILED'
+                #print 'PATH_WRITE_FAILED' #code prior version 0.0.1
+                logging.warning(u'PATH_WRITE_FAILED')
                 pass
 
     def reset_config(self):
@@ -702,7 +704,8 @@ class Window(wx.Frame):
                         try:
                             os.mkdir(self.path_local_config_dir)
                         except OSError, e:
-                            print 'Error creating materials directory:', e
+                            #print 'Error creating materials directory:', e #code prior version 0.0.1
+                            logging.warning(u'Error creating configuration directory:'+u' '+unicode(e))
 
                     from_file1 = os.path.join(self.path_exe, os.pardir, config.DIR_CONFIG, config.FILE_CONFIG)
                     from_file2 = os.path.join(self.path_exe, os.pardir, config.DIR_CONFIG, config.FILE_CONFIG_PREFIX + self.title + config.FILE_CONFIG_SUFFIX)
@@ -722,7 +725,8 @@ class Window(wx.Frame):
 
                     shutil.copy2( from_file, self.path_local_config )
         except (IOError, shutil.Error, OSError), err:
-            print repr(err)
+            #print repr(err) #code prior version 0.0.1
+            logging.debug(repr(err))
             self.errormsg(u'Error copying materials database to local folder. '+\
                 'Some funcionality may be affected');
 
@@ -880,7 +884,8 @@ class Window(wx.Frame):
                         try:
                             os.mkdir(self.path_local_materials_dir)
                         except OSError, e:
-                            print 'Error creating materials directory:', e
+                            #print 'Error creating materials directory:', e #code prior version 0.0.1
+                            logging.warning(u'Error creating materials directory:'+u' '+unicode(e))
 
                     from_file1 = os.path.join(self.path_exe, os.pardir, config.DIR_MATERIALS, config.FILE_MATERIALS)
                     from_file2 = os.path.join(self.path_exe, os.pardir, config.DIR_MATERIALS, config.FILE_MATERIALS_PREFIX + self.title + config.FILE_MATERIALS_SUFFIX)
@@ -900,7 +905,8 @@ class Window(wx.Frame):
 
                     shutil.copy2( from_file, self.path_local_materials )
         except (IOError, shutil.Error, OSError), err:
-            print repr(err)
+            #print repr(err) #code prior version 0.0.1
+            logging.debug(repr(err))
             self.errormsg(u'Error copying materials database to local folder. '+\
                 'Some funcionality may be affected');
 
@@ -1097,7 +1103,8 @@ class Window(wx.Frame):
                     os.unlink(name)
         except (IOError, shutil.Error, OSError), err:
             ok = False
-            print repr(err)
+            #print repr(err) #code prior version 0.0.1
+            logging.debug(repr(err))
             self.errormsg(u'Error erasing data (' + name + ') from working folder')
             
         return ok
@@ -1582,7 +1589,8 @@ class Window(wx.Frame):
 	    try:									#añadido
 		os.remove(filename)							#añadido
 	    except IOError:								#añadido
-		print u'Error deleting temporary file: ' + filename			#añadido
+		#print u'Error deleting temporary file: ' + filename #añadido #code prior version 0.0.1
+		logging.debug(u'Error deleting temporary file: '+unicode(filename))
 
 
 
@@ -2088,7 +2096,8 @@ class Window(wx.Frame):
             try:
                 os.chdir(namedir)
             except OSError, e:
-                print repr(e)
+                #print repr(e) #code prior version 0.0.1
+                logging.debug(repr(e))
                 self.errormsg(u'Cancelling parametrized execution ' +
                     u'because of error changing working directory: ' + e)
             else:
@@ -2097,7 +2106,8 @@ class Window(wx.Frame):
                 try:
                     os.chdir(self.path_local_get())
                 except OSError, e:
-                    print repr(e)
+                    #print repr(e) #code prior version 0.0.1
+                    logging.debug(repr(e))
                     self.errormsg(u'Cancelling parametrized execution ' +
                         u'because of error changing working directory: ' + e)
                 else:
@@ -2124,5 +2134,6 @@ class Window(wx.Frame):
         params = self.menus.get_parameters()
         p = Parametrize.Parametrize()
         p.setp(params)
-        print u'choices: ', p.get_num_choices()
+        #print u'choices: ', p.get_num_choices() #code prior version 0.0.1
+        logging.debug(u'choices: '+unicode(p.get_num_choices()))
 
