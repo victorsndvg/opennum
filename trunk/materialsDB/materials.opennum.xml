@@ -12,5 +12,9 @@
 				</leaf>
 			</struct>
 		</submenu>
+		<submenu name="Reset">
+			<action name="reset_materials">
+			</action>
+		</submenu>
 	</menu>
 </menus>
