@@ -77,7 +77,7 @@ class Widget(wx.Panel):
     def end(self):
         self.save_mem()
         #self.save_log() #code prior version 0.0.1
-        logging.debug('Saving '+self.struct.get_path())
+        logging.debug(u'Saving'+u' '+unicode(self.struct.get_path()))
 
 
     def save_mem(self):

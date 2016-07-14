@@ -39,7 +39,9 @@ class PanelExec(wx.Panel):
 
 
     def add_text(self, text):
-        self.txtout.AppendText('pp'+text[0:15])
+        self.txtout.AppendText(text)
+
+
 
     def update(self):
         txt = u''

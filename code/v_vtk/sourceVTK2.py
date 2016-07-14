@@ -49,7 +49,7 @@ def get_wrap(o):
 def get_source(filename):
 
     #print 'sourceVTK2: creating Reader for ', filename #code prior version 0.0.1
-    logging.debug('sourceVTK2: creating Reader for '+filename)
+    logging.debug(u'sourceVTK2: creating Reader for '+unicode(filename))
 
     # aqui para no importarlo siempre
     import vtk
@@ -216,14 +216,14 @@ def printn(ds):
     logging.debug(pdp.GetNumberOfArrays())
     for i in range(pdp.GetNumberOfArrays()):
         #print 'name', i, pdp.GetArrayName(i), pdp.GetAbstractArray(i).GetNumberOfComponents() #code prior version 0.0.1
-        logging.debug('name'+str(i)+pdp.GetArrayName(i)+str(pdp.GetAbstractArray(i).GetNumberOfComponents()))
+        logging.debug(u'name'+u' '+unicode(i)+u' '+unicode(pdp.GetArrayName(i))+u' '+unicode(pdp.GetAbstractArray(i).GetNumberOfComponents()))
     #print 'point nc', pdp.GetNumberOfComponents()
     pdc = ds.GetCellData()
     #print 'cell na', pdc.GetNumberOfArrays() #code prior version 0.0.1
     logging.debug(pdc.GetNumberOfArrays())
     for i in range(pdc.GetNumberOfArrays()):
         #print 'name', i,  pdc.GetArrayName(i), pdc.GetAbstractArray(i).GetNumberOfComponents() #code prior version 0.0.1
-        logging.debug('name'+str(i)+pdc.GetArrayName(i)+str(pdc.GetAbstractArray(i).GetNumberOfComponents()))
+        logging.debug(u'name'+u' '+unicode(i)+u' '+unicode(pdc.GetArrayName(i))+u' '+unicode(pdc.GetAbstractArray(i).GetNumberOfComponents()))
     #print 'cell nc', pdc.GetNumberOfComponents()
 
 
@@ -237,7 +237,7 @@ def prints(src):
 # non permitidos campos co mesmo nome e distinto numero de componentes en celldata (ou pointdata) do conxunto dos sources
 def complement_missing_fields(sources):
     #print 'Complementing' #code prior version 0.0.1
-    logging.debug('Complementing')
+    logging.debug(u'Complementing')
     namesp = {}
     namesc = {}
 
@@ -298,7 +298,7 @@ def add_missing_field(index, domain, data, number, name, components):
     import vtk
     
     #print 'Adding', index, domain, type(data), name, components #code prior version 0.0.1
-    logging.debug('Adding'+str(index)+str(domain)+str(type(data))+str(name)+str(components))
+    logging.debug(u'Adding'+u' '+unicode(index)+u' '+unicode(domain)+u' '+unicode(type(data))+u' '+unicode(name)+u' '+unicode(components))
     #a = vtk.vtkBitArray()
     a = vtk.vtkDoubleArray()
     a.SetNumberOfComponents(components)

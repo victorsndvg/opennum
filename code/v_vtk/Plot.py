@@ -676,7 +676,7 @@ class Plot(wx.Panel):
 # <range>
     def range_update2(self, range):
         #print 'updating range to', range, '...', #code prior version 0.0.1
-        logging.debug('updating range to'+str(range)+'...')
+        logging.debug(u'updating range to'+u' '+unicode(range)+u'...')
         #if not self.is_done(): # mal porque pode ser chamado ben desde o plot()
         #    return
         if range is None:
@@ -688,7 +688,7 @@ class Plot(wx.Panel):
         self.range_update3(range)
 
         #print 'updated' #code prior version 0.0.1
-        logging.debug('updated')
+        logging.debug(u'updated')
 
 
 
@@ -717,11 +717,11 @@ class Plot(wx.Panel):
             self.widget.GetRenderWindow().SetInteractor(self.iren)
             #self.iren.SetRenderWindow(self.widget.GetRenderWindow())
             #print 'interactor changing' #, last, '->', self.iren #code prior version 0.0.1
-            logging.debug('interactor changing')
+            logging.debug(u'interactor changing')
         else:
             self.iren = last
             #print 'interactor keeping' #, self.iren  #code prior version 0.0.1
-            logging.debug('interactor keeping')
+            logging.debug(u'interactor keeping')
 
 
 
@@ -1568,7 +1568,7 @@ class Plot(wx.Panel):
         txt2 = unicodedata.normalize('NFKD', txt).encode('ascii','ignore') # cuestionable º -> o
         if txt != txt2:
             #print u'Warning: unicode to ascii has changed some chars : \'' + txt + '\' -> \'' + txt2 + '\'' #code prior version 0.0.1
-            logging.warning(u'Warning: unicode to ascii has changed some chars : \'' + txt + '\' -> \'' + txt2 + '\'')
+            logging.warning(u'Warning: unicode to ascii has changed some chars : \''+unicode(txt)+'\' -> \''+unicode(txt2)+'\'')
         self.textActor.SetInput(txt2)
 
     def show_legend(self, tf):
@@ -1704,7 +1704,7 @@ u'Opacity: 60%', u'Opacity: 50%', u'Opacity: 40%', u'Opacity: 30%', u'Opacity: 2
             self.timer = None
             
         #print 'Plot closed' # non entra ao cerrar a aplicación ! xa entra #code prior version 0.0.1
-        logging.debug('Plot closed')
+        logging.debug(u'Plot closed')
 
 
 
@@ -1728,7 +1728,7 @@ u'Opacity: 60%', u'Opacity: 50%', u'Opacity: 40%', u'Opacity: 30%', u'Opacity: 2
         #print 'gfp', ren.GetActiveCamera().GetFocalPoint()
         #print 'gp', ren.GetActiveCamera().GetPosition()
         #print 'gvu', ren.GetActiveCamera().GetViewUp()  #code prior version 0.0.1
-        logging.debug('printcam')
+        logging.debug(u'printcam')
         logging.debug(ren.GetActiveCamera().GetFocalPoint())  
         logging.debug(ren.GetActiveCamera().GetPosition())
         logging.debug(ren.GetActiveCamera().GetViewUp())
@@ -1743,7 +1743,7 @@ u'Opacity: 60%', u'Opacity: 50%', u'Opacity: 40%', u'Opacity: 30%', u'Opacity: 2
             cam.append(ren.GetActiveCamera().GetViewUp())
             cams.append(cam)
         #print 'cam:', cams #code prior version 0.0.1
-        logging.debug('cams')
+        logging.debug(u'cams')
         logging.debug(cams)
         self.cams = cams
 
@@ -2130,10 +2130,10 @@ u'Opacity: 60%', u'Opacity: 50%', u'Opacity: 40%', u'Opacity: 30%', u'Opacity: 2
         alias = configPlot.get_alias(typename)
         if alias != typename:
             #print 'building plot:', typename, '->', alias  #code prior version 0.0.1
-            logging.debug('building plot:'+str(typename)+'->'+str(alias))
+            logging.debug(u'building plot:'+u' '+unicode(typename)+u'->'+unicode(alias))
         else:
             #print 'building plot:', typename #code prior version 0.0.1
-            logging.debug('building plot:'+str(typename))
+            logging.debug(u'building plot:'+u' '+unicode(typename))
         typeobj = Plot.get_type_type(alias)
         if typeobj is not None:
             return typeobj(parent) # constructor
