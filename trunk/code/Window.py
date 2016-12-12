@@ -1487,7 +1487,7 @@ class Window(wx.Frame):
     # closes tabular data window
     def tabular_onclose(self):
         #print 'tabular_onclose' url #code prior version 0.0.1
-        logging.debug(u'tabular_onclose'+u' '+unicode(url))
+        logging.debug(u'tabular_onclose')
         self.tabular = None
 
 
@@ -1495,7 +1495,7 @@ class Window(wx.Frame):
     # closes tabular data window
     def tabular_close(self):
         #print 'tabular_close' url #code prior version 0.0.1
-        logging.debug(u'tabular_close'+u' '+unicode(url))
+        logging.debug(u'tabular_close')
         # así ?
         if self.tabular is not None:
             self.tabular.Close()
@@ -1507,7 +1507,7 @@ class Window(wx.Frame):
     # shows a window with tabular data of the children of struct
     def tabular_show(self, struct, fromfile=False):
         #print 'tabular_show', struct url #code prior version 0.0.1
-        logging.debug(u'tabular_show'+u' '+unicode(struct)+u' '+unicode(url))
+        logging.debug(u'tabular_show'+u' '+unicode(struct))
         if self.tabular is None:
             self.tabular = WindowTabular.WindowTabular(self, self.tabular_onclose)
         self.tabular.display(struct, fromfile)
