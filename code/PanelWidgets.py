@@ -26,8 +26,8 @@ class PanelWidgets(wx.ScrolledWindow): #Panel):
         self.SetSizer(self.box)
 
         self.SetScrollRate(1,1)
-	#contador de widgets en panelWidgets
-	self.widgetcounter = 0					#añadido
+        #contador de widgets en panelWidgets
+        self.widgetcounter = 0
 
         self.widgets = []
 
@@ -44,7 +44,7 @@ class PanelWidgets(wx.ScrolledWindow): #Panel):
 #        print 'ds2'
         self.box.Clear(True)
 
-	self.widgetcounter = 0					#añadido
+        self.widgetcounter = 0
 
 #        print 'ds3'
         self.Scroll(0,0)
@@ -61,17 +61,17 @@ class PanelWidgets(wx.ScrolledWindow): #Panel):
             self.widgets[a].end()
             self.box.Detach(a)
             self.widgets[a].Destroy()
-	    self.widgetcounter = self.widgetcounter - 1		#añadido
+            self.widgetcounter = self.widgetcounter - 1
         del self.widgets[index:]
 
         self.add_widget(struct)
 
-	# poner alguna condición para no evaluar constantemente
-#	self.window.apply_config() #actualiza la configuracion en tiempo real
+        # poner alguna condición para no evaluar constantemente
+#        self.window.apply_config() #actualiza la configuracion en tiempo real
 
-	#Scroll automatico para cada widget añadido.
-	w,h = self.GetVirtualSizeTuple()			#añadido
-	self.Scroll(0,h)					#añadido
+        #Scroll automatico para cada widget añadido.
+        w,h = self.GetVirtualSizeTuple()
+        self.Scroll(0,h)
 
 
 
@@ -116,14 +116,14 @@ class PanelWidgets(wx.ScrolledWindow): #Panel):
                     widget.Destroy()
                     widget = None
                 if widget is not None:
-		    #Se fuerza a que panelWidgets consiga el foco en primer lugar
-		    self.SetFocus()						#añadido
+                    #Se fuerza a que panelWidgets consiga el foco en primer lugar
+                    self.SetFocus()
                     self.box.Add(widget , 0 , wx.EXPAND | wx.TOP | wx.BOTTOM | wx.LEFT | wx.RIGHT , PIXELS_MARGIN)
                     self.widgets.append(widget)
-		    self.widgetcounter = self.widgetcounter + 1			#añadido
-		#Gestion del foco del primer widget en panelWidgets
-		if self.widgetcounter == 1 and widget is not None:		#añadido
-		    widget.SetFocus()					#añadido
+                    self.widgetcounter = self.widgetcounter + 1
+                #Gestion del foco del primer widget en panelWidgets
+                if self.widgetcounter == 1 and widget is not None:
+                    widget.SetFocus()
                     
 #        for a in self.widgets:
             #a.Fit()
@@ -200,5 +200,5 @@ class PanelWidgets(wx.ScrolledWindow): #Panel):
     def event_struct_change(self, event):
         #print 'pulsou', event.struct, event.index
         self.display_add(event.struct, event.index)
-	self.window.apply_config()
+        self.window.apply_config()
 

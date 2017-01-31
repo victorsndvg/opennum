@@ -172,11 +172,11 @@ class TimeManager2():
         result = self.tracker.get_original_files()
 
         if self.mode == 1:
-	    if self.tracker.is_nodepvd:
-		for tr in self.trackerA:
-		    result.extend(tr.get_original_files())
-	    else:
-		result.extend(self.trackerA.get_original_files())
+            if self.tracker.is_nodepvd:
+                for tr in self.trackerA:
+                    result.extend(tr.get_original_files())
+            else:
+                result.extend(self.trackerA.get_original_files())
         if self.mode == 2:
             result.extend(self.tracker1.get_original_files())
             result.extend(self.tracker2.get_original_files())
@@ -216,16 +216,16 @@ class TimeManager2():
 
         mnames = []
 
-        tracker = self.tracker.get_tracker(index)				
+        tracker = self.tracker.get_tracker(index)
         if isinstance(tracker, basestring):
             return tracker
         else:
-	    if self.tracker.is_nodepvd:					#añadido
-		src = []						#añadido
-		for tr in tracker:					#añadido
-		    src.append(tr.get_src(mnames))			#añadido
-	    else:							#añadido
-                src = tracker.get_src(mnames)				#añadido
+            if self.tracker.is_nodepvd:
+                src = []
+                for tr in tracker:
+                    src.append(tr.get_src(mnames))
+            else:
+                src = tracker.get_src(mnames)
             if isinstance(src, basestring):
                 return src
                     
@@ -276,7 +276,7 @@ class TimeManager2():
 
         # para que non interpole tempo/frecuencia
         if self.interpolation is not True:
-            return self.recalculate(pi) # redondea cara á esquerda
+            return self.recalculate(pi) # redondea cara Ã¡ esquerda
 
         ti = self.times[pi].get('time')
         tf = self.times[pf].get('time')
@@ -297,7 +297,7 @@ class TimeManager2():
 
         # si ha cambiado el primer fichero ...
         if not (self.mode == 2 and self.index1 == pi):
-	    print '#1 si ha cambiado el primer fichero ..'
+            print '#1 si ha cambiado el primer fichero ..'
             tracker = self.tracker.get_tracker(pi)
             if isinstance(tracker, basestring):
                 return tracker
@@ -310,7 +310,7 @@ class TimeManager2():
 
         # si ha cambiado el segundo fichero ...
         if not (self.mode == 2 and self.index2 == pf):
-	    print '#2 si ha cambiado el segundo fichero ...'
+            print '#2 si ha cambiado el segundo fichero ...'
             tracker = self.tracker.get_tracker(pf)
             if isinstance(tracker, basestring):
                 return tracker
@@ -323,7 +323,7 @@ class TimeManager2():
 
         # si ha cambiado algun fichero
         if not (self.mode == 2 and self.index1 == pi and self.index2 == pf):
-	    print '#3 si ha cambiado algun fichero'
+            print '#3 si ha cambiado algun fichero'
 
             self.src = vtk.vtkInterpolateDataSetAttributes()
             
@@ -379,62 +379,62 @@ class TimeManager2():
         return self.changes
 
     #Returns a list with the field range
-    def get_source_range(self,src):							#añadido
-	r = None									#añadido
-	if self.attr_pc == 0:								#añadido
-	    if self.attr_sv == 0 and src.GetOutput().GetPointData().GetScalars(self.attr_fn) is not None: #añadido
-		r = src.GetOutput().GetPointData().GetScalars(self.attr_fn).GetRange(-1)#añadido
-	    elif self.attr_sv == 1 and src.GetOutput().GetPointData().GetVectors(self.attr_fn) is not None:#añadido
-		r = src.GetOutput().GetPointData().GetVectors(self.attr_fn).GetRange(-1)#añadido
-	elif self.attr_pc == 1:								#añadido
-	    if self.attr_sv == 0 and src.GetOutput().GetCellData().GetScalars(self.attr_fn) is not None:#añadido
-		r = src.GetOutput().GetCellData().GetScalars(self.attr_fn).GetRange(-1)	#añadido
-	    elif self.attr_sv == 1 and src.GetOutput().GetCellData().GetVectors(self.attr_fn) is not None:#añadido
-		r = src.GetOutput().GetCellData().GetVectors(self.attr_fn).GetRange(-1)	#añadido
-	if r is None:									#añadido
-	    return r
-	    r = src.GetOutput().GetScalarRange()					#añadido
+    def get_source_range(self,src):
+        r = None
+        if self.attr_pc == 0:
+            if self.attr_sv == 0 and src.GetOutput().GetPointData().GetScalars(self.attr_fn) is not None:
+                r = src.GetOutput().GetPointData().GetScalars(self.attr_fn).GetRange(-1)
+            elif self.attr_sv == 1 and src.GetOutput().GetPointData().GetVectors(self.attr_fn) is not None:
+                r = src.GetOutput().GetPointData().GetVectors(self.attr_fn).GetRange(-1)
+        elif self.attr_pc == 1:
+            if self.attr_sv == 0 and src.GetOutput().GetCellData().GetScalars(self.attr_fn) is not None:
+                r = src.GetOutput().GetCellData().GetScalars(self.attr_fn).GetRange(-1)
+            elif self.attr_sv == 1 and src.GetOutput().GetCellData().GetVectors(self.attr_fn) is not None:
+                r = src.GetOutput().GetCellData().GetVectors(self.attr_fn).GetRange(-1)
+        if r is None:
+            return r
+            r = src.GetOutput().GetScalarRange()
 
-	return list(r)									#añadido
-	
+        return list(r)
+
 
     def get_file_range(self, index):
         tracker = self.tracker.get_tracker(index)
         if isinstance(tracker, basestring):
             return tracker
         else:
-	    if self.tracker.is_nodepvd:							#añadido
-		src = []								#añadido
-		for tr in tracker:							#añadido
-		    src.append(tr.get_src())						#añadido
+            if self.tracker.is_nodepvd:
+                src = []
+                for tr in tracker:
+                    src.append(tr.get_src())
 
-	    else:
-		src = tracker.get_src()
-		if isinstance(src, basestring):
-		    return src
+            else:
+                src = tracker.get_src()
+                if isinstance(src, basestring):
+                    return src
 
         if self.assigner is not None:
-	    if self.tracker.is_nodepvd:							#añadido
-		import sourceVTK2							#añadido
-		r = None								#añadido	
-                self.assigner = sourceVTK2.get_append(src)				#añadido
-                self.assigner.Update()							#añadido
-		for s in src:								#añadido
-		    aux = self.get_source_range(s)					#añadido
-		    if aux is not None:							#añadido
-			if r is None:							#añadido
-			    r = aux							#añadido
-			else:								#añadido
-			    if aux[0] < r[0]:						#añadido
-				r[0]  = aux[0]						#añadido
-			    if aux[-1] > r[-1]:						#añadido
-				r[-1]  = aux[-1]		    			#añadido	
-	    else:
+            if self.tracker.is_nodepvd:
+                import sourceVTK2
+                r = None
+                self.assigner = sourceVTK2.get_append(src)
+                self.assigner.Update()
+                for s in src:
+                    aux = self.get_source_range(s)
+                    if aux is not None:
+                        if r is None:
+                            r = aux
+                        else:
+                            if aux[0] < r[0]:
+                                r[0]  = aux[0]
+                            if aux[-1] > r[-1]:
+                                r[-1]  = aux[-1]
+            else:
                 self.assigner.SetInputConnection(src.GetOutputPort())
                 self.assigner.Update()
-                r = self.get_source_range(src)						#añadido
+                r = self.get_source_range(src)
         else:
-	    r = self.get_source_range(src)						#añadido
+            r = self.get_source_range(src)
         
         print 'i', index, 't', self.times[index].get('time'), 'r', r
         
@@ -448,7 +448,7 @@ class TimeManager2():
         """
         # requires ordered sequence in self.times
 
-        # esto sólo, provoca que falle a interacción
+        # esto sÃ³lo, provoca que falle a interacciÃ³n
         #def callback(args1, args2):
         #    if cb is not None:
         #        cb(args1, args2)

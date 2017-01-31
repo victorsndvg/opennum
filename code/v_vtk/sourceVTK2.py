@@ -57,45 +57,45 @@ def get_source(filename):
     filenameencoded = filename.encode(sys.getfilesystemencoding()) # necesario en Windows por lo menos
 
     if filename.lower().endswith('.pvd'):
-	times = FilePVD.read(filename)
-	type = 'pvd'
-	src = [type,filenameencoded,times]
-#	fileinitime = times[0].get('file')
-#	filenameencoded = fileinitime.encode(sys.getfilesystemencoding())
-#    	if fileinitime.lower().endswith('.vtk'):
+        times = FilePVD.read(filename)
+        type = 'pvd'
+        src = [type,filenameencoded,times]
+#        fileinitime = times[0].get('file')
+#        filenameencoded = fileinitime.encode(sys.getfilesystemencoding())
+#            if fileinitime.lower().endswith('.vtk'):
 #            type = 'vtk'
 #            src = vtk.vtkUnstructuredGridReader()
 #            src.ReadAllScalarsOn()
 #            src.ReadAllVectorsOn()
 #            src.SetFileName(filenameencoded)
-#    	elif fileinitime.lower().endswith('.vtu'):
+#            elif fileinitime.lower().endswith('.vtu'):
 #            type = 'vtu'
 #            src = vtk.vtkXMLUnstructuredGridReader()
 #            src.SetFileName(filenameencoded)
     else:
-	if filename.lower().endswith('.vtk'):
+        if filename.lower().endswith('.vtk'):
             type = 'vtk'
-	    src = vtk.vtkUnstructuredGridReader()
+            src = vtk.vtkUnstructuredGridReader()
             src.ReadAllScalarsOn()
             src.ReadAllVectorsOn()
             src.SetFileName(filenameencoded)
-	elif filename.lower().endswith('.vtu'):
+        elif filename.lower().endswith('.vtu'):
             type = 'vtu'
             src = vtk.vtkXMLUnstructuredGridReader()
             src.SetFileName(filenameencoded)
-	elif filename.lower().endswith(vtkimagefileformats):
-	    createReader = vtk.vtkImageReader2Factory()
-	    src = createReader.CreateImageReader2(filename)
-	    src.SetFileName(filename)
-	else:
+        elif filename.lower().endswith(vtkimagefileformats):
+            createReader = vtk.vtkImageReader2Factory()
+            src = createReader.CreateImageReader2(filename)
+            src.SetFileName(filename)
+        else:
             return 'sourceVTK2: file extension of \''+filename+'\' not recognized'
 
-	try:
-	    src.Update()
-	except Exception, x:
-	    return 'sourceVTK2: unable to read '+ type +' file: \''+filename+'\': ' + repr(x)
+        try:
+            src.Update()
+        except Exception, x:
+            return 'sourceVTK2: unable to read '+ type +' file: \''+filename+'\': ' + repr(x)
     
-    	unselect_source(src)
+        unselect_source(src)
 
 #    print 'prints'
 #    prints(src)
@@ -129,8 +129,8 @@ def get_append(sources):
 # A patch is needed for run MergePointsOff(). You can find the patch at:
 # http://www.vtk.org/Bug/view.php?id=12460
 #    if int(str.split(vtk.vtkVersion.GetVTKVersion())[0]) == 5:
-#	if int(str.split(vtk.vtkVersion.GetVTKVersion())[1]) == 6:
-#	    src.MergePointsOff()
+#        if int(str.split(vtk.vtkVersion.GetVTKVersion())[1]) == 6:
+#            src.MergePointsOff()
     # comentado en favor doutro metodo
     #complement_missing_fields(sources) # #
     for s in sources:
@@ -306,13 +306,13 @@ def add_missing_field(index, domain, data, number, name, components):
     a.SetName(name)
 
     risco = True
-    if risco: # quizais mais r·pido
+    if risco: # quizais mais r√°pido
         l = components * number
         n = 0
         while n < l:
             a.SetValue(n,0.0)
             n += 1
-    else: # quizais m·is seguro
+    else: # quizais m√°is seguro
         t = 0
         while t < number:
             c = 0

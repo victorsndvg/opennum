@@ -8,7 +8,7 @@ import trees
 import NoDeep
 import Node
 import Menu
-import SubMenu     #añadido subsubmenus
+import SubMenu #añadido subsubmenus
 import Leaf
 import config
 import logging
@@ -43,15 +43,15 @@ class Menus(Node.Node):
 
 # load menu
     def load_file(self, filename=None):
-	    #print filename #code prior version 0.0.1
+        #print filename #code prior version 0.0.1
         logging.debug(filename)
         if filename is None:
             filename = config.FILE_MENULOCAL
         try:
             tree = trees.ET.parse(filename)
         except Exception , x:
-	    if filename == config.FILE_MENULOCAL:
-        	self.get_window().errormsg(u'Error loading menu file: \'' + filename + '\': ' + repr(x))
+            if filename == config.FILE_MENULOCAL:
+                self.get_window().errormsg(u'Error loading menu file: \'' + filename + '\': ' + repr(x))
             return False
 
         # this way, we do not discard data in case of error
@@ -77,11 +77,11 @@ class Menus(Node.Node):
                     num = num + 1
                     #Debemos asignar un indice a los subsubmenus para poder identificar sus eventos
                     #-------------------------------------------------------------------------------------------------------------------------------------
-                    for subsubmenu in submenu.get_children():                                                                 #añadido
-                        if isinstance(subsubmenu, SubMenu.SubMenu):                                                           #añadido
-                            self.indexed[num] = subsubmenu                                                                    #añadido
-                            subsubmenu.set_index(num)                                                                         #añadido
-                            num = num + 1                                                                                     #añadido
+                    for subsubmenu in submenu.get_children():
+                        if isinstance(subsubmenu, SubMenu.SubMenu):
+                            self.indexed[num] = subsubmenu
+                            subsubmenu.set_index(num)
+                            num = num + 1
                     #-------------------------------------------------------------------------------------------------------------------------------------
         return True
 
@@ -89,11 +89,11 @@ class Menus(Node.Node):
 
 #calculates unique numbers for submenu calls. podese reescribir o anterior
 #modificado para permitir recibir un indice de partida
-    def reindex(self, n=None):										
-	if n is None:
-	    num = 0
-	else:
-	    num = n
+    def reindex(self, n=None):
+        if n is None:
+            num = 0
+        else:
+            num = n
         self.indexed.clear()
         for menu in self.get_children():
             for submenu in menu.get_children():
@@ -102,12 +102,12 @@ class Menus(Node.Node):
                 num = num + 1
                 #Debemos reasignar un indice a los subsubmenus para poder identificar sus eventos
                 #---------------------------------------------------------------------------------------------------------------------
-                for subsubmenu in submenu.get_children():                                                                 #añadido
-                    if isinstance(subsubmenu, SubMenu.SubMenu):                                                           #añadido
-                        self.indexed[num] = subsubmenu                                                                    #añadido
-                        subsubmenu.set_index(num)                                                                         #añadido
-                        num = num + 1                                                                                     #añadido
-	return num
+                for subsubmenu in submenu.get_children():
+                    if isinstance(subsubmenu, SubMenu.SubMenu):
+                        self.indexed[num] = subsubmenu
+                        subsubmenu.set_index(num)
+                        num = num + 1
+        return num
                     #-------------------------------------------------------------------------------------------------------------------------------------
 
 

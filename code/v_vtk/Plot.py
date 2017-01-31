@@ -78,10 +78,10 @@ class Plot(wx.Panel):
         #print 'plotc', self.GetBackgroundColour()
         # se non poño esto, pinta o fondo dela e dos subpaneles gris, non do color por defecto.
         self.SetBackgroundColour(self.GetBackgroundColour())
-	# for scale bar
+        # for scale bar
         self.sb_hue = (0.66667,0.0) # blue->red
-	self.sv_saturation = (1.0,1.0)
-	self.sv_values = (1.0,1.0)
+        self.sv_saturation = (1.0,1.0)
+        self.sv_values = (1.0,1.0)
         #print 'plotc', self.GetBackgroundColour()
         
 
@@ -93,12 +93,12 @@ class Plot(wx.Panel):
 
         # para PlotReferences: segrega mallas adicionales (self.src2) de mallas principales (self.src)
         self.additional = False
-	self.wireMadd = None
-	self.wireAadd = None
-	self.additionalAlist = []	#lista de mallas adicionales
+        self.wireMadd = None
+        self.wireAadd = None
+        self.additionalAlist = [] #lista de mallas adicionales
         # datos para comprobar se unha fonte ten un campo
         self.fielddata = None
-	self.sbA = None
+        self.sbA = None
 
         self.window = parents[1] # to call some methods on it
         self.struct = parents[2] # to use it in constructor. FIX
@@ -116,11 +116,11 @@ class Plot(wx.Panel):
         
         self.widget = None
         self.widget2 = None
-	self.window2image = None
-	self.moviewriter = None
-	self.window2image2 = None
+        self.window2image = None
+        self.moviewriter = None
+        self.window2image2 = None
         self.imageappend = None
-	self.movie_saving = False
+        self.movie_saving = False
         
         if self.get_options().get(u'split') is True: # excepcional
             
@@ -331,16 +331,16 @@ class Plot(wx.Panel):
             # en algun caso vtkAssignAttribute duplicado
             if pc is not None and sv is not None and fn is not None:
                 self.timemanager.set_attributes(fn, sv, pc)
-	    #se considera que todos los trackers pueden tener mallas adicionales
-#	    self.set_additional(False)
-#	    self.has_src = False
-	    #si trackernodefiles.is_nodepvd tiene series temporales y mallas adicionales. deprecated
-#	    if self.tracker.is_nodepvd:								#añadido
-#		self.has_src = True								#añadido
-#            	self.set_additional(True)							#añadido
-#	    else:										#añadido
-#		self.has_src = False
-#            	self.set_additional(False) # se non dá excepción ao intentar usar self.src2=None en add_additional_2
+            #se considera que todos los trackers pueden tener mallas adicionales
+#            self.set_additional(False)
+#            self.has_src = False
+            #si trackernodefiles.is_nodepvd tiene series temporales y mallas adicionales. deprecated
+#            if self.tracker.is_nodepvd:
+#                self.has_src = True
+#                    self.set_additional(True)
+#            else:
+#                self.has_src = False
+#                    self.set_additional(False) # se non dá excepción ao intentar usar self.src2=None en add_additional_2
         else:
             self.has_src = True
 
@@ -371,9 +371,9 @@ class Plot(wx.Panel):
                 return False
 
         # para os pvds ok: self.has_src é false
-	if self.has_src and self.timemanager is not None:
-	    res = self.update_tracker_source(self.timemanager.indexA)
-	else:
+        if self.has_src and self.timemanager is not None:
+            res = self.update_tracker_source(self.timemanager.indexA)
+        else:
             res = self.update_tracker_source()
         if isinstance(res,basestring):
             self.window.errormsg(res)
@@ -455,10 +455,10 @@ class Plot(wx.Panel):
         # en get_src se llama a update
 
         if self.has_src:
-	    if tracker.is_nodepvd:					#añadido
-		tracker.get_src(None,self.timemanager.indexA)		#añadido
-	    else:							#añadido
-                tracker.get_src() #				
+            if tracker.is_nodepvd:
+                tracker.get_src(None,self.timemanager.indexA)
+            else:
+                tracker.get_src()
             if self.revision != tracker.get_revision():
                 return True
             if self.revision_src != tracker.get_revision_src():
@@ -488,11 +488,11 @@ class Plot(wx.Panel):
     def update_tracker_pvd(self):
         if self.timemanager is None:
             return True
-	#Se captura el error en la actualizacion de trackerpvd vacio o con mallas adicionales	
-	try:									#añadido
-	    res = self.timemanager.set_tracker(self.tracker)
-	except:									#añadido
-	    res = True								#añadido
+        #Se captura el error en la actualizacion de trackerpvd vacio o con mallas adicionales
+        try:
+            res = self.timemanager.set_tracker(self.tracker)
+        except:
+            res = True
 
         if isinstance(res,basestring):
             return 'Error initializing for .pvd: '+res
@@ -515,17 +515,17 @@ class Plot(wx.Panel):
 
         mnames = []
 
-	#Con trackerformula2 se actualizan las mallas adicionales en add_additional_2
+        #Con trackerformula2 se actualizan las mallas adicionales en add_additional_2
         if not self.has_src:
-	    return True
-        		
-        if self.additional:								#añadido
-            src = self.tracker.get_src_group_f(1, self.fielddata, mnames,index)		#añadido
-            if src is None or isinstance(src, basestring):				#añadido
-                return 'Error obtaining VTK source object (main): ' + unicode(src)	#añadido
+            return True
+                        
+        if self.additional:
+            src = self.tracker.get_src_group_f(1, self.fielddata, mnames,index)
+            if src is None or isinstance(src, basestring):
+                return 'Error obtaining VTK source object (main): ' + unicode(src)
             src2 = self.tracker.get_src_group_f(2, self.fielddata, mnames,index) # pode ser None: non ten
-            if src2 is None or isinstance(src2, basestring):				#añadido
-                return 'Error obtaining VTK source object (additional): ' + unicode(src2)#añadido
+            if src2 is None or isinstance(src2, basestring):
+                return 'Error obtaining VTK source object (additional): ' + unicode(src2)
         else:
             src = self.tracker.get_src(mnames)
             if src is None or isinstance(src, basestring):
@@ -598,23 +598,23 @@ class Plot(wx.Panel):
                 return 'Error obtaining source for .pvd'
 
             if self.has_assign:
-		if self.tracker.is_nodepvd:								#añadido
-		    if self.src2 is None:								#añadido
-			self.src2 = vtk.vtkAssignAttribute()						#añadido
-		    src = self.tracker.get_src_group_f(1, self.fielddata, mnames,self.timemanager.indexA)#añadido
-	            if src is None or isinstance(src, basestring):					#añadido
-        	        return 'Error obtaining VTK source object (main): ' + unicode(src)		#añadido
-		    self.src.SetInputConnection(src.GetOutputPort())					#añadido
-		    self.src.Update()									#añadido
-		    src2 = self.tracker.get_src_group_f(2, self.fielddata, mnames,self.timemanager.indexA)#añadido
-	            if src is None or isinstance(src, basestring):					#añadido
-        	        return 'Error obtaining VTK source object (additional): ' + unicode(src)	#añadido
-		    self.src2.SetInputConnection(src2.GetOutputPort())					#añadido
-		    self.src2.Update()									#añadido
-		else:											#añadido
-                    self.src.SetInputConnection(src.GetOutputPort())					#añadido
-		    self.src2 = None
-                changes['new'] = False						
+                if self.tracker.is_nodepvd:
+                    if self.src2 is None:
+                        self.src2 = vtk.vtkAssignAttribute()
+                    src = self.tracker.get_src_group_f(1, self.fielddata, mnames,self.timemanager.indexA)
+                    if src is None or isinstance(src, basestring):
+                        return 'Error obtaining VTK source object (main): ' + unicode(src)
+                    self.src.SetInputConnection(src.GetOutputPort())
+                    self.src.Update()
+                    src2 = self.tracker.get_src_group_f(2, self.fielddata, mnames,self.timemanager.indexA)
+                    if src is None or isinstance(src, basestring):
+                        return 'Error obtaining VTK source object (additional): ' + unicode(src)
+                    self.src2.SetInputConnection(src2.GetOutputPort())
+                    self.src2.Update()
+                else:
+                    self.src.SetInputConnection(src.GetOutputPort())
+                    self.src2 = None
+                changes['new'] = False
             else:
                 self.src = src
                 
@@ -627,14 +627,14 @@ class Plot(wx.Panel):
         ret = self.src_update0(changes)
         
         if render:
-	    if self.window2image is not None and self.moviewriter is not None and self.movie_saving:	#añadido
-       		if self.get_options().get(u'split'):
-		    self.window2image.Modified()								#añadido
-		    self.window2image2.Modified()								#añadido
-		    self.imageappend.Update()								#añadido			
-		else:
-		    self.window2image.Modified()								#añadido
-		self.moviewriter.Write()								#añadido
+            if self.window2image is not None and self.moviewriter is not None and self.movie_saving:
+                if self.get_options().get(u'split'):
+                    self.window2image.Modified()
+                    self.window2image2.Modified()
+                    self.imageappend.Update()
+                else:
+                    self.window2image.Modified()
+                self.moviewriter.Write()
             self.do_render() # legend needs this
         
         return True
@@ -720,7 +720,7 @@ class Plot(wx.Panel):
             logging.debug(u'interactor changing')
         else:
             self.iren = last
-            #print 'interactor keeping' #, self.iren  #code prior version 0.0.1
+            #print 'interactor keeping' #, self.iren #code prior version 0.0.1
             logging.debug(u'interactor keeping')
 
 
@@ -808,69 +808,69 @@ class Plot(wx.Panel):
 # <additional>
     def add_additional_2(self):
         if self.additional:
-	    for actor in self.additionalAlist:					#añadido
-		self.rens[0].RemoveActor(actor)					#añadido
-	    self.additionalAlist= []
-	    try:
-		if self.src2 is None and not self.has_src:
-		# Mallas adicionales con trackerformula2
-		    self.additionaltracker = self.tracker.get_additional_trackers(self.data1['filesmesh2'])		#añadido
-		    # Si existen mallas adicionales se añaden a la lista de actores y al render
-		    if len(self.additionaltracker) > 0:
-			for tr in self.additionaltracker:
-			    self.wireMadd = vtk.vtkDataSetMapper()
-			    self.wireMadd.SetInputConnection(tr.get_src().GetOutputPort())
-			    self.wireMadd.ScalarVisibilityOff()
-			    self.wireAadd = vtk.vtkActor()
-			    self.wireAadd.SetMapper(self.wireMadd)
-			    self.wireAadd.GetProperty().SetRepresentationToWireframe()
-			    self.wireAadd.GetProperty().SetColor(mesh3_color)
-			    self.rens[0].AddActor(self.wireAadd) # additional meshes
-			    self.additionalAlist.append(self.wireAadd)
-		else:
-		# Mallas adicionales en otros casos
-		# Si existen mallas adicionales se añaden a la lista de actores y al render
-		    self.wireMadd = vtk.vtkDataSetMapper()
-		    self.wireMadd.SetInputConnection(self.src2.GetOutputPort())
-		    self.wireMadd.ScalarVisibilityOff()
-		    self.wireAadd = vtk.vtkActor()
-		    self.wireAadd.SetMapper(self.wireMadd)
-		    self.wireAadd.GetProperty().SetRepresentationToWireframe()
-		    self.wireAadd.GetProperty().SetColor(mesh3_color)
-		    self.rens[0].AddActor(self.wireAadd) # additional meshes
-		    self.additionalAlist.append(self.wireAadd)
-	    except:
-		pass
-#		self.set_additional(False)
+            for actor in self.additionalAlist:
+                self.rens[0].RemoveActor(actor)
+            self.additionalAlist= []
+            try:
+                if self.src2 is None and not self.has_src:
+                # Mallas adicionales con trackerformula2
+                    self.additionaltracker = self.tracker.get_additional_trackers(self.data1['filesmesh2'])
+                    # Si existen mallas adicionales se añaden a la lista de actores y al render
+                    if len(self.additionaltracker) > 0:
+                        for tr in self.additionaltracker:
+                            self.wireMadd = vtk.vtkDataSetMapper()
+                            self.wireMadd.SetInputConnection(tr.get_src().GetOutputPort())
+                            self.wireMadd.ScalarVisibilityOff()
+                            self.wireAadd = vtk.vtkActor()
+                            self.wireAadd.SetMapper(self.wireMadd)
+                            self.wireAadd.GetProperty().SetRepresentationToWireframe()
+                            self.wireAadd.GetProperty().SetColor(mesh3_color)
+                            self.rens[0].AddActor(self.wireAadd) # additional meshes
+                            self.additionalAlist.append(self.wireAadd)
+                else:
+                # Mallas adicionales en otros casos
+                # Si existen mallas adicionales se añaden a la lista de actores y al render
+                    self.wireMadd = vtk.vtkDataSetMapper()
+                    self.wireMadd.SetInputConnection(self.src2.GetOutputPort())
+                    self.wireMadd.ScalarVisibilityOff()
+                    self.wireAadd = vtk.vtkActor()
+                    self.wireAadd.SetMapper(self.wireMadd)
+                    self.wireAadd.GetProperty().SetRepresentationToWireframe()
+                    self.wireAadd.GetProperty().SetColor(mesh3_color)
+                    self.rens[0].AddActor(self.wireAadd) # additional meshes
+                    self.additionalAlist.append(self.wireAadd)
+            except:
+                pass
+#                self.set_additional(False)
 
 
-    def check_additional(self, changes):						#modificado
-	self.additionaltracker = []							#añadido
-        if self.additional:# and changes.get('new'): # así ?				#modificado
-	    if changes.get('new') and self.wireMadd is not None:			#añadido
-	        self.wireMadd.SetInputConnection(self.src2.GetOutputPort())		#modificado
-	    else:									#añadido
-		# Actualización de plots
-		self.add_additional_2()							#añadido
-		# En el caso de no haber mallas adicionales se borra la lista de sus actores del render
-		if self.src2 is None:							#añadido
-		    for actor in self.additionalAlist:					#añadido
-			self.rens[0].RemoveActor(actor)					#añadido
-		    self.additionalAlist = []						#añadido
-                    self.wireMadd = None						#añadido
-		    self.wireAadd = None						#añadido
-		    # Si es un trackerformula se actualizan las mallas adicionales
-		    if not self.has_src and len(self.additionaltracker) > 0:		#añadido
-			self.add_additional_2()						#añadido
+    def check_additional(self, changes):
+        self.additionaltracker = []
+        if self.additional:# and changes.get('new'): # así ?
+            if changes.get('new') and self.wireMadd is not None:
+                self.wireMadd.SetInputConnection(self.src2.GetOutputPort())
+            else:
+                # Actualización de plots
+                self.add_additional_2()
+                # En el caso de no haber mallas adicionales se borra la lista de sus actores del render
+                if self.src2 is None:
+                    for actor in self.additionalAlist:
+                        self.rens[0].RemoveActor(actor)
+                    self.additionalAlist = []
+                    self.wireMadd = None
+                    self.wireAadd = None
+                    # Si es un trackerformula se actualizan las mallas adicionales
+                    if not self.has_src and len(self.additionaltracker) > 0:
+                        self.add_additional_2()
 
-	else: #Si no hay que añadir mallas adicionales, elimina las obsoletas		#añadido
-	    if self.wireAadd is not None:						#añadido
-		for actor in self.additionalAlist:					#añadido
-		    self.rens[0].RemoveActor(actor)					#añadido
-		self.additionalAlist = []						#añadido
-                self.wireMadd = None							#añadido
-		self.wireAadd = None							#añadido
-		self.src2 = None							#añadido
+        else: #Si no hay que añadir mallas adicionales, elimina las obsoletas
+            if self.wireAadd is not None:
+                for actor in self.additionalAlist:
+                    self.rens[0].RemoveActor(actor)
+                self.additionalAlist = []
+                self.wireMadd = None
+                self.wireAadd = None
+                self.src2 = None
 
 # </additional>
 
@@ -931,8 +931,8 @@ class Plot(wx.Panel):
     def add_scalarbar_2(self, look):
         # reverse rainbow [red->blue] -> [blue->red]
         look.SetHueRange(self.sb_hue)
-	look.SetSaturationRange(self.sv_saturation)
-	look.SetValueRange(self.sv_values)
+        look.SetSaturationRange(self.sv_saturation)
+        look.SetValueRange(self.sv_values)
         
         self.sbA = vtk.vtkScalarBarActor()
         self.sbA.SetLookupTable(look)
@@ -961,25 +961,25 @@ class Plot(wx.Panel):
     def scalarbar_change_color(self, hue=None, sat=None, val=None, style=None):
         if not self.done:
             return
-	look = self.sbA.GetLookupTable()
-	if style is not None:
-	    if style == u'Linear':
-		look.SetRampToLinear()
-	    elif style == u'Curve':
-		look.SetRampToSCurve()
-	    elif style == u'Sqrt':
-		look.SetRampToSQRT()
-	if hue is not None:
-	    self.sb_hue = hue
-	    look.SetHueRange(self.sb_hue)
-	if sat is not None:
-	    self.sb_saturation = sat
-	    look.SetSaturationRange(self.sb_saturation)
-	if val is not None:
-	    self.sb_values = val
-	    look.SetValueRange(self.sb_values)
-	look.Build()
-	self.do_render()
+        look = self.sbA.GetLookupTable()
+        if style is not None:
+            if style == u'Linear':
+                look.SetRampToLinear()
+            elif style == u'Curve':
+                look.SetRampToSCurve()
+            elif style == u'Sqrt':
+                look.SetRampToSQRT()
+        if hue is not None:
+            self.sb_hue = hue
+            look.SetHueRange(self.sb_hue)
+        if sat is not None:
+            self.sb_saturation = sat
+            look.SetSaturationRange(self.sb_saturation)
+        if val is not None:
+            self.sb_values = val
+            look.SetValueRange(self.sb_values)
+        look.Build()
+        self.do_render()
 
 
 
@@ -1082,10 +1082,10 @@ class Plot(wx.Panel):
         self.rens[0].AddActor(self.cubeA)
 
 
-	#Añadido: por defecto outline oculto
-        state = self.button_outline.GetValue()		#añadido
-        self.outA.SetVisibility(state)			#añadido
-        self.cubeA.SetVisibility(state)			#añadido
+        #Añadido: por defecto outline oculto
+        state = self.button_outline.GetValue()
+        self.outA.SetVisibility(state)
+        self.cubeA.SetVisibility(state)
 
 
 # debuxa tres eixos coloreados en (0,0) pareceme
@@ -1328,15 +1328,15 @@ class Plot(wx.Panel):
         if not self.done:
             return
 
-	if movie:
+        if movie:
             return self.save_movie_from_window(self.widget.GetRenderWindow())
-	else:
+        else:
             if self.get_options().get(u'split') is True: # excepcional
-            	self.save_from_window(self.widget.GetRenderWindow(), u'Select a file to save the scene on the left')
-            	self.save_from_window(self.widget2.GetRenderWindow(), u'Select a file to save the scene on the right')
+                self.save_from_window(self.widget.GetRenderWindow(), u'Select a file to save the scene on the left')
+                self.save_from_window(self.widget2.GetRenderWindow(), u'Select a file to save the scene on the right')
             else:
-            	self.save_from_window(self.widget.GetRenderWindow())
-	return None
+                self.save_from_window(self.widget.GetRenderWindow())
+        return None
 
 
 
@@ -1345,7 +1345,7 @@ class Plot(wx.Panel):
 # # # # </save image as>
 
     def save_movie_from_window(self, renderwindow, title=None):
-	return auxSave.save_movie_renderwindow(self.window, renderwindow, title)
+        return auxSave.save_movie_renderwindow(self.window, renderwindow, title)
 
 # # # # <center>
 # center despois de quitar mallas adicionais, considéraas ainda para calcular o centro... => hide / delete
@@ -1364,7 +1364,7 @@ class Plot(wx.Panel):
     def hide_center_1(self):
         self.center_button.Hide()
         self.orient_widget.Hide()
-	self.legend_button.Hide()
+        self.legend_button.Hide()
         
 # restore cam: center
     def center_event(self, event):
@@ -1576,84 +1576,84 @@ class Plot(wx.Panel):
 # # # # </legend>
 
 # # # # Opacity: 100%/Opacity: 75%/Opacity: 50%/Opacity: 25%/Opacity: 0%
-    def add_opacity_1(self, selection=1):								#añadido
-        self.opacity_pos = selection									#añadido
+    def add_opacity_1(self, selection=1):
+        self.opacity_pos = selection
         self.opacity_choices = [u'Opacity: 100%', u'Opacity: 90%', u'Opacity: 80%', u'Opacity: 70%',\
-u'Opacity: 60%', u'Opacity: 50%', u'Opacity: 40%', u'Opacity: 30%', u'Opacity: 20%', u'Opacity: 10%']	#añadido
-        self.opacity_widget = wx.Choice(self.plotbar, wx.ID_ANY, choices = self.opacity_choices)	#añadido
-        self.opacity_widget.SetSelection(self.opacity_pos) # in windows appears without selection	#añadido
-        self.opacity_widget.Bind(wx.EVT_CHOICE, self.handler_opacity)					#añadido
-        self.plotbar.add(self.opacity_widget)								#añadido
+u'Opacity: 60%', u'Opacity: 50%', u'Opacity: 40%', u'Opacity: 30%', u'Opacity: 20%', u'Opacity: 10%']
+        self.opacity_widget = wx.Choice(self.plotbar, wx.ID_ANY, choices = self.opacity_choices)
+        self.opacity_widget.SetSelection(self.opacity_pos) # in windows appears without selection
+        self.opacity_widget.Bind(wx.EVT_CHOICE, self.handler_opacity)
+        self.plotbar.add(self.opacity_widget)
 
 
-    def add_opacity_2(self, obj):									#añadido
-        self.opacity_data = obj # Actor array!								#añadido
+    def add_opacity_2(self, obj):
+        self.opacity_data = obj # Actor array!
 
 
-    def handler_opacity(self, event):									#añadido
-        if not self.done:										#añadido
-            return											#añadido
-        self.opacity_pos = self.opacity_widget.GetSelection()						#añadido
-        self.adjust_opacity()										#añadido
-        self.widget.Render()										#añadido
+    def handler_opacity(self, event):
+        if not self.done:
+            return
+        self.opacity_pos = self.opacity_widget.GetSelection()
+        self.adjust_opacity()
+        self.widget.Render()
 
 
-    def adjust_opacity(self):										#añadido
-	#Se añade el actor de la barra de escala
-	if self.sbA is not None:
-	    self.opacity_data.append(self.sbA)								#añadido
-	for actor in self.opacity_data:									#añadido
-            if self.opacity_pos == 0:									#añadido
-		actor.GetProperty().SetOpacity(1.)							#añadido
-            elif self.opacity_pos == 1:									#añadido
-		actor.GetProperty().SetOpacity(0.9)							#añadido
-            elif self.opacity_pos == 2:									#añadido
-		actor.GetProperty().SetOpacity(0.8)							#añadido
-            elif self.opacity_pos == 3:									#añadido
-		actor.GetProperty().SetOpacity(0.7)							#añadido
-	    elif self.opacity_pos == 4:									#añadido
-		actor.GetProperty().SetOpacity(0.6)							#añadido
-	    elif self.opacity_pos == 5:									#añadido
-		actor.GetProperty().SetOpacity(0.5)							#añadido
-	    elif self.opacity_pos == 6:									#añadido
-		actor.GetProperty().SetOpacity(0.4)							#añadido
-	    elif self.opacity_pos == 7:									#añadido
-		actor.GetProperty().SetOpacity(0.3)							#añadido
-	    elif self.opacity_pos == 8:									#añadido
-		actor.GetProperty().SetOpacity(0.2)							#añadido
-	    elif self.opacity_pos == 9:									#añadido
-		actor.GetProperty().SetOpacity(0.1)							#añadido
+    def adjust_opacity(self):
+        #Se añade el actor de la barra de escala
+        if self.sbA is not None:
+            self.opacity_data.append(self.sbA)
+        for actor in self.opacity_data:
+            if self.opacity_pos == 0:
+                actor.GetProperty().SetOpacity(1.)
+            elif self.opacity_pos == 1:
+                actor.GetProperty().SetOpacity(0.9)
+            elif self.opacity_pos == 2:
+                actor.GetProperty().SetOpacity(0.8)
+            elif self.opacity_pos == 3:
+                actor.GetProperty().SetOpacity(0.7)
+            elif self.opacity_pos == 4:
+                actor.GetProperty().SetOpacity(0.6)
+            elif self.opacity_pos == 5:
+                actor.GetProperty().SetOpacity(0.5)
+            elif self.opacity_pos == 6:
+                actor.GetProperty().SetOpacity(0.4)
+            elif self.opacity_pos == 7:
+                actor.GetProperty().SetOpacity(0.3)
+            elif self.opacity_pos == 8:
+                actor.GetProperty().SetOpacity(0.2)
+            elif self.opacity_pos == 9:
+                actor.GetProperty().SetOpacity(0.1)
 # # # # Opacity: 100%/Opacity: 75%/Opacity: 50%/Opacity: 25%/Opacity: 0%
 
 ## axes indicator
     def add_axes_2(self):
         #return
 
-	#print 'AXES2AXES2AXES2AXES2AXES2AXES2AXES2AXES2AXES2'
-	#print 'AXES2AXES2AXES2AXES2AXES2AXES2AXES2AXES2AXES2'
-	#print 'AXES2AXES2AXES2AXES2AXES2AXES2AXES2AXES2AXES2'
+        #print 'AXES2AXES2AXES2AXES2AXES2AXES2AXES2AXES2AXES2'
+        #print 'AXES2AXES2AXES2AXES2AXES2AXES2AXES2AXES2AXES2'
+        #print 'AXES2AXES2AXES2AXES2AXES2AXES2AXES2AXES2AXES2'
 
         renai = self.add_ren() 
-	renai.InteractiveOff()
-	a = vtk.vtkBorderWidget()
-	#dist = self.rens[0].GetActiveCamera().GetDistance()
-	renai.SetActiveCamera(self.rens[0].GetActiveCamera())
-	#renai.GetActiveCamera().SetPosition(self.rens[0].GetActiveCamera().GetPosition())
-	#renai.GetActiveCamera().SetFocalPoint(self.rens[0].GetActiveCamera().GetFocalPoint())
-	#renai.GetActiveCamera().SetViewUp(self.rens[0].GetActiveCamera().GetViewUp())
-	renai.GetActiveCamera().SetDistance(self.rens[0].GetActiveCamera().GetDistance())	
-	renai.GetActiveCamera().SetFocalPoint(self.rens[0].GetActiveCamera().GetDirectionOfProjection())
-	renai.SetBackground(background_color)
+        renai.InteractiveOff()
+        a = vtk.vtkBorderWidget()
+        #dist = self.rens[0].GetActiveCamera().GetDistance()
+        renai.SetActiveCamera(self.rens[0].GetActiveCamera())
+        #renai.GetActiveCamera().SetPosition(self.rens[0].GetActiveCamera().GetPosition())
+        #renai.GetActiveCamera().SetFocalPoint(self.rens[0].GetActiveCamera().GetFocalPoint())
+        #renai.GetActiveCamera().SetViewUp(self.rens[0].GetActiveCamera().GetViewUp())
+        renai.GetActiveCamera().SetDistance(self.rens[0].GetActiveCamera().GetDistance())
+        renai.GetActiveCamera().SetFocalPoint(self.rens[0].GetActiveCamera().GetDirectionOfProjection())
+        renai.SetBackground(background_color)
         #self.widget.GetRenderWindow().AddRenderer(renai)
         renai.SetViewport(0.0, 0.0, 0.15, 0.2)
         self.axesIndicator = vtk.vtkAxesActor()
-	self.axesIndicator.SetTotalLength(3.5,3.5,3.5)
+        self.axesIndicator.SetTotalLength(3.5,3.5,3.5)
         vomw = vtk.vtkOrientationMarkerWidget()
-	self.set_iren()
-	vomw.SetInteractor( self.iren )
+        self.set_iren()
+        vomw.SetInteractor( self.iren )
         vomw.SetOutlineColor( 0.9300, 0.5700, 0.1300 )
         vomw.SetOrientationMarker( self.axesIndicator )
-	vomw.InteractiveOn( )
+        vomw.InteractiveOn( )
 
 
         renai.AddActor(self.axesIndicator)
@@ -1683,8 +1683,8 @@ u'Opacity: 60%', u'Opacity: 50%', u'Opacity: 40%', u'Opacity: 30%', u'Opacity: 2
     def set_data(self, data):
         self.data1['filenames'] = data.get('filenames')
         self.data1['dim'] = data.get('dim')
-	# Necesario para las mallas adicionales en trackerformula2
-        self.data1['filesmesh2'] = data.get('filesmesh2')			#añadido
+        # Necesario para las mallas adicionales en trackerformula2
+        self.data1['filesmesh2'] = data.get('filesmesh2')
         self.call_dim(False) # calculates dim to show # uses self.tracker
         self.update_legend_data()
 
@@ -1727,7 +1727,7 @@ u'Opacity: 60%', u'Opacity: 50%', u'Opacity: 40%', u'Opacity: 30%', u'Opacity: 2
         #print 'printcam'
         #print 'gfp', ren.GetActiveCamera().GetFocalPoint()
         #print 'gp', ren.GetActiveCamera().GetPosition()
-        #print 'gvu', ren.GetActiveCamera().GetViewUp()  #code prior version 0.0.1
+        #print 'gvu', ren.GetActiveCamera().GetViewUp() #code prior version 0.0.1
         logging.debug(u'printcam')
         logging.debug(ren.GetActiveCamera().GetFocalPoint())  
         logging.debug(ren.GetActiveCamera().GetPosition())
@@ -1959,93 +1959,93 @@ u'Opacity: 60%', u'Opacity: 50%', u'Opacity: 40%', u'Opacity: 30%', u'Opacity: 2
 # establecemos el escritor de video
     def set_movie_writer(self, codec,filename,rate):
 
-	self.moviewriter = None							#añadido
-        codecs = [u'AVI',u'FFMPEGHQ',u'FFMPEGLQ',u'OGGTHEORA',u'MPEG2']		#añadido
-	#print codec  #code prior version 0.0.1
+        self.moviewriter = None
+        codecs = [u'AVI',u'FFMPEGHQ',u'FFMPEGLQ',u'OGGTHEORA',u'MPEG2']
+        #print codec  #code prior version 0.0.1
         logging.debug(codec)
-	index = codecs.index(codec)						#añadido
-        if codec in codecs:							#añadido
-	    try:								#añadido
-	    	if index == 0:		#AVI					#añadido
-		    self.moviewriter = vtk.vtkAVIWriter()			#añadido
-		    self.moviewriter.SetRate(rate)				#añadido
-		    self.moviewriter.SetQuality(2)				#añadido
-	    	elif index == 1:	#FFMEPGHQ				#añadido
-		    self.moviewriter = vtk.vtkFFMPEGWriter()			#añadido
-		    self.moviewriter.SetRate(rate)				#añadido		
-		    self.moviewriter.SetBitRate(1024*1024*30)			#añadido
-		    self.moviewriter.SetBitRateTolerance(1024*1024*30)		#añadido
-		    self.moviewriter.SetQuality(2)				#añadido	
-	    	elif index == 2:	#FFMEPGLQ				#añadido
-		    self.moviewriter = vtk.vtkFFMPEGWriter()			#añadido
-		    self.moviewriter.SetRate(rate)				#añadido		
-		    self.moviewriter.SetBitRate(800*800*30)			#añadido
-		    self.moviewriter.SetBitRateTolerance(800*800*30)		#añadido
-		    self.moviewriter.SetQuality(2)				#añadido	
-	    	elif index == 3:	#OGGTHEORA				#añadido
-		    self.moviewriter = vtk.vtkOggTheoraWriter()			#añadido
-		    self.moviewriter.SetRate(rate)				#añadido
-		    self.moviewriter.SetQuality(2)				#añadido
-	    	elif index == 4:	#MPEG2					#añadido
-		    self.moviewriter = vtk.vtkMPEG2Writer()			#añadido
-		    #self.moviewriter.SetRate(rate)				#añadido
-		    #self.moviewriter.SetQuality(2)				#añadido
-		self.moviewriter.SetFileName(filename)				#añadido
-	    except:								#añadido
-		return u'ERROR: '+codec+ ' codec not found'			#añadido
-	else:
-	    return u'ERROR: '+codec+ ' not yet supported'			#añadido
+        index = codecs.index(codec)
+        if codec in codecs:
+            try:
+                if index == 0:      #AVI
+                    self.moviewriter = vtk.vtkAVIWriter()
+                    self.moviewriter.SetRate(rate)
+                    self.moviewriter.SetQuality(2)
+                elif index == 1:    #FFMEPGHQ
+                    self.moviewriter = vtk.vtkFFMPEGWriter()
+                    self.moviewriter.SetRate(rate)
+                    self.moviewriter.SetBitRate(1024*1024*30)
+                    self.moviewriter.SetBitRateTolerance(1024*1024*30)
+                    self.moviewriter.SetQuality(2)
+                elif index == 2:    #FFMEPGLQ
+                    self.moviewriter = vtk.vtkFFMPEGWriter()
+                    self.moviewriter.SetRate(rate)
+                    self.moviewriter.SetBitRate(800*800*30)
+                    self.moviewriter.SetBitRateTolerance(800*800*30)
+                    self.moviewriter.SetQuality(2)
+                elif index == 3:    #OGGTHEORA
+                    self.moviewriter = vtk.vtkOggTheoraWriter()
+                    self.moviewriter.SetRate(rate)
+                    self.moviewriter.SetQuality(2)
+                elif index == 4:    #MPEG2
+                    self.moviewriter = vtk.vtkMPEG2Writer()
+                    #self.moviewriter.SetRate(rate)
+                    #self.moviewriter.SetQuality(2)
+                self.moviewriter.SetFileName(filename)
+            except:
+                return u'ERROR: '+codec+ ' codec not found'
+        else:
+            return u'ERROR: '+codec+ ' not yet supported'
 
 
 ################################################################################################
 # establecemos el capturador de la ventana de render
     def set_image_filter(self,moviewriter):
 
-	self.window2image = None						#añadido
-	self.window2image2 = None						#añadido
+        self.window2image = None
+        self.window2image2 = None
 
-	self.window2image = vtk.vtkWindowToImageFilter()			#añadido
-	self.window2image.SetInput(self.widget.GetRenderWindow())		#añadido
+        self.window2image = vtk.vtkWindowToImageFilter()
+        self.window2image.SetInput(self.widget.GetRenderWindow())
 
-	if self.get_options().get(u'split'):
-	    self.window2image2 = vtk.vtkWindowToImageFilter()			#añadido
-	    self.window2image2.SetInput(self.widget2.GetRenderWindow())		#añadido
-	    self.imageappend = vtk.vtkImageAppend()				#añadido
-	    self.imageappend.PreserveExtentsOff()				#añadido
-	    self.imageappend.SetAppendAxis(0)					#añadido	
-	    if vtk.vtkVersion.GetVTKMajorVersion() < 6:
-	        self.imageappend.SetInput(0,self.window2image.GetOutput())		#añadido
-	        self.imageappend.SetInput(1,self.window2image2.GetOutput())		#añadido
-	    else:
-	        self.imageappend.SetInputData(0,self.window2image.GetOutput())		#añadido
-	        self.imageappend.SetInputData(1,self.window2image2.GetOutput())		#añadido
-	    self.imageappend.Update()						#añadido
-	    moviewriter.SetInputConnection(self.imageappend.GetOutputPort())#añadido
-	else:									#añadido
-	    moviewriter.SetInputConnection(self.window2image.GetOutputPort()) #añadido
+        if self.get_options().get(u'split'):
+            self.window2image2 = vtk.vtkWindowToImageFilter()
+            self.window2image2.SetInput(self.widget2.GetRenderWindow())
+            self.imageappend = vtk.vtkImageAppend()
+            self.imageappend.PreserveExtentsOff()
+            self.imageappend.SetAppendAxis(0)
+            if vtk.vtkVersion.GetVTKMajorVersion() < 6:
+                self.imageappend.SetInput(0,self.window2image.GetOutput())
+                self.imageappend.SetInput(1,self.window2image2.GetOutput())
+            else:
+                self.imageappend.SetInputData(0,self.window2image.GetOutput())
+                self.imageappend.SetInputData(1,self.window2image2.GetOutput())
+            self.imageappend.Update()
+            moviewriter.SetInputConnection(self.imageappend.GetOutputPort())
+        else:
+            moviewriter.SetInputConnection(self.window2image.GetOutputPort())
 
 ################################################################################################
 # Exportar animación de la ventana de render a video
     def start_movie_saving(self, movie_opt=None):
-        if movie_opt is not None:							#añadido
-	    #Calculo de frames por segundo
-	    num_times = len(self.tracker.get_times())						#añadido
-	    ini_time_index = self.tracker.search_time_pos(movie_opt.get(u'start_time'))	#añadido
-	    end_time_index = self.tracker.search_time_pos(movie_opt.get(u'end_time'))	#añadido
-	    movie_opt[u'num_times'] = end_time_index - ini_time_index			#añadido
-	    rate = movie_opt.get(u'num_times')//movie_opt.get(u'duration')		#añadido
-	    if rate == 0:								#añadido
-		rate = 1								#añadido
-	    #Creamos movie writer e image filter
-	    res =  self.set_movie_writer(movie_opt.get(u'codec'),movie_opt.get(u'file'),rate)#añadido
-	    if isinstance(res,basestring):
-		self.window.errormsg(res)
-		return False
-	    else:
-		self.set_image_filter(self.moviewriter)							#añadido
-	    	self.movie_saving = movie_opt.get(u'movie')				#añadido
-		self.moviewriter.Start()						#añadido
-		return True								#añadido
+        if movie_opt is not None:
+            #Calculo de frames por segundo
+            num_times = len(self.tracker.get_times())
+            ini_time_index = self.tracker.search_time_pos(movie_opt.get(u'start_time'))
+            end_time_index = self.tracker.search_time_pos(movie_opt.get(u'end_time'))
+            movie_opt[u'num_times'] = end_time_index - ini_time_index
+            rate = movie_opt.get(u'num_times')//movie_opt.get(u'duration')
+            if rate == 0:
+                rate = 1
+            #Creamos movie writer e image filter
+            res =  self.set_movie_writer(movie_opt.get(u'codec'),movie_opt.get(u'file'),rate)
+            if isinstance(res,basestring):
+                self.window.errormsg(res)
+                return False
+            else:
+                self.set_image_filter(self.moviewriter)
+                self.movie_saving = movie_opt.get(u'movie')
+                self.moviewriter.Start()
+                return True
 ################################################################################################
 
     def time_play(self):
@@ -2109,9 +2109,9 @@ u'Opacity: 60%', u'Opacity: 50%', u'Opacity: 40%', u'Opacity: 30%', u'Opacity: 2
             self.is_playing = False
             self.timebar.set_is_playing(False)
             self.window.add_text('Play: stopping ...\n')
-	    if self.moviewriter is not None and self.movie_saving:				#añadido
-		self.moviewriter.End()								#añadido
-		self.movie_saving = False							#añadido
+            if self.moviewriter is not None and self.movie_saving:
+                self.moviewriter.End()
+                self.movie_saving = False
         self.timebar.put_status(self.get_status())
 
 
@@ -2129,7 +2129,7 @@ u'Opacity: 60%', u'Opacity: 50%', u'Opacity: 40%', u'Opacity: 30%', u'Opacity: 2
         
         alias = configPlot.get_alias(typename)
         if alias != typename:
-            #print 'building plot:', typename, '->', alias  #code prior version 0.0.1
+            #print 'building plot:', typename, '->', alias #code prior version 0.0.1
             logging.debug(u'building plot:'+u' '+unicode(typename)+u'->'+unicode(alias))
         else:
             #print 'building plot:', typename #code prior version 0.0.1
@@ -2177,9 +2177,9 @@ u'Opacity: 60%', u'Opacity: 50%', u'Opacity: 40%', u'Opacity: 30%', u'Opacity: 2
         elif typename == u'vector_components':
             return PlotVectorComponents.PlotVectorComponents
         elif typename == u'streamline':
-        	return PlotStreamline.PlotStreamline 
+            return PlotStreamline.PlotStreamline 
         elif typename == u'image':
-        	return PlotPicture.PlotPicture
+            return PlotPicture.PlotPicture
         else:
             return None
 

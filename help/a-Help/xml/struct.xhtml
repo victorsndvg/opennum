@@ -23,7 +23,7 @@
     <p>An element <code>struct</code> is designed to contain other child elements <code>struct</code>, <code>leaf</code> and <code>action</code>. This element can be empty. The required attribute <code>name=</code>"<em>value</em>" indicates the ASCII string that identifies the element. The optional attribute <code>title=</code>"<em>value</em>" indicates an UTF-8 string that will be the title of the associated widget; if <code>title</code> is not present, the widget title is taken from attribute <code>name</code>.</p>
     <p>The associated widget depends on the optional attribute <code>selection="</code><em>value</em><code>"</code>, where <em>value</em> can be</p>
     <ul>
-      <li><strong><code>none</code></strong> (the default value) has this <a href="../use/data.xhtml#multiple">associated widget</a> and selection is not saved;</li>
+      <li><strong><code>none</code></strong> (the default value) has this <a href="../use/data.xhtml#none">associated widget</a> and selection is not saved;</li>
       <li><strong><code>single</code></strong> has this <a href="../use/data.xhtml#single">associated widget</a>. 
       If one child of the structure has the attribute <code>selected="true"</code>, the child will appear as pre-selected. 
       The last child selected by the user will take the attribute <code>selected="true"</code> and it will be saved in the
@@ -41,13 +41,13 @@
     <div class="back"><a href="#top">Back to top</a></div>      
 
     <h4 id="custom">Customizable structures</h4>
-    <p>An element <code>struct</code> with attribute <code>customizable="true"</code> let the user to add or delete child elements. The associated widget depends on the optional attribute <code>selection="</code><em>value</em><code>"</code>, where <em>value</em> can be</p>
+    <p>An element <code>struct</code> with the attribute <code>customize="true"</code> lets user to add or delete child elements. The associated widget depends on the optional attribute <code>selection="</code><em>value</em><code>"</code>, where <em>value</em> can be</p>
     <ul>
-      <li><strong><code>none</code></strong> (the default value) has this <a href="../use/data.xhtml#conf">associated widget</a> and selection is not saved;</li>
-      <li><strong><code>single</code></strong> has this <a href="../use/data.xhtml#confs">associated widget</a>.</li>
+      <li><strong><code>none</code></strong> (the default value) has this <a href="../use/data.xhtml#conf-n">associated widget</a> and selection is not saved;</li>
+      <li><strong><code>single</code></strong> has this <a href="../use/data.xhtml#conf-s">associated widget</a>.</li>
     </ul>
-    <p>Every customizable structure must contain a child element with attribute <code>default="true"</code>. This child element can be a regular element <code>struct</code> or <code>leaf</code> without the attribute <code>name</code>. This element does not appear in the widget, it will serve as a pattern to create the new child elements that the user adds. The new elements will be identical to the pattern except in the attribute <code>name</code>, provided by the user. The customizable structures can contain other child elements apart from the pattern.</p>
-    <pre class="xml">&lt;struct name="Mathematical constants" customizable="true"&gt;
+    <p>Every customizable structure must contain a child element with the attribute <code>default="true"</code>. This child element can be a regular element <code>struct</code> or <code>leaf</code> without the attribute <code>name</code>. This element does not appear in the widget, it will serve as a pattern to create the new child elements that the user adds. The new elements will be identical to the pattern except in the attribute <code>name</code>, provided by the user. The customizable structures can contain other child elements apart from the pattern.</p>
+    <pre class="xml">&lt;struct name="Mathematical constants" customize="true"&gt;
   &lt;leaf type="float" default="true"&gt;
     &lt;element&gt;0&lt;/element&gt;
   &lt;/leaf&gt;
@@ -55,6 +55,7 @@
     &lt;element&gt;3.14159&lt;/element&gt;
   &lt;/leaf&gt;
 &lt;/struct&gt;</pre>
+    <p>There is more information about how to use the attribute <code>customize="true"</code> combined with the attribute <code>source</code> and with or without children with attributes <code>default="true"</code> and <code>name</code> in the section <a href="dep.xhtml#struct-adv">Advanced dependent structures</a>.</p>
     <div class="back"><a href="#top">Back to top</a></div>      
 
     <h4 id="table">Tables and charts</h4>

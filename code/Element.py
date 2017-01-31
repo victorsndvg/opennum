@@ -148,10 +148,10 @@ class Element(Node.Node):
             
         #---------------------------------------------------
         #Detecta el tag submenu (de 2ndo nivel) y lo añade a la jerarquia
-        if (item.tag==u'submenu'):              #añadido
-            e = SubMenu.SubMenu()               #añadido
-            e.load(item)                                    #añadido
-            return e                                        #añadido
+        if (item.tag==u'submenu'):
+            e = SubMenu.SubMenu()
+            e.load(item)
+            return e
         #*-------------------------------------------------
         
         return None

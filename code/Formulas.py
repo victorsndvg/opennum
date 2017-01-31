@@ -46,10 +46,10 @@ def get_array(src, fn, sv, pc):
         return r
 
 def real(var):
-	return var.real
+    return var.real
 
 def imag(var):
-	return var.imag
+    return var.imag
 
 def create_lambda(formula, variables):
 

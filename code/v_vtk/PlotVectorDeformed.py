@@ -59,12 +59,12 @@ class PlotVectorDeformed(Plot.Plot):
             else:
                 self.warpT.SetInputConnection(self.src.GetOutputPort())
         if changes.get('changed'):
-            if self.data1.get('fielddomain') == 'cell':				#añadido
-		self.vectors = self.src.GetOutput().GetCellData().GetVectors()	#añadido
-	    elif self.data1.get('fielddomain') == 'point':			#añadido
-		self.vectors = self.src.GetOutput().GetPointData().GetVectors()	#añadido
-            sr = self.vectors.GetRange(-1)					#añadido
-	    self.scalarrange.local_set(sr)					#añadido
+            if self.data1.get('fielddomain') == 'cell':
+                self.vectors = self.src.GetOutput().GetCellData().GetVectors()
+            elif self.data1.get('fielddomain') == 'point':
+                self.vectors = self.src.GetOutput().GetPointData().GetVectors()
+            sr = self.vectors.GetRange(-1)
+            self.scalarrange.local_set(sr)
             #self.wireM2.SetScalarRange(sr)
         if changes.get('changed'):
             self.update_outline(self.warpT)
@@ -86,7 +86,7 @@ class PlotVectorDeformed(Plot.Plot):
         # creates self.src
         if not self.call_src():
             return
-	self.ini_data(self.src)
+        self.ini_data(self.src)
 
         # si es cell data, lo transforma a point data, porque vtkWarpScalar parece ser que no soporta cell data.
         if self.data1.get('fielddomain') == 'cell':
@@ -97,38 +97,38 @@ class PlotVectorDeformed(Plot.Plot):
         else:
             self.warpT = vtk.vtkWarpVector()
             self.warpT.SetInputConnection(self.src.GetOutputPort())
-	
-	self.warpT.GetOutput().GetPointData().SetVectors(self.vectors)
-#	print self.warpT
+
+        self.warpT.GetOutput().GetPointData().SetVectors(self.vectors)
+#        print self.warpT
 
         
-	#Creacion de una tabla de color
-	lut = vtk.vtkLookupTable()				#añadido
-	lut.SetRampToLinear()					#añadido
-	lut.SetScaleToLinear()					#añadido
-	# When using vector magnitude for coloring		#añadido
-	lut.SetVectorModeToMagnitude()				#añadido
-	if self.vectors is not None:				#añadido
-            lutrange = self.vectors.GetRange(-1)		#añadido
-            lut.SetTableRange(lutrange)				#añadido
-	lut.Build()						#añadido
+        #Creacion de una tabla de color
+        lut = vtk.vtkLookupTable()
+        lut.SetRampToLinear()
+        lut.SetScaleToLinear()
+        # When using vector magnitude for coloring
+        lut.SetVectorModeToMagnitude()
+        if self.vectors is not None:
+            lutrange = self.vectors.GetRange(-1)
+            lut.SetTableRange(lutrange)
+        lut.Build()
 
 
         self.wireM2 = vtk.vtkDataSetMapper()
         self.wireM2.SetInputConnection(self.warpT.GetOutputPort())
-	#Definicion del campo y el rango para colorear
-	if self.vectors is not None:
-	     self.wireM2.SelectColorArray(self.vectors.GetName())#añadido
-             self.wireM2.SetScalarRange(lutrange)		#añadido
-        if self.data1.get('fielddomain') == 'cell':		#añadido
-            self.wireM2.SetScalarModeToUseCellFieldData()	#añadido
-	else:							#añadido
-            self.wireM2.SetScalarModeToUsePointFieldData()	#añadido
-        self.wireM2.ScalarVisibilityOn()			#añadido
-	self.wireM2.SetLookupTable(lut)				#añadido
-	self.wireM2.Update()					#añadido
+        #Definicion del campo y el rango para colorear
+        if self.vectors is not None:
+             self.wireM2.SelectColorArray(self.vectors.GetName())
+             self.wireM2.SetScalarRange(lutrange)
+        if self.data1.get('fielddomain') == 'cell':
+            self.wireM2.SetScalarModeToUseCellFieldData()
+        else:
+            self.wireM2.SetScalarModeToUsePointFieldData()
+        self.wireM2.ScalarVisibilityOn()
+        self.wireM2.SetLookupTable(lut)
+        self.wireM2.Update()
 
-#	print self.wireM2 
+#        print self.wireM2 
 
         self.wireA2 = vtk.vtkActor()
         self.wireA2.SetMapper(self.wireM2)
@@ -138,17 +138,17 @@ class PlotVectorDeformed(Plot.Plot):
         self.add_sw_2(self.wireA2)
         self.add_opacity_2([self.wireA2]) # Opacity: 100%/75%/50%/25%/0%
 #Para pintar el wireframe original(sin desplazamiento)
-#        self.wireM = vtk.vtkDataSetMapper()			#añadido
-#        self.wireM.SetInputConnection(self.src.GetOutputPort())#añadido
-#        self.wireM.ScalarVisibilityOff()			#añadido
+#        self.wireM = vtk.vtkDataSetMapper()
+#        self.wireM.SetInputConnection(self.src.GetOutputPort())
+#        self.wireM.ScalarVisibilityOff()
 
-#        self.wireA3 = vtk.vtkActor()				#añadido
-#        self.wireA3.SetMapper(self.wireM)			#añadido
-#        self.wireA3.GetProperty().SetRepresentationToWireframe()#añadido
-#        self.wireA3.GetProperty().SetColor(Plot.mesh_color)	#añadido
-#        self.wireA3.GetProperty().SetEdgeColor(Plot.unselected_color)#añadido
+#        self.wireA3 = vtk.vtkActor()
+#        self.wireA3.SetMapper(self.wireM)
+#        self.wireA3.GetProperty().SetRepresentationToWireframe()
+#        self.wireA3.GetProperty().SetColor(Plot.mesh_color)
+#        self.wireA3.GetProperty().SetEdgeColor(Plot.unselected_color)
 
-#        self.rens[0].AddActor(self.wireA3)			#añadido
+#        self.rens[0].AddActor(self.wireA3)
         self.rens[0].AddActor(self.wireA2)
         
         self.copy_params(struct)
@@ -158,9 +158,9 @@ class PlotVectorDeformed(Plot.Plot):
         self.add_outline_2(self.warpT)
 
 # reverse rainbow [red->blue] -> [blue->red]
-	if self.vectors is not None:				#añadido
-	    self.scalarrange.local_set(lutrange)		#añadido
-            self.add_scalarbar_2(lut)			#añadido
+        if self.vectors is not None:
+            self.scalarrange.local_set(lutrange)
+            self.add_scalarbar_2(lut)
 
         self.done = True
 
@@ -174,8 +174,8 @@ class PlotVectorDeformed(Plot.Plot):
 
     def range_update3(self,range):
         #self.warpT.SetScaleFactor(self.scale)
-	self.wireM2.SetScalarRange(range)		#añadido
-	self.wireM2.GetLookupTable().SetTableRange(range)
+        self.wireM2.SetScalarRange(range)
+        self.wireM2.GetLookupTable().SetTableRange(range)
 
     def copy_params(self, struct):
 
@@ -195,56 +195,56 @@ class PlotVectorDeformed(Plot.Plot):
                 self.data_error('Error converting \'' + num + '\' to float')
         else:
             #self.data_error('Incorrect number of elements (1 needed)')
-            self.scale = self.calc_best_scale()				#añadido
-            self.warpT.SetScaleFactor(self.scale)			#añadido
-            self.update_outline(self.warpT)				#añadido
-            nums = struct.set_elements([str(self.scale)])		#añadido
+            self.scale = self.calc_best_scale()
+            self.warpT.SetScaleFactor(self.scale)
+            self.update_outline(self.warpT)
+            nums = struct.set_elements([str(self.scale)])
             #self.panel_widgets.update_widget_struct(nums[0])
 
 
-    def ini_data(self, src):					#añadido
-        o = src.GetOutput()						#añadido
+    def ini_data(self, src):
+        o = src.GetOutput()
         
-        if self.data1.get('fielddomain') == 'cell':			#añadido
-            self.vectors = o.GetCellData().GetVectors()			#añadido
-            pc = 1							#añadido
-        elif self.data1.get('fielddomain') == 'point':			#añadido
-            self.vectors = o.GetPointData().GetVectors()		#añadido
-            pc = 0							#añadido
-        else:								#añadido
-            self.vectors = None						#añadido
-				
-	self.bounds = self.src.GetOutput().GetBounds()                  #añadido
-	self.maxNorm = None						#añadido
-        if self.vectors is not None:					#añadido
-	#Maximo valor da norma dos vectores
-            self.maxNorm = self.vectors.GetMaxNorm()                    #añadido
-	self.scale = self.calc_best_scale()
+        if self.data1.get('fielddomain') == 'cell':
+            self.vectors = o.GetCellData().GetVectors()
+            pc = 1
+        elif self.data1.get('fielddomain') == 'point':
+            self.vectors = o.GetPointData().GetVectors()
+            pc = 0
+        else:
+            self.vectors = None
+
+        self.bounds = self.src.GetOutput().GetBounds()
+        self.maxNorm = None
+        if self.vectors is not None:
+        #Maximo valor da norma dos vectores
+            self.maxNorm = self.vectors.GetMaxNorm()
+        self.scale = self.calc_best_scale()
 
 
 
-    def calc_best_scale(self):                                   	#añadido
-	if self.maxNorm is not None:					#añadido
-            xdist = (self.bounds[1]-self.bounds[0])                  #añadido
-            ydist = (self.bounds[3]-self.bounds[2])                  #añadido
-            zdist = (self.bounds[5]-self.bounds[4])                  #añadido
-	    
-            maxdist = xdist						#añadido
-            if maxdist<ydist:						#añadido
-		maxdist = ydist						#añadido
-            if maxdist<zdist:						#añadido
-		maxdist = zdist 					#añadido
-            meddist = (xdist+ydist+zdist)/3				#añadido
-            #maxdist = ((xdist*xdist)+(ydist*ydist)+(zdist*zdist))   #añadido
-            if self.maxNorm == 0:					#añadido
-		return 1.0						#añadido
-            else:							#añadido
-        	return self.round_to_1(maxdist/(self.maxNorm*20))       #añadido
-	else:								#añadido
-            return 1.0							#añadido
+    def calc_best_scale(self):
+        if self.maxNorm is not None:
+            xdist = (self.bounds[1]-self.bounds[0])
+            ydist = (self.bounds[3]-self.bounds[2])
+            zdist = (self.bounds[5]-self.bounds[4])
+
+            maxdist = xdist
+            if maxdist<ydist:
+                maxdist = ydist
+            if maxdist<zdist:
+                maxdist = zdist
+            meddist = (xdist+ydist+zdist)/3
+            #maxdist = ((xdist*xdist)+(ydist*ydist)+(zdist*zdist))
+            if self.maxNorm == 0:
+                return 1.0
+            else:
+                return self.round_to_1(maxdist/(self.maxNorm*20))
+        else:
+            return 1.0
 
 #redondea al primer digito significativo
-    def round_to_1(self,x):					#añadido
-	from math import log10, floor				#añadido
-	return round(x, -int(floor(log10(x))))			#añadido
+    def round_to_1(self,x):
+        from math import log10, floor
+        return round(x, -int(floor(log10(x))))
 

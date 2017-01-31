@@ -1,0 +1,4 @@
+user 
+host 
+key 
+queuing qrsh -q general -j y -V -cwd

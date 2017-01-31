@@ -22,7 +22,8 @@ DIR_IMAGES = u'images'
 FILE_MENULOCAL = u'local.mnu.xml'
 FILE_MENULOCALSOLVER = u'local.dat.xml'
 FILE_LASTFOLDER = u'lastfolder.dat'
-FILE_REMOTEDATA = u'remotedata.txt'
+FILE_REMOTEDATA = u'remote-run-data.txt'
+FILE_RUNSTATUS = u'run-status.txt'
 FILE_MATERIALS = u'materials.xml'
 FILE_MATERIALS_PREFIX = u'materials.'
 FILE_MATERIALS_SUFFIX = u'.xml'
@@ -83,7 +84,7 @@ AT_TITLE = u'title'
 AT_HIDDEN = u'hidden' # heavy
 AT_HELP = u'help' # heavy
 
-# interno. non previsto o seu uso no local.mnu.xml. s� en menu en principio
+# interno. non previsto o seu uso no local.mnu.xml. sรณ en menu en principio
 AT_SAVETHIS = u'savethis'
 
 # interno. non previsto o seu uso no local.mnu.xml.

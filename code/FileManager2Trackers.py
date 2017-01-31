@@ -25,7 +25,7 @@ class Tracker:
         self.cb = fm.get_callback()
         self.num = -1
         self.needs_vtkfiles = True
-        self.vtkfile = None	#Tracker MFM y UNV no recalcula
+        self.vtkfile = None #Tracker MFM y UNV no recalcula
         self.filetracks = []
         self.dim = None
         self.revision = 0
@@ -37,8 +37,8 @@ class Tracker:
         self.name = '-'
         self.center = None
         self.has_series_ = False
-	self.is_nodepvd = False			#añadido. identificacion de trackernode
-	self.is_void = False			#añadido. identificacion de trackervoid
+        self.is_nodepvd = False #añadido. identificacion de trackernode
+        self.is_void = False #añadido. identificacion de trackervoid
 
 
 
@@ -102,11 +102,11 @@ class Tracker:
 
 
 # Devielve una lista de trackers a partir de una lista de mallas individuales
-    def get_additional_trackers(self,filesmesh):				#añadido
-	trackerlist = []							#añadido
-	for fn in filesmesh:							#añadido
-	    trackerlist.append(self.fm.get_tracker_mesh_file(fn))		#añadido
-	return trackerlist
+    def get_additional_trackers(self,filesmesh):
+        trackerlist = []
+        for fn in filesmesh:
+            trackerlist.append(self.fm.get_tracker_mesh_file(fn))
+        return trackerlist
 
 
 # public
@@ -272,7 +272,7 @@ class TrackerVoid(Tracker):
     def __init__(self, fm):
         Tracker.__init__(self, fm)
         self.needs_vtkfiles = False
-	self.is_void = True
+        self.is_void = True
 
     def get_src(self, labels=None):
         # non se engaden labels para o obxecto baleiro
@@ -333,69 +333,69 @@ class TrackerMFMFile(Tracker):
 
 # private
     def recalculate(self):
-	if self.vtkfile is not None:	#Si no existe VTK no se recalcula
-	    the_file = self.filetracks[0].get_name()
+        if self.vtkfile is not None: #Si no existe VTK no se recalcula
+            the_file = self.filetracks[0].get_name()
             rr = R.FileMrwReconvxx(self.cb)
             res = rr.read(the_file, {'dim':self.dim})
         
             if res is not True:
-		self.cbc(u'Error loading file \''+the_file+'\': '+ unicode(res) +'\n')
+                self.cbc(u'Error loading file \''+the_file+'\': '+ unicode(res) +'\n')
                 return False
-	    else:
-		self.dim = rr.get_dim()
+            else:
+                self.dim = rr.get_dim()
 
-		# some file may not have every reference
+                # some file may not have every reference
                      
-		# nsd nrc nra nrv -> element_ref face_ref edge_ref vertex_ref
-		self.refs = {}
-		for k, v in rr.get_refs().items():
-		    if v is not None:
-			temps = v.copy()
-			temps.discard(0)
-			templ = list(temps)
-			templ.sort()
-			self.refs[k] = map(str, templ)
+                # nsd nrc nra nrv -> element_ref face_ref edge_ref vertex_ref
+                self.refs = {}
+                for k, v in rr.get_refs().items():
+                    if v is not None:
+                        temps = v.copy()
+                        temps.discard(0)
+                        templ = list(temps)
+                        templ.sort()
+                        self.refs[k] = map(str, templ)
 
-			self.cbc(u'Calculating submesh ... ')
+                        self.cbc(u'Calculating submesh ... ')
 
-			res = rr.calculate_submesh()
+                        res = rr.calculate_submesh()
 
-		if not res:
-		    self.cbc(u'Error calculating submesh: \''+the_file+'\'\n')
+                if not res:
+                    self.cbc(u'Error calculating submesh: \''+the_file+'\'\n')
                     return False
 
-		self.cbc('\n')
+                self.cbc('\n')
 
-		self.cbc(u'Converting to .vtk ... ')
+                self.cbc(u'Converting to .vtk ... ')
     
-		k = rr.to_vtk()
+                k = rr.to_vtk()
 
-		self.cbc('\n')
+                self.cbc('\n')
 
-		# o: meter dentro de to_vtk, controlado por un bool, o recuperar numero de subceldas
+                # o: meter dentro de to_vtk, controlado por un bool, o recuperar numero de subceldas
             
-		# array de puntos .. id [0..n-1] -> [1..n]
-		# para ter os números dispoñibles para as etiquetas
-		k.add_point_data_sequential()
-		array = range(1, rr.nel + 1) # elementos originales numerados
-		array.extend([0] * rr.nsm) # la submalla no se numera
-		k.add_cell_data_sequential(array)
+                # array de puntos .. id [0..n-1] -> [1..n]
+                # para ter os números dispoñibles para as etiquetas
+                k.add_point_data_sequential()
+                array = range(1, rr.nel + 1) # elementos originales numerados
+                array.extend([0] * rr.nsm) # la submalla no se numera
+                k.add_cell_data_sequential(array)
 
-		# optional
-		res = k.check()
-		if res is not True:
-		    self.cbc(u'Error checking .vtk: k.check(): ' + res + u'\n')
+                # optional
+                res = k.check()
+                if res is not True:
+                    self.cbc(u'Error checking .vtk: k.check(): ' + res + u'\n')
                     return False
 
-		self.cbc(u'Saving \'' + self.vtkfile + '\' ... ')
+                self.cbc(u'Saving \'' + self.vtkfile + '\' ... ')
 
-		res = k.save(self.vtkfile)
+                res = k.save(self.vtkfile)
 
-		if not res:
-		    self.cbc(u'Error saving file: \''+the_file+'\'\n')
+                if not res:
+                    self.cbc(u'Error saving file: \''+the_file+'\'\n')
                     return False
                 
-		self.cbc('saved!\n')
+                self.cbc('saved!\n')
                 
             return True
 
@@ -536,41 +536,41 @@ class TrackerUNVFile(Tracker):
 
     # private
     def recalculate(self):
-	if self.vtkfile is not None and self.is_changed():	# si no existe VTK no se recalcula
+        if self.vtkfile is not None and self.is_changed(): # si no existe VTK no se recalcula
             the_file = self.filetracks[0].get_name()
             unv = U.UNV()
             error = unv.read(the_file)
             if error is not None:
-		self.cbc(u'Error loading file: \''+the_file+':'+error+u'\n')
-		return False
+                self.cbc(u'Error loading file: \''+the_file+':'+error+u'\n')
+                return False
         
             vtk = unv.to_vtk()
         
             if not isinstance(vtk, FileMrwVTK.FileMrwVTK):
-		self.cbc("Error converting to .vtk: " + vtk + u'\n')
-		return False
+                self.cbc("Error converting to .vtk: " + vtk + u'\n')
+                return False
         
             # optional
             res = vtk.check()
             if res is not True:
-		self.cbc(u'Error checking .vtk: vtk.check(): ' + res + u'\n')
-		return False
+                self.cbc(u'Error checking .vtk: vtk.check(): ' + res + u'\n')
+                return False
 
             # nsd nrc nra nrv -> element_ref face_ref edge_ref vertex_ref
             self.refs = {}
             for k, v in unv.get_refs().items():
-		if v is not None:
-		    self.refs[k] = map(str, v)
+                if v is not None:
+                    self.refs[k] = map(str, v)
     
-	    self.cbc(u'Saving \'' + self.vtkfile + '\' ... ')
+            self.cbc(u'Saving \'' + self.vtkfile + '\' ... ')
 
             result = vtk.save(self.vtkfile)
     
             if result is not True:
-		self.cbc("Error saving .vtk file\n")
-		return False
+                self.cbc("Error saving .vtk file\n")
+                return False
 
-	    self.cbc('saved!\n')
+            self.cbc('saved!\n')
         
         return True
 
@@ -642,17 +642,17 @@ class TrackerPVDFile(Tracker):
         return tracker
 
     def search_time_pos(self, time,evolution=None):
-	auxtimedic = None
-	for timedic in self.times:
-	    #Si encuentra el tiempo devuelve la posición
-	    if timedic.get(u'time') == time:
-		return self.times.index(timedic)
-	    elif auxtimedic is not None:
-		#Si no encuentra el tiempo, devuelve el comienzo del intervalo
-		if auxtimedic.get(u'time')<time and timedic.get(u'time')>time:
-		    return self.times.index(auxtimedic)
-	    auxtimedic = timedic
-	return None
+        auxtimedic = None
+        for timedic in self.times:
+            #Si encuentra el tiempo devuelve la posición
+            if timedic.get(u'time') == time:
+                return self.times.index(timedic)
+            elif auxtimedic is not None:
+                #Si no encuentra el tiempo, devuelve el comienzo del intervalo
+                if auxtimedic.get(u'time')<time and timedic.get(u'time')>time:
+                    return self.times.index(auxtimedic)
+            auxtimedic = timedic
+        return None
 
 
 
@@ -679,50 +679,50 @@ class TrackerNodeFiles(Tracker):
         self.rev2 = -1
         self.modified = True # non 'standard'
 
-	self.is_nodepvd = is_nodepvd					#añadido
-	self.has_series_ = is_nodepvd					#añadido
+        self.is_nodepvd = is_nodepvd
+        self.has_series_ = is_nodepvd
 
 
 
 #    def has_series(self):
-#	return True
+#        return True
 
     def get_times(self):
-	times = []
-	for tr in self.trackers:
-	    res =  FilePVD.read(tr.filetracks[0].get_name())
-	    tr.times = res
-	    times.append(res)
-	return times
-	    
+        times = []
+        for tr in self.trackers:
+            res =  FilePVD.read(tr.filetracks[0].get_name())
+            tr.times = res
+            times.append(res)
+        return times
+            
 
     # before update does not give value
     def get_tracker(self, index):
-	trackers = []
+        trackers = []
         if len(self.trackers) <= 0:
             return ".pvd node file with 0 entries"
         if not (index >= 0):
             return ".pvd: index out of range"
 
-	for tr in self.trackers:
-	    if len(tr.trackers)>0:
-	    	if tr.trackers[index] is not None:
-		    tracker =  tr.trackers[index]
-	    	    trackers.append(tracker)
-	    else:
-		rel  = tr.get_times()[index].get('file')
-		filename = os.path.join(os.path.dirname(tr.get_vtkfile()), rel)
-		tracker = self.fm.get_tracker_mesh_file(filename)
-		if tracker is None:
-		    return 'Unable to open file from .pvd: \''+ filename +'\''
-		tracker.set_name(os.path.basename(rel))
-		try:
-		    tr.trackers[index] = tracker
-		except IndexError:
-		    pass
-		trackers.append(tracker)
+        for tr in self.trackers:
+            if len(tr.trackers)>0:
+                if tr.trackers[index] is not None:
+                    tracker =  tr.trackers[index]
+                    trackers.append(tracker)
+            else:
+                rel  = tr.get_times()[index].get('file')
+                filename = os.path.join(os.path.dirname(tr.get_vtkfile()), rel)
+                tracker = self.fm.get_tracker_mesh_file(filename)
+                if tracker is None:
+                    return 'Unable to open file from .pvd: \''+ filename +'\''
+                tracker.set_name(os.path.basename(rel))
+                try:
+                    tr.trackers[index] = tracker
+                except IndexError:
+                    pass
+                trackers.append(tracker)
 
-	return trackers
+        return trackers
 
     def get_original_files(self):
 
@@ -768,48 +768,48 @@ class TrackerNodeFiles(Tracker):
             self.size1 = first_group
 
     # before update does not give value
-    def get_tracker(self, index):						#añadido
-        if len(self.trackers) <= 0:						#añadido
-            return "node tracker file with 0 entries"				#añadido
-        if not (index >= 0):							#añadido
-            return "node tracker file: index out of range"			#añadido
-        if self.trackers is not None:						#añadido
-	    t = []
-	    for tr in self.trackers:
-		# Captura del error. Necesario en mallas adicionales
-		try:								#añadido
-		    t.append(tr.get_tracker(index))
-		except:								#añadido
-		    pass							#añadido
-            return t 								#añadido
-				
-        rel = self.times[index].get('file')					#añadido
+    def get_tracker(self, index):
+        if len(self.trackers) <= 0:
+            return "node tracker file with 0 entries"
+        if not (index >= 0):
+            return "node tracker file: index out of range"
+        if self.trackers is not None:
+            t = []
+            for tr in self.trackers:
+                # Captura del error. Necesario en mallas adicionales
+                try:
+                    t.append(tr.get_tracker(index))
+                except:
+                    pass
+            return t
+                                
+        rel = self.times[index].get('file')
         
-        filename = os.path.join(os.path.dirname(self.get_vtkfile()), rel)	#añadido
+        filename = os.path.join(os.path.dirname(self.get_vtkfile()), rel)
 
-        tracker = self.fm.get_tracker_mesh_file(filename)			#añadido
+        tracker = self.fm.get_tracker_mesh_file(filename)
 
-        if tracker is None:							#añadido
-            return 'Unable to open file from .pvd: \''+ filename +'\''		#añadido
+        if tracker is None:
+            return 'Unable to open file from .pvd: \''+ filename +'\''
         
-        tracker.set_name(os.path.basename(rel))					#añadido
+        tracker.set_name(os.path.basename(rel))
         
-        self.trackers[index] = tracker						#añadido
+        self.trackers[index] = tracker
         
-        return tracker								#añadido
+        return tracker
 
 
     # Devuelve la lista de tiempos 
-    def get_times(self):							#añadido
-	times = []								#añadido
-	for tr in self.trackers:						#añadido
-	    # Captura del error. Necesario en mallas adicionales
-	    try:								#añadido
-		lasttime = tr.get_times()					#añadido
-		times.append(tr.get_times())					#añadido
-	    except:								#añadido
-		pass								#añadido
-	return lasttime								#añadido
+    def get_times(self):
+        times = []
+        for tr in self.trackers:
+            # Captura del error. Necesario en mallas adicionales
+            try:
+                lasttime = tr.get_times()
+                times.append(tr.get_times())
+            except:
+                pass
+        return lasttime
 
 
 
@@ -819,29 +819,29 @@ class TrackerNodeFiles(Tracker):
         srcs = []
         labels = []
 
-	if self.is_nodepvd:							#añadido
-	    if index is not None:						#añadido
-		for tr in trackers:						#añadido
-		    # Captura del error. Necesario en la actualización de mallas adicionales
-		    try:							#añadido
-			t = tr.get_tracker(index)				#añadido
-			labels1 = []						#añadido
-			src = t.get_src(labels1,index)				#añadido	
-			if isinstance(src, basestring):				#añadido
-			    return (src, [])					#añadido
-			srcs.append(src)					#añadido
-			labels.append(labels1) # append non extend. habilitar varias/ningunha label por src#añadido
-		    except:							#añadido
-                	labels1 = []
-                	src = tr.get_src(labels1,index)
-                	if isinstance(src, basestring):
-                    	    return (src, [])
-                	srcs.append(src)
-                	labels.append(labels1) # append non extend. habilitar varias/ningunha label por src
-	    else:
-		return ['Error','Index in multiple PVD trackerNodeFiles is None']
+        if self.is_nodepvd:
+            if index is not None:
+                for tr in trackers:
+                    # Captura del error. Necesario en la actualización de mallas adicionales
+                    try:
+                        t = tr.get_tracker(index)
+                        labels1 = []
+                        src = t.get_src(labels1,index)
+                        if isinstance(src, basestring):
+                            return (src, [])
+                        srcs.append(src)
+                        labels.append(labels1) # append non extend. habilitar varias/ningunha label por src
+                    except:
+                        labels1 = []
+                        src = tr.get_src(labels1,index)
+                        if isinstance(src, basestring):
+                            return (src, [])
+                        srcs.append(src)
+                        labels.append(labels1) # append non extend. habilitar varias/ningunha label por src
+            else:
+                return ['Error','Index in multiple PVD trackerNodeFiles is None']
 
-	else:
+        else:
             for tr in trackers:
                 labels1 = []
                 src = tr.get_src(labels1)
@@ -873,7 +873,7 @@ class TrackerNodeFiles(Tracker):
 
 
     # self.src pode non ser vtkAppendFilter
-    def get_src(self, labels=None,index=None):				#modificado
+    def get_src(self, labels=None,index=None):
 
         (newsrcs,newlabels) = self.get_sources(self.trackers,index)
 
@@ -977,7 +977,7 @@ class TrackerNodeFiles(Tracker):
 
 
     # os do grupo 1 que non teñan o campo van para o grupo 2
-    def get_src_group_f(self, group, field=None, labels=None,index=None):		#modificado
+    def get_src_group_f(self, group, field=None, labels=None,index=None):
 
         if group == 1:
             if self.size1 == 0: # baleiro
@@ -986,7 +986,7 @@ class TrackerNodeFiles(Tracker):
                 labels_aux = None
             else:
                 labels_aux = []
-            res = self.get_src(labels_aux,index)					#modificado
+            res = self.get_src(labels_aux,index)
             if isinstance(res, basestring):
                 return res
 
@@ -1056,8 +1056,8 @@ class TrackerNodeFiles(Tracker):
                 labels_aux2.extend(l)
 
             todos = total + self.sources[self.size1:]
-	    #Es necesario forzar para ver las mallas secundarias????
-	    #self.src2 = None
+            #Es necesario forzar para ver las mallas secundarias????
+            #self.src2 = None
             if self.src2 is None or self.rev2 != self.revision_src:
                 if self.src2 is None:
                     self.src2 = sourceVTK2.get_append(todos)
@@ -1774,11 +1774,11 @@ class TrackerFormula2(Tracker):
                 try:
                     numtext = float(text)
                 except ValueError:
-		    vals = []									#añadido
-		    if self.parse_complex(text,'(',')',vals) == -1:				#añadido
-			return "Error converting '" + text + "' to a numeric type"		#añadido
-		    numtext = vals[0]								#añadido
-                if Debug: print 'Variable ' + name + ': ' + unicode(numtext)			#añadido
+                    vals = []
+                    if self.parse_complex(text,'(',')',vals) == -1:
+                        return "Error converting '" + text + "' to a numeric type"
+                    numtext = vals[0]
+                if Debug: print 'Variable ' + name + ': ' + unicode(numtext)
                 vardata[i]['value'] = numtext
             else:
                 vardata[i]['value'] = None
@@ -1786,60 +1786,60 @@ class TrackerFormula2(Tracker):
 
 
     def parse_complex(self, string,startchar,endchar,lista):
-	"""
-	Parse a list of complex and check the syntax. Recursive function.
+        """
+        Parse a list of complex and check the syntax. Recursive function.
 
-	string: type String.
-	startchar: type Character.
-	endchar: type Character.
-	list: type List.
-	"""
+        string: type String.
+        startchar: type Character.
+        endchar: type Character.
+        list: type List.
+        """
 
-	start = string.find(startchar)
-	end = string.find(endchar)
+        start = string.find(startchar)
+        end = string.find(endchar)
 
-	if start<end and start != -1 and end != -1:
-	    complexstr = string[start:end+1]
-	    try:
-		if not len(map(float, complexstr[1:-1].replace(',', ' ').split())) == 2:
-		    return -1
-		complexparts = map(float, complexstr[1:-1].replace(',', ' ').split())
-		lista.append(complex(complexparts[0], complexparts[1]))
-		return self.parse_complex(string[end+1:],startchar,endchar,lista)
-	    except:
-		return -1
-	    return 1
-	elif (start == -1 and end != -1) or (start != -1 and end == -1):
-	    return -1
-	else:
-	    return 0
+        if start<end and start != -1 and end != -1:
+            complexstr = string[start:end+1]
+            try:
+                if not len(map(float, complexstr[1:-1].replace(',', ' ').split())) == 2:
+                    return -1
+                complexparts = map(float, complexstr[1:-1].replace(',', ' ').split())
+                lista.append(complex(complexparts[0], complexparts[1]))
+                return self.parse_complex(string[end+1:],startchar,endchar,lista)
+            except:
+                return -1
+            return 1
+        elif (start == -1 and end != -1) or (start != -1 and end == -1):
+            return -1
+        else:
+            return 0
 
     # depende de tracker. modificar index_calculated en cada chamada
     def parse_variables_srcs(self, vardata, index):
         for i in xrange(len(vardata)):
             tracker = vardata[i].get('tracker')
-	    data = self.data['formula_data'][i]
-	    if tracker is not None and tracker.is_nodepvd:					#añadido
-		labels = []									#añadido
-		fielddata = {}									#añadido
-		fielddata['name'] = data.get('fieldname')					#añadido
-		fielddata['domain'] = data.get('fielddomain')					#añadido
-		src = tracker.get_src_group_f( 1, fielddata, labels,index)			#añadido
+            data = self.data['formula_data'][i]
+            if tracker is not None and tracker.is_nodepvd:
+                labels = []
+                fielddata = {}
+                fielddata['name'] = data.get('fieldname')
+                fielddata['domain'] = data.get('fielddomain')
+                src = tracker.get_src_group_f( 1, fielddata, labels,index)
                 vardata[i]['src'] = src
                 vardata[i]['srcfieldname'] = data.get('fieldname')
-	    else:
-		if index >= 0 and tracker is not None and tracker.has_series(): # reempraza por tempo 'index'
-		    tracker = tracker.get_tracker(index)
+            else:
+                if index >= 0 and tracker is not None and tracker.has_series(): # reempraza por tempo 'index'
+                    tracker = tracker.get_tracker(index)
                     if not isinstance(tracker, Tracker):
-			return unicode(tracker)
-		if isinstance(tracker, Tracker):# or tracker is None:
-		    # non válido para os pvd (local local?)
-		    src = tracker.get_src_group(1) # ou tracker.get_src_group_f(1, self.fielddata, mnames) "ou sin f"
+                        return unicode(tracker)
+                if isinstance(tracker, Tracker):# or tracker is None:
+                    # non válido para os pvd (local local?)
+                    src = tracker.get_src_group(1) # ou tracker.get_src_group_f(1, self.fielddata, mnames) "ou sin f"
                     if isinstance(src, basestring):
-			return "Error getting source object: " + src
+                        return "Error getting source object: " + src
                     vardata[i]['src'] = src
                     vardata[i]['srcfieldname'] = data.get('fieldname')
-		else:   
+                else:   
                     vardata[i]['src'] = None
                     vardata[i]['srcfieldname'] = None
 

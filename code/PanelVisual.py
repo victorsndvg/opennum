@@ -257,11 +257,11 @@ class PanelVisual(wx.Panel):
                 fieldname = ':' + fieldname
 
         temp = struct.get_attribs().get(config.PLOT) # cambiado de PLOT_TYPE a PLOT
-	#Si la representacion viene del boton show en lugar del atributo plot
-	if temp is None:							#añadido
-	    typename = u'2d_graph'						#añadido
-	else:									#añadido
-            typename = configPlot.get_alias(temp)				#añadido
+        #Si la representacion viene del boton show en lugar del atributo plot
+        if temp is None:
+            typename = u'2d_graph'
+        else:
+            typename = configPlot.get_alias(temp)
         extra = u'¬' # para abrir, en distintas graficas, structs con igual ficheiro pero distinta configuracion de tempo/frecuencia...
         if not data.get('interpolation'):
             extra += unicode(data.get('interpolation'))
@@ -283,7 +283,7 @@ class PanelVisual(wx.Panel):
             was = None
         else:
             was = False
-	
+        
 
 #        print 'plotlist was', was is not None, filenames, fieldname, typename, extra, struct
         
@@ -324,9 +324,9 @@ class PanelVisual(wx.Panel):
                 self.window.errormsg(u'Error creating plot: ' + tracker)
             elif tracker is None:
                 self.window.errormsg(u'Error creating plot: Undefined plot files')
-	    # si añadimos un nuevo tracker vacio
-            elif tracker.is_void:		#añadido
-                self.window.errormsg(u'Error creating plot: No mesh or chart has been selected') #añadido
+            # si añadimos un nuevo tracker vacio
+            elif tracker.is_void:
+                self.window.errormsg(u'Error creating plot: No mesh or chart has been selected')
             else:
                 if tracker.is_changed() is not None:
                     if tracker.update() is not None:
@@ -334,7 +334,7 @@ class PanelVisual(wx.Panel):
                     else: # tracker.update() is None
                         self.window.errormsg(u'Error converting mesh to vtk. Not creating plot')
                 else: # tracker.is_changed() is Non
-#		    print filenames, fieldname, typename, extra, struct, tracker, data
+#                    print filenames, fieldname, typename, extra, struct, tracker, data
                     self.window.errormsg(u'Unable to access file(s) to create plot')
 
             #self.window.add_text(u'Adding visualization end ...\n') #code prior version 0.0.1
@@ -359,14 +359,14 @@ class PanelVisual(wx.Panel):
                             if view.updatable_tracker():
                                 if tracker is not view.get_tracker_():
                                     view.set_tracker_(tracker)
-				# Si es nodepvd se permite por defecto que tenga mallas adicionales
-				# En caso de que no las tenga se compruba en plot.check_additional. deprecated
-				# Todos los trackers tienen la posibilidad de tener mallas adicionales.
-				    if True:#tracker.is_nodepvd:							#añadido
-			            	view.set_additional(True)							#añadido
-				# Si el tracker esta vacio no se actualiza nada
-				    elif tracker.is_void:								#añadido
-					return										#añadido
+                                # Si es nodepvd se permite por defecto que tenga mallas adicionales
+                                # En caso de que no las tenga se compruba en plot.check_additional. deprecated
+                                # Todos los trackers tienen la posibilidad de tener mallas adicionales.
+                                    if True:#tracker.is_nodepvd:
+                                        view.set_additional(True)
+                                # Si el tracker esta vacio no se actualiza nada
+                                    elif tracker.is_void:
+                                        return
 
                                 view.set_data(data)
                                     
@@ -407,7 +407,7 @@ class PanelVisual(wx.Panel):
             previous = self.book.GetSelection()
             if next != previous:
                 self.book.SetSelection(next)
-            #print u'Selecting visualization end ...'#code prior version 0.0.1
+            #print u'Selecting visualization end ...' #code prior version 0.0.1
             logging.debug(u'Selecting visualization end ...')
 
         return ( add and add_ok ) or update or select

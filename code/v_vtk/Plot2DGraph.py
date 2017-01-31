@@ -42,7 +42,7 @@ class Plot2DGraph(Plot.Plot):
 
     def __init__(self, parent):
         Plot.Plot.__init__(self, parent)
-	self.parent = parent
+        self.parent = parent
 
         self.label_tbutton = wx.ToggleButton(self.plotbar, wx.ID_ANY, 'Labels', style=wx.BU_EXACTFIT)
         self.label_tbutton.SetValue(False)
@@ -121,7 +121,7 @@ class Plot2DGraph(Plot.Plot):
             self.window.errormsg (u'Error converting \'' + unicode(temp) + '\' to integer')
             return False
 
-	polydata = []
+        polydata = []
 
         for s in range(series_num):
             temp = f.getword()
@@ -172,7 +172,7 @@ class Plot2DGraph(Plot.Plot):
                 sca.InsertNextValue( y )
                 
             pd.SetScalars(sca)
-	    polydata.append(ds)
+            polydata.append(ds)
 
         labels = [] # string o None
         for t in range(3+series_num):
@@ -193,7 +193,7 @@ class Plot2DGraph(Plot.Plot):
             return False
         f = None
 
-	return {'labels':labels, 'polydata':polydata, 'series_num':series_num}
+        return {'labels':labels, 'polydata':polydata, 'series_num':series_num}
 
 
     def plot(self, struct):
@@ -209,43 +209,43 @@ class Plot2DGraph(Plot.Plot):
         self.rens[0].SetBackground((1.0,1.0,1.0))
         self.xyplot = vtk.vtkXYPlotActor()
 
-	if self.tracker.is_void:
-	    return False
-	elif self.tracker.type == "node_files":
+        if self.tracker.is_void:
+            return False
+        elif self.tracker.type == "node_files":
             series_num = 0
-	    labels = []
+            labels = []
 
-	    trackers = self.tracker.trackers
-	    self.dataname = []
-	    for tracker in trackers:
-		self.dataname.append(tracker.get_vtkfile())
+            trackers = self.tracker.trackers
+            self.dataname = []
+            for tracker in trackers:
+                self.dataname.append(tracker.get_vtkfile())
 
-	    for name in self.dataname:
-	        res = self.Gr2_File_to_Polydata(name)
-		polydata = res.get('polydata')
-		labels.extend(res.get('labels')[min(len(labels),3):])
-		series_num = series_num + res.get('series_num')
-		
-		for pd in polydata:
-		    if vtk.vtkVersion.GetVTKMajorVersion() < 6:
-		        self.xyplot.AddInput(pd)
-		    else:
-		        self.xyplot.AddDataSetInput(pd)
-#	    return False
-	else:
+            for name in self.dataname:
+                res = self.Gr2_File_to_Polydata(name)
+                polydata = res.get('polydata')
+                labels.extend(res.get('labels')[min(len(labels),3):])
+                series_num = series_num + res.get('series_num')
+                
+                for pd in polydata:
+                    if vtk.vtkVersion.GetVTKMajorVersion() < 6:
+                        self.xyplot.AddInput(pd)
+                    else:
+                        self.xyplot.AddDataSetInput(pd)
+#            return False
+        else:
             self.dataname = self.tracker.get_vtkfile()
-	    #returns 'labels', 'series_num' and 'polydata' keys
-	    res = self.Gr2_File_to_Polydata(self.dataname)
+            #returns 'labels', 'series_num' and 'polydata' keys
+            res = self.Gr2_File_to_Polydata(self.dataname)
 
-	    polydata = res.get('polydata')
-	    labels = res.get('labels')
-	    series_num = res.get('series_num')
+            polydata = res.get('polydata')
+            labels = res.get('labels')
+            series_num = res.get('series_num')
 
-	    for pd in polydata:
-	        if vtk.vtkVersion.GetVTKMajorVersion() < 6:
-	            self.xyplot.AddInput(pd)
-	        else:
-	            self.xyplot.AddDataSetInput(pd)
+            for pd in polydata:
+                if vtk.vtkVersion.GetVTKMajorVersion() < 6:
+                    self.xyplot.AddInput(pd)
+                else:
+                    self.xyplot.AddDataSetInput(pd)
 
 
         self.xyplot.GetPositionCoordinate().SetValue(self.pospi0)
@@ -317,7 +317,7 @@ class Plot2DGraph(Plot.Plot):
     def update(self, struct):
         self.copy_params(struct)
         self.widget.Render()
-	self.update_from_dependency(struct)
+        self.update_from_dependency(struct)
 
 
 
@@ -338,44 +338,44 @@ class Plot2DGraph(Plot.Plot):
 
         self.rens[0].SetBackground((1.0,1.0,1.0))
 
-	if self.tracker.is_void:
-	    return False
-	elif self.tracker.type == "node_files":
+        if self.tracker.is_void:
+            return False
+        elif self.tracker.type == "node_files":
             series_num = 0
-	    labels = []
+            labels = []
 
-	    trackers = self.tracker.trackers
-	    self.dataname = []
-	    for tracker in trackers:
-		self.dataname.append(tracker.get_vtkfile())
+            trackers = self.tracker.trackers
+            self.dataname = []
+            for tracker in trackers:
+                self.dataname.append(tracker.get_vtkfile())
 
-	    for name in self.dataname:
-	        res = self.Gr2_File_to_Polydata(name)
-		polydata = res.get('polydata')
-		labels.extend(res.get('labels')[min(len(labels),3):])
-		series_num = series_num + res.get('series_num')
+            for name in self.dataname:
+                res = self.Gr2_File_to_Polydata(name)
+                polydata = res.get('polydata')
+                labels.extend(res.get('labels')[min(len(labels),3):])
+                series_num = series_num + res.get('series_num')
 
-		for pd in polydata:
-		    if vtk.vtkVersion.GetVTKMajorVersion() < 6:
-		        self.xyplot.AddInput(pd)
-		    else:
-		        self.xyplot.AddDataSetInput(pd)
+                for pd in polydata:
+                    if vtk.vtkVersion.GetVTKMajorVersion() < 6:
+                        self.xyplot.AddInput(pd)
+                    else:
+                        self.xyplot.AddDataSetInput(pd)
 
-#	    return False
-	else:
+#            return False
+        else:
             self.dataname = self.tracker.get_vtkfile()
-	    #returns 'labels', 'series_num' and 'polydata' keys
-	    res = self.Gr2_File_to_Polydata(self.dataname)
+            #returns 'labels', 'series_num' and 'polydata' keys
+            res = self.Gr2_File_to_Polydata(self.dataname)
 
-	    polydata = res.get('polydata')
-	    labels = res.get('labels')
-	    series_num = res.get('series_num')
+            polydata = res.get('polydata')
+            labels = res.get('labels')
+            series_num = res.get('series_num')
 
-	    for pd in polydata:
-	        if vtk.vtkVersion.GetVTKMajorVersion() < 6:
-	            self.xyplot.AddInput(pd)
-	        else:
-	            self.xyplot.AddDataSetInput(pd)
+            for pd in polydata:
+                if vtk.vtkVersion.GetVTKMajorVersion() < 6:
+                    self.xyplot.AddInput(pd)
+                else:
+                    self.xyplot.AddDataSetInput(pd)
 
 
         temp = labels[0]
@@ -438,53 +438,53 @@ class Plot2DGraph(Plot.Plot):
         self.done = True
 
         if self.label_tbutton.GetValue():
-	    self.label_event(None)
+            self.label_event(None)
 
 
     def copy_params(self, struct):
-	#Se hace esta comprobación por si la representacion viene del boton show en lugar de la propiedad plot
-	if struct.get_attribs().get(u'plot') is not None:					#añadido
-		ch = struct.get_children()
-		if len(ch) != 2:
-		    self.data_error('Incorrect number of childs in Plot2DGraph (2 needed)')
-		    return None
-		
-		nums0 = ch[0].get_elements()
-		nums1 = ch[1].get_elements()
-		
-		if len(nums0) != 0 and len(nums0) != 2:
-		    self.data_error('Incorrect number of elements for X range (0 or 2 needed)')
-		    return None
+        #Se hace esta comprobación por si la representacion viene del boton show en lugar de la propiedad plot
+        if struct.get_attribs().get(u'plot') is not None:
+            ch = struct.get_children()
+            if len(ch) != 2:
+                self.data_error('Incorrect number of childs in Plot2DGraph (2 needed)')
+                return None
+            
+            nums0 = ch[0].get_elements()
+            nums1 = ch[1].get_elements()
+            
+            if len(nums0) != 0 and len(nums0) != 2:
+                self.data_error('Incorrect number of elements for X range (0 or 2 needed)')
+                return None
 
-		if len(nums1) != 0 and len(nums1) != 2:
-		    self.data_error('Incorrect number of elements for Y range (0 or 2 needed)')
-		    return None
-		
-		numsf0 = []
-		for num in nums0:
-		    try:
-		        numsf0.append(float(num))
-		    except ValueError:
-		        self.data_error('Error converting \'' + num + '\' to float in X range')
-		        return None
+            if len(nums1) != 0 and len(nums1) != 2:
+                self.data_error('Incorrect number of elements for Y range (0 or 2 needed)')
+                return None
+            
+            numsf0 = []
+            for num in nums0:
+                try:
+                    numsf0.append(float(num))
+                except ValueError:
+                    self.data_error('Error converting \'' + num + '\' to float in X range')
+                    return None
 
-		numsf1 = []
-		for num in nums1:
-		    try:
-		        numsf1.append(float(num))
-		    except ValueError:
-		        self.data_error('Error converting \'' + num + '\' to float in Y range')
-		        return None
+            numsf1 = []
+            for num in nums1:
+                try:
+                    numsf1.append(float(num))
+                except ValueError:
+                    self.data_error('Error converting \'' + num + '\' to float in Y range')
+                    return None
 
 
-		if len(numsf0) != 2:
-		    self.xyplot.SetXRange((0.0,0.0))
-		else:
-		    self.xyplot.SetXRange(numsf0)
-		if len(numsf1) != 2:
-		    self.xyplot.SetYRange((0.0,0.0))
-		else:
-		    self.xyplot.SetYRange(numsf1)
+            if len(numsf0) != 2:
+                self.xyplot.SetXRange((0.0,0.0))
+            else:
+                self.xyplot.SetXRange(numsf0)
+            if len(numsf1) != 2:
+                self.xyplot.SetYRange((0.0,0.0))
+            else:
+                self.xyplot.SetYRange(numsf1)
 
 
 
@@ -534,9 +534,9 @@ class Plot2DGraph(Plot.Plot):
         # iguales se iguales
         #print self.xyplot.GetXRange(), self.xyplot.GetYRange()
 
-	#si la visualización se realiza desde el boton 'show'
-	#no se actualizan los structs con el rango de la 
-	if self.struct.get_attribs().get(u'plot') is not None:
+        #si la visualización se realiza desde el boton 'show'
+        #no se actualizan los structs con el rango de la 
+        if self.struct.get_attribs().get(u'plot') is not None:
             self.set_params(self.struct, x, y, True)
 
         self.widget.Render()

@@ -124,7 +124,7 @@ class Player():
 
 
         # facendo o bucle, vese ben o obxecto e a escala, pero non deixa interaccionar
-        # (ser· porque o bucle de eventos non itera)
+        # (ser√° porque o bucle de eventos non itera)
         #done = True
         #while done:
         if True:
@@ -160,6 +160,6 @@ class Player():
             self.stop()
             return False
 
-        # agora: sÛ enteiros
+        # agora: s√≥ enteiros
         
         return True

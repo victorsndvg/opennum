@@ -120,12 +120,12 @@ class PanelExec(wx.Panel):
 
 
     def time(self):
-		return self.timef(self.timenow())
+        return self.timef(self.timenow())
 
 
 
     def timenow(self):
-		return datetime.datetime.now()
+        return datetime.datetime.now()
 
 
 

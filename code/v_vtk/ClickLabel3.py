@@ -272,7 +272,7 @@ class ClickLabel():
         print 'pos', pos, 'there is', there_is
         
         if not there_is:
-	    self.clear()
+            self.clear()
             return
 
 #        print self.locator

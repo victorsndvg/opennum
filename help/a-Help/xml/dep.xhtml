@@ -18,6 +18,10 @@
       <li><a href="#menu">Menu dependencies</a></li>
       <li><a href="#var">Variables</a></li>
       <li><a href="#struc">Dependent structures</a></li>
+        <ul>
+          <li><a href="#struc-bas">Basic dependent structures</a></li>
+          <li><a href="#struct-adv">Advanced dependent structures</a></li>
+        </ul>
       <li><a href="#leaf">Dependent leaves</a></li>
     </ul>
     
@@ -84,6 +88,7 @@
     <div class="back"><a href="#top">Back to top</a></div>      
 
     <h4 id="struc">Dependent structures</h4>
+    <h5 id="struc-bas">Basic dependent structures</h5>
     <p>It is possible to create children for an element <code>struct</code> using the information stored in another part of the menu. An element
     <code>struct</code> can have the attribute <code>source="menu:</code><em>value</em>" where <em>value</em> is a <a href="#menu">menu dependency</a>.
     When the element pointed by <em>value</em></p>
@@ -95,14 +100,14 @@
       <code>leaf</code>.</li>
     </ul>
     <p>To determine the structure of the children, the element <code>struct</code> with the attribute <code>source</code> must contain a child element
-    with attribute <code>default="true"</code>. The structure of this child will be the parttern to create the rest of the children. As it was commented 
-    in section <a href="struct.xhtml#custom">Customizable structures</a>, the pattern will not appear in the widget and it must not have 
+    with attribute <code>default="true"</code>. The structure of this child will be the pattern to create the rest of the children. As it was commented 
+    in the section <a href="struct.xhtml#custom">Customizable structures</a>, the pattern will not appear in the widget and it must not have 
     attribute <code>name</code>, since the name will be provided by <code>source</code>.</p>
     <pre class="xml">&lt;struct name="Materials" source="menu:/Materials database/Open/Data"&gt;
   &lt;leaf type="char" default="true"&gt;
   &lt;/leaf&gt;
 &lt;/struct&gt;</pre>
-    <p>If <em>Data</em> is a element <code>struct</code> with two children named <em>Silicon</em> and <em>Iron</em>, or it is an element <code>leaf</code> 
+    <p>If <em>Data</em> is an element <code>struct</code> with two children named <em>Silicon</em> and <em>Iron</em>, or it is an element <code>leaf</code> 
 containing two strings, <em>Silicon</em> and <em>Iron</em>, then the result is</p>
     <pre class="xml">&lt;struct name="Materials" source="menu:/Materials database/Open/Data"&gt;
   &lt;leaf type="char" default="true"&gt;
@@ -114,6 +119,89 @@ containing two strings, <em>Silicon</em> and <em>Iron</em>, then the result is</
 &lt;/struct&gt;</pre>
     <p>The attribute <code>source</code> can point to a <a href="struct.xhtml#custom">customizable structure</a>; thus, the elements of the structure
     with attribute <code>source</code> will change when the children of the customizable structure change.</p> 
+    <p>The associated widget for these structures depends on the optional attributes <code>selection</code> and <code>customize</code> as is explained in the section <a href="../xml/struct.xhtml">Structures</a>.</p>
+    <div class="back"><a href="#top">Back to top</a></div>     
+    
+    <h5 id="struct-adv">Advanced dependent structures</h5>
+    <p>It is possible to create children for an element <code>struct</code> combining the information stored in another part of the menu with other specific children, added by distributor, and even with new children added by the user. This approach allows unions, intersections and particularization of the structure for specific elements.</p>
+    <p>An element <code>struct</code> can have the attribute <code>source="menu:</code><em>value</em>", where <em>value</em> is a <a href="#menu">menu dependency</a>, and/or children with the attribute <code>default="true"</code>, with or without <code>name</code>, and/or the attribute <code>customize="true"</code>.</p>
+	<p>These attributes can be combined in various ways and the result depend on which of them are present.</p>
+    <ul>
+      <li>Attribute <code>source</code>:</li>
+        <p>When the attribute <code>source="menu:</code><em>value</em>" is present, the <code>struct</code> will have as many children as elements were in the pointed menu item.<br/>
+           Note that this will get only the list of elements, without structure, because no children with the attribute <code>default="true"</code> is present to provide the pattern to create the children.</p>
+        <pre class="xml">&lt;struct name="Materials" source="menu:/Materials database/Open/Data"&gt;
+&lt;/struct&gt;</pre>
+      <li>Attribute <code>source</code> and child with attribute <code>default="true"</code>:</li>
+        <p>This is exactly the case described in <a href="#struc-bas">Basic dependent structures</a>.</p>
+      <li>Attribute <code>source</code>, child with attribute <code>default="true"</code> and children with attributes <code>default="true"</code> and <code>name="<em>name</em>"</code>:</li>
+        <p>This is the way to get a union between elements in source and other specific children and/or to particularize them.<br/>
+          The <code>struct</code> with the attribute <code>source</code> must contain one child with attribute <code>default="true"</code> (without <code>name</code>) and can contain other children with attribute <code>default="true"</code> and different <code>name</code>.<br/>
+          The key to get a union, not an intersection, is the presence of a child with attribute <code>default="true"</code> and no <code>name</code>.<br/>
+          For elements in source, if the name of the element matches with the attribute <code>name</code> of some child with attribute <code>default="true"</code>, the structure of this child will be used as pattern to create the new one. Otherwise, the child with attribute <code>default="true"</code> and no <code>name</code> will be used.</p>
+        <pre class="xml">&lt;struct name="Materials" source="menu:/Materials database/Open/Data"&gt;
+  &lt;leaf type="char" default="true"&gt;
+  &lt;/leaf&gt;
+  &lt;leaf type="float" default="true" name="Silicon"&gt;
+    &lt;element&gt;0.25&lt;/element&gt;
+  &lt;/leaf&gt;
+  &lt;leaf type="char" default="true" name="Copper"&gt;
+    &lt;element&gt;sqrt(x)&lt;/element&gt;
+  &lt;/leaf&gt;
+&lt;/struct&gt;</pre>
+    <p>If <em>Data</em> is an element <code>struct</code> with two children named <em>Silicon</em> and <em>Iron</em>, or it is an element <code>leaf</code> 
+containing two strings, <em>Silicon</em> and <em>Iron</em>, then the result is</p>
+        <pre class="xml">&lt;struct name="Materials" source="menu:/Materials database/Open/Data"&gt;
+  &lt;leaf type="char" default="true"&gt;
+  &lt;/leaf&gt;
+  &lt;leaf type="float" default="true" name="Silicon"&gt;
+    &lt;element&gt;0.25&lt;/element&gt;
+  &lt;/leaf&gt;
+  &lt;leaf type="char" default="true" name="Copper"&gt;
+    &lt;element&gt;sqrt(x)&lt;/element&gt;
+  &lt;/leaf&gt;
+  &lt;leaf type="float" name="Silicon"&gt;
+    &lt;element&gt;0.25&lt;/element&gt;
+  &lt;/leaf&gt;
+  &lt;leaf type="char" name="Iron"&gt;
+  &lt;/leaf&gt;
+  &lt;leaf type="char" name="Copper"&gt;
+    &lt;element&gt;sqrt(x)&lt;/element&gt;
+  &lt;/leaf&gt;
+&lt;/struct&gt;</pre>
+      <li>Attribute <code>source</code> and children with attributes <code>default="true"</code> and <code>name="<em>name</em>"</code>:</li>
+        <p>This is the way to get an intersection between elements in source and other specific children.<br/>
+          The <code>struct</code> with the attribute <code>source</code> must contain one or more children with attribute <code>default="true"</code> and different <code>name</code> but cannot contain any child with attribute <code>default="true"</code> and no <code>name</code>.<br/>
+          The key to get an intersection, not a union, is the absence of a child with attribute <code>default="true"</code> and no <code>name</code>.<br/>
+          For elements in source, if the name of the element matches with the attribute <code>name</code> of any child with attribute <code>default="true"</code>, the structure of this child will be used as pattern to create the new one. Otherwise, the element will be omitted and the child will not be created.</p>
+        <pre class="xml">&lt;struct name="Materials" source="menu:/Materials database/Open/Data"&gt;
+  &lt;leaf type="float" default="true" name="Silicon"&gt;
+    &lt;element&gt;0.25&lt;/element&gt;
+  &lt;/leaf&gt;
+  &lt;leaf type="char" default="true" name="Copper"&gt;
+    &lt;element&gt;sqrt(x)&lt;/element&gt;
+  &lt;/leaf&gt;
+&lt;/struct&gt;</pre>
+    <p>If <em>Data</em> is an element <code>struct</code> with two children named <em>Silicon</em> and <em>Iron</em>, or it is an element <code>leaf</code> 
+containing two strings, <em>Silicon</em> and <em>Iron</em>, then the result is</p>
+        <pre class="xml">&lt;struct name="Materials" source="menu:/Materials database/Open/Data"&gt;
+  &lt;leaf type="float" default="true" name="Silicon"&gt;
+    &lt;element&gt;0.25&lt;/element&gt;
+  &lt;/leaf&gt;
+  &lt;leaf type="char" default="true" name="Copper"&gt;
+    &lt;element&gt;sqrt(x)&lt;/element&gt;
+  &lt;/leaf&gt;
+  &lt;leaf type="float" name="Silicon"&gt;
+    &lt;element&gt;0.25&lt;/element&gt;
+  &lt;/leaf&gt;
+&lt;/struct&gt;</pre>
+      <li>Attribute <code>source</code> and <code>customize="true"</code> [and child with attribute <code>default="true"</code>] [and children with attributes <code>default="true"</code> and <code>name="<em>name</em>"</code>]:</li>
+        <p>This is the way to combine elements in source and new ones added by the user.<br/>
+          If a child with attribute <code>default="true"</code> (without <code>name</code>) is present, user can add new elements. If not, user only can select one of the existing.<br/>
+          The rules to get a union or an intersection, or to understand how children will be created, are the same as in previous cases (when <code>customize="true"</code> is not present).</p>
+        <p>There is more information about how to use the attribute <code>customize</code> in the section <a href="struct.xhtml#custom">Customizable structures</a>.</p>
+    </ul>
+    <p>The associated widget for these structures depends on the optional attributes <code>selection</code> and <code>customize</code> as is explained in the section <a href="../xml/struct.xhtml">Structures</a>.</p>
     <div class="back"><a href="#top">Back to top</a></div>     
     
     <h4 id="leaf">Dependent leaves</h4>
@@ -130,7 +218,7 @@ containing two strings, <em>Silicon</em> and <em>Iron</em>, then the result is</
   
     <pre class="xml">&lt;leaf name="Materials" type="charlist" source="menu:/Materials database/Open/Data"&gt;
 &lt;/leaf&gt;</pre>
-    <p>If <em>Data</em> is a element <code>struct</code> with two children named <em>Silicon</em> and <em>Iron</em>, or it is an element <code>leaf</code> 
+    <p>If <em>Data</em> is an element <code>struct</code> with two children named <em>Silicon</em> and <em>Iron</em>, or it is an element <code>leaf</code> 
 containing two strings, <em>Silicon</em> and <em>Iron</em>, then the result is</p>
     <pre class="xml">&lt;leaf name="Materials" type="charlist" source="menu:/Materials database/Open/Data"&gt;
   &lt;element&gt;Silicon&lt;/element&gt;

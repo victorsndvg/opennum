@@ -20,13 +20,13 @@ def save_renderwindow(parent, renderwindow, title=None):
 #        u"|EPS (*.eps)|*.eps" + \
 #        u"|PS (*.ps)|*.ps" + \
 #        u"|SVG (*.svg)|*.svg"
-    extensions = ['.jpg','.png','.bmp','.tiff']				#añadido
+    extensions = ['.jpg','.png','.bmp','.tiff']
     formats = u"JPEG (*.jpg)|*.jpg" + \
         u"|PNG (*.png)|*.png" + \
         u"|BMP (*.bmp)|*.bmp" + \
         u"|TIFF (*.tiff)|*.tiff"
 
-    [file,ext_index] = dialogs.get_file_save(parent,u".",u"",formats,title)#añadido
+    [file,ext_index] = dialogs.get_file_save(parent,u".",u"",formats,title)
     if file is None:
         return
 
@@ -41,12 +41,12 @@ def save_renderwindow(parent, renderwindow, title=None):
         extension = file[point:]
 
 #    splitname = file.split('.')
-#    if len(splitname) == 1:						#añadido
-#        base = file							#añadido
-#        extension = extensions[ext_index]				#añadido
-#    else:								#añadido
-#        base = splitname[0]						#añadido
-#        extension = splitname[1]					#añadido
+#    if len(splitname) == 1:
+#        base = file
+#        extension = extensions[ext_index]
+#    else:
+#        base = splitname[0]
+#        extension = splitname[1]
 
     error = None
     
@@ -62,29 +62,29 @@ def save_renderwindow(parent, renderwindow, title=None):
     if error is not None:
         dialogs.show_error(parent, error)
 
-def save_movie_renderwindow(parent, renderwindow, title=None):			#añadido
-						
-    codec = [u'AVI',u'FFMPEGHQ',u'FFMPEGLQ',u'OGGTHEORA',u'MPEG2']				#añadido
-    extensions = [u'.avi',u'.avi',u'.avi',u'.ogv',u'.mpg']			#añadido
+def save_movie_renderwindow(parent, renderwindow, title=None):
+
+    codec = [u'AVI',u'FFMPEGHQ',u'FFMPEGLQ',u'OGGTHEORA',u'MPEG2']
+    extensions = [u'.avi',u'.avi',u'.avi',u'.ogv',u'.mpg']
     formats = u"AVI (*.avi)|*.avi" + \
         u"|FFMPEG (HQ) (*.avi)|*.avi" + \
         u"|FFMPEG (LQ) (*.avi)|*.avi" + \
         u"|OGGTHEORA (*.ogv)|*.ogv" + \
         u"|MPEG2 (*.mpg)|*.mpg"
-    file = None									#añadido
-    ext_index = None								#añadido
-    [file,ext_index] = dialogs.get_file_save(parent,u".",u"",formats,title)	#añadido
-    if file is None:								#añadido
-        return None								#añadido
+    file = None
+    ext_index = None
+    [file,ext_index] = dialogs.get_file_save(parent,u".",u"",formats,title)
+    if file is None:
+        return None
 
-    point = file.rfind('.')							#añadido
-    if point == -1:								#añadido
-        base = file								#añadido
-        extension = extensions[ext_index]					#añadido
-    else:									#añadido
-        base = file[:point]							#añadido
-        extension = file[point:]						#añadido
-    return [base+extension,codec[ext_index]]						#añadido
+    point = file.rfind('.')
+    if point == -1:
+        base = file
+        extension = extensions[ext_index]
+    else:
+        base = file[:point]
+        extension = file[point:]
+    return [base+extension,codec[ext_index]]
 
 
 def save_image(renderwindow, base, extension):
