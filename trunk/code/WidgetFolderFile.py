@@ -73,38 +73,38 @@ class WidgetFolderFile(Widget.Widget):
         
         attribs = self.struct.get_attribs()
 
-	subtype = attribs.get(config.AT_SUBTYPE)
+        subtype = attribs.get(config.AT_SUBTYPE)
 
-	attribmeshfield = self.parse_mesh_field_string(subtype)
+        attribmeshfield = self.parse_mesh_field_string(subtype)
 
-	if attribmeshfield is not None:
-	    if len(attribmeshfield) == 1:
-		if attribs.get(config.AT_SUBTYPE) == u'mesh':
-	#            file_extensions = u'All supported (*.mfm;*.unv;*.bdf)|*.mfm;*.unv;*.bdf|Modulef Formatted Meshes (*.mfm)|*.mfm|Universal Files (*.unv)|*.unv|Nastran Input Data File (*.bdf)|*.bdf'
-	#            file_extensions = u'All supported (*.mfm;*.unv)|*.mfm;*.unv|Modulef Formatted Meshes (*.mfm)|*.mfm|Universal Files (*.unv)|*.unv'
-	#            file_extensions = u'All supported (*.mfm)|*.mfm|Modulef Formatted Meshes (*.mfm)|*.mfm'
-		    file_extensions = u'All supported (*.mfm;*.unv;*.vtk;*.vtu;*.pvd)|*.mfm;*.unv;*.vtk;*.vtu;*.pvd|' +\
-		        'Modulef Formatted Meshes (*.mfm)|*.mfm|' +\
-		        'Universal Files (*.unv)|*.unv|' +\
-		        'VTK Unstructured Grid Files (+) (*.vtk)|*.vtk|' +\
-		        'VTK XML Unstructured Grid Files (+) (*.vtu)|*.vtu|' +\
-		        'PVD Files (*.pvd)|*.pvd|' +\
-		        'All Files (*)|*'
-		
-		if attribs.get(config.AT_SUBTYPE) == u'field':
-	#            file_extensions = u'All supported (*.mff;*.vtu)|*.mff;*.vtu|Modulef Formatted Fields (*.mff)|*.mff|VTK XML Point Data Fields on Unstructured Grid (*.vtu)|*.vtu'
-		    file_extensions = u'All supported (*.mff;*.vtk;*.vtu)|*.mff;*.vtk;*.vtu|' +\
+        if attribmeshfield is not None:
+            if len(attribmeshfield) == 1:
+                if attribs.get(config.AT_SUBTYPE) == u'mesh':
+        #            file_extensions = u'All supported (*.mfm;*.unv;*.bdf)|*.mfm;*.unv;*.bdf|Modulef Formatted Meshes (*.mfm)|*.mfm|Universal Files (*.unv)|*.unv|Nastran Input Data File (*.bdf)|*.bdf'
+        #            file_extensions = u'All supported (*.mfm;*.unv)|*.mfm;*.unv|Modulef Formatted Meshes (*.mfm)|*.mfm|Universal Files (*.unv)|*.unv'
+        #            file_extensions = u'All supported (*.mfm)|*.mfm|Modulef Formatted Meshes (*.mfm)|*.mfm'
+                    file_extensions = u'All supported (*.mfm;*.unv;*.vtk;*.vtu;*.pvd)|*.mfm;*.unv;*.vtk;*.vtu;*.pvd|' +\
+                        'Modulef Formatted Meshes (*.mfm)|*.mfm|' +\
+                        'Universal Files (*.unv)|*.unv|' +\
+                        'VTK Unstructured Grid Files (+) (*.vtk)|*.vtk|' +\
+                        'VTK XML Unstructured Grid Files (+) (*.vtu)|*.vtu|' +\
+                        'PVD Files (*.pvd)|*.pvd|' +\
+                        'All Files (*)|*'
+                
+                if attribs.get(config.AT_SUBTYPE) == u'field':
+        #            file_extensions = u'All supported (*.mff;*.vtu)|*.mff;*.vtu|Modulef Formatted Fields (*.mff)|*.mff|VTK XML Point Data Fields on Unstructured Grid (*.vtu)|*.vtu'
+                    file_extensions = u'All supported (*.mff;*.vtk;*.vtu)|*.mff;*.vtk;*.vtu|' +\
                         'Modulef Formatted Fields (*.mff)|*.mff|' +\
                         'VTK Unstructured Grid Fields (*.vtk)|*.vtk|' +\
                         'VTK XML Unstructured Grid Fields (*.vtu)|*.vtu|' +\
                         'All Files (*)|*'
 
-		if attribs.get(config.AT_SUBTYPE) == u'data':
-		    file_extensions = u'All Files (*)|*'
+                if attribs.get(config.AT_SUBTYPE) == u'data':
+                    file_extensions = u'All Files (*)|*'
 
-	    if len(attribmeshfield) == 2:
-		if attribmeshfield[0] == u'mesh' or attribmeshfield[0] == u'field' or attribmeshfield[0] == u'data':
-		    file_extensions = attribmeshfield[1]
+            if len(attribmeshfield) == 2:
+                if attribmeshfield[0] == u'mesh' or attribmeshfield[0] == u'field' or attribmeshfield[0] == u'data':
+                    file_extensions = attribmeshfield[1]
         
         if self.ff == FOLDER:
             val = dialogs.get_folder(self.window, self.val)
@@ -155,10 +155,10 @@ class WidgetFolderFile(Widget.Widget):
         post = string[i+1:]
         if pre == u'mesh' or pre == u'field' or pre == u'data':
             return [pre, post]
-	else:
+        else:
             return [string]
 
     #Gestion del foco del widget
-    def SetFocus(self):				#añadido
-	self.button.SetFocus()			#añadido
-	
+    def SetFocus(self):
+        self.button.SetFocus()
+        

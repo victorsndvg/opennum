@@ -106,13 +106,13 @@ class PlotVectorField(Plot.Plot):
 #                self.lin.SetInputConnection(self.src_vc.GetOutputPort())
 #            self.wireM2.SetInputConnection(self.src_vc.GetOutputPort())
         if changes.get('changed'):
-            if self.data1.get('fielddomain') == 'cell':				#añadido
-		self.vectors = self.src.GetOutput().GetCellData().GetVectors()	#añadido
-	    elif self.data1.get('fielddomain') == 'point':			#añadido
-		self.vectors = self.src.GetOutput().GetPointData().GetVectors()	#añadido
+            if self.data1.get('fielddomain') == 'cell':
+                self.vectors = self.src.GetOutput().GetCellData().GetVectors()
+            elif self.data1.get('fielddomain') == 'point':
+                self.vectors = self.src.GetOutput().GetPointData().GetVectors()
         if self.vectors is not None:
-            sr = self.vectors.GetRange(-1)					#añadido
-	    self.scalarrange.local_set(sr)					#añadido
+            sr = self.vectors.GetRange(-1)
+            self.scalarrange.local_set(sr)
             #self.wireM2.SetScalarRange(sr)
 
 
@@ -185,79 +185,79 @@ class PlotVectorField(Plot.Plot):
             print self.gl.GetCenter()
 
 #Prueba para representar flechas 3d (descomentar)
-#	cyl = vtk.vtkCylinderSource()				#añadido
-#	cyl.SetResolution(6)					#añadido
-#	cyl.SetRadius(.05)					#añadido
-#	cyl.SetHeight(1)					#añadido
-	
-#	cylTrans = vtk.vtkTransform()				#añadido
-#	cylTrans.Identity()					#añadido
-#	cylTrans.RotateZ(90)					#añadido
-#	cylTrans.Translate(0,-1,0)				#añadido
+#        cyl = vtk.vtkCylinderSource()
+#        cyl.SetResolution(6)
+#        cyl.SetRadius(.05)
+#        cyl.SetHeight(1)
 
-#	cylTransFilter = vtk.vtkTransformPolyDataFilter()	#añadido
-#	cylTransFilter.SetInput(cyl.GetOutput())		#añadido
-#	cylTransFilter.SetTransform(cylTrans)			#añadido
-#	cone = vtk.vtkConeSource()				#añadido
-#	cone.SetResolution(6)					#añadido
-#	cone.SetCenter(2,0,0)					#añadido
-#	cone.SetAngle(15)					#añadido
+#        cylTrans = vtk.vtkTransform()
+#        cylTrans.Identity()
+#        cylTrans.RotateZ(90)
+#        cylTrans.Translate(0,-1,0)
 
-#	arrow = vtk.vtkAppendPolyData()				#añadido
-#	arrow.AddInput(cylTransFilter.GetOutput())		#añadido
-#	arrow.AddInput(cone.GetOutput())			#añadido
-#	arrow.Update()						#añadido
-#	self.gl = arrow						#añadido
+#        cylTransFilter = vtk.vtkTransformPolyDataFilter()
+#        cylTransFilter.SetInput(cyl.GetOutput())
+#        cylTransFilter.SetTransform(cylTrans)
+#        cone = vtk.vtkConeSource()
+#        cone.SetResolution(6)
+#        cone.SetCenter(2,0,0)
+#        cone.SetAngle(15)
+
+#        arrow = vtk.vtkAppendPolyData()
+#        arrow.AddInput(cylTransFilter.GetOutput())
+#        arrow.AddInput(cone.GetOutput())
+#        arrow.Update()
+#        self.gl = arrow
 #Prueba para representar flechas 3d
 
         self.lin = vtk.vtkGlyph3D()
         if self.data1.get('fielddomain') == 'cell': # vtk does not seem to support cell vectors
             if vtk.vtkVersion.GetVTKMajorVersion() < 6:
-                self.lin.SetInput(self.cellcenters.GetOutput())#amañar cambio new
+                self.lin.SetInput(self.cellcenters.GetOutput())#amaÃ±ar cambio new
             else:
-                self.lin.SetInputConnection(self.cellcenters.GetOutputPort())#amañar cambio new
-            #lutrange = self.src_vc.GetOutput().GetCellData().GetVectors().GetRange(-1)	#añadido
+                self.lin.SetInputConnection(self.cellcenters.GetOutputPort())#amaÃ±ar cambio new
+            #lutrange = self.src_vc.GetOutput().GetCellData().GetVectors().GetRange(-1)
         else:
             if vtk.vtkVersion.GetVTKMajorVersion() < 6:
                 self.lin.SetInput(self.src_vc.GetOutput())
             else:
                 self.lin.SetInputConnection(self.src_vc.GetOutputPort())
-            #lutrange = self.src_vc.GetOutput().GetPointData().GetVectors().GetRange(-1)#añadido
+            #lutrange = self.src_vc.GetOutput().GetPointData().GetVectors().GetRange(-1)
 
 
-	lut = vtk.vtkLookupTable()				#añadido
-	lut.SetRampToLinear()					#añadido
-	lut.SetScaleToLinear()					#añadido
-	# When using vector magnitude for coloring		#añadido
-	lut.SetVectorModeToMagnitude()				#añadido
-	lut.Build()						#añadido
-	# When using a vector component for coloring		#añadido
-	#lut.SetVectorModeToComponent()				#añadido
-	#lut.SetVectorComponent(1)				#añadido
+        lut = vtk.vtkLookupTable()
+        lut.SetRampToLinear()
+        lut.SetScaleToLinear()
+        # When using vector magnitude for coloring
+        lut.SetVectorModeToMagnitude()
+        lut.Build()
+        # When using a vector component for coloring
+        #lut.SetVectorModeToComponent()
+        #lut.SetVectorComponent(1)
 
 
-	if self.vectors is not None:				#añadido
-            lutrange = self.vectors.GetRange(-1)		#añadido
-            lut.SetTableRange(lutrange)				#añadido
+        if self.vectors is not None:
+            lutrange = self.vectors.GetRange(-1)
+            lut.SetTableRange(lutrange)
 
         self.lin.SetSourceConnection(self.gl.GetOutputPort())
         self.lin.SetScaleModeToScaleByVector()
 #        self.lin.SetScaleFactor(1.0)
         self.lin.SetColorModeToColorByVector() # flechas de cores
-	self.lin.OrientOn()
-	self.lin.Update()
+        self.lin.OrientOn()
+        self.lin.Update()
 
 
 
         self.pdM = vtk.vtkPolyDataMapper()
         self.pdM.SetInputConnection(self.lin.GetOutputPort())
-	#coloreado de vectores
-#	self.pdM.SetScalarRange(lutrange)			#añadido
-        self.pdM.ScalarVisibilityOn() 				#añadido
-	self.pdM.SetLookupTable(lut)				#añadido
-	self.pdM.InterpolateScalarsBeforeMappingOff()
-#	self.pdM.UseLookupTableScalarRangeOn()
-	self.pdM.Update()
+        #coloreado de vectores
+#        self.pdM.SetScalarRange(lutrange)
+        self.pdM.ScalarVisibilityOn()
+        self.pdM.SetLookupTable(lut)
+        self.pdM.InterpolateScalarsBeforeMappingOff()
+#        self.pdM.UseLookupTableScalarRangeOn()
+        self.pdM.Update()
 
 
       
@@ -289,7 +289,7 @@ class PlotVectorField(Plot.Plot):
         if interactive:
             self.set_iren()
             if self.data1.get('fielddomain') == 'cell':
-                self.clicker.set_point_cell('point') # así ok
+                self.clicker.set_point_cell('point') # asÃ­ ok
                 self.clicker.set_objects(self.cellcenters_click, self.rens[0], self.iren, self.widget) # ALPHA-vc
             else:
                 self.clicker.set_point_cell(self.data1.get('fielddomain'))
@@ -307,10 +307,10 @@ class PlotVectorField(Plot.Plot):
         for ren in self.rens: # WORKAROUND (aparecia non centrada) // + outline
             ren.ResetCamera()
 
-	if self.vectors is not None:				#añadido
-            self.scalarrange.local_set(lutrange)		#añadido
-            self.add_scalarbar_1()				#añadido
-            self.add_scalarbar_2(lut)				#añadido
+        if self.vectors is not None:
+            self.scalarrange.local_set(lutrange)
+            self.add_scalarbar_1()
+            self.add_scalarbar_2(lut)
 
         self.done = True
 
@@ -344,10 +344,10 @@ class PlotVectorField(Plot.Plot):
                 self.data_error('Error converting \'' + num + '\' to float')
                 return fail
         else:
-	#Calcula unha escala e escribe o dato no struct
-            scale = self.calc_best_scale()                                   #añadido
-            ch[0].set_elements([str(scale)])				     #añadido
-            self.panel_widgets.update_widget_struct(ch[0])		     #añadido
+        #Calcula unha escala e escribe o dato no struct
+            scale = self.calc_best_scale()
+            ch[0].set_elements([str(scale)])
+            self.panel_widgets.update_widget_struct(ch[0])
         #    self.data_error('Incorrect number of elements in scale (1 needed)')
         #    return fail
 
@@ -370,43 +370,43 @@ class PlotVectorField(Plot.Plot):
 
         return (scale, density/100.0)
 
-    def apply_ini_params(self):                                 #añadido
-        if self.lastscale is not None:                          #añadido
-            self.bestScale = self.calc_best_scale()             #añadido
-            self.lin.SetScaleFactor(self.bestScale)             #añadido
-        res = self.apply_data(self.lastmode)                    #añadido
+    def apply_ini_params(self):
+        if self.lastscale is not None:
+            self.bestScale = self.calc_best_scale()
+            self.lin.SetScaleFactor(self.bestScale)
+        res = self.apply_data(self.lastmode)
 
-    def calc_best_scale(self):                                  #añadido
-	if self.maxNorm is not None:				#añadido
-            xdist = (self.bounds[1]-self.bounds[0])             #añadido
-            ydist = (self.bounds[3]-self.bounds[2])             #añadido
-            zdist = (self.bounds[5]-self.bounds[4])             #añadido
-            maxdist = xdist					#añadido
-            if maxdist<ydist:					#añadido
-		maxdist = ydist					#añadido
-            if maxdist<zdist:					#añadido
-		maxdist = zdist 				#añadido
-            #meddist = (xdist+ydist+zdist)/3			#añadido
-            #maxdist = sqrt(((xdist*xdist)+(ydist*ydist)+(zdist*zdist))/3)#añadido
-            if self.maxNorm == 0:				#añadido
-		return 1.0					#añadido
-            else:						#añadido
-		return self.round_to_1(maxdist/(self.maxNorm*20))#añadido
-	else:
+    def calc_best_scale(self):
+        if self.maxNorm is not None:
+            xdist = (self.bounds[1]-self.bounds[0])
+            ydist = (self.bounds[3]-self.bounds[2])
+            zdist = (self.bounds[5]-self.bounds[4])
+            maxdist = xdist
+            if maxdist<ydist:
+                maxdist = ydist
+            if maxdist<zdist:
+                maxdist = zdist
+            #meddist = (xdist+ydist+zdist)/3
+            #maxdist = sqrt(((xdist*xdist)+(ydist*ydist)+(zdist*zdist))/3)
+            if self.maxNorm == 0:
+                return 1.0
+            else:
+                return self.round_to_1(maxdist/(self.maxNorm*20))
+        else:
             return 1.0
 
 
 #redondea al primer digito significativo
-    def round_to_1(self,x):					#añadido
-	from math import floor, log10				#añadido
-	return round(x, -int(floor(log10(x))))			#añadido
+    def round_to_1(self,x):
+        from math import floor, log10
+        return round(x, -int(floor(log10(x))))
 
 
 
     def apply_params(self):
-	if self.lastscale is not None:
+        if self.lastscale is not None:
             self.lin.SetScaleFactor(self.lastscale)
-	else:
+        else:
             self.lin.SetScaleFactor(self.bestscale)
         res = self.apply_data(self.lastmode)
 
@@ -454,15 +454,15 @@ class PlotVectorField(Plot.Plot):
             self.vectors = None
 
 
-	#Limites dos eixos
-	self.bounds = self.src.GetOutput().GetBounds()                  #añadido
-	#Maximo tamaño de celda
-	#self.cellMaxSize = ugrid.GetMaxCellSize()
-	self.maxNorm = None						#añadido
+        #Limites dos eixos
+        self.bounds = self.src.GetOutput().GetBounds()
+        #Maximo tamaÃ±o de celda
+        #self.cellMaxSize = ugrid.GetMaxCellSize()
+        self.maxNorm = None
         # engadir aqui os orixinais a ugrid ...
         if self.vectors is not None:
-	#Maximo valor da norma dos vectores
-            self.maxNorm = self.vectors.GetMaxNorm()                    #añadido
+        #Maximo valor da norma dos vectores
+            self.maxNorm = self.vectors.GetMaxNorm()
             v = vtk.vtkDoubleArray()
             v.DeepCopy(self.vectors)
             v.SetName(aname1)
@@ -610,4 +610,4 @@ class PlotVectorField(Plot.Plot):
 
         return decimated
 
-	xdist = (self.bounds[1]-self.bounds[0])
+        xdist = (self.bounds[1]-self.bounds[0])

@@ -22,7 +22,7 @@ class SSHoper():
         self.user = None
         self.passw = None
         self.keyfile = None
-	self.thread = parent
+        self.thread = parent
 
 
     def __del__(self):
@@ -48,7 +48,7 @@ class SSHoper():
             mywp = MyWarningPolicy()
             try:
                 self.ssh = paramiko.SSHClient()
-                self.ssh.load_system_host_keys() # posix # policy [só hosts conocidos]
+                self.ssh.load_system_host_keys() # posix # policy [sÃ³ hosts conocidos]
                 self.ssh.set_missing_host_key_policy(mywp)
                 # (AutoAddPolicy / RejectPolicy / WarningPolicy / custom)
                 # AuthenticationException
@@ -152,7 +152,7 @@ class SSHoper():
         stdin.close()
         stdin.channel.shutdown_write() # se non, colga con 'cat'
 
-        # mellorar: usar select ? agora imprime desordenado: primeiro saída, despois erro
+        # mellorar: usar select ? agora imprime desordenado: primeiro saÃ­da, despois erro
         out = stdout.readline()
         while out:
             log(out)
@@ -167,40 +167,40 @@ class SSHoper():
 
 
 #copia de directorios enteros
-    def folder_get(self, remote, local):						#añadido
-	sep = '/'
-        if self.sftp is None:								#añadido
-            return 'Error executing SFTP command: sftp not open'			#añadido	
-        try:										#añadido
-            dir = self.sftp.listdir(remote)						#añadido
-	    folder = os.path.basename(remote)						#añadido
-            if not os.path.exists(local):						#añadido
-		try:									#añadido
-		    os.mkdir(local)							#añadido
-		    #while not os.path.exists(local):
-			#pass
-		except OSError, e:							#añadido
-		    print 'Error creating ' + folder + ' directory:', e			#añadido
-	    for file in dir:								#añadido
-                self.thread.send(self.thread.prefix+': Copying \''			#añadido
-		+sep.join([remote,file])+'\' -> \''+sep.join([local,file])+'\'\n')	#añadido
-		self.file_get(sep.join([remote,file]),sep.join([local,file]))	#añadido
-        except Exception, e1:								#añadido
-            return 'SFTPget error: ' + repr(e1)						#añadido
-        return True									#añadido
+    def folder_get(self, remote, local):
+        sep = '/'
+        if self.sftp is None:
+            return 'Error executing SFTP command: sftp not open'
+        try:
+            dir = self.sftp.listdir(remote)
+            folder = os.path.basename(remote)
+            if not os.path.exists(local):
+                try:
+                    os.mkdir(local)
+                    #while not os.path.exists(local):
+                        #pass
+                except OSError, e:
+                    print 'Error creating ' + folder + ' directory:', e
+            for file in dir:
+                self.thread.send(self.thread.prefix+': Copying \''
+                +sep.join([remote,file])+'\' -> \''+sep.join([local,file])+'\'\n')
+                self.file_get(sep.join([remote,file]),sep.join([local,file]))
+        except Exception, e1:
+            return 'SFTPget error: ' + repr(e1)
+        return True
 
 
     def file_get(self, remote, local):
         if self.sftp is None:
             return 'Error executing SFTP command: sftp not open'
         try:
-	    #comprobacion de directorio, temporal
-	    if str(self.sftp.lstat(remote))[0] == 'd':					#añadido	
-		self.folder_get(remote,local)						#añadido
-	    else:									#añadido
-		self.sftp.get(remote,local)						#añadido
+            #comprobacion de directorio, temporal
+            if str(self.sftp.lstat(remote))[0] == 'd':
+                self.folder_get(remote,local)
+            else:
+                self.sftp.get(remote,local)
         except Exception, e:
-	    return 'SFTPget error: ' + repr(e)
+            return 'SFTPget error: ' + repr(e)
         return True
 
 

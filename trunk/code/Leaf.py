@@ -177,43 +177,43 @@ class Leaf(Element.Element):
 # formato3= [ini:paso:fin]. por facer. Admite distintos signos inicial final como () [] ...
 #devuelve [nuevacadena,numerodeelementos]
 #si numerodeelementos == -1 no es un rango al estilo matlab
-    def float_range(self,string):						#añadido
-	string2=u' '								#añadido
-	num = 0									#añadido
-        try:									#añadido
-	    array_range = [float(s) for s in string.split(u':')] 		#añadido
-            if len(array_range)==3:          					#añadido
-		if (array_range[0]>array_range[2] and array_range[1]>0) or\
-                   (array_range[2]>array_range[0] and array_range[1]<0):	#añadido
-                    print u'ERROR: wrong step in Range('+string+u')'            #añadido		    
-		    return[string2, num]					#añadido
-		low = array_range[0]						#añadido
-                step = array_range[1]						#añadido
-                high = array_range[2]						#añadido
-                while abs(high)-abs(low)>=0:					#añadido
-                	string2 += str(low)+ u'  '				#añadido
-                	low+=step						#añadido
-			num = num + 1						#añadido
-                print u'Range('+string+u')'					#añadido
-            elif len(array_range)==2:						#añadido
-		if (array_range[0]>array_range[1]):			 	#añadido
-                    print u'ERROR: wrong step in Range('+string+u')'            #añadido		    
-		    return[string2, num]					#añadido
-                low = array_range[0]						#añadido
-                step = 1							#añadido
-                high = array_range[1]						#añadido
-                while high-low>=0:						#añadido
-                	string2 += str(low)+ u'  '				#añadido
-                	low+=step						#añadido
-			num = num + 1						#añadido
-                print u'Range('+string+u')'              			#añadido
-            elif len(array_range)==1:						#añadido
-                string2 = string						#añadido
-		num = -1							#añadido
-        except:									#añadido
-            string2 = string							#añadido
-	    num = -1								#añadido
-	return [string2,num]							#añadido
+    def float_range(self,string):
+        string2=u' '
+        num = 0
+        try:
+            array_range = [float(s) for s in string.split(u':')]
+            if len(array_range)==3:
+                if (array_range[0]>array_range[2] and array_range[1]>0) or\
+                   (array_range[2]>array_range[0] and array_range[1]<0):
+                    print u'ERROR: wrong step in Range('+string+u')'
+                    return[string2, num]
+                low = array_range[0]
+                step = array_range[1]
+                high = array_range[2]
+                while abs(high)-abs(low)>=0:
+                    string2 += str(low)+ u'  '
+                    low+=step
+                    num = num + 1
+                print u'Range('+string+u')'
+            elif len(array_range)==2:
+                if (array_range[0]>array_range[1]):
+                    print u'ERROR: wrong step in Range('+string+u')'
+                    return[string2, num]
+                low = array_range[0]
+                step = 1
+                high = array_range[1]
+                while high-low>=0:
+                    string2 += str(low)+ u'  '
+                    low+=step
+                    num = num + 1
+                print u'Range('+string+u')'
+            elif len(array_range)==1:
+                string2 = string
+                num = -1
+        except:
+            string2 = string
+            num = -1
+        return [string2,num]
 
 
     def save_data(self, parent, parameters=None, transform=None):
@@ -266,14 +266,14 @@ class Leaf(Element.Element):
                 text += trfunction(elem)
             else:
                 if e.attrib.get(u'type') == u'float':
-			# Admite rangos al estilo matlab en leaf-float
-			float_range = self.float_range(elem)				#añadido
-			# Si es un rango modificar totalnum
-			if float_range[1] != -1:					#añadido
-			    e.attrib[u'totalnum'] = unicode(float_range[1])		#añadido
-			text += float_range[0]						#añadido
-		else:
-                	text += elem
+                    # Admite rangos al estilo matlab en leaf-float
+                    float_range = self.float_range(elem)
+                    # Si es un rango modificar totalnum
+                    if float_range[1] != -1:
+                        e.attrib[u'totalnum'] = unicode(float_range[1])
+                    text += float_range[0]
+                else:
+                    text += elem
                 
 #            if (i+1 != len(elements)):
 #                text += glue

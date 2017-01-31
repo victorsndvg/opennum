@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 
+# THIS CLASS IS NOT CURRENTLY BEING USED!
 
 # Choice -> Combo
 
@@ -57,7 +58,7 @@ class WidgetChoice(Widget.Widget):
         else:
             disp = title
 
-        self.combobox = wx.Choice( self, choices = names )
+        self.combobox = wx.Choice( self, choices = self.names )
 
         if self.selected != wx.NOT_FOUND:
             self.combobox.SetSelection(self.selected)
@@ -90,7 +91,7 @@ class WidgetChoice(Widget.Widget):
     def subselect(self, changes=True):
         self.save_mem() # maybe 'can' modify children ...
 
-        # poñer dentro de changes ?
+        # poÃ±er dentro de changes ?
         self.struct.apply_to_all_plots(self.window.panelB.update)
         if changes:
             self.struct.call_influences(self.window.panelB.update_from_dependency) # 'punteiros inversos'
@@ -177,7 +178,7 @@ class WidgetChoice(Widget.Widget):
             name = name.strip()
             if len(name)>0:
 
-                # comprobación se repetido
+                # comprobaciÃ³n se repetido
                 repeated = self.check_repeated(name, self.struct)
                 if repeated:
                     return False
@@ -195,5 +196,5 @@ class WidgetChoice(Widget.Widget):
         return None
 
     #Gestion del foco del widget
-    def SetFocus(self):				#añadido
-        self.combobox.SetFocus()		#añadido
+    def SetFocus(self):
+        self.combobox.SetFocus()

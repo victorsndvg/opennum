@@ -9,6 +9,7 @@ import wx.lib.newevent
 import config
 import dialogs
 import logging
+import copy
 
 
 
@@ -135,18 +136,29 @@ class Widget(wx.Panel):
 
         if tag==u'struct':
 
-	    #Permite mostrar una matriz desde fichero con WindowTabular
-	    if attribs.get(config.AT_SHOW) == config.AT_MATRIX and \
-		attribs.get(u'data') is not None:						#añadido
-		import WindowTabular								#añadido
-		table = WindowTabular.WindowTabular(window, window.tabular_onclose)		#añadido
-		table.display(struct,True)							#añadido
+            #Permite mostrar una matriz desde fichero con WindowTabular
+            if attribs.get(config.AT_SHOW) == config.AT_MATRIX and \
+                attribs.get(u'data') is not None:
+                import WindowTabular
+                table = WindowTabular.WindowTabular(window, window.tabular_onclose)
+                table.display(struct,True)
+
+            # Checks if struct has defaults (with or without name).
+            default_list = struct.get_defaults()
+            default_names = []
+            for default in default_list:
+                namede = default.get_attribs().get(u'name')
+                if namede is not None:
+                    default_names.append(namede)
+            has_default = len(default_list) > len(default_names)
+            has_default_names = len(default_names) > 0
 
             # there can be hidden elements
             if len(struct.get_children()) == 0 and \
                 attribs.get(config.AT_SOURCE) is None and \
                 attribs.get(config.AT_CUSTOMIZE) != config.VALUE_TRUE and \
-                attribs.get(config.AT_SHOWVALUES) != config.VALUE_TRUE:
+                attribs.get(config.AT_SHOWVALUES) != config.VALUE_TRUE and \
+                not has_default_names:
                 return widget
 
             selection = attribs.get(u'selection')
@@ -192,8 +204,8 @@ class Widget(wx.Panel):
 
     #Gestion del foco del widget
     #Se sobreescribe en cada uno de los widgets
-    def SetFocus(self):					#añadido
-	pass						#añadido
+    def SetFocus(self):
+        pass
 
 #busca nunha cadena (leaf type='float') rangos escritos con los distintos formatos
 # formato1= ini:paso:fin
@@ -201,43 +213,69 @@ class Widget(wx.Panel):
 # formato3= [ini:paso:fin]. por facer. Admite distintos signos inicial final como () [] ...
 #devuelve [nuevacadena,numerodeelementos]
 #si numerodeelementos == -1 no es un rango al estilo matlab
-    def float_range(self,string):						#añadido
-	string2=u' '								#añadido
-	num = 0									#añadido
-        try:									#añadido
-	    array_range = [float(s) for s in string.split(u':')] 		#añadido
-            if len(array_range)==3:          					#añadido
-		if (array_range[0]>array_range[2] and array_range[1]>0) or \
-                   (array_range[2]>array_range[0] and array_range[1]<0):	#añadido
-                    print u'ERROR: wrong step in Range('+string+u')'            #añadido		    
-		    return[string2, num]					#añadido
-		low = array_range[0]						#añadido
-                step = array_range[1]						#añadido
-                high = array_range[2]						#añadido
-                while abs(high)-abs(low)>=0:					#añadido
-                	string2 += str(low)+ u'  '				#añadido
-                	low+=step						#añadido
-			num = num + 1						#añadido
-                print u'Range('+string+u')'					#añadido
-            elif len(array_range)==2:						#añadido
-		if (array_range[0]>array_range[1]):			 	#añadido
-                    print u'ERROR: wrong step in Range('+string+u')'            #añadido		    
-		    return[string2, num]					#añadido
-                low = array_range[0]						#añadido
-                step = 1							#añadido
-                high = array_range[1]						#añadido
-                while high-low>=0:						#añadido
-                	string2 += str(low)+ u'  '				#añadido
-                	low+=step						#añadido
-			num = num + 1						#añadido
-                print u'Range('+string+u')'              			#añadido
-            elif len(array_range)==1:						#añadido
-                string2 = string						#añadido
-		num = -1							#añadido
-        except:									#añadido
-            string2 = string							#añadido
-	    num = -1								#añadido
-	return [string2,num]							#añadido
+    def float_range(self,string):
+        string2=u' '
+        num = 0
+        try:
+            array_range = [float(s) for s in string.split(u':')]
+            if len(array_range)==3:
+                if (array_range[0]>array_range[2] and array_range[1]>0) or \
+                   (array_range[2]>array_range[0] and array_range[1]<0):
+                    print u'ERROR: wrong step in Range('+string+u')'
+                    return[string2, num]
+                low = array_range[0]
+                step = array_range[1]
+                high = array_range[2]
+                while abs(high)-abs(low)>=0:
+                    string2 += str(low)+ u'  '
+                    low+=step
+                    num = num + 1
+                print u'Range('+string+u')'
+            elif len(array_range)==2:
+                if (array_range[0]>array_range[1]):
+                    print u'ERROR: wrong step in Range('+string+u')'
+                    return[string2, num]
+                low = array_range[0]
+                step = 1
+                high = array_range[1]
+                while high-low>=0:
+                    string2 += str(low)+ u'  '
+                    low+=step
+                    num = num + 1
+                print u'Range('+string+u')'
+            elif len(array_range)==1:
+                string2 = string
+                num = -1
+        except:
+            string2 = string
+            num = -1
+        return [string2,num]
+
+
+    
+    def check_candel(self, name, struct):
+        struct_copy = copy.deepcopy(struct)
+        attribs = struct_copy.get_attribs()
+        # Checks if struct is customizable.
+        if attribs.get(config.AT_CUSTOMIZE) != config.VALUE_TRUE:
+            return False
+        # Checks if showvalues is present.
+        if attribs.get(config.AT_SHOWVALUES) == config.VALUE_TRUE:
+            return False
+        # Checks if struct has source and if name was in source.
+        if attribs.get(config.AT_SOURCE) is not None:
+            elements = self.check_error(struct_copy.get_elements_with_source(self.menus))
+            for element in elements:
+                if element[0] == name:
+                    return False
+        # Checks if name was in defaults (with name).
+        default_list = struct_copy.get_defaults()
+        for default in default_list:
+            namede = default.get_attribs().get(u'name')
+            if namede == name:
+                return False
+        # Otherwise, name can be deleted.
+        return True
 
 
 

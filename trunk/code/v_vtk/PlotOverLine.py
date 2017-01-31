@@ -144,7 +144,7 @@ class PlotOverLine(Plot.Plot):
         self.wireA.GetProperty().SetEdgeColor(Plot.edges_color)
         
         self.add_swe_2(self.wireA) # wireframe/surface/surface+edges
-	self.add_opacity_2([self.wireA]) # Opacity: 100%/75%/50%/25%/0%
+        self.add_opacity_2([self.wireA]) # Opacity: 100%/75%/50%/25%/0%
 # test mover liña interactivamente 2 INICIO
         self.lineI = vtk.vtkLineWidget()
         self.lineI.GetLineProperty().SetColor(Plot.probe_line_color)

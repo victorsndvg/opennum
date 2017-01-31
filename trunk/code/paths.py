@@ -10,12 +10,12 @@ import sys
 
 #avoid crashes when paths have other characters
 def relativefs(path, start=None):
-	pathu = unicode(path, sys.getfilesystemencoding())
-	if start is None:
-		startu = start
-	else:
-		startu = unicode(start, sys.getfilesystemencoding())
-	return relative(pathu, startu)
+    pathu = unicode(path, sys.getfilesystemencoding())
+    if start is None:
+        startu = start
+    else:
+        startu = unicode(start, sys.getfilesystemencoding())
+    return relative(pathu, startu)
 
 
 

@@ -15,6 +15,7 @@ import Widget
 import WidgetCustomize0
 import WidgetCustomize1
 import WidgetHeader
+import logging
 
 
 
@@ -30,33 +31,89 @@ class WidgetCombo(Widget.Widget):
         attribs = struct.get_attribs()
         self.has_source = struct.has_source()
         self.is_leaf = struct.get_tag() == u'leaf'
-        self.is_customize = attribs.get(config.AT_CUSTOMIZE) == config.VALUE_TRUE and not self.has_source
+        self.is_customize = attribs.get(config.AT_CUSTOMIZE) == config.VALUE_TRUE
+
+        # Checks if struct has defaults (with and without name).
+        if not self.is_leaf:
+            # If is_leaf, it could not have defaults (get_defaults would fail).
+            default_list = struct.get_defaults()
+            default_names = []
+            for default in default_list:
+                namede = default.get_attribs().get(u'name')
+                if namede is not None:
+                    default_names.append(namede)
+            self.has_default = len(default_list) > len(default_names)
+            self.has_default_names = len(default_names) > 0
 
         if self.has_source:
+            struct_copy = copy.deepcopy(struct)
             elements = self.check_error ( struct.get_elements_with_source(self.menus) )
-	    if len(elements) == 1:						#añadido
-		float_range = self.float_range(elements[0][0])			#añadido
-		# Si es un rango modificar totalnum
-		if float_range[1] != -1:					#añadido
-		    self.names += float_range[0].split()			#añadido
-		else:								#añadido
-		    self.names.append(elements[0][0])				#añadido
-		    if elements[0][1]:						#añadido
-			self.selected = 0					#añadido
-	    else:
-		for element in elements:
-		    if element[1]:
-			self.selected = len(self.names)
-		    self.names.append(element[0])
+            if not self.is_leaf and not self.has_default and self.has_default_names:
+            # If not is_leaf and not has_default, but has_default_names, generic children 
+            # could have been created for elements in source and not in defaults (with name).
+            # They must be removed.
+                children_copy = copy.deepcopy(struct.get_children())
+                elements_copy = copy.deepcopy(elements)
+                for child in children_copy:
+                    namech = child.get_attribs().get(u'name')
+                    if namech not in default_names:
+                        struct.del_childs_by_name(namech)
+                        for element in elements_copy:
+                            if element[0] == namech:
+                                elements.remove(element)
+            if len(elements) == 1:
+                float_range = self.float_range(elements[0][0])
+                # If range, update totalnum
+                if float_range[1] != -1:
+                    self.names += float_range[0].split()
+                else:
+                    self.names.append(elements[0][0])
+                    if elements[0][1]:
+                        self.selected = 0
+            else:
+                for element in elements:
+                    if element[1]:
+                        self.selected = len(self.names)
+                    self.names.append(element[0])
+            # Besides elements in source, it could have children or defaults (with name).
+            if not self.is_leaf and self.has_default:
+                # If is_leaf, it could not have defaults (self.has_default would fail).
+                # If not has_defaults (without name), it would be an intersection, 
+                # not an union, between elements in source and defaults (with name).
+                children = struct_copy.get_children()
+                for child in children:
+                    namech = child.get_attribs().get(u'name')
+                    if namech not in self.names:
+                        attribsch = child.get_attribs()
+                        if attribsch.get(u'selected') == u'true':
+                            self.selected = len(self.names)
+                        self.names.append(child.get_name())
+                        self.struct.add_child(child)
+                for name in default_names:
+                    if name not in self.names:
+                        defaults = self.struct.create_defaults(name)
+                        for default in defaults:
+                            self.names.append(name)
+                            self.struct.add_child(default)
         else:
+            # If not has_source, existing elements will be added to the list.
             children = struct.get_children()
             for child in children:
                 attribsch = child.get_attribs()
-                if attribsch.get(u"selected") == u"true":
+                if attribsch.get(u'selected') == u'true':
                     self.selected = len(self.names)
                 self.names.append(child.get_name())
+            # Besides existing elements, it could have defaults (with name).
+            if not self.is_leaf:
+                # If is_leaf, it could not have defaults (create_defaults would fail).
+                for name in default_names:
+                    if name not in self.names:
+                        defaults = self.struct.create_defaults(name)
+                        for default in defaults:
+                            self.names.append(name)
+                            self.struct.add_child(default)
 
-        if self.is_customize:
+        if self.is_customize and self.has_default:
             text = Widget.TXT_CHOOSE_CUSTOMIZE
         else:
             text = Widget.TXT_CHOOSE
@@ -66,7 +123,7 @@ class WidgetCombo(Widget.Widget):
         else:
             disp = title
 
-        if self.is_customize:
+        if self.is_customize and self.has_default:
             style = wx.TE_PROCESS_ENTER
         else:
             style = wx.CB_READONLY
@@ -105,7 +162,7 @@ class WidgetCombo(Widget.Widget):
     def subselect(self, changes=True):
         self.save_mem() # maybe 'can' modify children ...
 
-        # poñer dentro de changes ?
+        # poÃ±er dentro de changes ?
         self.struct.apply_to_all_plots(self.window.panelB.update)
         if changes:
             self.struct.call_influences(self.window.panelB.update_from_dependency) # 'punteiros inversos'
@@ -132,7 +189,7 @@ class WidgetCombo(Widget.Widget):
     def save_log(self):
         offset = self.combobox.GetSelection()
         if offset != self.selected:
-            if self.has_source:
+            if self.has_source and not self.is_customize:
                 if offset >= 0 and offset < len(self.names):
                     self.log(self.names[offset])
                 else:
@@ -147,7 +204,7 @@ class WidgetCombo(Widget.Widget):
 
 
     def save_mem(self):
-        if self.has_source:
+        if self.has_source and not self.is_customize:
             elements = []
             offset = self.combobox.GetSelection()
             if offset>=0 and offset<len(self.names):
@@ -175,17 +232,22 @@ class WidgetCombo(Widget.Widget):
             children = self.struct.get_children()
             offset = self.combobox.GetSelection()
             if (offset != wx.NOT_FOUND and offset>=0 and offset<len(children)):
-                self.log(u'- '+children[offset].get_name())
-                self.combobox.Delete(offset)
-                self.struct.del_child(offset)
-                if (offset >= len(children)):
-                    offset = len(children) - 1
-                if (offset >= 0):
-                    self.combobox.SetSelection(offset)
+                name = unicode(children[offset].get_name())
+                if self.check_candel(name, self.struct):
+#                   self.log(u'- '+children[offset].get_name()) #code prior version 0.0.1
+                    logging.debug(u'- '+name)
+                    self.combobox.Delete(offset)
+                    self.struct.del_child(offset)
+                    if (offset >= len(children)):
+                        offset = len(children) - 1
+                    if (offset >= 0):
+                        self.combobox.SetSelection(offset)
+                    else:
+#                       self.combobox.ChangeValue(u'') # changevalue => 2.7.1
+                        self.combobox.SetValue(u'')
+                    self.subselect()
                 else:
-                    self.combobox.ChangeValue(u'') # changevalue => 2.7.1
-                self.subselect()
-
+                    self.window.errormsg(u'\'' + name + u'\' is a predefined item. Can not be deleted.')
         elif (action == u'+'):
             result = self.add(name)
 
@@ -203,7 +265,7 @@ class WidgetCombo(Widget.Widget):
         name = name.strip()
         if len(name)>0:
         
-            # comprobación se repetido
+            # comprobaciÃ³n se repetido
             repeated = self.check_repeated(name, self.struct)
             if repeated:
                 return False
@@ -214,12 +276,13 @@ class WidgetCombo(Widget.Widget):
                 self.combobox.Append(default.get_name())
                 self.struct.add_child(default)
             if len(defaults)>0:
-                self.log(u'+ '+name)
+#                self.log(u'+ '+name) #code prior version 0.0.1
+                logging.debug(u'+ '+unicode(name))
                 self.combobox.SetSelection(len(children)-1)
                 self.subselect()
 
         return None
 
     #Gestion del foco del widget
-    def SetFocus(self):				#añadido
-	self.combobox.SetFocus()		#añadido
+    def SetFocus(self):
+        self.combobox.SetFocus()

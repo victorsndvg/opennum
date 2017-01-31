@@ -36,13 +36,33 @@ class Struct(Element.Element):
 
     def create_defaults(self, name):
         result = []
+        # Looks for defaults (with name)
         for default in self.defaults:
-            default_copy = copy.deepcopy(default) # important
-            default_copy.set_children_parents()
-            attribs = default_copy.get_attribs()
-            if attribs.get(u"default")==u"true":
-                del attribs[u"default"]
+            if default.get_attribs().get(u'name')==name:
+                default_copy = copy.deepcopy(default) # important
+                default_copy.set_children_parents()
+                attribs = default_copy.get_attribs()
+                if attribs.get(u"default")==u"true":
+                    del attribs[u"default"]
+                default_copy.set_name(name)
+                result.append(default_copy)
+        # If no defaults (with name), looks for defaults (without name)
+        if len(result) == 0:
+            for default in self.defaults:
+                if default.get_attribs().get(u'name') is None:
+                    default_copy = copy.deepcopy(default) # important
+                    default_copy.set_children_parents()
+                    attribs = default_copy.get_attribs()
+                    if attribs.get(u"default")==u"true":
+                        del attribs[u"default"]
+                    default_copy.set_name(name)
+                    result.append(default_copy)
+        # If no defaults (with or without name), creates a generic struct
+        if len(result) == 0:
+            default_copy = Struct()
+            default_copy.tag = u'struct'
             default_copy.set_name(name)
+            default_copy.set_children_parents()
             result.append(default_copy)
         return result
 

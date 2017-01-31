@@ -118,7 +118,7 @@ class PlotSlice(Plot.Plot):
         self.cutA.SetMapper(self.pdM)
         self.cutA.GetProperty().SetRepresentationToSurface()
         self.cutA.GetProperty().SetColor(Plot.mesh_color)
-	self.add_opacity_2([self.cutA]) # Opacity: 100%/75%/50%/25%/0%
+        self.add_opacity_2([self.cutA]) # Opacity: 100%/75%/50%/25%/0%
         self.rens[0].AddActor(self.cutA)
         
         # poñendo a scalarbar aquí e non antes, queda ben dibuxada desde o primeiro (non negra)
@@ -225,7 +225,7 @@ class PlotSlice(Plot.Plot):
             nums = [ unicode('0.0'), unicode('0.0'), unicode('1.0') ]
             ch[1].set_elements_nosel(nums)
             self.panel_widgets.update_widget_struct(ch[1])
-	elif force:
+        elif force:
             nums = [ unicode(normals[0]), unicode(normals[1]), unicode(normals[2]) ]
             ch[1].set_elements_nosel(nums)
             self.panel_widgets.update_widget_struct(ch[1])

@@ -203,7 +203,7 @@ class PlotReferences(Plot.Plot):
             self.lrA.SetMapper(self.lrM)
             self.lrA.SetVisibility(0)
             
-            # CELL 	POINT 	FIELD 	VERTEX 	EDGE 	
+            # CELL  POINT  FIELD  VERTEX  EDGE
             if self.data1.get('fielddomain') == 'point':
                 ftype = 1 # vtkSelection::POINT
             else:

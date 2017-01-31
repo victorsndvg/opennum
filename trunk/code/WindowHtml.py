@@ -80,8 +80,8 @@ class WindowHtml(wx.Frame):
             ret = html.SetPage(data)
         elif mode == 'url':
             ret = html.LoadPage(data)
-	elif mode == 'frontcode':
-	    html.Bind(wx.html.EVT_HTML_LINK_CLICKED, self.OnURLClick)
+        elif mode == 'frontcode':
+            html.Bind(wx.html.EVT_HTML_LINK_CLICKED, self.OnURLClick)
             ret = html.SetPage(data)
 
         if ret is True:
@@ -95,6 +95,6 @@ class WindowHtml(wx.Frame):
             self.error = 'Error loading page'
 
     def OnURLClick(self,event):
-	url = event.GetLinkInfo().GetHref()
-	print 'launching ' + url
-	wx.LaunchDefaultBrowser(url.replace(' ', '%20')) 
+        url = event.GetLinkInfo().GetHref()
+        print 'launching ' + url
+        wx.LaunchDefaultBrowser(url.replace(' ', '%20')) 

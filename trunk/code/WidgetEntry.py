@@ -55,43 +55,43 @@ class WidgetEntry(Widget.Widget):
 
 
     def parse_complex(self, string,startchar,endchar,lista):
-	"""
-	Parse a list of complex and check the syntax. Recursive function.
+        """
+        Parse a list of complex and check the syntax. Recursive function.
 
-	string: type String.
-	startchar: type Character.
-	endchar: type Character.
-	list: type List.
-	"""
+        string: type String.
+        startchar: type Character.
+        endchar: type Character.
+        list: type List.
+        """
 
-	start = string.find(startchar)
-	end = string.find(endchar)
+        start = string.find(startchar)
+        end = string.find(endchar)
 
-	if start<end and start != -1 and end != -1:
-	    complexstr = string[start:end+1]
-	    try:
-		if complexstr.find(',') == -1 or not len(map(float, complexstr[1:-1].replace(',', ' ').split())) == 2:
-		    return -1
-		lista.append(complexstr)
-		return self.parse_complex(string[end+1:],startchar,endchar,lista)
-	    except:
-		return -1
-	    return 1
-	elif (start == -1 and end != -1) or (start != -1 and end == -1):
-	    return -1
-	else:
-	    return 0
+        if start<end and start != -1 and end != -1:
+            complexstr = string[start:end+1]
+            try:
+                if complexstr.find(',') == -1 or not len(map(float, complexstr[1:-1].replace(',', ' ').split())) == 2:
+                    return -1
+                lista.append(complexstr)
+                return self.parse_complex(string[end+1:],startchar,endchar,lista)
+            except:
+                return -1
+            return 1
+        elif (start == -1 and end != -1) or (start != -1 and end == -1):
+            return -1
+        else:
+            return 0
 
     def func(self,string,char):
-	index = 0
-	lista = []
+        index = 0
+        lista = []
         while index < len( string ):
-	    index = string.find( char, index )
-	    if index == -1:
-		break
-	    lista.append(index)
-	    index += 1
-	return lista
+            index = string.find( char, index )
+            if index == -1:
+                break
+            lista.append(index)
+            index += 1
+        return lista
 
     def save_mem(self):
         print 'widget entry save mem'
@@ -99,10 +99,10 @@ class WidgetEntry(Widget.Widget):
         if self.mode == 0: # float
             val2 = self.preprocess_val(val)
             vals = val2.split()
-	elif self.mode == 2: #complex
-	    vals = []
-	    if self.parse_complex(val,'(',')',vals) == -1:
-		vals = [val]
+        elif self.mode == 2: #complex
+            vals = []
+            if self.parse_complex(val,'(',')',vals) == -1:
+                vals = [val]
 
         else: # string
             if val == '':
@@ -118,7 +118,7 @@ class WidgetEntry(Widget.Widget):
         # TEMPORARY FIX put here to notify tabular that data may be changed
         parent = self.struct.get_parent()
         if parent is not None:
-	    #modificado para el nuevo atributo show (en lugar de tabular)
+            #modificado para el nuevo atributo show (en lugar de tabular)
             if parent.get_attribs().get(config.AT_SHOW) == config.AT_TABULAR: # non imprescindible
                 self.window.tabular_update(parent)
 
@@ -168,6 +168,6 @@ class WidgetEntry(Widget.Widget):
         return ''.join(out)
 
     #Gestion del foco del widget
-    def SetFocus(self):				#añadido
-	self.entry.SetFocus()			#añadido
+    def SetFocus(self):
+        self.entry.SetFocus()
 

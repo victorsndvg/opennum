@@ -24,7 +24,7 @@ class PlotContour(Plot.Plot):
         self.plotbar.add(self.edges_button)
         
         self.add_opacity_1(selection=0) # Opacity: 100%/75%/50%/25%/0%
-        #self.scalarrange.mode_set(0) # tiña rango nulo => non actualiza rango
+        #self.scalarrange.mode_set(0) # tiÃ±a rango nulo => non actualiza rango
         #self.scalarrange.mode_mutable_set(False) # always local scalar range
 
 
@@ -180,7 +180,7 @@ class PlotContour(Plot.Plot):
                 num = nums[0]
                 numi = None
                 try:
-                    numi = int(num) + 2 #añadido +2 para no tener en cuenta los límites de la escala
+                    numi = int(num) + 2 #aÃ±adido +2 para no tener en cuenta los lÃ­mites de la escala
                 except ValueError:
                     pass
                 if numi is not None:

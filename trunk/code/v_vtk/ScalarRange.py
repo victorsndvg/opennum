@@ -8,9 +8,9 @@ import wx
 
 
 
-# para evitar actualizacións múltiples
-# 1º cambiar rango
-# 2º cambiar modo se é necesario
+# para evitar actualizaciÃ³ns mÃºltiples
+# 1Âº cambiar rango
+# 2Âº cambiar modo se Ã© necesario
 
 
 

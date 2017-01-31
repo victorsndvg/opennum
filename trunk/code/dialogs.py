@@ -56,10 +56,10 @@ def get_file_save(parent, dir_name, file_name, file_extensions=None, title=None)
     ext_selected = None
     if (result == wx.ID_OK):
         file = dialog.GetPath()
-	ext_selected = dialog.GetFilterIndex()						#añadido
+        ext_selected = dialog.GetFilterIndex()
     dialog.Destroy()
     dialog = None
-    return [file,ext_selected]								#añadido
+    return [file,ext_selected]
 
 
 

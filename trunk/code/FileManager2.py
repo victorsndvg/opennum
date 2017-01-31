@@ -180,7 +180,7 @@ class FileManager2:
 
 
 
-    def get_tracker_node_files(self, node,is_nodepvd=False): #modificado
+    def get_tracker_node_files(self, node,is_nodepvd=False):
         if node in self.buffer6:
             if Debug:
                 print '6aproveitando', node
@@ -188,7 +188,7 @@ class FileManager2:
         else:
             if Debug:
                 print '6creando', node
-            tracker = FMT.TrackerNodeFiles(self, node,is_nodepvd) #modificado
+            tracker = FMT.TrackerNodeFiles(self, node,is_nodepvd)
             self.trackers.append(tracker)
             self.buffer6[node] = tracker
             return tracker

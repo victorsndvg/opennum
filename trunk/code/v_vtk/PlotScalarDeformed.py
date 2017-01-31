@@ -85,7 +85,7 @@ class PlotScalarDeformed(Plot.Plot):
         if not self.call_src():
             return
 
-	self.bounds = self.src.GetOutput().GetBounds()                  #añadido
+        self.bounds = self.src.GetOutput().GetBounds()
 
         # si es cell data, lo transforma a point data, porque vtkWarpScalar parece ser que no soporta cell data.
         if self.data1.get('fielddomain') == 'cell':
@@ -118,7 +118,7 @@ class PlotScalarDeformed(Plot.Plot):
         self.add_opacity_2([self.wireA2]) # Opacity: 100%/75%/50%/25%/0%
         self.rens[0].AddActor(self.wireA2)
 
-	self.maxrange = self.src.GetOutput().GetScalarRange()[1]
+        self.maxrange = self.src.GetOutput().GetScalarRange()[1]
         
         self.copy_params(struct)
 
@@ -157,36 +157,36 @@ class PlotScalarDeformed(Plot.Plot):
                 self.update_outline(self.warpT)
             else:
                 self.data_error('Error converting \'' + num + '\' to float')
-        elif len(nums) == 0:					#añadido
-	    scale = self.calc_best_scale()			#añadido
-            self.warpT.SetScaleFactor(scale)			#añadido
-            self.update_outline(self.warpT)			#añadido
-	    nums = struct.set_elements([str(scale)])		#añadido
-            self.panel_widgets.update_widget_struct(nums)	#añadido
-	else:
+        elif len(nums) == 0:
+            scale = self.calc_best_scale()
+            self.warpT.SetScaleFactor(scale)
+            self.update_outline(self.warpT)
+            nums = struct.set_elements([str(scale)])
+            self.panel_widgets.update_widget_struct(nums)
+        else:
             self.data_error('Incorrect number of elements (1 needed)')
 
-    def calc_best_scale(self):                                  #añadido
-	if self.maxrange is not None:				#añadido
-            xdist = (self.bounds[1]-self.bounds[0])             #añadido
-            ydist = (self.bounds[3]-self.bounds[2])             #añadido
-            zdist = (self.bounds[5]-self.bounds[4])             #añadido
-            maxdist = xdist					#añadido
-            if maxdist<ydist:					#añadido
-		maxdist = ydist					#añadido
-            if maxdist<zdist:					#añadido
-		maxdist = zdist 				#añadido
-            if self.maxrange == 0:				#añadido
-		return 0.0					#añadido
-            else:						#añadido
-		return self.round_to_1(maxdist/(self.maxrange*20))#añadido
-	else:
+    def calc_best_scale(self):
+        if self.maxrange is not None:
+            xdist = (self.bounds[1]-self.bounds[0])
+            ydist = (self.bounds[3]-self.bounds[2])
+            zdist = (self.bounds[5]-self.bounds[4])
+            maxdist = xdist
+            if maxdist<ydist:
+                maxdist = ydist
+            if maxdist<zdist:
+                maxdist = zdist
+            if self.maxrange == 0:
+                return 0.0
+            else:
+                return self.round_to_1(maxdist/(self.maxrange*20))
+        else:
             return 0.0
 
-    def round_to_1(self,x):					#añadido
-	from math import floor, log10				#añadido
-	try:
-		res = round(x, -int(floor(log10(x))))		#añadido
-		return res
-	except:
-		return 0.0
+    def round_to_1(self,x):
+        from math import floor, log10
+        try:
+            res = round(x, -int(floor(log10(x))))
+            return res
+        except:
+            return 0.0

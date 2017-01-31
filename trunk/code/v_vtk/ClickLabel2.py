@@ -83,7 +83,7 @@ class ClickLabel():
         self.CLselS = vtk.vtkSelectionSource()
         self.CLselS.SetContentType(4) # vtkSelection:: #1 GLOBALIDS(nada) #3 VALUES(nada) #4 INDICES(varios)
         self.CLselS.SetFieldType(1) # vtkSelection:: #0 CELL #1 POINT
-        self.CLselS.SetContainingCells(0) # para non extraer tamén as celdas que conteñen o punto dado
+        self.CLselS.SetContainingCells(0) # para non extraer tamÃ©n as celdas que conteÃ±en o punto dado
 
         self.CLselF = vtk.vtkExtractSelectedIds()
         self.CLselF.SetInputConnection(self.src.GetOutputPort())
@@ -158,7 +158,7 @@ class ClickLabel():
 
 
 
-# funciona en Windows ( se llama a LeftButtonReleaseEvent sólo para double click )
+# funciona en Windows ( se llama a LeftButtonReleaseEvent sÃ³lo para double click )
     def ButtonRelease(self, obj, event):
         xypos = self.iren.GetEventPosition()
         print 'leftRel', event, 'repeat', self.iren.GetRepeatCount(), xypos
@@ -180,7 +180,7 @@ class ClickLabel():
         if not there_is:
             return
 
-        if self.point_locator_pending: # así no inicializa varias veces innecesariamente
+        if self.point_locator_pending: # asÃ­ no inicializa varias veces innecesariamente
             self.point_locator.SetDataSet(self.src.GetOutput())
             self.point_locator_pending = False
 

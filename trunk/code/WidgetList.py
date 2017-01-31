@@ -17,39 +17,92 @@ class WidgetList(Widget.Widget):
     def __init__(self, selection, parent, window, struct, index):
         Widget.Widget.__init__(self, parent, window, struct, index)
         self.selection = selection
-	self.parent = parent
+        self.parent = parent
         self.names = []
         selected = []
         self.selectedset = set()
         attribs = struct.get_attribs()
         self.has_source = struct.has_source()
         self.is_leaf = struct.get_tag() == u'leaf'
-        self.is_customize = attribs.get(config.AT_CUSTOMIZE) == config.VALUE_TRUE and not self.has_source
+        self.is_customize = attribs.get(config.AT_CUSTOMIZE) == config.VALUE_TRUE
 
-        if self.has_source:
+        # Checks if struct has defaults (with or without name).
+        if not self.is_leaf:
+            # If is_leaf, it could not have defaults (get_defaults would fail).
+            default_list = struct.get_defaults()
+            default_names = []
+            for default in default_list:
+                namede = default.get_attribs().get(u'name')
+                if namede is not None:
+                    default_names.append(namede)
+            self.has_default = len(default_list) > len(default_names)
+            self.has_default_names = len(default_names) > 0
+
+        source_names = []
+        if self.has_source and not self.is_customize:
+            # If has_source and not is_customize, elements will be added to the list.
+            # If is_customize, elements would be added to the combobox, not to the list.
+            struct_copy = copy.deepcopy(struct)
             elements = self.check_error ( struct.get_elements_with_source(self.menus) )
-	    index = 0
-	    if len(elements) == 1:						#añadido
-		float_range = self.float_range(elements[0][0])			#añadido
-		# Si es un rango modificar totalnum
-		if float_range[1] != -1:					#añadido
-		    self.names += float_range[0].split()			#añadido
-		    index += float_range[1]					#añadido
-		else:								#añadido
-		    self.names.append(elements[0][0])				#añadido
-		    if elements[0][1]:						#añadido
-			selected.append(0)					#añadido
-			self.selectedset.add(0)					#añadido
-		    index += 1							#añadido
-		
-	    else:
-		for element in elements:
-		    if element[1]:
+            if not self.is_leaf and not self.has_default and self.has_default_names:
+            # If not is_leaf and not has_default, but has_default_names, generic children 
+            # could have been created for elements in source and not in defaults (with name).
+            # They must be removed.
+                children_copy = copy.deepcopy(struct.get_children())
+                elements_copy = copy.deepcopy(elements)
+                for child in children_copy:
+                    namech = child.get_attribs().get(u'name')
+                    if namech not in default_names:
+                        struct.del_childs_by_name(namech)
+                        for element in elements_copy:
+                            if element[0] == namech:
+                                elements.remove(element)
+            index = 0
+            if len(elements) == 1:
+                float_range = self.float_range(elements[0][0])
+                # If range, update totalnum
+                if float_range[1] != -1:
+                    self.names += float_range[0].split()
+                    index += float_range[1]
+                else:
+                    self.names.append(elements[0][0])
+                    if elements[0][1]:
+                        selected.append(0)
+                        self.selectedset.add(0)
+                    index += 1
+            else:
+                for element in elements:
+                    if element[1]:
                         selected.append(len(self.names))
                         self.selectedset.add(index)
-		    self.names.append(element[0])
-
+                    self.names.append(element[0])
+                    index += 1
+            # Besides elements in source, it could have defaults (with name).
+            if not self.is_leaf and self.has_default:
+                # If is_leaf, it could not have defaults (self.has_default would fail).
+                # If not has_defaults (without name), it would be an intersection, 
+                # not an union, between elements in source and defaults (with name).
+                children = struct_copy.get_children()
+                for child in children:
+                    namech = child.get_attribs().get(u'name')
+                    if namech not in self.names and namech in default_names:
+                        attribsch = child.get_attribs()
+                        if attribsch.get(u"selected") == u"true":
+                            selected.append(len(self.names))
+                            self.selectedset.add(index)
+                        self.struct.add_child(child)
+                        self.names.append(child.get_name())
+                        index += 1
+                for name in default_names:
+                    if name not in self.names:
+                        defaults = self.struct.create_defaults(name)
+                        for default in defaults:
+                            self.struct.add_child(default)
+                            self.names.append(name)
+                            index += 1
         else:
+            # If not has_source or is_customize, existing elements will be added to the list.
+            # If is_customize, other elements will be added to the combobox, not to the list.
             children = struct.get_children()
             index = 0
             for child in children:
@@ -59,6 +112,64 @@ class WidgetList(Widget.Widget):
                     self.selectedset.add(index)
                 self.names.append(child.get_name())
                 index += 1
+            # Besides existing elements, it could have defaults (with name).
+            if not self.is_leaf and not self.is_customize:
+                # If is_leaf, it could not have defaults (create_defaults would fail).
+                # If is_customize, elements would be added to the combobox, not to the list.
+                for name in default_names:
+                    if name not in self.names:
+                        defaults = self.struct.create_defaults(name)
+                        for default in defaults:
+                            self.struct.add_child(default)
+                            self.names.append(name)
+                            index += 1
+
+        combo_names = []
+        self.entry = None
+        if not self.is_leaf and self.is_customize:
+            # If is_leaf, it could not be customizable.
+            # If is_customize, elements in source and defaults (with name) will be added to the combobox.
+            if self.has_source:
+                struct_copy = copy.deepcopy(struct)
+                elements = self.check_error ( struct_copy.get_elements_with_source(self.menus) )
+                if not self.has_default and self.has_default_names:
+                    # If not is_leaf and not has_default, but has_default_names, generic children 
+                    # could have been created for elements in source and not in defaults (with name).
+                    # They must be removed.
+                    children_copy = copy.deepcopy(struct_copy.get_children())
+                    elements_copy = copy.deepcopy(elements)
+                    for child in children_copy:
+                        namech = child.get_attribs().get(u'name')
+                        if namech not in default_names:
+                            struct.del_childs_by_name(namech)
+                            for element in elements_copy:
+                                if element[0] == namech:
+                                    elements.remove(element)
+                if len(elements) == 1:
+                    float_range = self.float_range(elements[0][0])
+                    # If range, update totalnum
+                    if float_range[1] != -1:
+                        source_names += float_range[0].split()
+                    else:
+                        source_names.append(elements[0][0])
+                else:
+                    for element in elements:
+                        source_names.append(element[0])
+                combo_names = source_names
+                if self.has_default:
+                    for name in default_names:
+                        if name not in source_names:
+                            combo_names.append(name)
+            else:
+                combo_names = default_names
+            if self.has_default:
+                style = wx.TE_PROCESS_ENTER
+            else:
+                style = wx.CB_READONLY
+            if self.has_default and not self.has_source and not self.has_default_names:
+                self.entry = wx.TextCtrl(self, wx.ID_ANY)
+            else:
+                self.entry = wx.ComboBox(self, wx.ID_ANY, choices=combo_names, style=style)
 
         if self.is_customize:
             text = Widget.TXT_CHOOSE_CUSTOMIZE
@@ -102,7 +213,7 @@ class WidgetList(Widget.Widget):
 #                self.listbox.Select(item)
 
         # para que aparezca seleccionado el elemento al crear el widget tambien cuando selection = None
-        # tal como está, no aparece debajo el widget que aparecería al pulsar en el elemento
+        # tal como estÃ¡, no aparece debajo el widget que aparecerÃ­a al pulsar en el elemento
         for item in selected:
             self.listbox.Select(item)
 
@@ -127,7 +238,7 @@ class WidgetList(Widget.Widget):
         self.Bind(wx.EVT_LISTBOX, self.event_list)
         self.Bind(wx.EVT_LISTBOX_DCLICK, self.event_list)
 
-        self.poputmenu = None
+        self.popupmenu = None
         self.saveditem = None
         if self.is_customize and not self.is_leaf: # por que is leaf e non has_source ???
             self.popupmenu = wx.Menu()
@@ -175,7 +286,7 @@ class WidgetList(Widget.Widget):
 
 
     def save_mem(self):
-        if self.has_source: # => not customize
+        if self.has_source and not self.is_customize:
             elements = []
             offsets = self.listbox.GetSelections()
             for offset in offsets:
@@ -235,7 +346,7 @@ class WidgetList(Widget.Widget):
 
 
     def event_customize(self, action, name=None):
-        # name é o índice a borrar, se aparece, se non, borrase o seleccionado
+        # name Ã© o Ã­ndice a borrar, se aparece, se non, borrase o seleccionado
         result = None
         if (action == u'-'):
             children = self.struct.get_children()
@@ -266,7 +377,7 @@ class WidgetList(Widget.Widget):
                     print 'ini1m', self.listbox.GetMinSize(), self.box.GetMinSize(), self.GetMinSize()
                     print 'fin1b', self.listbox.GetBestSize(), '~', self.GetBestSize()
 
-                # comprobación se repetido
+                # comprobaciÃ³n se repetido
                 repeated = self.check_repeated(name, self.struct)
                 if repeated:
                     return False
@@ -287,12 +398,17 @@ class WidgetList(Widget.Widget):
     
                     self.subselect() # important [update plots]
 
+                    self.SetFocus()
+                    index = self.listbox.GetStrings().index(name)
+                    self.listbox.Select(index)
+                    self.subselect()
+
         return result
 
 
 
     # toogle item == param
-    # chamado desde os plots para notificar selección co rato
+    # chamado desde os plots para notificar selecciÃ³n co rato
     def update_from_param(self, param):
         print 'WidgetList:', param
         strs = self.listbox.GetStrings()
@@ -312,8 +428,13 @@ class WidgetList(Widget.Widget):
             self.subselect()
 
     #Gestion del foco del widget
-    def SetFocus(self):							#añadido
-        if self.is_customize and self.listbox.GetCount() == 0:		#añadido
-            self.customizer.SetFocus()					#añadido
-        else:								#añadido
-            self.listbox.SetFocus()					#añadido
+    def SetFocus(self):
+        if self.is_customize and self.listbox.GetCount() == 0:
+            self.customizer.SetFocus()
+        else:
+            self.listbox.SetFocus()
+
+
+
+    def get_entry(self):
+        return self.entry

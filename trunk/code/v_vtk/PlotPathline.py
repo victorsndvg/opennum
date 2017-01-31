@@ -19,7 +19,7 @@ class PlotPathline(Plot.Plot):
 #### Constructor ###############################################################
 # Inicializa la clase
     def __init__(self, parent):
-    	#usa el constructor del padre
+        #usa el constructor del padre
         Plot.Plot.__init__(self, parent)
 
         # Primera parte para incliur el visor
@@ -52,7 +52,7 @@ class PlotPathline(Plot.Plot):
 # Asigna el titulo y la opcion de interaccion
 # Motodo sobrecargado
     def get_options(self):
-    	ops = {u'title':'Pathline'}
+        ops = {u'title':'Pathline'}
         if interactive:
             ops[u'interactor'] = True
         return ops
@@ -62,7 +62,7 @@ class PlotPathline(Plot.Plot):
 #### cl ########################################################################
 # Cambia la representacion en funcion de la opcion escogida (wireframe, surface, ...)
     def cl(self, event):
-    	if not self.done:
+        if not self.done:
             return
 
         sel = self.cbl.GetSelection()
@@ -85,7 +85,7 @@ class PlotPathline(Plot.Plot):
 # al finalizar invoca a src_update1b
 # metodo sobrecargado
     def src_update1(self, changes):
-    	if changes.get('changed'):
+        if changes.get('changed'):
             self.ugrid = self.construct_data(self.src)
             if vtk.vtkVersion.GetVTKMajorVersion() < 6:
                 self.src_vc.SetInput(self.ugrid)
@@ -98,7 +98,7 @@ class PlotPathline(Plot.Plot):
 #### src_update1b ##############################################################
 # para cuando cambia el tiempo y por tanto, self.src
     def src_update1b(self, changes): 
-    	if changes.get('changed'):
+        if changes.get('changed'):
             # Actualiza los datos referentes al plot
             self.apply_params()
         if changes.get('changed'):
@@ -129,7 +129,7 @@ class PlotPathline(Plot.Plot):
 #### plot ######################################################################
 # Metodo principal para dibujar la representacion
     def plot(self, struct):
-    	# Crea self. data1, legend, filename, fieldname, dim, has_field, tracker, revision
+        # Crea self. data1, legend, filename, fieldname, dim, has_field, tracker, revision
         if not self.call_config(struct):
             return
 
@@ -182,7 +182,7 @@ class PlotPathline(Plot.Plot):
         print '====>plot ->> self.lin.SetStartPosition',self.lastcenter[0],',',self.lastcenter[1],',',self.lastcenter[2]
         self.lin.SetMaximumPropagation(500)
         self.lin.SetInitialIntegrationStep(0.5)
-        #self.lin.SetIntegrationStepUnit(2)	# 2 = CELL_LENGTH_UNIT
+        #self.lin.SetIntegrationStepUnit(2) # 2 = CELL_LENGTH_UNIT
         self.lin.SetIntegrationDirectionToBoth()
         
         integ = vtk.vtkRungeKutta4()
@@ -265,7 +265,7 @@ class PlotPathline(Plot.Plot):
         newlast = self.read_params(struct)
         changed = self.test_params(newlast)
         if changed:
-        	self.apply_params()
+            self.apply_params()
            
         # Reseteamos las camaras de todos los renderers
         for ren in self.rens: # WORKAROUND (aparecia non centrada) // + outline
@@ -287,13 +287,13 @@ class PlotPathline(Plot.Plot):
 # Asigna el rango de la escala
 # Motodo sobrecargado
     def range_update3(self, range_): # to overwrite in subclasses
-    	self.pdM.SetScalarRange(range_)        
+        self.pdM.SetScalarRange(range_)        
 
 
 #### read_params ###############################################################
 # Obtiene los parametros que se pasan desde el xml
     def read_params(self, struct):
-    	fail = [None,None,None,None,None]
+        fail = [None,None,None,None,None]
         nlin = None
         ancho = None
         radio = None
@@ -433,7 +433,7 @@ class PlotPathline(Plot.Plot):
 #### mod_integ #################################################################
 # Modifica el integrador en funcion del orden escogido
     def mod_integ(self, lastinteg):
-    	if lastinteg == "2":
+        if lastinteg == "2":
             integ = vtk.vtkRungeKutta2()
         elif lastinteg == "4":
             integ = vtk.vtkRungeKutta4()
@@ -449,7 +449,7 @@ class PlotPathline(Plot.Plot):
 
 #### apply_params ##############################################################
     def apply_params(self):
-    	if self.lastradio is not None:
+        if self.lastradio is not None:
             self.seeds.SetRadius(self.lastradio)
         if self.lastnlin is not None:
             self.seeds.SetNumberOfPoints(self.lastnlin)
@@ -465,7 +465,7 @@ class PlotPathline(Plot.Plot):
 
 #### test_params ##############################################################
     def test_params(self, newlast): 
-    	changed = False
+        changed = False
         
         if (newlast[0] is not None) & (self.lastnlin != newlast[0]):
             changed = True
@@ -494,7 +494,7 @@ class PlotPathline(Plot.Plot):
 # Actualiza el estado de la representacion
 # Metodo sobrecargado
     def update(self, struct):   
-    	newlast = self.read_params(struct)
+        newlast = self.read_params(struct)
         changed = self.test_params(newlast)
 
         if changed:
@@ -506,7 +506,7 @@ class PlotPathline(Plot.Plot):
 #### construct_data ############################################################
 # Inicializacion de la lectura del archivo?
     def construct_data(self, src):
-    	# Construimos el grid
+        # Construimos el grid
         o = src.GetOutput()
         ugrid = vtk.vtkUnstructuredGrid()
         ugrid.SetPoints(o.GetPoints())
@@ -527,7 +527,7 @@ class PlotPathline(Plot.Plot):
         return ugrid
         
     def ini_params(self):
-    	
+        
         # Centro ("Inicializacion")
         x = (self.bounds[1]+self.bounds[0])/2.0
         y = (self.bounds[3]+self.bounds[2])/2.0

@@ -229,9 +229,9 @@ class Node():
             print 'Warning: called get_first_name() not on a Leaf'
         ch = self.get_children()
         if len(ch)>0:
-	    for child in ch:
-		if (child.get_attribs().get(u'selected')==u'true'):
-		    return child.get_name()
+            for child in ch:
+                if (child.get_attribs().get(u'selected')==u'true'):
+                    return child.get_name()
         else:
             return None
 
@@ -269,8 +269,8 @@ class Node():
         self.get_attribs()[u"name"]=name
 
 
-    def set_title(self, title):						#añadido
-        self.get_attribs()[u"title"]=title				#añadido
+    def set_title(self, title):
+        self.get_attribs()[u"title"]=title
 
 
 
@@ -574,11 +574,11 @@ class Node():
                 return u'Error parsing "data" source string'
             if tupm[0] != 1 and tupm[0] != 2:
                 return u'"data" attribute only allows "file:" and "menu:" prefixes'
-	    #Graph2d permite menu:
-	    graph2d_filenames = self.parse_path_varx(tupm[1],False,False,objects)	#añadido
-            result['filesdata'] = graph2d_filenames					#añadido
-	    for f in graph2d_filenames:							#añadido
-		result['filenames'].append(f)						#añadido
+            #Graph2d permite menu:
+            graph2d_filenames = self.parse_path_varx(tupm[1],False,False,objects)
+            result['filesdata'] = graph2d_filenames
+            for f in graph2d_filenames:
+                result['filenames'].append(f)
 
 
 #        print 'DEBUG: get_data5.filenames: ', result['filenames']
@@ -603,8 +603,8 @@ class Node():
 
 
     def get_tracker5(self, filemanager, predata=None):
-	#para multiples pvds is_nodepvd = True
-	is_nodepvd = False                                             #añadido
+        #para multiples pvds is_nodepvd = True
+        is_nodepvd = False
 
         if predata is not None:
             data = predata
@@ -643,13 +643,13 @@ class Node():
         if datafilenames is not None:
             if len(datafilenames) == 1:
                 return filemanager.get_tracker_file(datafilenames[0]) # data
-            elif len(datafilenames) > 1:							#añadido multiples trackers gr2
-		# Modificado. Se crean TrackerNodeFiles a partir de multiples TrackerFiles. Ej. multiples Plot2DGraph
-		#return u'Only one data file allowed'
-                trackers =  [filemanager.get_tracker_file(dfn) for dfn in datafilenames] 	# data
-		tracker = filemanager.get_tracker_node_files(self, is_nodepvd)			#añadido            
-		tracker.set_trackers(trackers, len(datafilenames)) # lonxitude do grupo 1 / grupo 2
-		return tracker
+            elif len(datafilenames) > 1: #añadido multiples trackers gr2
+                # Modificado. Se crean TrackerNodeFiles a partir de multiples TrackerFiles. Ej. multiples Plot2DGraph
+                #return u'Only one data file allowed'
+                trackers =  [filemanager.get_tracker_file(dfn) for dfn in datafilenames] # data
+                tracker = filemanager.get_tracker_node_files(self, is_nodepvd)
+                tracker.set_trackers(trackers, len(datafilenames)) # lonxitude do grupo 1 / grupo 2
+                return tracker
 
 
 
@@ -704,9 +704,9 @@ class Node():
             if fieldfilename is None  or not fieldfilename.lower().endswith('.mff'):
                 # crea trackers para todos los ficheros
                 i = 0
-		#comprobacion de trackernodefile de pvd
-		if meshfilenames[0].lower().endswith('.pvd'):			#añadido
-		    is_nodepvd = True						#añadido
+                #comprobacion de trackernodefile de pvd
+                if meshfilenames[0].lower().endswith('.pvd'):
+                    is_nodepvd = True
                 for meshfile in meshfilenames:
                     if meshfile == '':
                         return 'Empty mesh file name'
@@ -716,9 +716,9 @@ class Node():
                         
                     if fm_mn is not None and len(fm_mn) > i:
                         trackertemp.set_name(fm_mn[i])
-		    #Si trackernodefiles de pvd inicializamos los trackervtk para obtener tiempos
-		    if is_nodepvd:						#añadido
-			trackertemp.recalculate()				#añadido
+                    #Si trackernodefiles de pvd inicializamos los trackervtk para obtener tiempos
+                    if is_nodepvd:
+                        trackertemp.recalculate()
 
 
                     trackers.append(trackertemp)
@@ -746,7 +746,7 @@ class Node():
                             meshfile+' , '+fieldfilename+'): Allowed .mfm and .mff'
                     i += 1
             
-            tracker = filemanager.get_tracker_node_files(self, is_nodepvd)		#añadido
+            tracker = filemanager.get_tracker_node_files(self, is_nodepvd)
             
             tracker.set_trackers(trackers, len(mesh1filenames)) # lonxitude do grupo 1 / grupo 2
             # que non cambie o tracker sempre por esto,
@@ -817,8 +817,8 @@ class Node():
             else:
                 # filename
                 file = node.get_first_selected_name()
-		if file is None:
-		    file = node.get_first_name()
+                if file is None:
+                    file = node.get_first_name()
 
                 if objects is not None: # punteiros
                     objects.append(node)
@@ -1196,23 +1196,23 @@ class Node():
             parsed = self.parse_source_string_1(source) #### rewrite to not go to other nodes (?)
             if parsed[0] is None:
                 return u'Can not parse "source" string value'
-	    #parsed[0] == 1 => type == file: list file lines
-            elif parsed[0] == 1:				#añadido
-		sourcefile = None				#añadido
-		source = []					#añadido
-		if os.path.isfile(parsed[1]):
-		    sourcefile = open(parsed[1])		#añadido
-		    try:					#añadido
-			line = sourcefile.readline()		#añadido
-			while line:				#añadido
-			    line = line.strip('\n').strip()	#añadido
-			    source.append(line)			#añadido
-			    line = sourcefile.readline()	#añadido
-		    finally:					#añadido
-			if sourcefile is not None:
-			    sourcefile.close()			#añadido
-		return source
-	    elif parsed[0] != 2:
+            #parsed[0] == 1 => type == file: list file lines
+            elif parsed[0] == 1:
+                sourcefile = None
+                source = []
+                if os.path.isfile(parsed[1]):
+                    sourcefile = open(parsed[1])
+                    try:
+                        line = sourcefile.readline()
+                        while line:
+                            line = line.strip('\n').strip()
+                            source.append(line)
+                            line = sourcefile.readline()
+                    finally:
+                        if sourcefile is not None:
+                            sourcefile.close()
+                return source
+            elif parsed[0] != 2:
                 return u'Can not parse "source" string value: only allows "menu:" and "file:" prefix'
             source_path = parsed[1]
             

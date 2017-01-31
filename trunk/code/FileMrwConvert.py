@@ -108,7 +108,7 @@ if __name__ == '__main__':
         sys.exit(5)
 
     # array .. id [0..n-1] -> [1..n]
-    # para ter os números dispoñibles para as etiquetas
+    # para ter os nÃºmeros dispoÃ±ibles para as etiquetas
     t.add_point_data_sequential()
     array = range(1, rr.nel + 1) # elementos originales numerados
     array.extend([0] * rr.nsm) # la submalla no se numera

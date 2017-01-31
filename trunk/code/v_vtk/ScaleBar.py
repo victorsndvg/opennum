@@ -170,14 +170,14 @@ class ScaleBar(wx.PyPanel):
     def color_event(self, event):   
         self.color_pos = self.color_widget.GetCurrentSelection()
         self.color_widget.SetLabel(self.color_choices[self.color_pos])
-	if self.color_pos == 0: # blue->red
-	    self.plot.scalarbar_change_color((0.66667, 0.0), (1.0, 1.0), (1.0, 1.0), u'Curve')
-	elif self.color_pos == 1: # red->blue
-	    self.plot.scalarbar_change_color((0.0, 0.66667), (1.0, 1.0), (1.0, 1.0), u'Curve')
-	elif self.color_pos == 2: # cool
-	    self.plot.scalarbar_change_color((0.66667, 0.5), (1.0, 0.0), (0.7, 1.0), u'Sqrt')
-	elif self.color_pos == 3: # warm
-	    self.plot.scalarbar_change_color((0.16667, 0.0), (0.0, 1.0), (1.0, 0.7), u'Sqrt')
+        if self.color_pos == 0: # blue->red
+            self.plot.scalarbar_change_color((0.66667, 0.0), (1.0, 1.0), (1.0, 1.0), u'Curve')
+        elif self.color_pos == 1: # red->blue
+            self.plot.scalarbar_change_color((0.0, 0.66667), (1.0, 1.0), (1.0, 1.0), u'Curve')
+        elif self.color_pos == 2: # cool
+            self.plot.scalarbar_change_color((0.66667, 0.5), (1.0, 0.0), (0.7, 1.0), u'Sqrt')
+        elif self.color_pos == 3: # warm
+            self.plot.scalarbar_change_color((0.16667, 0.0), (0.0, 1.0), (1.0, 0.7), u'Sqrt')
 #        self.plot.do_render()
 
 

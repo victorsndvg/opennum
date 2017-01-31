@@ -32,7 +32,7 @@ class PlotThreshold(Plot.Plot):
         if interactive:
             self.clicker = ClickLabel.ClickLabel()
 
-        #self.scalarrange.mode_set(0) # tiña rango nulo => non actualiza rango
+        #self.scalarrange.mode_set(0) # tiÃ±a rango nulo => non actualiza rango
         #self.scalarrange.mode_mutable_set(False) # always local scalar range
 
 

@@ -18,14 +18,14 @@ class ThreadRemote(threading.Thread):
     """
     Thread que fai o traballo necesario para executar un solver remoto.
     Copiar os datos e executar o solver por SSH/SFTP/SCP.
-    Actualiza a vent· principal con mensaxes
+    Actualiza a vent√° principal con mensaxes
     """
     
     def __init__(self, window, options):
         threading.Thread.__init__(self)
         self.window = window
         self.menus = window.menus
-	self.materials = window.materials
+        self.materials = window.materials
         self.appname = self.window.get_appname()
         if not isinstance(self.appname,basestring) or len(self.appname) < 1: # non debera pasar
             self.appname = 'void'
@@ -107,15 +107,15 @@ class ThreadRemote(threading.Thread):
         #newdatafile = os.path.join(dirtemp,datafilebase) # antes
         
         extra = [ self.window.get_extra('..'+serverdirsep+dirfiles+serverdirsep) ]
-        names = NameTransform.NameTransform('..'+serverdirsep+dirfiles+serverdirsep) # / porque È para o solver
+        names = NameTransform.NameTransform('..'+serverdirsep+dirfiles+serverdirsep) # / porque √© para o solver
         self.menus.save_data(newdatafile,extras=extra,transform=names) # transformextra=names
-	
-	#Modificacion: copia de ficheros desde la base de datos de materiales.
-	if self.window.MaterialsDB_exists:						#aÒadido		
-	    matfile = config.FILE_MATERIALS_DAT						#aÒadido
-	    matfilebase = os.path.basename(matfile)					#aÒadido
-	    newmatfile = matfilebase + '.temp-remote.xml'				#aÒadido
-	    self.materials.save_data(newmatfile, force=True ,transform=names)		#aÒadido
+        
+        #Modificacion: copia de ficheros desde la base de datos de materiales.
+        if self.window.MaterialsDB_exists:
+            matfile = config.FILE_MATERIALS_DAT
+            matfilebase = os.path.basename(matfile)
+            newmatfile = matfilebase + '.temp-remote.xml'
+            self.materials.save_data(newmatfile, force=True ,transform=names)
 
         # #
         import SSHoper
@@ -195,9 +195,9 @@ class ThreadRemote(threading.Thread):
                 serverdirsep.join([self.tempdir,dirfiles,datafilebase]))
                     )
         # copying materials file only if exists
-	if self.window.MaterialsDB_exists:							#aÒadido
-            tocopy.append( (newmatfile,								#aÒadido
-            	    serverdirsep.join([self.tempdir,dirfiles,config.FILE_MATERIALS_DAT]))	#aÒadido
+        if self.window.MaterialsDB_exists:
+            tocopy.append( (newmatfile,
+                    serverdirsep.join([self.tempdir,dirfiles,config.FILE_MATERIALS_DAT]))
                      )
         
         for one in tocopy:
@@ -235,7 +235,7 @@ class ThreadRemote(threading.Thread):
                 temp += ' ' + self.options.get('queuing')
             string += ' "' + execute + '"'
             temp += ' "' + execute + '"'
-            # 'cd' non necesario porque cada comando È independente en paramiko
+            # 'cd' non necesario porque cada comando √© independente en paramiko
             
             self.send(self.prefix+': Executing solver: '+temp+'\n')
 

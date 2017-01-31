@@ -23,11 +23,11 @@ class WidgetText(Widget.Widget):
 
         self.text = u''
         showfile = attribs.get(u'showfile')
-	newpath = self.parse_path_var(showfile, True, struct)
-	if newpath is None:
+        newpath = self.parse_path_var(showfile, True, struct)
+        if newpath is None:
             res = struct.parse_source_string_1(showfile)
-	else:
-	    res = struct.parse_source_string_1(newpath)
+        else:
+            res = struct.parse_source_string_1(newpath)
 
         if res[0] == 1 or res[0] == 2:
             self.filename = res[1]
@@ -54,8 +54,8 @@ class WidgetText(Widget.Widget):
         else:
             disp = title
 
-        # TE_RICH para que admita textos de más de 64 KB en Windows
-        # posible también TE_RICH2
+        # TE_RICH para que admita textos de mÃ¡s de 64 KB en Windows
+        # posible tambiÃ©n TE_RICH2
         self.textctrl = wx.TextCtrl(self, wx.ID_ANY, self.text, \
             style=wx.TE_MULTILINE | wx.TE_READONLY | wx.TE_DONTWRAP | wx.TE_RICH )
         self.textctrl.SetMinSize((-1,200))
@@ -69,28 +69,28 @@ class WidgetText(Widget.Widget):
 #        self.Bind(wx.EVT_TEXT_ENTER, self.event_enter)
 
     def parse_path_var(self, path, is_menu, struct, objects=None):
-	#No demasiado testeado.
-	#Variables permitidas: texto desde leaf. Elemento (solo 1) seleccionado desde struct
+        #No demasiado testeado.
+        #Variables permitidas: texto desde leaf. Elemento (solo 1) seleccionado desde struct
         #para construir un nombre de fichero 
-        parts = Source.Source.extract_var(path)		
+        parts = Source.Source.extract_var(path)
 
         if isinstance(parts,list):
             if parts[1] is None: # no hay variables
-		return None
+                return None
             else: # hay una variable
                 array = struct.get_from_path(parts[1], False, objects, False) #
                 if isinstance(array, tuple):
                     txt = u''
-		    if len(array) >= 3:
-			#Solo permite un elemento seleccionado
-			try:
-			    sel = array[2][0].get_elements_selected()
-                    	    for a in array[0]:
+                    if len(array) >= 3:
+                        #Solo permite un elemento seleccionado
+                        try:
+                            sel = array[2][0].get_elements_selected()
+                            for a in array[0]:
                                 # escapar 'a' que proven dun nome e vai ser desescapada
-			        if len(array[0])==1 or a == sel[0]:
+                                if len(array[0])==1 or a == sel[0]:
                                     txt = Source.Source.desescape(parts[0]) + a + Source.Source.desescape(parts[2])
-			except:
-			    return None
+                        except:
+                            return None
                     return txt
                 else:
                     return None
@@ -119,6 +119,6 @@ class WidgetText(Widget.Widget):
 #        self.save_mem()
 
     #Gestion del foco del widget
-    def SetFocus(self):				#añadido
-	self.textctrl.SetFocus()		#añadido
+    def SetFocus(self):
+        self.textctrl.SetFocus()
 

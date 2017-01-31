@@ -15,19 +15,19 @@ class SubMenu(Node.Node):
 
     def __init__(self):
         Node.Node.__init__(self)
-	self.indexed = {}
+        self.indexed = {}
         self.actions = []
         self.num = -1
 
 
 #Ahora tambien funciona para el control de eventos desde Window
     def get_index(self, num=None):
-	if num is None:					#añadido
-	    return self.num
-        if (num in self.indexed):			#añadido
-            return self.indexed[num]			#añadido
-        else:						#añadido
-            return None					#añadido
+        if num is None:
+            return self.num
+        if (num in self.indexed):
+            return self.indexed[num]
+        else:
+            return None
 
 
 
@@ -48,9 +48,9 @@ class SubMenu(Node.Node):
                 action = {}
                 action[u'source'] = item.attrib.get(u'source') # unused
                 action[u'name'] = item.get(u'name')
-                action[u'title'] = item.get(u'title')		#añadido
-                action[u'data'] = item.get(u'data')		#añadido
-                action[u'reload'] = item.get(u'reload')		#añadido
+                action[u'title'] = item.get(u'title')
+                action[u'data'] = item.get(u'data')
+                action[u'reload'] = item.get(u'reload')
                 
                 params = [] # one action: [param0, param1, ...]
                 subitems = item.getchildren()
@@ -145,15 +145,15 @@ class SubMenu(Node.Node):
 ####################################################################
 # Atributos de custom exec. title:titulo de la ventana, data:comando
 ####################################################################
-            title = action.get('title')			#añadido
-            if title is not None:			#añadido
-                a.set(u'title',title)			#añadido
-            data = action.get('data')			#añadido
-            if data is not None:			#añadido
-                a.set(u'data',data)			#añadido
-            reload_menu = action.get('reload')		#añadido
-            if reload_menu is not None:			#añadido
-                a.set(u'reload',reload_menu)		#añadido
+            title = action.get('title')
+            if title is not None:
+                a.set(u'title',title)
+            data = action.get('data')
+            if data is not None:
+                a.set(u'data',data)
+            reload_menu = action.get('reload')
+            if reload_menu is not None:
+                a.set(u'reload',reload_menu)
 
             source = action.get('source') # unused
             if source is not None:
@@ -177,10 +177,10 @@ class SubMenu(Node.Node):
 
 
     def reindex(self, n=None):
-	if n is None:
-	    num = 0
-	else:
-	    num = n
+        if n is None:
+            num = 0
+        else:
+            num = n
         self.indexed.clear()
         if True:
             for submenu in self.get_children():
@@ -189,10 +189,10 @@ class SubMenu(Node.Node):
                 num = num + 1
                 #Debemos reasignar un indice a los subsubmenus para poder identificar sus eventos
                 #-------------------------------------------------------------------------------------------------------------------------------------
-                for subsubmenu in submenu.get_children():                                                                   #añadido
-                    if isinstance(subsubmenu, SubMenu):                                                           #añadido
-                        self.indexed[num] = subsubmenu                                                                              #añadido
-                        subsubmenu.set_index(num)                                                                                      #añadido
-                        num = num + 1                                                                                                           #añadido
-	return num
+                for subsubmenu in submenu.get_children():
+                    if isinstance(subsubmenu, SubMenu):
+                        self.indexed[num] = subsubmenu
+                        subsubmenu.set_index(num)
+                        num = num + 1
+        return num
                     #-------------------------------------------------------------------------------------------------------------------------------------

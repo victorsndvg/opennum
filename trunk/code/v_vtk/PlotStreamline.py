@@ -19,7 +19,7 @@ class PlotStreamline(Plot.Plot):
 #### Constructor ###############################################################
 # Inicializa la clase
     def __init__(self, parent):
-    	#usa el constructor del padre
+        #usa el constructor del padre
         Plot.Plot.__init__(self, parent)
 
         # Primera parte para incliur el visor
@@ -56,7 +56,7 @@ class PlotStreamline(Plot.Plot):
 # Asigna el titulo y la opcion de interaccion
 # Motodo sobrecargado
     def get_options(self):
-    	ops = {u'title':'Streamline'}
+        ops = {u'title':'Streamline'}
         if interactive:
             ops[u'interactor'] = True
         return ops
@@ -66,7 +66,7 @@ class PlotStreamline(Plot.Plot):
 #### cl ########################################################################
 # Cambia la representacion en funcion de la opcion escogida (wireframe, surface, ...)
     def cl(self, event):
-    	if not self.done:
+        if not self.done:
             return
 
         sel = self.cbl.GetSelection()
@@ -89,41 +89,41 @@ class PlotStreamline(Plot.Plot):
 # al finalizar invoca a src_update1b
 # metodo sobrecargado
     def src_update1(self, changes):
-    	if changes.get('changed'):
-    		self.ugrid = self.construct_data(self.src)
-    		if vtk.vtkVersion.GetVTKMajorVersion() < 6:
-    		    self.src_vc.SetInput(self.ugrid)
-    		else:
-    		    self.src_vc.SetInputData(self.ugrid)
-    	return self.src_update1b(changes)
+        if changes.get('changed'):
+            self.ugrid = self.construct_data(self.src)
+            if vtk.vtkVersion.GetVTKMajorVersion() < 6:
+                self.src_vc.SetInput(self.ugrid)
+            else:
+                self.src_vc.SetInputData(self.ugrid)
+        return self.src_update1b(changes)
         
 
 
 #### src_update1b ##############################################################
 # para cuando cambia el tiempo y por tanto, self.src
     def src_update1b(self, changes):
-    	if changes.get('changed'):
-    		# Actualiza los datos referentes al plot
-    		self.apply_params()
-    	if changes.get('changed'):
-    		# Actualiza las medidas del visor
-    		self.update_outline(self.src_vc)
+        if changes.get('changed'):
+            # Actualiza los datos referentes al plot
+            self.apply_params()
+        if changes.get('changed'):
+            # Actualiza las medidas del visor
+            self.update_outline(self.src_vc)
 
-    	# siempre ?
-    	# Actualiza el clicker en funcion del tipo de elemento
-    	if self.data1.get('fielddomain') == 'cell':
-    		self.src_update_clicker(self.clicker, self.cellcenters_click, changes) # necesario ?
-    	else:
-    		self.src_update_clicker(self.clicker, self.src, changes) # ALPHA-vc
+        # siempre ?
+        # Actualiza el clicker en funcion del tipo de elemento
+        if self.data1.get('fielddomain') == 'cell':
+            self.src_update_clicker(self.clicker, self.cellcenters_click, changes) # necesario ?
+        else:
+            self.src_update_clicker(self.clicker, self.src, changes) # ALPHA-vc
 
-    	return True
+        return True
         
 
 
 #### plot ######################################################################
 # Metodo principal para dibujar la representacion
     def plot(self, struct):
-    	# Crea self. data1, legend, filename, fieldname, dim, has_field, tracker, revision
+        # Crea self. data1, legend, filename, fieldname, dim, has_field, tracker, revision
         if not self.call_config(struct):
             return
 
@@ -139,7 +139,7 @@ class PlotStreamline(Plot.Plot):
         #self.obten_nombres()
         self.nombre = self.data1.get('fieldscalar')
         if self.nombre is None or self.nombre == '':
-        	self.obten_nombres()
+            self.obten_nombres()
         self.ugrid = self.construct_data(self.src)
         self.src_vc = vtk.vtkAssignAttribute()
         if vtk.vtkVersion.GetVTKMajorVersion() < 6:
@@ -175,7 +175,7 @@ class PlotStreamline(Plot.Plot):
         self.lin.SetStartPosition(self.lastcenter)
         self.lin.SetMaximumPropagation(500)
         self.lin.SetInitialIntegrationStep(0.5)
-        #self.lin.SetIntegrationStepUnit(2)	# 2 = CELL_LENGTH_UNIT
+        #self.lin.SetIntegrationStepUnit(2) # 2 = CELL_LENGTH_UNIT
         self.lin.SetIntegrationDirectionToBoth()
         
         integ = vtk.vtkRungeKutta4()
@@ -257,7 +257,7 @@ class PlotStreamline(Plot.Plot):
         newlast = self.read_params(struct)
         changed = self.test_params(newlast)
         if changed:
-        	self.apply_params()
+            self.apply_params()
            
         # Reseteamos las camaras de todos los renderers
         for ren in self.rens: # WORKAROUND (aparecia non centrada) // + outline
@@ -279,15 +279,15 @@ class PlotStreamline(Plot.Plot):
 # Asigna el rango de la escala
 # Motodo sobrecargado
     def range_update3(self, range_): # to overwrite in subclasses
-    	self.pdM.SetScalarRange(range_)   
-    	self.pdM.GetLookupTable().SetTableRange(range_)
+        self.pdM.SetScalarRange(range_)   
+        self.pdM.GetLookupTable().SetTableRange(range_)
         
 
 
 #### read_params ###############################################################
 # Obtiene los parametros que se pasan desde el xml
     def read_params(self, struct):
-    	fail = [None,None,None,None,None]
+        fail = [None,None,None,None,None]
         nlin = None
         ancho = None
         radio = None
@@ -425,7 +425,7 @@ class PlotStreamline(Plot.Plot):
 #### mod_integ #################################################################
 # Modifica el integrador en funcion del orden escogido
     def mod_integ(self, lastinteg):
-    	if lastinteg == "2":
+        if lastinteg == "2":
             integ = vtk.vtkRungeKutta2()
         elif lastinteg == "4":
             integ = vtk.vtkRungeKutta4()
@@ -443,23 +443,23 @@ class PlotStreamline(Plot.Plot):
 # Aplica las modificaciones necesarias para asignar los parametros obtenidos a
 # las propiedades principales
     def apply_params(self):
-    	if self.lastradio is not None:
-    		self.seeds.SetRadius(self.lastradio)
-    	if self.lastnlin is not None:
-    		self.seeds.SetNumberOfPoints(self.lastnlin)
-    	if self.lastancho is not None:
-    		self.streamTube.SetRadius(self.lastancho)
-    	if self.lastcenter is not None:
-    		self.seeds.SetCenter(self.lastcenter)
-    	if self.lastinteg is not None:
-    		self.mod_integ(self.lastinteg)
+        if self.lastradio is not None:
+            self.seeds.SetRadius(self.lastradio)
+        if self.lastnlin is not None:
+            self.seeds.SetNumberOfPoints(self.lastnlin)
+        if self.lastancho is not None:
+            self.streamTube.SetRadius(self.lastancho)
+        if self.lastcenter is not None:
+            self.seeds.SetCenter(self.lastcenter)
+        if self.lastinteg is not None:
+            self.mod_integ(self.lastinteg)
         
 
 
 #### test_params ##############################################################
 # Comprueba que los parametros de modificacion introducidos son correctos
     def test_params(self, newlast):
-    	changed = False
+        changed = False
         
         if (newlast[0] is not None) & (self.lastnlin != newlast[0]):
             changed = True
@@ -485,18 +485,18 @@ class PlotStreamline(Plot.Plot):
 # Actualiza el estado de la representacion
 # Metodo sobrecargado
     def update(self, struct):
-    	newlast = self.read_params(struct)
-    	changed = self.test_params(newlast)
-    	if changed:
-				self.apply_params()
-				self.widget.Render()
+        newlast = self.read_params(struct)
+        changed = self.test_params(newlast)
+        if changed:
+            self.apply_params()
+            self.widget.Render()
         
 
 
 #### construct_data ############################################################
 # Inicializacion de la lectura del archivo?
     def construct_data(self, src):
-    	# Construimos el grid
+        # Construimos el grid
         o = src.GetOutput()
         ugrid = vtk.vtkUnstructuredGrid()
         ugrid.SetPoints(o.GetPoints())
@@ -545,15 +545,15 @@ class PlotStreamline(Plot.Plot):
     def obten_nombres(self):
         i = 0
         while True:
-        	if self.data1.get('fielddomain') == 'cell':
-        		tmp = self.src.GetOutput().GetCellData().GetArrayName(i)
-        	elif self.data1.get('fielddomain') == 'point':
-        		tmp = self.src.GetOutput().GetPointData().GetArrayName(i)
-        	if tmp is None:
-        		break
-        	else:
-        		self.nombres.append(tmp)
-        		i = i+1
-        		
+            if self.data1.get('fielddomain') == 'cell':
+                tmp = self.src.GetOutput().GetCellData().GetArrayName(i)
+            elif self.data1.get('fielddomain') == 'point':
+                tmp = self.src.GetOutput().GetPointData().GetArrayName(i)
+            if tmp is None:
+                break
+            else:
+                self.nombres.append(tmp)
+                i = i+1
+                
         if self.nombres is not None and len(self.nombres)>0:
-					self.nombre = self.nombres[0]
+            self.nombre = self.nombres[0]

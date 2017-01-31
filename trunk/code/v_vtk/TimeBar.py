@@ -77,23 +77,23 @@ class TimeBar(wx.Panel):
         #self.SetBackgroundColour(wx.Colour(100,50,20)) # invalidades themes
 
 
-    def save_movie(self, event):					#añadido
-	movie_opt = {}							#añadido
-	movie_opt[u'movie'] = True					#añadido
+    def save_movie(self, event):
+        movie_opt = {}
+        movie_opt[u'movie'] = True
 
-        file_ext = self.plot.save_as_call(event,movie_opt[u'movie'])	#añadido
-	if file_ext is not None:					#añadido
-	    movie_opt[u'file'] = file_ext[0]				#añadido
-	    movie_opt[u'codec'] = file_ext[1]				#añadido
+        file_ext = self.plot.save_as_call(event,movie_opt[u'movie'])
+        if file_ext is not None:
+            movie_opt[u'file'] = file_ext[0]
+            movie_opt[u'codec'] = file_ext[1]
         try:
-	    movie_opt[u'start_time'] = float(self.txt_start.GetValue())	#añadido
-	    movie_opt[u'end_time'] = float(self.txt_end.GetValue())	#añadido
-	    movie_opt[u'duration'] = float(self.txt_dur.GetValue())	#añadido
+            movie_opt[u'start_time'] = float(self.txt_start.GetValue())
+            movie_opt[u'end_time'] = float(self.txt_end.GetValue())
+            movie_opt[u'duration'] = float(self.txt_dur.GetValue())
         except ValueError, v:
             self.plot.window.errormsg('Can not convert times to a floating point numbers')
 
-    	if self.plot.start_movie_saving(movie_opt):			#añadido
-	    self.b_play(event)						#añadido
+        if self.plot.start_movie_saving(movie_opt):
+            self.b_play(event)
 
     def b_first(self, event):
         print 'first'
@@ -150,10 +150,10 @@ class TimeBar(wx.Panel):
     def set_is_playing(self, value):
         if value:
             self.buttons[2].SetLabel('||')
-	    self.bsave.Disable()
+            self.bsave.Disable()
         else:
             self.buttons[2].SetLabel('>')
-	    self.bsave.Enable()
+            self.bsave.Enable()
 
 
     def get_time_range(self):
