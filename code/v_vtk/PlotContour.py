@@ -197,27 +197,30 @@ class PlotContour(Plot.Plot):
     # valor dos contornos especificado
         if selected == 1:
             nums = ch[1].get_elements()
-            nums2 = []
-            good = True
-            numi = None
-            for num in nums:
-                numf = None
-                try:
-                    numf = float(num)
-                except ValueError:
-                    good = False
-                    numi = num
-                    break
-                if numf is not None:
-                    nums2.append(numf)
-            if good:
-                self.contours.SetNumberOfContours(len(nums2))
-                i = 0
-                while i < len(nums2):
-                    self.contours.SetValue(i,nums2[i])
-                    i += 1
-                # reforma
-                # update range to min and max contour
-                self.scalarrange.local_set( (min(nums2),max(nums2)) )
+            if len(nums) > 0:
+                nums2 = []
+                good = True
+                numi = None
+                for num in nums:
+                    numf = None
+                    try:
+                        numf = float(num)
+                    except ValueError:
+                        good = False
+                        numi = num
+                        break
+                    if numf is not None:
+                        nums2.append(numf)
+                if good:
+                    self.contours.SetNumberOfContours(len(nums2))
+                    i = 0
+                    while i < len(nums2):
+                        self.contours.SetValue(i,nums2[i])
+                        i += 1
+                    # reforma
+                    # update range to min and max contour
+                    self.scalarrange.local_set( (min(nums2),max(nums2)) )
+                else:
+                    self.data_error('Error converting \'' + numi + '\' to float')
             else:
-                self.data_error('Error converting \'' + numi + '\' to float')
+                self.data_error('Incorrect number of elements (1 or more needed)')
