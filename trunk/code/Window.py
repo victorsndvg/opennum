@@ -1893,12 +1893,12 @@ class Window(wx.Frame):
 
 
     def end_process(self, exitcode, stopped=False, custom_command=False):
-        errortxt = self.process.read().lstrip()
+        outerrtxt = self.process.read().lstrip()
         #print u'end', exitcode, stopped #code prior version 0.0.1
         logging.debug(u'end'+u' '+unicode(exitcode)+u' '+unicode(stopped))
         if not stopped:
             self.timer.Stop()
-            self.event_timer2()
+            self.logger.add_text(unicode(outerrtxt))
 
         txt = self.panelC.stop_code(exitcode) # si no se ejecuta siempre, dio: Elapsed time = 23:59:57.250
 
@@ -1944,8 +1944,8 @@ class Window(wx.Frame):
             self.taskscurrent = -2
 
         if error:
-            self.logger.add_text(u'\''+unicode(name)+u'\' returned exit code '+unicode(exitcode)+u'.\n\nERROR MESSAGE:\n====================\n'+unicode(errortxt))
-            self.errormsg(u'\''+unicode(os.path.normpath(name))+u'\' returned exit code '+unicode(exitcode)+u'.\n\nERROR MESSAGE:\n====================\n'+unicode(errortxt))
+            self.logger.add_text(u'\''+unicode(name)+u'\' returned exit code '+unicode(exitcode)+u'.\n\nERROR MESSAGE:\n====================\n'+unicode(outerrtxt))
+            self.errormsg(u'\''+unicode(os.path.normpath(name))+u'\' returned exit code '+unicode(exitcode)+u'.\n\nERROR MESSAGE:\n====================\n'+unicode(outerrtxt))
 
 
 

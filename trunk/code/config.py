@@ -84,7 +84,7 @@ AT_TITLE = u'title'
 AT_HIDDEN = u'hidden' # heavy
 AT_HELP = u'help' # heavy
 
-# interno. non previsto o seu uso no local.mnu.xml. sรณ en menu en principio
+# interno. non previsto o seu uso no local.mnu.xml. só en menu en principio
 AT_SAVETHIS = u'savethis'
 
 # interno. non previsto o seu uso no local.mnu.xml.
