@@ -1193,7 +1193,7 @@ class Window(wx.Frame):
         except (IOError, shutil.Error, OSError), err:
             ok = False
             #print repr(err)
-            self.errormsg(u'Error copying '+subdir_to+' to working folder.\n'+repr(err)+u': ')
+            self.errormsg(u'Error copying files to working folder.\n'+repr(err)+u': ')
 
         return ok
 
