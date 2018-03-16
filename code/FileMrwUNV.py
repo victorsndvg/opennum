@@ -9,7 +9,7 @@ import FileMrwVTK
 import FileMrwVTU
 import FileMrwModulef
 import time
-
+import copy
 
 
 # LIMITACIONS DA VERSION ACTUAL:
@@ -231,7 +231,18 @@ class UNV(FileMrw.FileMrw):
                     record3 = map(int, line3.split())
                 cont += 1
                 elements.append(self.Element(record1,record2,record3))
-        return elements
+        #labels must start in 1 and be consecutive
+        labl = [e.label for e in elements]
+        if min(labl)!=1:
+            raise RuntimeError('The lowest element label is '+str(min(labl))+', instead of 1.')
+        if max(labl)>len(elements):
+            raise RuntimeError('The biggest element label is '+str(max(labl))+', instead of '+str(len(elements))+'.')
+        #return a list ordered by label
+        ordelem = len(elements)*[None]
+        for i in range(len(elements)):
+            ordelem[elements[i].label-1] = copy.copy(elements[i]) #shallow copy         
+        return ordelem        
+        #return elements
     
      
     def readUNV2467(self,file):
@@ -420,22 +431,18 @@ class UNV(FileMrw.FileMrw):
             tempgroups = []
 
         for group in tempgroups: # orden creciente => refs ordenadas
-
             value = group.groupNumber
 
             for e in group.entities:
-
                 etype = e[0]
                 enode = e[1]
                 edim = None
 
                 if etype == 8: # 8: finite elements
-
                     element = self.elements[enode-1]
                     info = UNV.get_info_vtk(len(element.nodeLabels),element.feDescID)
                     if info is not None:
                         edim = info[0]
-
                 elif etype == 7: # 7: nodes: grupos de puntos
 
                     edim = 0
