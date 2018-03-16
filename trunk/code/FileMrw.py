@@ -103,7 +103,7 @@ class FileMrw():
         if len(array) < index + num: # adicional
             return False
         try:
-            result = map(float,array[index:index+num])
+            result = map(float, [s.replace('D','E') for s in array[index:index+num]])
             return result
         except ValueError, e:
             return False

@@ -1801,9 +1801,9 @@ class TrackerFormula2(Tracker):
         if start<end and start != -1 and end != -1:
             complexstr = string[start:end+1]
             try:
-                if not len(map(float, complexstr[1:-1].replace(',', ' ').split())) == 2:
+                if not len(map(float, complexstr[1:-1].replace(',', ' ').replace('D','E').split())) == 2:
                     return -1
-                complexparts = map(float, complexstr[1:-1].replace(',', ' ').split())
+                complexparts = map(float, complexstr[1:-1].replace(',', ' ').replace('D','E').split())
                 lista.append(complex(complexparts[0], complexparts[1]))
                 return self.parse_complex(string[end+1:],startchar,endchar,lista)
             except:
