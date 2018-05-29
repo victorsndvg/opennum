@@ -201,7 +201,8 @@ class WidgetList(Widget.Widget):
 
         self.listbox.SetMaxSize((-1,test_size)) # FIX
         self.listbox.SetMinSize((-1,test_size)) # FIX
-        self.listbox.InsertItems(self.names, 0)
+        if self.names:
+            self.listbox.InsertItems(self.names, 0)
 
         if self.selection == 2: #multiple
             self.listbox.DeselectAll()
